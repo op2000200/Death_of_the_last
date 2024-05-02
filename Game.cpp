@@ -57,7 +57,7 @@ void Game::render()
 
 void Game::mainMenu()
 {
-	sf::Time TimePerFrame = sf::seconds(1.f / 30.f);
+	sf::Time TimePerFrame = sf::seconds(1.f / 144.f);
 	sf::Clock clock;
 	sf::Time timeSinceLastUpdate = sf::Time::Zero;
 	int bufState;
@@ -274,27 +274,36 @@ void Game::readInputAM()
 	sf::Event event;
 	while (window.pollEvent(event))
 	{
-		if (event.type == sf::Event::KeyPressed)
+		if (paused == 1)
 		{
-			if (event.key.code == sf::Keyboard::Escape)
+			if (event.type == sf::Event::KeyPressed)
 			{
-				if (paused == 1)
+				if (event.key.code == sf::Keyboard::Escape)
 				{
 					paused = 0;
 				}
-				else
+			}
+			if (event.type == sf::Event::MouseButtonPressed)
+			{
+				if (event.mouseButton.button == sf::Mouse::Left and (sf::Mouse::getPosition().x > 800 and sf::Mouse::getPosition().x < 1110 and sf::Mouse::getPosition().y > 490 and sf::Mouse::getPosition().y < 580))
+				{
+					state = 0;
+					paused = 0;
+				}
+			}
+		}
+		else
+		{
+			if (event.type == sf::Event::KeyPressed)
+			{
+				if (event.key.code == sf::Keyboard::Escape)
 				{
 					paused = 1;
 				}
 			}
-		}
-		if (event.type == sf::Event::MouseButtonPressed and paused == 1)
-		{
-			//back to main menu pressed
-			if (event.mouseButton.button == sf::Mouse::Left and (sf::Mouse::getPosition().x > 800 and sf::Mouse::getPosition().x < 1110 and sf::Mouse::getPosition().y > 490 and sf::Mouse::getPosition().y < 580))
+			if (event.type == sf::Event::MouseButtonPressed)
 			{
-				state = 0;
-				paused = 0;
+
 			}
 		}
 	}
@@ -304,7 +313,7 @@ void Game::arcadeModeRunDraw()
 {
 	sf::RectangleShape buf(sf::Vector2f(1920, 1080));
 	buf.setPosition(0, 0);
-	buf.setFillColor(sf::Color::Cyan);
+	buf.setFillColor(sf::Color(143, 188, 143));
 
 	sf::Sprite cursor;
 	cursor.setTexture(cursorTexture);
