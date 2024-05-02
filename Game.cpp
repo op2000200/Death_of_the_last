@@ -20,6 +20,16 @@ Game::Game()
 	state = 0;
 	paused = 0;
 	cursorTexture.loadFromFile("assets/textures/cursor.png");
+	playerTexture = new sf::Texture;
+	playerTexture->loadFromFile("assets/textures/player.png");
+	playerState = 0;
+	for (int i = 0; i < 200; i++)
+	{
+		inputs[i] = 0;
+	}
+	enemyCooldown = 0;
+	enemyTickCounter = 0;
+	enemyCounter = 0;
 }
 
 void Game::run()
@@ -187,11 +197,16 @@ void Game::processInput()
 
 void Game::arcadeMode()
 {
+	if (playerState == 0)
+	{
+		player = new Player(playerTexture);
+		playerState = 1;
+	}
 	while (true)
 	{
 		if (paused == 0)
 		{
-			arcadeModeRun();
+			arcadeModeRun(player);
 			return;
 		}
 		if (paused == 1)
@@ -202,7 +217,7 @@ void Game::arcadeMode()
 	}
 }
 
-void Game::arcadeModeRun()
+void Game::arcadeModeRun(Player* player)
 {
 	window.clear();
 	sf::Time TimePerFrame = sf::seconds(1.f / 144.f);
@@ -213,14 +228,17 @@ void Game::arcadeModeRun()
 	{
 		bufState = state;
 		bufPaused = paused;
-		readInputAM();
 		sf::Time elapsedTime = clock.restart();
 		timeSinceLastUpdate += elapsedTime;
+		readInputAM();//checking what stupid human do
+		arcadeModeRunUpdate();
 		while (timeSinceLastUpdate > TimePerFrame)
 		{
-			window.clear();
+			updatePlayer(TimePerFrame, player);
+			updateEnemies(TimePerFrame, player);
 			timeSinceLastUpdate -= TimePerFrame;
-			arcadeModeRunDraw();
+			window.clear();
+			arcadeModeRunDraw(player);
 			window.display();
 		}
 		if (bufPaused != paused)
@@ -236,6 +254,12 @@ void Game::arcadeModeRun()
 	}
 }
 
+
+void Game::arcadeModeRunUpdate()
+{
+
+}
+
 void Game::arcadeModePause()
 {
 	window.clear();
@@ -249,6 +273,7 @@ void Game::arcadeModePause()
 		bufState = state;
 		bufPaused = paused;
 		readInputAM();
+		arcadeModePauseUpdate();
 		sf::Time elapsedTime = clock.restart();
 		timeSinceLastUpdate += elapsedTime;
 		while (timeSinceLastUpdate > TimePerFrame)
@@ -269,47 +294,92 @@ void Game::arcadeModePause()
 	}
 }
 
+void Game::arcadeModePauseUpdate()
+{
+	if (inputs[5] == 1 and (sf::Mouse::getPosition().x > 800 and sf::Mouse::getPosition().x < 1110 and sf::Mouse::getPosition().y > 490 and sf::Mouse::getPosition().y < 580))
+	{
+		state = 0;
+		paused = 0;
+		playerState = 0;
+	}
+}
+
 void Game::readInputAM()
 {
 	sf::Event event;
 	while (window.pollEvent(event))
 	{
-		if (paused == 1)
+		if (event.type == sf::Event::LostFocus)
 		{
-			if (event.type == sf::Event::KeyPressed)
-			{
-				if (event.key.code == sf::Keyboard::Escape)
-				{
-					paused = 0;
-				}
-			}
-			if (event.type == sf::Event::MouseButtonPressed)
-			{
-				if (event.mouseButton.button == sf::Mouse::Left and (sf::Mouse::getPosition().x > 800 and sf::Mouse::getPosition().x < 1110 and sf::Mouse::getPosition().y > 490 and sf::Mouse::getPosition().y < 580))
-				{
-					state = 0;
-					paused = 0;
-				}
-			}
+			paused = 1;
 		}
-		else
+		if (event.type == sf::Event::KeyPressed)
 		{
-			if (event.type == sf::Event::KeyPressed)
+			if (event.key.code == sf::Keyboard::Escape)
 			{
-				if (event.key.code == sf::Keyboard::Escape)
+				if (paused == 1)
+				{
+					paused = 0;
+				}
+				else
 				{
 					paused = 1;
 				}
 			}
-			if (event.type == sf::Event::MouseButtonPressed)
+			if (event.key.code == sf::Keyboard::W)
 			{
-
+				inputs[1] = 1;
+			}
+			if (event.key.code == sf::Keyboard::A)
+			{
+				inputs[2] = 1;
+			}
+			if (event.key.code == sf::Keyboard::S)
+			{
+				inputs[3] = 1;
+			}
+			if (event.key.code == sf::Keyboard::D)
+			{
+				inputs[4] = 1;
+			}
+		}
+		if (event.type == sf::Event::MouseButtonPressed)
+		{
+			if (event.mouseButton.button == sf::Mouse::Left)
+			{
+				inputs[5] = 1;
+			}
+		}
+		if (event.type == sf::Event::KeyReleased)
+		{
+			if (event.key.code == sf::Keyboard::W)
+			{
+				inputs[1] = 0;
+			}
+			if (event.key.code == sf::Keyboard::A)
+			{
+				inputs[2] = 0;
+			}
+			if (event.key.code == sf::Keyboard::S)
+			{
+				inputs[3] = 0;
+			}
+			if (event.key.code == sf::Keyboard::D)
+			{
+				inputs[4] = 0;
+			}
+		}
+		if (event.type == sf::Event::MouseButtonReleased)
+		{
+			if (event.mouseButton.button == sf::Mouse::Left)
+			{
+				inputs[5] = 0;
 			}
 		}
 	}
 }
 
-void Game::arcadeModeRunDraw()
+void Game::arcadeModeRunDraw(Player* player)
 {
 	sf::RectangleShape buf(sf::Vector2f(1920, 1080));
 	buf.setPosition(0, 0);
@@ -319,8 +389,13 @@ void Game::arcadeModeRunDraw()
 	cursor.setTexture(cursorTexture);
 	cursor.setPosition(sf::Vector2f(sf::Mouse::getPosition().x - 5, sf::Mouse::getPosition().y - 5));
 	cursor.setScale(sf::Vector2f(5, 5));
-
+	//background
 	window.draw(buf);
+	
+	//draw the player
+	window.draw(player[0].getSprite());
+
+	//cursor
 	window.draw(cursor);
 }
 
@@ -346,4 +421,90 @@ void Game::arcadeModePauseDraw(sf::Sprite prevFrame)
 	window.draw(buttonArcadeModePauseMM.getBody());
 	window.draw(labelbuttonArcadeModePauseMM);
 	window.draw(cursor);
+}
+
+void Game::updatePlayer(sf::Time elapsedTime, Player* player)
+{
+	float del = elapsedTime.asSeconds();
+	sf::Vector2f tmp;
+	if (inputs[1] == 1 and inputs[2] == 0 and inputs[3] == 0 and inputs[4] == 0 or inputs[1] == 1 and inputs[2] == 1 and inputs[3] == 0 and inputs[4] == 1)
+	{
+		tmp = player[0].getSprite().getPosition();
+		tmp.y = tmp.y - player[0].getSpeed() * del;
+		player[0].setPos(tmp);
+		//std::con << "up" << std::endl;
+	}
+	if (inputs[1] == 1 and inputs[2] == 0 and inputs[3] == 0 and inputs[4] == 1)
+	{
+		tmp = player[0].getSprite().getPosition();
+		tmp.y = tmp.y - player[0].getSpeed() * del;
+		tmp.x = tmp.x + player[0].getSpeed() * del;
+		player[0].setPos(tmp);
+		//std::cout << "up+r" << std::endl;
+	}
+	if (inputs[1] == 0 and inputs[2] == 0 and inputs[3] == 0 and inputs[4] == 1 or inputs[1] == 1 and inputs[2] == 0 and inputs[3] == 1 and inputs[4] == 1)
+	{
+		tmp = player[0].getSprite().getPosition();
+		tmp.x = tmp.x + player[0].getSpeed() * del;
+		player[0].setPos(tmp);
+		//std::cout << "r" << std::endl;
+	}
+	if (inputs[1] == 0 and inputs[2] == 0 and inputs[3] == 1 and inputs[4] == 1)
+	{
+		tmp = player[0].getSprite().getPosition();
+		tmp.y = tmp.y + player[0].getSpeed() * del;
+		tmp.x = tmp.x + player[0].getSpeed() * del;
+		player[0].setPos(tmp);
+		//std::cout << "down+r" << std::endl;
+	}
+	if (inputs[1] == 0 and inputs[2] == 0 and inputs[3] == 1 and inputs[4] == 0 or inputs[1] == 0 and inputs[2] == 1 and inputs[3] == 1 and inputs[4] == 1)
+	{
+		tmp = player[0].getSprite().getPosition();
+		tmp.y = tmp.y + player[0].getSpeed() * del;
+		player[0].setPos(tmp);
+		//std::cout << "down" << std::endl;
+	}
+	if (inputs[1] == 0 and inputs[2] == 1 and inputs[3] == 1 and inputs[4] == 0)
+	{
+		tmp = player[0].getSprite().getPosition();
+		tmp.y = tmp.y + player[0].getSpeed() * del;
+		tmp.x = tmp.x - player[0].getSpeed() * del;
+		player[0].setPos(tmp);
+		//std::cout << "down+l" << std::endl;
+	}
+	if (inputs[1] == 0 and inputs[2] == 1 and inputs[3] == 0 and inputs[4] == 0 or inputs[1] == 1 and inputs[2] == 1 and inputs[3] == 1 and inputs[4] == 0)
+	{
+		tmp = player[0].getSprite().getPosition();
+		tmp.x = tmp.x - player[0].getSpeed() * del;
+		player[0].setPos(tmp);
+		//std::cout << "l" << std::endl;
+	}
+	if (inputs[1] == 1 and inputs[2] == 1 and inputs[3] == 0 and inputs[4] == 0)
+	{
+		tmp = player[0].getSprite().getPosition();
+		tmp.y = tmp.y - player[0].getSpeed() * del;
+		tmp.x = tmp.x - player[0].getSpeed() * del;
+		player[0].setPos(tmp);
+		//std::cout << "up+l" << std::endl;
+	}
+}
+
+void Game::updateBullets(sf::Time elapsedTime, Player* player)
+{
+
+}
+
+void Game::updateEnemies(sf::Time elapsedTime, Player* player)
+{
+	enemyCooldown++;
+	if (enemyTickCounter > 144)
+		enemyTickCounter = 0;
+	srand(time(0) * enemyTickCounter);
+	enemyTickCounter++;
+	sf::Vector2f pos, dist;
+}
+
+void Game::updateCollision(sf::Time elapsedTime, Player* player)
+{
+
 }

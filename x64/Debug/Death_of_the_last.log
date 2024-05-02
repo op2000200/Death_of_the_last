@@ -1,37 +1,32 @@
 ﻿  Game.cpp
-C:\Game\Death_of_the_last\Game.cpp(126,90): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Death_of_the_last\Game.cpp(133,90): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
           with
           [
               T=float
           ]
-C:\Game\Death_of_the_last\Game.cpp(126,60): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Death_of_the_last\Game.cpp(133,60): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
           with
           [
               T=float
           ]
-C:\Game\Death_of_the_last\Game.cpp(311,93): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Death_of_the_last\Game.cpp(386,93): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
           with
           [
               T=float
           ]
-C:\Game\Death_of_the_last\Game.cpp(311,61): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Death_of_the_last\Game.cpp(386,61): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
           with
           [
               T=float
           ]
-C:\Game\Death_of_the_last\Game.cpp(333,93): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Death_of_the_last\Game.cpp(413,93): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
           with
           [
               T=float
           ]
-C:\Game\Death_of_the_last\Game.cpp(333,61): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Death_of_the_last\Game.cpp(413,61): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
           with
           [
               T=float
           ]
-sfml-graphics-s-d.lib(RenderTarget.obj) : warning LNK4099: PDB '' was not found with 'sfml-graphics-s-d.lib(RenderTarget.obj)' or at ''; linking object as if no debug info
-sfml-graphics-s-d.lib(View.obj) : warning LNK4099: PDB '' was not found with 'sfml-graphics-s-d.lib(View.obj)' or at ''; linking object as if no debug info
-sfml-graphics-s-d.lib(Shape.obj) : warning LNK4099: PDB '' was not found with 'sfml-graphics-s-d.lib(Shape.obj)' or at ''; linking object as if no debug info
-sfml-graphics-s-d.lib(Text.obj) : warning LNK4099: PDB '' was not found with 'sfml-graphics-s-d.lib(Text.obj)' or at ''; linking object as if no debug info
-sfml-window-s-d.lib(JoystickImpl.obj) : warning LNK4099: PDB '' was not found with 'sfml-window-s-d.lib(JoystickImpl.obj)' or at ''; linking object as if no debug info
-  Death_of_the_last.vcxproj -> C:\Game\Death_of_the_last\x64\Debug\Death_of_the_last.exe
+  Death_of_the_last.vcxproj -> C:\Death_of_the_last\x64\Debug\Death_of_the_last.exe
