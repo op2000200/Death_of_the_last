@@ -1,32 +1,37 @@
-﻿  Game.cpp
-C:\Death_of_the_last\Game.cpp(133,90): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+﻿  Bullet.cpp
+  Game.cpp
+C:\Game\Death_of_the_last\Game.cpp(141,90): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
           with
           [
               T=float
           ]
-C:\Death_of_the_last\Game.cpp(133,60): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\Game\Death_of_the_last\Game.cpp(141,60): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
           with
           [
               T=float
           ]
-C:\Death_of_the_last\Game.cpp(386,93): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\Game\Death_of_the_last\Game.cpp(397,93): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
           with
           [
               T=float
           ]
-C:\Death_of_the_last\Game.cpp(386,61): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\Game\Death_of_the_last\Game.cpp(397,61): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
           with
           [
               T=float
           ]
-C:\Death_of_the_last\Game.cpp(413,93): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\Game\Death_of_the_last\Game.cpp(436,93): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
           with
           [
               T=float
           ]
-C:\Death_of_the_last\Game.cpp(413,61): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\Game\Death_of_the_last\Game.cpp(436,61): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
           with
           [
               T=float
           ]
-  Death_of_the_last.vcxproj -> C:\Death_of_the_last\x64\Debug\Death_of_the_last.exe
+C:\Game\Death_of_the_last\Game.cpp(520,14): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Game\Death_of_the_last\Game.cpp(544,16): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Game\Death_of_the_last\Game.cpp(551,13): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+  Generating Code...
+  Death_of_the_last.vcxproj -> C:\Game\Death_of_the_last\x64\Debug\Death_of_the_last.exe

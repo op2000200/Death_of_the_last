@@ -49,14 +49,23 @@ private: //private variables
 	sf::Texture cursorTexture;
 	sf::Texture pausedScreen;
 	sf::Texture* playerTexture;
+	sf::Texture* enemyTexture;
+	sf::Texture* bulletTexture;
 	Player* player;
+	int castCooldown;
+	std::vector<Enemy> enemyBuffer;
+	int enemyCooldown;
+	int enemyTickCounter;
+	int enemyCounter;
+
+	std::vector<Bullet> bulletBuffer;
+	int bulletCounter;
+
 	int playerState;
 	int state; //0 - main menu; 1 - story mode; 2 - arcade mode; 3 - settings menu; 4 - exit
 	int paused;
 	int* inputs = new int[200];
-	int enemyCooldown;
-	int enemyTickCounter;
-	int enemyCounter;
+
 	/*
 	* 0 - esc
 	* 1 - w

@@ -22,6 +22,10 @@ Game::Game()
 	cursorTexture.loadFromFile("assets/textures/cursor.png");
 	playerTexture = new sf::Texture;
 	playerTexture->loadFromFile("assets/textures/player.png");
+	enemyTexture = new sf::Texture;
+	enemyTexture->loadFromFile("assets/textures/enemy.png");
+	bulletTexture = new sf::Texture;
+	bulletTexture->loadFromFile("assets/textures/bullet.png");
 	playerState = 0;
 	for (int i = 0; i < 200; i++)
 	{
@@ -30,6 +34,7 @@ Game::Game()
 	enemyCooldown = 0;
 	enemyTickCounter = 0;
 	enemyCounter = 0;
+	bulletCounter = 0;
 }
 
 void Game::run()
@@ -236,6 +241,8 @@ void Game::arcadeModeRun(Player* player)
 		{
 			updatePlayer(TimePerFrame, player);
 			updateEnemies(TimePerFrame, player);
+			updateBullets(TimePerFrame, player);
+			updateCollision(TimePerFrame, player);
 			timeSinceLastUpdate -= TimePerFrame;
 			window.clear();
 			arcadeModeRunDraw(player);
@@ -395,6 +402,18 @@ void Game::arcadeModeRunDraw(Player* player)
 	//draw the player
 	window.draw(player[0].getSprite());
 
+	//draw the enemies
+	for (int i = 0; i < enemyCounter; i++)
+	{
+		window.draw(enemyBuffer[i].getSprite());
+	}
+
+	//draw bullets
+	for (int i = 0; i < bulletCounter; i++)
+	{
+		window.draw(bulletBuffer[i].getSprite());
+	}
+
 	//cursor
 	window.draw(cursor);
 }
@@ -491,7 +510,30 @@ void Game::updatePlayer(sf::Time elapsedTime, Player* player)
 
 void Game::updateBullets(sf::Time elapsedTime, Player* player)
 {
-
+	castCooldown++;
+	for (int i = 0; i < enemyCounter; i++)
+	{
+		sf::Vector2f posPlayer, posEnemy;
+		int dist;
+		posPlayer = player[0].getSprite().getPosition();
+		posEnemy = enemyBuffer[i].getSprite().getPosition();
+		dist = sqrt(pow(posPlayer.x - posEnemy.x, 2) + pow(posPlayer.y - posEnemy.y, 2));
+		if (dist < 20000 and castCooldown > player[0].getCastSpeed())
+		{
+			castCooldown = 0;
+			Bullet bullet(posPlayer, bulletTexture);
+			bullet.setPos(posEnemy);
+			bulletBuffer.push_back(bullet);
+			bulletCounter++;
+		}
+	}
+	for (int i = 0; i < bulletCounter; i++)
+	{
+		bulletBuffer[i].getSprite().setPosition(sf::Vector2f(
+			bulletBuffer[i].getSprite().getPosition().x + bulletBuffer[i].getSpeed() * elapsedTime.asSeconds() * (((bulletBuffer[i].getPos().x + 30 - bulletBuffer[i].getSprite().getPosition().x) / ((std::abs(bulletBuffer[i].getPos().x + 30 - bulletBuffer[i].getSprite().getPosition().x) + std::abs(bulletBuffer[i].getPos().y + 30 - bulletBuffer[i].getSprite().getPosition().y))))),
+			bulletBuffer[i].getSprite().getPosition().y + bulletBuffer[i].getSpeed() * elapsedTime.asSeconds() * (((bulletBuffer[i].getPos().y + 30 - bulletBuffer[i].getSprite().getPosition().y) / ((std::abs(bulletBuffer[i].getPos().x + 30 - bulletBuffer[i].getSprite().getPosition().x) + std::abs(bulletBuffer[i].getPos().y + 30 - bulletBuffer[i].getSprite().getPosition().y)))))
+		));
+	}
 }
 
 void Game::updateEnemies(sf::Time elapsedTime, Player* player)
@@ -501,7 +543,29 @@ void Game::updateEnemies(sf::Time elapsedTime, Player* player)
 		enemyTickCounter = 0;
 	srand(time(0) * enemyTickCounter);
 	enemyTickCounter++;
-	sf::Vector2f pos, dist;
+	sf::Vector2f posPlayer, posEnemy;
+	int dist;
+	posPlayer = player[0].getSprite().getPosition();
+	posEnemy.x = -200 + posPlayer.x + rand() % 600;
+	posEnemy.y = -200 + posPlayer.y + rand() % 600;
+	dist = sqrt(pow(posPlayer.x - posEnemy.x,2) + pow(posPlayer.y - posEnemy.y,2));
+	if (dist > 1 and enemyCooldown > 500 and enemyCounter < 1000)
+	{
+		Enemy enemy(enemyTexture, posEnemy);
+		enemyBuffer.push_back(enemy);
+		enemyCounter++;
+		enemyCooldown = 0;
+	}
+	for (int i = 0; i < enemyCounter; i++)
+	{
+		posEnemy = enemyBuffer[i].getSprite().getPosition();
+		posPlayer = player[0].getSprite().getPosition();
+		enemyBuffer[i].setPos(sf::Vector2f(
+			posEnemy.x + enemyBuffer[i].getSpeed() * elapsedTime.asSeconds() * (((posPlayer.x + 30 - posEnemy.x) / ((std::abs(posPlayer.x + 30 - posEnemy.x) + std::abs(posPlayer.y + 30 - posEnemy.y))))),
+			posEnemy.y + enemyBuffer[i].getSpeed() * elapsedTime.asSeconds() * (((posPlayer.y + 30 - posEnemy.y) / ((std::abs(posPlayer.x + 30 - posEnemy.x) + std::abs(posPlayer.y + 30 - posEnemy.y)))))
+		));
+	}
+
 }
 
 void Game::updateCollision(sf::Time elapsedTime, Player* player)

@@ -29,3 +29,8 @@ int Player::getSpeed()
 {
 	return Player::speed;
 }
+
+int Player::getCastSpeed()
+{
+	return Player::castSpeed;
+}
