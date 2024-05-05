@@ -8,16 +8,17 @@ public:
     ~Bullet();
 public:
     sf::Sprite getSprite();
-    sf::Vector2f getPos();
+    sf::Vector2f getDir();
     int getHealth();
     int getSpeed();
 
+    void setDir(sf::Vector2f coord);
     void setPos(sf::Vector2f coord);
     void setHealth(int num);
     void setSpeed(int num);
 private:
     sf::Sprite sprite;
-    sf::Vector2f pos;
+    sf::Vector2f direction;
     int health;
     int speed;
 };

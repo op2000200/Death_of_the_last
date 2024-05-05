@@ -7,7 +7,7 @@ Player::Player(sf::Texture *texture)
 	exp = 0;
 	health = 100;
 	speed = 500;
-	castSpeed = 10;
+	castSpeed = 1;
 }
 
 sf::Sprite Player::getSprite()

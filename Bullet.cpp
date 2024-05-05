@@ -3,8 +3,9 @@
 Bullet::Bullet(sf::Vector2f pos, sf::Texture* texture)
 	:	sprite(*texture)
 {
-	speed = 10;
-	health = 100;
+	Bullet::sprite.setPosition(pos);
+	speed = 500;
+	health = 500;
 }
 
 Bullet::~Bullet()
@@ -34,10 +35,16 @@ int Bullet::getSpeed()
 
 void Bullet::setPos(sf::Vector2f pos)
 {
-	Bullet::pos = pos;
+	Bullet::sprite.setPosition(pos);
 }
 
-sf::Vector2f Bullet::getPos()
+
+void Bullet::setDir(sf::Vector2f pos)
 {
-	return Bullet::pos;
+	Bullet::direction = pos;
+}
+
+sf::Vector2f Bullet::getDir()
+{
+	return Bullet::direction;
 }

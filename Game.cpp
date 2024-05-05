@@ -518,21 +518,38 @@ void Game::updateBullets(sf::Time elapsedTime, Player* player)
 		posPlayer = player[0].getSprite().getPosition();
 		posEnemy = enemyBuffer[i].getSprite().getPosition();
 		dist = sqrt(pow(posPlayer.x - posEnemy.x, 2) + pow(posPlayer.y - posEnemy.y, 2));
-		if (dist < 20000 and castCooldown > player[0].getCastSpeed())
+		if (dist < 2000 and castCooldown > player[0].getCastSpeed())
 		{
 			castCooldown = 0;
 			Bullet bullet(posPlayer, bulletTexture);
-			bullet.setPos(posEnemy);
+			bullet.setDir(sf::Vector2f(
+				(posEnemy.x - posPlayer.x) / (std::abs(posEnemy.x - posPlayer.x) + std::abs(posEnemy.y - posPlayer.y)),
+				(posEnemy.y - posPlayer.y) / (std::abs(posEnemy.x - posPlayer.x) + std::abs(posEnemy.y - posPlayer.y))
+			));
 			bulletBuffer.push_back(bullet);
 			bulletCounter++;
 		}
 	}
 	for (int i = 0; i < bulletCounter; i++)
 	{
-		bulletBuffer[i].getSprite().setPosition(sf::Vector2f(
-			bulletBuffer[i].getSprite().getPosition().x + bulletBuffer[i].getSpeed() * elapsedTime.asSeconds() * (((bulletBuffer[i].getPos().x + 30 - bulletBuffer[i].getSprite().getPosition().x) / ((std::abs(bulletBuffer[i].getPos().x + 30 - bulletBuffer[i].getSprite().getPosition().x) + std::abs(bulletBuffer[i].getPos().y + 30 - bulletBuffer[i].getSprite().getPosition().y))))),
-			bulletBuffer[i].getSprite().getPosition().y + bulletBuffer[i].getSpeed() * elapsedTime.asSeconds() * (((bulletBuffer[i].getPos().y + 30 - bulletBuffer[i].getSprite().getPosition().y) / ((std::abs(bulletBuffer[i].getPos().x + 30 - bulletBuffer[i].getSprite().getPosition().x) + std::abs(bulletBuffer[i].getPos().y + 30 - bulletBuffer[i].getSprite().getPosition().y)))))
+		sf::Vector2f dir;
+		int buf;
+		dir = bulletBuffer[i].getDir();
+		bulletBuffer[i].setPos(sf::Vector2f(
+			bulletBuffer[i].getSprite().getPosition().x + bulletBuffer[i].getSpeed() * elapsedTime.asSeconds() * dir.x,
+			bulletBuffer[i].getSprite().getPosition().y + bulletBuffer[i].getSpeed() * elapsedTime.asSeconds() * dir.y
 		));
+		buf = bulletBuffer[i].getHealth();
+		buf--;
+		if (buf < 0)
+		{
+			bulletBuffer.erase(bulletBuffer.begin() + i);
+			bulletCounter--;
+		}
+		else
+		{
+			bulletBuffer[i].setHealth(buf);
+		}
 	}
 }
 
