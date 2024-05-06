@@ -26,12 +26,16 @@ private: //private methods
 	void updateBullets(sf::Time elapsedTime, Player* player);
 	void updateEnemies(sf::Time elapsedTime, Player* player);
 	void updateCollision(sf::Time elapsedTime, Player* player);
+	void updateLevel(sf::Time elapsedTime, Player* player);
 	void arcadeModeRunDraw(Player* player);
 	void arcadeModePauseUpdate();
 	void arcadeModePause();
 	void arcadeModePauseDraw(sf::Sprite prevFrame);
 	void arcadeModeDeath();
 	void arcadeModeDeathDraw();
+	void arcadeModeLevelUp(Player* player);
+	void arcadeModeLevelUpUpdate(sf::Time elapsedTime, Player* player);
+	void arcadeModeLevelUpDraw(sf::Sprite prevFrame);
 	void readInputAM();
 	//other
 	void render();
@@ -42,11 +46,17 @@ private: //private variables
 	button buttonSettings;
 	button buttonExit;
 	button buttonArcadeModePauseMM;
+	button buttonArcadeModeUpCastSpeed;
+	button buttonArcadeModeUpSpeed;
+	button buttonArcadeModeHeal;
 	sf::Text labelButtonSM;
 	sf::Text labelButtonAM;
 	sf::Text labelbuttonSettings;
 	sf::Text labelbuttonExit;
 	sf::Text labelbuttonArcadeModePauseMM;
+	sf::Text labelbuttonArcadeModeUpCastSpeed;
+	sf::Text labelbuttonArcadeModeUpSpeed;
+	sf::Text labelbuttonArcadeModeHeal;
 	sf::RenderWindow window;
 	sf::Font fontMM;
 	sf::Font fontMM2;
@@ -70,10 +80,12 @@ private: //private variables
 
 	std::vector<Mana> manaBuffer;
 	int manaCounter;
+	int manaTickCounter;
 
 
 	int playerState;
 	int playerDeath;
+	int levelUp;
 	int state; //0 - main menu; 1 - story mode; 2 - arcade mode; 3 - settings menu; 4 - exit
 	int paused;
 	int* inputs = new int[200];

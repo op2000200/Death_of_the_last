@@ -13,6 +13,10 @@ Game::Game()
 	, buttonExit(sf::Vector2f(600, 200), sf::Vector2f(1300, 820), sf::Color::Color(60, 60, 60), sf::Color::Color(180, 180, 180), 10.f)
 	//buttons arcade mode
 	, buttonArcadeModePauseMM(sf::Vector2f(320, 100), sf::Vector2f(800, 490), sf::Color::Color(60, 60, 60), sf::Color::Color(180, 180, 180), 5.f)
+	//buttons level up
+	, buttonArcadeModeHeal(sf::Vector2f(320, 100), sf::Vector2f(460, 490), sf::Color::Color(60, 60, 60), sf::Color::Color(180, 180, 180), 5.f)
+	, buttonArcadeModeUpCastSpeed(sf::Vector2f(320, 100), sf::Vector2f(800, 490), sf::Color::Color(60, 60, 60), sf::Color::Color(180, 180, 180), 5.f)
+	, buttonArcadeModeUpSpeed(sf::Vector2f(320, 100), sf::Vector2f(1140, 490), sf::Color::Color(60, 60, 60), sf::Color::Color(180, 180, 180), 5.f)
 {
 	window.setMouseCursorVisible(false);
 	fontMM.loadFromFile("assets/font/Humane-ExtraBold.ttf");
@@ -31,6 +35,7 @@ Game::Game()
 	bgTexture->loadFromFile("assets/textures/bg.jpg");
 	manaTexture = new sf::Texture;
 	manaTexture->loadFromFile("assets/textures/manaOrb1.png");
+	manaTickCounter = 0;
 	playerState = 0;
 	for (int i = 0; i < 200; i++)
 	{
@@ -43,6 +48,7 @@ Game::Game()
 	castCooldown = 0;
 	manaCounter = 0;
 	playerDeath = 0;
+	levelUp = 0;
 }
 
 void Game::run()
@@ -219,6 +225,7 @@ void Game::arcadeMode()
 		castCooldown = 0;
 		manaCounter = 0;
 		playerDeath = 0;
+		manaTickCounter = 0;
 	}
 	while (true)
 	{
@@ -229,15 +236,23 @@ void Game::arcadeMode()
 		}
 		else
 		{
-			if (paused == 0)
+			if (levelUp == 1)
 			{
-				arcadeModeRun(player);
+				arcadeModeLevelUp(player);
 				return;
 			}
-			if (paused == 1)
+			else
 			{
-				arcadeModePause();
-				return;
+				if (paused == 0)
+				{
+					arcadeModeRun(player);
+					return;
+				}
+				if (paused == 1)
+				{
+					arcadeModePause();
+					return;
+				}
 			}
 		}
 	}
@@ -249,12 +264,13 @@ void Game::arcadeModeRun(Player* player)
 	sf::Time TimePerFrame = sf::seconds(1.f / 144.f);
 	sf::Clock clock;
 	sf::Time timeSinceLastUpdate = sf::Time::Zero;
-	int bufState, bufPaused, bufDeath;
+	int bufState, bufPaused, bufDeath, bufLevel;
 	while (window.isOpen())
 	{
 		bufState = state;
 		bufPaused = paused;
 		bufDeath = playerDeath;
+		bufLevel = player->getLevel();
 		sf::Time elapsedTime = clock.restart();
 		timeSinceLastUpdate += elapsedTime;
 		readInputAM();//checking what stupid human do
@@ -262,9 +278,11 @@ void Game::arcadeModeRun(Player* player)
 		while (timeSinceLastUpdate > TimePerFrame)
 		{
 			updatePlayer(TimePerFrame, player);
+			updateMana(TimePerFrame, player);
 			updateEnemies(TimePerFrame, player);
 			updateBullets(TimePerFrame, player);
 			updateCollision(TimePerFrame, player);
+			updateLevel(TimePerFrame, player);
 			timeSinceLastUpdate -= TimePerFrame;
 			window.clear();
 			arcadeModeRunDraw(player);
@@ -284,12 +302,24 @@ void Game::arcadeModeRun(Player* player)
 		{
 			return;
 		}
+		if (bufLevel != player->getLevel())
+		{
+			pausedScreen.create(window.getSize().x, window.getSize().y);
+			pausedScreen.update(window);
+			levelUp = 1;
+			return;
+		}
 	}
 }
 
 void Game::arcadeModeRunUpdate()
 {
-
+	if (player->getExp() >= player->getExpCap())
+	{
+		player->setExp(player->getExp() - player->getExpCap());
+		player->setExpCap(player->getExpCap()*1.1);
+		player->setLevel(player->getLevel() + 1);
+	}
 }
 
 void Game::arcadeModePause()
@@ -428,9 +458,17 @@ void Game::arcadeModeRunDraw(Player* player)
 	cursor.setScale(sf::Vector2f(5, 5));
 	//background
 	window.draw(bg);
+
+	//draw mana orbs
+	for (int i = 0; i < manaCounter; i++)
+	{
+		window.draw(manaBuffer[i].getSprite());
+	}
 	
 	//draw the player
 	window.draw(player[0].getSprite());
+
+
 
 	//draw the enemies
 	for (int i = 0; i < enemyCounter; i++)
@@ -566,7 +604,22 @@ void Game::updatePlayer(sf::Time elapsedTime, Player* player)
 
 void Game::updateMana(sf::Time elapsedTime, Player* player)
 {
-
+	if (manaTickCounter > 144)
+		manaTickCounter = 0;
+	srand(time(0) * manaTickCounter);
+	manaTickCounter++;
+	sf::Vector2f posPlayer, posMana;
+	int dist;
+	posPlayer = player[0].getSprite().getPosition();
+	posMana.x = -20000 + posPlayer.x + rand() % 60000;
+	posMana.y = -20000 + posPlayer.y + rand() % 60000;
+	dist = sqrt(pow(posPlayer.x - posMana.x, 2) + pow(posPlayer.y - posMana.y, 2));
+	if (dist > 2000 and manaCounter < 20000)
+	{
+		Mana mana(posMana, manaTexture);
+		manaBuffer.push_back(mana);
+		manaCounter++;
+	}
 }
 
 void Game::updateBullets(sf::Time elapsedTime, Player* player)
@@ -627,7 +680,7 @@ void Game::updateEnemies(sf::Time elapsedTime, Player* player)
 	posEnemy.x = -2000 + posPlayer.x + rand() % 6000;
 	posEnemy.y = -2000 + posPlayer.y + rand() % 6000;
 	dist = sqrt(pow(posPlayer.x - posEnemy.x,2) + pow(posPlayer.y - posEnemy.y,2));
-	if (dist > 1000 and enemyCooldown > 50 and enemyCounter < 10000)
+	if (dist > 1000 and enemyCooldown > 50 and enemyCounter < 1000)
 	{
 		Enemy enemy(enemyTexture, posEnemy);
 		enemyBuffer.push_back(enemy);
@@ -643,9 +696,8 @@ void Game::updateEnemies(sf::Time elapsedTime, Player* player)
 			posEnemy.y + enemyBuffer[i].getSpeed() * elapsedTime.asSeconds() * (((posPlayer.y + 30 - posEnemy.y) / ((std::abs(posPlayer.x + 30 - posEnemy.x) + std::abs(posPlayer.y + 30 - posEnemy.y)))))
 		));
 	}
-
 }
-
+	
 void Game::updateCollision(sf::Time elapsedTime, Player* player)
 {
 	for (int i = 0; i < bulletCounter; i++)
@@ -674,10 +726,25 @@ void Game::updateCollision(sf::Time elapsedTime, Player* player)
 			break;
 		}
 	}
+	for (int i = 0; i < manaCounter; i++)
+	{
+		if (abs(player[0].getSprite().getPosition().x + 30 - manaBuffer[i].getSprite().getPosition().x) < 30 and abs(player[0].getSprite().getPosition().y + 30 - manaBuffer[i].getSprite().getPosition().y) < 50)
+		{
+			manaBuffer.erase(manaBuffer.begin() + i);
+			manaCounter--;
+			player[0].setExp(player[0].getExp() + manaBuffer[i].getValue());
+			break;
+		}
+	}
 	if (player[0].getHealth() < 1)
 	{
 		playerDeath = 1; //die screen
 	}
+}
+
+void Game::updateLevel(sf::Time elapsedTime, Player* player)
+{
+
 }
 
 void Game::arcadeModeDeath()
@@ -737,4 +804,110 @@ void Game::arcadeModeDeathDraw()
 	window.draw(buttonArcadeModePauseMM.getBody());
 	window.draw(labelbuttonArcadeModePauseMM);
 	window.draw(cursor);
+}
+
+
+void Game::arcadeModeLevelUp(Player* player)
+{
+	window.clear();
+	sf::Sprite prevFrame(pausedScreen);
+	sf::Time TimePerFrame = sf::seconds(1.f / 144.f);
+	sf::Clock clock;
+	sf::Time timeSinceLastUpdate = sf::Time::Zero;
+	int bufState;
+	while (window.isOpen())
+	{
+		bufState = levelUp;
+		readInputAM();
+		arcadeModeLevelUpUpdate(TimePerFrame, player);
+		sf::Time elapsedTime = clock.restart();
+		timeSinceLastUpdate += elapsedTime;
+		while (timeSinceLastUpdate > TimePerFrame)
+		{
+			window.clear();
+			timeSinceLastUpdate -= TimePerFrame;
+			arcadeModeLevelUpDraw(prevFrame);
+			window.display();
+		}
+		if (bufState != levelUp)
+		{
+			return;
+		}
+	}
+}
+
+void Game::arcadeModeLevelUpDraw(sf::Sprite prevFrame)
+{
+	sf::View view = window.getView();
+	view.setCenter(1920 / 2, 1080 / 2);
+	window.setView(view);
+	window.draw(prevFrame);
+	sf::RectangleShape buf(sf::Vector2f(1920, 1080));
+	buf.setPosition(0, 0);
+	buf.setFillColor(sf::Color(0, 0, 0, 200));
+
+	sf::Sprite cursor;
+	cursor.setTexture(cursorTexture);
+	cursor.setPosition(sf::Vector2f(sf::Mouse::getPosition().x - 5, sf::Mouse::getPosition().y - 5));
+	cursor.setScale(sf::Vector2f(5, 5));
+
+	labelbuttonArcadeModeUpCastSpeed.setFont(fontMM2);
+	labelbuttonArcadeModeUpCastSpeed.setString("UP CAST SPEED");
+	labelbuttonArcadeModeUpCastSpeed.setPosition(buttonArcadeModeUpCastSpeed.getBody().getPosition().x + 25, buttonArcadeModePauseMM.getBody().getPosition().y - 15);
+	labelbuttonArcadeModeUpCastSpeed.setFillColor(sf::Color(180, 180, 180));
+	labelbuttonArcadeModeUpCastSpeed.setCharacterSize(90);
+	labelbuttonArcadeModeUpCastSpeed.setLetterSpacing(1.5);
+
+	labelbuttonArcadeModeUpSpeed.setFont(fontMM2);
+	labelbuttonArcadeModeUpSpeed.setString("UP PLAYER SPEED");
+	labelbuttonArcadeModeUpSpeed.setPosition(buttonArcadeModeUpSpeed.getBody().getPosition().x + 25, buttonArcadeModePauseMM.getBody().getPosition().y - 15);
+	labelbuttonArcadeModeUpSpeed.setFillColor(sf::Color(180, 180, 180));
+	labelbuttonArcadeModeUpSpeed.setCharacterSize(90);
+	labelbuttonArcadeModeUpSpeed.setLetterSpacing(1.5);
+
+	labelbuttonArcadeModeHeal.setFont(fontMM2);
+	labelbuttonArcadeModeHeal.setString("HEAL");
+	labelbuttonArcadeModeHeal.setPosition(buttonArcadeModeHeal.getBody().getPosition().x + 25, buttonArcadeModePauseMM.getBody().getPosition().y - 15);
+	labelbuttonArcadeModeHeal.setFillColor(sf::Color(180, 180, 180));
+	labelbuttonArcadeModeHeal.setCharacterSize(90);
+	labelbuttonArcadeModeHeal.setLetterSpacing(1.5);
+
+	window.draw(buf);
+	window.draw(buttonArcadeModeUpCastSpeed.getBody());
+	window.draw(buttonArcadeModeUpSpeed.getBody());
+	window.draw(labelbuttonArcadeModeUpCastSpeed);
+	window.draw(labelbuttonArcadeModeUpSpeed);
+	if (player->getHealth() < 100)
+	{
+		window.draw(buttonArcadeModeHeal.getBody());
+		window.draw(labelbuttonArcadeModeHeal);
+	}
+	window.draw(cursor);
+}
+
+
+void Game::arcadeModeLevelUpUpdate(sf::Time elapsedTime, Player* player)
+{
+	if (inputs[5] == 1)
+	{
+		if (sf::Mouse::getPosition().x > 800 and sf::Mouse::getPosition().x < 1110 and sf::Mouse::getPosition().y > 490 and sf::Mouse::getPosition().y < 580) //up cast speed
+		{
+			player->setCastSpeed(player->getCastSpeed() + 10);
+			levelUp = 0;
+		}
+		if (sf::Mouse::getPosition().x > 460 and sf::Mouse::getPosition().x < 740 and sf::Mouse::getPosition().y > 490 and sf::Mouse::getPosition().y < 580) //heal
+		{
+			if (player->getHealth() < 100)
+			{
+				player->setHealth(player->getHealth() + 10);
+				levelUp = 0;
+			}
+		}
+		if (sf::Mouse::getPosition().x > 1140 and sf::Mouse::getPosition().x < 1450 and sf::Mouse::getPosition().y > 490 and sf::Mouse::getPosition().y < 580) //up speed
+		{
+			player->setSpeed(player->getSpeed() + 10);
+			levelUp = 0;
+		}
+		
+	}
 }
