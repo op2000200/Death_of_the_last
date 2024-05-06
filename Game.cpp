@@ -42,6 +42,7 @@ Game::Game()
 	bulletCounter = 0;
 	castCooldown = 0;
 	manaCounter = 0;
+	playerDeath = 0;
 }
 
 void Game::run()
@@ -162,7 +163,6 @@ void Game::drawMM()
 	window.draw(cursor);
 }
 
-
 void Game::updateMM()
 {
 
@@ -205,10 +205,6 @@ void Game::readInputMM()
 		}
 	}
 }
-void Game::processInput()
-{
-
-}
 
 void Game::arcadeMode()
 {
@@ -216,18 +212,33 @@ void Game::arcadeMode()
 	{
 		player = new Player(playerTexture);
 		playerState = 1;
+		enemyCooldown = 0;
+		enemyTickCounter = 0;
+		enemyCounter = 0;
+		bulletCounter = 0;
+		castCooldown = 0;
+		manaCounter = 0;
+		playerDeath = 0;
 	}
 	while (true)
 	{
-		if (paused == 0)
+		if (playerDeath == 1)
 		{
-			arcadeModeRun(player);
+			arcadeModeDeath();
 			return;
 		}
-		if (paused == 1)
+		else
 		{
-			arcadeModePause();
-			return;
+			if (paused == 0)
+			{
+				arcadeModeRun(player);
+				return;
+			}
+			if (paused == 1)
+			{
+				arcadeModePause();
+				return;
+			}
 		}
 	}
 }
@@ -238,11 +249,12 @@ void Game::arcadeModeRun(Player* player)
 	sf::Time TimePerFrame = sf::seconds(1.f / 144.f);
 	sf::Clock clock;
 	sf::Time timeSinceLastUpdate = sf::Time::Zero;
-	int bufState, bufPaused;
+	int bufState, bufPaused, bufDeath;
 	while (window.isOpen())
 	{
 		bufState = state;
 		bufPaused = paused;
+		bufDeath = playerDeath;
 		sf::Time elapsedTime = clock.restart();
 		timeSinceLastUpdate += elapsedTime;
 		readInputAM();//checking what stupid human do
@@ -268,9 +280,12 @@ void Game::arcadeModeRun(Player* player)
 		{
 			return;
 		}
+		if (bufDeath != playerDeath)
+		{
+			return;
+		}
 	}
 }
-
 
 void Game::arcadeModeRunUpdate()
 {
@@ -549,7 +564,6 @@ void Game::updatePlayer(sf::Time elapsedTime, Player* player)
 	}
 }
 
-
 void Game::updateMana(sf::Time elapsedTime, Player* player)
 {
 
@@ -662,6 +676,65 @@ void Game::updateCollision(sf::Time elapsedTime, Player* player)
 	}
 	if (player[0].getHealth() < 1)
 	{
-		; //die screen
+		playerDeath = 1; //die screen
 	}
+}
+
+void Game::arcadeModeDeath()
+{
+	window.clear();
+	sf::Time TimePerFrame = sf::seconds(1.f / 144.f);
+	sf::Clock clock;
+	sf::Time timeSinceLastUpdate = sf::Time::Zero;
+	int bufState;
+	while (window.isOpen())
+	{
+		bufState = state;
+		sf::Time elapsedTime = clock.restart();
+		timeSinceLastUpdate += elapsedTime;
+		readInputAM();//checking what stupid human do
+		if (inputs[5] == 1 and (sf::Mouse::getPosition().x > 800 and sf::Mouse::getPosition().x < 1110 and sf::Mouse::getPosition().y > 490 and sf::Mouse::getPosition().y < 580))
+		{
+			state = 0;
+			playerState = 0;
+			playerDeath = 0;
+		}
+		while (timeSinceLastUpdate > TimePerFrame)
+		{
+			timeSinceLastUpdate -= TimePerFrame;
+			window.clear();
+			arcadeModeDeathDraw();
+			window.display();
+		}
+		if (bufState != state)
+		{
+			return;
+		}
+	}
+}
+
+void Game::arcadeModeDeathDraw()
+{
+	sf::View view = window.getView();
+	view.setCenter(1920 / 2, 1080 / 2);
+	window.setView(view);
+	sf::RectangleShape buf(sf::Vector2f(1920, 1080));
+	buf.setPosition(0, 0);
+	buf.setFillColor(sf::Color(0, 0, 0, 200));
+	labelbuttonArcadeModePauseMM.setFont(fontMM2);
+	labelbuttonArcadeModePauseMM.setString("BACK TO MAIN MENU");
+	labelbuttonArcadeModePauseMM.setPosition(buttonArcadeModePauseMM.getBody().getPosition().x + 25, buttonArcadeModePauseMM.getBody().getPosition().y - 15);
+	labelbuttonArcadeModePauseMM.setFillColor(sf::Color(180, 180, 180));
+	labelbuttonArcadeModePauseMM.setCharacterSize(90);
+	labelbuttonArcadeModePauseMM.setLetterSpacing(1.5);
+
+	sf::Sprite cursor;
+	cursor.setTexture(cursorTexture);
+	cursor.setPosition(sf::Vector2f(sf::Mouse::getPosition().x - 5, sf::Mouse::getPosition().y - 5));
+	cursor.setScale(sf::Vector2f(5, 5));
+
+	window.draw(buf);
+	window.draw(buttonArcadeModePauseMM.getBody());
+	window.draw(labelbuttonArcadeModePauseMM);
+	window.draw(cursor);
 }

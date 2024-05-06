@@ -30,6 +30,8 @@ private: //private methods
 	void arcadeModePauseUpdate();
 	void arcadeModePause();
 	void arcadeModePauseDraw(sf::Sprite prevFrame);
+	void arcadeModeDeath();
+	void arcadeModeDeathDraw();
 	void readInputAM();
 	//other
 	void render();
@@ -71,6 +73,7 @@ private: //private variables
 
 
 	int playerState;
+	int playerDeath;
 	int state; //0 - main menu; 1 - story mode; 2 - arcade mode; 3 - settings menu; 4 - exit
 	int paused;
 	int* inputs = new int[200];
