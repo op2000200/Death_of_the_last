@@ -5,9 +5,10 @@ Player::Player(sf::Texture *texture)
 {
 	level = 0;
 	exp = 0;
+	expCap = 1000;
 	health = 100;
 	speed = 500;
-	castSpeed = 1;
+	castSpeed = 500;
 }
 
 sf::Sprite Player::getSprite()
@@ -33,4 +34,34 @@ int Player::getSpeed()
 int Player::getCastSpeed()
 {
 	return Player::castSpeed;
+}
+
+void Player::setHealth(int num)
+{
+	Player::health = num;
+}
+
+int Player::getHealth()
+{
+	return Player::health;
+}
+
+void Player::setExpCap(int num)
+{
+	Player::expCap = num;
+}
+
+int Player::getExpCap()
+{
+	return Player::expCap;
+}
+
+void Player::setExp(int num)
+{
+	Player::exp = num;
+}
+
+int Player::getExp()
+{
+	return Player::exp;
 }

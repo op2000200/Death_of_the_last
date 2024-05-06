@@ -26,6 +26,11 @@ Game::Game()
 	enemyTexture->loadFromFile("assets/textures/enemy.png");
 	bulletTexture = new sf::Texture;
 	bulletTexture->loadFromFile("assets/textures/bullet.png");
+	bgTexture = new sf::Texture;
+	bgTexture->setRepeated(true);
+	bgTexture->loadFromFile("assets/textures/bg.jpg");
+	manaTexture = new sf::Texture;
+	manaTexture->loadFromFile("assets/textures/manaOrb1.png");
 	playerState = 0;
 	for (int i = 0; i < 200; i++)
 	{
@@ -35,6 +40,8 @@ Game::Game()
 	enemyTickCounter = 0;
 	enemyCounter = 0;
 	bulletCounter = 0;
+	castCooldown = 0;
+	manaCounter = 0;
 }
 
 void Game::run()
@@ -99,6 +106,9 @@ void Game::mainMenu()
 void Game::drawMM()
 {
 	window.clear();
+	sf::View view = window.getView();
+	view.setCenter(1920 / 2, 1080 / 2);
+	window.setView(view);
 	sf::RectangleShape background;
 	background.setPosition(sf::Vector2f(0, 0));
 	background.setSize(sf::Vector2f(1920, 1080));
@@ -388,16 +398,21 @@ void Game::readInputAM()
 
 void Game::arcadeModeRunDraw(Player* player)
 {
-	sf::RectangleShape buf(sf::Vector2f(1920, 1080));
-	buf.setPosition(0, 0);
-	buf.setFillColor(sf::Color(143, 188, 143));
+
+	sf::View view = window.getView();
+	view.setCenter(player[0].getSprite().getPosition().x + 30, player[0].getSprite().getPosition().y + 30);
+	window.setView(view);
+	
+
+	sf::Sprite bg(*bgTexture, sf::IntRect(0, 0, 2000000, 2000000));
+	bg.setPosition(sf::Vector2f(-1000000, -1000000));
 
 	sf::Sprite cursor;
 	cursor.setTexture(cursorTexture);
 	cursor.setPosition(sf::Vector2f(sf::Mouse::getPosition().x - 5, sf::Mouse::getPosition().y - 5));
 	cursor.setScale(sf::Vector2f(5, 5));
 	//background
-	window.draw(buf);
+	window.draw(bg);
 	
 	//draw the player
 	window.draw(player[0].getSprite());
@@ -414,12 +429,38 @@ void Game::arcadeModeRunDraw(Player* player)
 		window.draw(bulletBuffer[i].getSprite());
 	}
 
-	//cursor
-	window.draw(cursor);
+	//draw hud
+	sf::RectangleShape healthBarOut(sf::Vector2f(200, 20));
+	healthBarOut.setPosition(view.getCenter().x+700,view.getCenter().y + 300);
+	healthBarOut.setFillColor(sf::Color(143, 188, 143, 0));
+	healthBarOut.setOutlineColor(sf::Color::Black);
+	healthBarOut.setOutlineThickness(5.f);
+	sf::RectangleShape expBarOut(sf::Vector2f(200, 20));
+	expBarOut.setPosition(view.getCenter().x + 700, view.getCenter().y + 340);
+	expBarOut.setFillColor(sf::Color(143, 188, 143, 0));
+	expBarOut.setOutlineColor(sf::Color::Black);
+	expBarOut.setOutlineThickness(5.f);
+	sf::RectangleShape healthBarFill(sf::Vector2f(200*(player[0].getHealth()/100.f), 20));
+	healthBarFill.setPosition(view.getCenter().x + 700, view.getCenter().y + 300);
+	healthBarFill.setFillColor(sf::Color::Red);
+	sf::RectangleShape expBarFill(sf::Vector2f(200*(static_cast<float>(player[0].getExp())/player[0].getExpCap()), 20));
+	expBarFill.setPosition(view.getCenter().x + 700, view.getCenter().y + 340);
+	expBarFill.setFillColor(sf::Color::Blue);
+	window.draw(healthBarFill);
+	window.draw(expBarFill);
+	window.draw(healthBarOut);
+	window.draw(expBarOut);
+	
+
+	////cursor
+	//window.draw(cursor);
 }
 
 void Game::arcadeModePauseDraw(sf::Sprite prevFrame)
 {
+	sf::View view = window.getView();
+	view.setCenter(1920/2,1080/2);
+	window.setView(view);
 	window.draw(prevFrame);
 	sf::RectangleShape buf(sf::Vector2f(1920, 1080));
 	buf.setPosition(0, 0);
@@ -508,6 +549,12 @@ void Game::updatePlayer(sf::Time elapsedTime, Player* player)
 	}
 }
 
+
+void Game::updateMana(sf::Time elapsedTime, Player* player)
+{
+
+}
+
 void Game::updateBullets(sf::Time elapsedTime, Player* player)
 {
 	castCooldown++;
@@ -518,7 +565,7 @@ void Game::updateBullets(sf::Time elapsedTime, Player* player)
 		posPlayer = player[0].getSprite().getPosition();
 		posEnemy = enemyBuffer[i].getSprite().getPosition();
 		dist = sqrt(pow(posPlayer.x - posEnemy.x, 2) + pow(posPlayer.y - posEnemy.y, 2));
-		if (dist < 2000 and castCooldown > player[0].getCastSpeed())
+		if (dist < 300 and castCooldown > player[0].getCastSpeed())
 		{
 			castCooldown = 0;
 			Bullet bullet(posPlayer, bulletTexture);
@@ -563,10 +610,10 @@ void Game::updateEnemies(sf::Time elapsedTime, Player* player)
 	sf::Vector2f posPlayer, posEnemy;
 	int dist;
 	posPlayer = player[0].getSprite().getPosition();
-	posEnemy.x = -200 + posPlayer.x + rand() % 600;
-	posEnemy.y = -200 + posPlayer.y + rand() % 600;
+	posEnemy.x = -2000 + posPlayer.x + rand() % 6000;
+	posEnemy.y = -2000 + posPlayer.y + rand() % 6000;
 	dist = sqrt(pow(posPlayer.x - posEnemy.x,2) + pow(posPlayer.y - posEnemy.y,2));
-	if (dist > 1 and enemyCooldown > 500 and enemyCounter < 1000)
+	if (dist > 1000 and enemyCooldown > 50 and enemyCounter < 10000)
 	{
 		Enemy enemy(enemyTexture, posEnemy);
 		enemyBuffer.push_back(enemy);
@@ -587,5 +634,34 @@ void Game::updateEnemies(sf::Time elapsedTime, Player* player)
 
 void Game::updateCollision(sf::Time elapsedTime, Player* player)
 {
-
+	for (int i = 0; i < bulletCounter; i++)
+	{
+		for (int j = 0; j < enemyCounter; j++)
+		{
+			if (abs(bulletBuffer[i].getSprite().getPosition().x - enemyBuffer[j].getSprite().getPosition().x) < 30 and abs(bulletBuffer[i].getSprite().getPosition().y - enemyBuffer[j].getSprite().getPosition().y) < 30)
+			{
+				bulletBuffer.erase(bulletBuffer.begin() + i);
+				enemyBuffer.erase(enemyBuffer.begin() + j);
+				bulletCounter--;
+				enemyCounter--;
+				player[0].setExp(player[0].getExp() + 10);
+				break;
+			}
+		}
+	}
+	for (int j = 0; j < enemyCounter; j++)
+	{
+		if (abs(player[0].getSprite().getPosition().x + 30 - enemyBuffer[j].getSprite().getPosition().x) < 30 and abs(player[0].getSprite().getPosition().y + 30 - enemyBuffer[j].getSprite().getPosition().y) < 50)
+		{
+			enemyBuffer.erase(enemyBuffer.begin() + j);
+			enemyCounter--;
+			player[0].setExp(player[0].getExp() + 10);
+			player[0].setHealth(player[0].getHealth() - 10);
+			break;
+		}
+	}
+	if (player[0].getHealth() < 1)
+	{
+		; //die screen
+	}
 }

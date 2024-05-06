@@ -4,6 +4,7 @@
 #include "Bullet.h"
 #include "Enemy.h"
 #include "Player.h"
+#include "Mana.h"
 class Game
 {
 public: //public methods
@@ -21,6 +22,7 @@ private: //private methods
 	void arcadeModeRun(Player* player);
 	void arcadeModeRunUpdate();
 	void updatePlayer(sf::Time elapsedTime, Player* player);
+	void updateMana(sf::Time elapsedTime, Player* player);
 	void updateBullets(sf::Time elapsedTime, Player* player);
 	void updateEnemies(sf::Time elapsedTime, Player* player);
 	void updateCollision(sf::Time elapsedTime, Player* player);
@@ -51,6 +53,8 @@ private: //private variables
 	sf::Texture* playerTexture;
 	sf::Texture* enemyTexture;
 	sf::Texture* bulletTexture;
+	sf::Texture* bgTexture;
+	sf::Texture* manaTexture;
 	Player* player;
 	int castCooldown;
 	std::vector<Enemy> enemyBuffer;
@@ -60,6 +64,11 @@ private: //private variables
 
 	std::vector<Bullet> bulletBuffer;
 	int bulletCounter;
+
+
+	std::vector<Mana> manaBuffer;
+	int manaCounter;
+
 
 	int playerState;
 	int state; //0 - main menu; 1 - story mode; 2 - arcade mode; 3 - settings menu; 4 - exit
