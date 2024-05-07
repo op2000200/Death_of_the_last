@@ -6,8 +6,8 @@ Player::Player(sf::Texture *texture)
 	level = 0;
 	exp = 0;
 	expCap = 1000;
-	health = 100;
-	speed = 500;
+	health = 1000;
+	speed = 200;
 	castSpeed = 500;
 }
 
