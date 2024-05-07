@@ -2,7 +2,7 @@
 #include "button.h"
 Game::Game()
 	//windows
-	: window(sf::VideoMode(1920, 1080), "Death of the last", sf::Style::Fullscreen)
+	: window(sf::VideoMode(1920, 1080), "Death of the last", sf::Style::None)
 	//fonts
 	, fontMM()
 	, fontMM2()
@@ -81,7 +81,6 @@ void Game::run()
 
 void Game::render()
 {
-	window.clear();
 }
 
 void Game::mainMenu()
@@ -99,6 +98,7 @@ void Game::mainMenu()
 		while (timeSinceLastUpdate > TimePerFrame)
 		{
 			timeSinceLastUpdate -= TimePerFrame;
+			window.clear();
 			drawMM();
 			//updateMM();
 			window.display();
@@ -112,7 +112,6 @@ void Game::mainMenu()
 
 void Game::drawMM()
 {
-	window.clear();
 	sf::View view = window.getView();
 	view.setCenter(1920 / 2, 1080 / 2);
 	window.setView(view);
@@ -120,7 +119,6 @@ void Game::drawMM()
 	background.setPosition(sf::Vector2f(0, 0));
 	background.setSize(sf::Vector2f(1920, 1080));
 	background.setFillColor(sf::Color::Color(105, 105, 105));
-	window.clear();
 	window.draw(background);
 	sf::Text name1;
 	name1.setFont(fontMM);
@@ -158,12 +156,12 @@ void Game::drawMM()
 	cursor.setPosition(sf::Vector2f(sf::Mouse::getPosition().x-5, sf::Mouse::getPosition().y-5));
 	cursor.setScale(sf::Vector2f(5, 5));
 	window.draw(name1);
-	window.draw(buttonSM.getBody());
-	window.draw(labelButtonSM);
+	//window.draw(buttonSM.getBody());
+	//window.draw(labelButtonSM);
 	window.draw(buttonAM.getBody());
 	window.draw(labelButtonAM);
-	window.draw(buttonSettings.getBody());
-	window.draw(labelbuttonSettings);
+	//window.draw(buttonSettings.getBody());
+	//window.draw(labelbuttonSettings);
 	window.draw(buttonExit.getBody());
 	window.draw(labelbuttonExit);
 	window.draw(cursor);
@@ -260,7 +258,6 @@ void Game::arcadeMode()
 
 void Game::arcadeModeRun(Player* player)
 {
-	window.clear();
 	sf::Time TimePerFrame = sf::seconds(1.f / 144.f);
 	sf::Clock clock;
 	sf::Time timeSinceLastUpdate = sf::Time::Zero;
@@ -273,17 +270,20 @@ void Game::arcadeModeRun(Player* player)
 		bufLevel = player->getLevel();
 		sf::Time elapsedTime = clock.restart();
 		timeSinceLastUpdate += elapsedTime;
-		readInputAM();//checking what stupid human do
-		arcadeModeRunUpdate();
 		while (timeSinceLastUpdate > TimePerFrame)
 		{
+
+			timeSinceLastUpdate -= TimePerFrame;
+
+			readInputAM();//checking what stupid human do
+
 			updatePlayer(TimePerFrame, player);
 			updateMana(TimePerFrame, player);
 			updateEnemies(TimePerFrame, player);
 			updateBullets(TimePerFrame, player);
 			updateCollision(TimePerFrame, player);
 			updateLevel(TimePerFrame, player);
-			timeSinceLastUpdate -= TimePerFrame;
+
 			window.clear();
 			arcadeModeRunDraw(player);
 			window.display();
@@ -314,17 +314,11 @@ void Game::arcadeModeRun(Player* player)
 
 void Game::arcadeModeRunUpdate()
 {
-	if (player->getExp() >= player->getExpCap())
-	{
-		player->setExp(player->getExp() - player->getExpCap());
-		player->setExpCap(player->getExpCap()*1.1);
-		player->setLevel(player->getLevel() + 1);
-	}
+
 }
 
 void Game::arcadeModePause()
 {
-	window.clear();
 	sf::Sprite prevFrame(pausedScreen);
 	sf::Time TimePerFrame = sf::seconds(1.f / 144.f);
 	sf::Clock clock;
@@ -452,10 +446,6 @@ void Game::arcadeModeRunDraw(Player* player)
 	sf::Sprite bg(*bgTexture, sf::IntRect(0, 0, 2000000, 2000000));
 	bg.setPosition(sf::Vector2f(-1000000, -1000000));
 
-	sf::Sprite cursor;
-	cursor.setTexture(cursorTexture);
-	cursor.setPosition(sf::Vector2f(sf::Mouse::getPosition().x - 5, sf::Mouse::getPosition().y - 5));
-	cursor.setScale(sf::Vector2f(5, 5));
 	//background
 	window.draw(bg);
 
@@ -493,7 +483,7 @@ void Game::arcadeModeRunDraw(Player* player)
 	expBarOut.setFillColor(sf::Color(143, 188, 143, 0));
 	expBarOut.setOutlineColor(sf::Color::Black);
 	expBarOut.setOutlineThickness(5.f);
-	sf::RectangleShape healthBarFill(sf::Vector2f(200*(player[0].getHealth()/100.f), 20));
+	sf::RectangleShape healthBarFill(sf::Vector2f(200*(player[0].getHealth()/1000.f), 20));
 	healthBarFill.setPosition(view.getCenter().x + 700, view.getCenter().y + 300);
 	healthBarFill.setFillColor(sf::Color::Red);
 	sf::RectangleShape expBarFill(sf::Vector2f(200*(static_cast<float>(player[0].getExp())/player[0].getExpCap()), 20));
@@ -614,7 +604,7 @@ void Game::updateMana(sf::Time elapsedTime, Player* player)
 	posMana.x = -20000 + posPlayer.x + rand() % 60000;
 	posMana.y = -20000 + posPlayer.y + rand() % 60000;
 	dist = sqrt(pow(posPlayer.x - posMana.x, 2) + pow(posPlayer.y - posMana.y, 2));
-	if (dist > 2000 and manaCounter < 20000)
+	if (dist > 2000 and manaCounter < 2000000)
 	{
 		Mana mana(posMana, manaTexture);
 		manaBuffer.push_back(mana);
@@ -680,7 +670,7 @@ void Game::updateEnemies(sf::Time elapsedTime, Player* player)
 	posEnemy.x = -2000 + posPlayer.x + rand() % 6000;
 	posEnemy.y = -2000 + posPlayer.y + rand() % 6000;
 	dist = sqrt(pow(posPlayer.x - posEnemy.x,2) + pow(posPlayer.y - posEnemy.y,2));
-	if (dist > 1000 and enemyCooldown > 50 and enemyCounter < 1000)
+	if (dist > 1000 and enemyCooldown > 50 and enemyCounter < 10000)
 	{
 		Enemy enemy(enemyTexture, posEnemy);
 		enemyBuffer.push_back(enemy);
@@ -744,12 +734,16 @@ void Game::updateCollision(sf::Time elapsedTime, Player* player)
 
 void Game::updateLevel(sf::Time elapsedTime, Player* player)
 {
-
+	if (player->getExp() >= player->getExpCap())
+	{
+		player->setExp(player->getExp() - player->getExpCap());
+		player->setExpCap(player->getExpCap() * 1.1);
+		player->setLevel(player->getLevel() + 1);
+	}
 }
 
 void Game::arcadeModeDeath()
 {
-	window.clear();
 	sf::Time TimePerFrame = sf::seconds(1.f / 144.f);
 	sf::Clock clock;
 	sf::Time timeSinceLastUpdate = sf::Time::Zero;
@@ -809,7 +803,6 @@ void Game::arcadeModeDeathDraw()
 
 void Game::arcadeModeLevelUp(Player* player)
 {
-	window.clear();
 	sf::Sprite prevFrame(pausedScreen);
 	sf::Time TimePerFrame = sf::seconds(1.f / 144.f);
 	sf::Clock clock;
@@ -892,7 +885,7 @@ void Game::arcadeModeLevelUpUpdate(sf::Time elapsedTime, Player* player)
 	{
 		if (sf::Mouse::getPosition().x > 800 and sf::Mouse::getPosition().x < 1110 and sf::Mouse::getPosition().y > 490 and sf::Mouse::getPosition().y < 580) //up cast speed
 		{
-			player->setCastSpeed(player->getCastSpeed() + 10);
+			player->setCastSpeed(player->getCastSpeed() - 10);
 			levelUp = 0;
 		}
 		if (sf::Mouse::getPosition().x > 460 and sf::Mouse::getPosition().x < 740 and sf::Mouse::getPosition().y > 490 and sf::Mouse::getPosition().y < 580) //heal
