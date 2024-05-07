@@ -27,6 +27,7 @@ private: //private methods
 	void updateEnemies(sf::Time elapsedTime, Player* player);
 	void updateCollision(sf::Time elapsedTime, Player* player);
 	void updateLevel(sf::Time elapsedTime, Player* player);
+	void collectFarObjects(sf::Time elapsedTime, Player* player);
 	void arcadeModeRunDraw(Player* player);
 	void arcadeModePauseUpdate();
 	void arcadeModePause();

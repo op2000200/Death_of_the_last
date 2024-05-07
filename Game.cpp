@@ -1,5 +1,4 @@
 #include "Game.h"
-#include "button.h"
 Game::Game()
 	//windows
 	: window(sf::VideoMode(1920, 1080), "Death of the last", sf::Style::None)
@@ -32,7 +31,7 @@ Game::Game()
 	bulletTexture->loadFromFile("assets/textures/bullet.png");
 	bgTexture = new sf::Texture;
 	bgTexture->setRepeated(true);
-	bgTexture->loadFromFile("assets/textures/bg.jpg");
+	bgTexture->loadFromFile("assets/textures/bg2.jpg");
 	manaTexture = new sf::Texture;
 	manaTexture->loadFromFile("assets/textures/manaOrb1.png");
 	manaTickCounter = 0;
@@ -86,27 +85,26 @@ void Game::render()
 void Game::mainMenu()
 {
 	sf::Time TimePerFrame = sf::seconds(1.f / 144.f);
+	sf::Time start, elapsed;
 	sf::Clock clock;
-	sf::Time timeSinceLastUpdate = sf::Time::Zero;
 	int bufState;
 	while (window.isOpen())
 	{
+		clock.restart();
 		bufState = state;
 		readInputMM();
-		sf::Time elapsedTime = clock.restart();
-		timeSinceLastUpdate += elapsedTime;
-		while (timeSinceLastUpdate > TimePerFrame)
-		{
-			timeSinceLastUpdate -= TimePerFrame;
-			window.clear();
-			drawMM();
-			//updateMM();
-			window.display();
-		}
+		window.clear();
+		drawMM();
+		window.display();
 		if (bufState != state)
 		{
 			return;
 		}
+		while (clock.getElapsedTime() < TimePerFrame)
+		{
+			;
+		}
+
 	}
 }
 
@@ -264,30 +262,27 @@ void Game::arcadeModeRun(Player* player)
 	int bufState, bufPaused, bufDeath, bufLevel;
 	while (window.isOpen())
 	{
+		clock.restart();
 		bufState = state;
 		bufPaused = paused;
 		bufDeath = playerDeath;
-		bufLevel = player->getLevel();
-		sf::Time elapsedTime = clock.restart();
-		timeSinceLastUpdate += elapsedTime;
-		while (timeSinceLastUpdate > TimePerFrame)
-		{
+		bufLevel = player[0].getLevel();
 
-			timeSinceLastUpdate -= TimePerFrame;
+		readInputAM();//checking what stupid human do
 
-			readInputAM();//checking what stupid human do
+		updatePlayer(TimePerFrame, player);
+		updateMana(TimePerFrame, player);
+		updateEnemies(TimePerFrame, player);
+		updateBullets(TimePerFrame, player);
+		updateCollision(TimePerFrame, player);
+		updateLevel(TimePerFrame, player);
+		collectFarObjects(TimePerFrame, player);
 
-			updatePlayer(TimePerFrame, player);
-			updateMana(TimePerFrame, player);
-			updateEnemies(TimePerFrame, player);
-			updateBullets(TimePerFrame, player);
-			updateCollision(TimePerFrame, player);
-			updateLevel(TimePerFrame, player);
+		window.clear();
+		arcadeModeRunDraw(player);
+		window.display();
 
-			window.clear();
-			arcadeModeRunDraw(player);
-			window.display();
-		}
+
 		if (bufPaused != paused)
 		{
 			pausedScreen.create(window.getSize().x, window.getSize().y);
@@ -302,12 +297,17 @@ void Game::arcadeModeRun(Player* player)
 		{
 			return;
 		}
-		if (bufLevel != player->getLevel())
+		if (bufLevel != player[0].getLevel())
 		{
 			pausedScreen.create(window.getSize().x, window.getSize().y);
 			pausedScreen.update(window);
 			levelUp = 1;
 			return;
+		}
+
+		while (clock.getElapsedTime() < TimePerFrame)
+		{
+			;
 		}
 	}
 }
@@ -444,6 +444,7 @@ void Game::arcadeModeRunDraw(Player* player)
 	
 
 	sf::Sprite bg(*bgTexture, sf::IntRect(0, 0, 2000000, 2000000));
+	bg.setScale(sf::Vector2f(10.f, 10.f));
 	bg.setPosition(sf::Vector2f(-1000000, -1000000));
 
 	//background
@@ -483,7 +484,7 @@ void Game::arcadeModeRunDraw(Player* player)
 	expBarOut.setFillColor(sf::Color(143, 188, 143, 0));
 	expBarOut.setOutlineColor(sf::Color::Black);
 	expBarOut.setOutlineThickness(5.f);
-	sf::RectangleShape healthBarFill(sf::Vector2f(200*(player[0].getHealth()/1000.f), 20));
+	sf::RectangleShape healthBarFill(sf::Vector2f(200*(player[0].getHealth()/100.f), 20));
 	healthBarFill.setPosition(view.getCenter().x + 700, view.getCenter().y + 300);
 	healthBarFill.setFillColor(sf::Color::Red);
 	sf::RectangleShape expBarFill(sf::Vector2f(200*(static_cast<float>(player[0].getExp())/player[0].getExpCap()), 20));
@@ -601,10 +602,10 @@ void Game::updateMana(sf::Time elapsedTime, Player* player)
 	sf::Vector2f posPlayer, posMana;
 	int dist;
 	posPlayer = player[0].getSprite().getPosition();
-	posMana.x = -20000 + posPlayer.x + rand() % 60000;
-	posMana.y = -20000 + posPlayer.y + rand() % 60000;
+	posMana.x = -3000 + posPlayer.x + rand() % 6000;
+	posMana.y = -3000 + posPlayer.y + rand() % 6000;
 	dist = sqrt(pow(posPlayer.x - posMana.x, 2) + pow(posPlayer.y - posMana.y, 2));
-	if (dist > 2000 and manaCounter < 2000000)
+	if (dist > 2000 and manaCounter < 2000)
 	{
 		Mana mana(posMana, manaTexture);
 		manaBuffer.push_back(mana);
@@ -615,25 +616,60 @@ void Game::updateMana(sf::Time elapsedTime, Player* player)
 void Game::updateBullets(sf::Time elapsedTime, Player* player)
 {
 	castCooldown++;
+	int* distBuffer = new int[enemyCounter];
 	for (int i = 0; i < enemyCounter; i++)
 	{
 		sf::Vector2f posPlayer, posEnemy;
 		int dist;
-		posPlayer = player[0].getSprite().getPosition();
-		posEnemy = enemyBuffer[i].getSprite().getPosition();
+		posPlayer = sf::Vector2f(player[0].getSprite().getPosition().x + 70, player[0].getSprite().getPosition().y + 15);
+		posEnemy = sf::Vector2f(enemyBuffer[i].getSprite().getPosition().x + 20, enemyBuffer[i].getSprite().getPosition().y + 20);
 		dist = sqrt(pow(posPlayer.x - posEnemy.x, 2) + pow(posPlayer.y - posEnemy.y, 2));
-		if (dist < 300 and castCooldown > player[0].getCastSpeed())
-		{
-			castCooldown = 0;
-			Bullet bullet(posPlayer, bulletTexture);
-			bullet.setDir(sf::Vector2f(
-				(posEnemy.x - posPlayer.x) / (std::abs(posEnemy.x - posPlayer.x) + std::abs(posEnemy.y - posPlayer.y)),
-				(posEnemy.y - posPlayer.y) / (std::abs(posEnemy.x - posPlayer.x) + std::abs(posEnemy.y - posPlayer.y))
-			));
-			bulletBuffer.push_back(bullet);
-			bulletCounter++;
-		}
+		distBuffer[i] = dist;
+		//if (dist < 300 and castCooldown > player[0].getCastSpeed())
+		//{
+		//	castCooldown = 0;
+		//	Bullet bullet(posPlayer, bulletTexture);
+		//	bullet.setDir(sf::Vector2f(
+		//		(posEnemy.x - posPlayer.x) / (std::abs(posEnemy.x - posPlayer.x) + std::abs(posEnemy.y - posPlayer.y)),
+		//		(posEnemy.y - posPlayer.y) / (std::abs(posEnemy.x - posPlayer.x) + std::abs(posEnemy.y - posPlayer.y))
+		//	));
+		//	bulletBuffer.push_back(bullet);
+		//	bulletCounter++;
+		//}
 	}
+	int dist = 3000, num = 0;
+	for (int i = 0; i < enemyCounter; i++)
+	{
+		if (dist > distBuffer[i])
+		{
+			num = i;
+			dist = distBuffer[i];
+		}
+
+		//if (dist < 300 and castCooldown > player[0].getCastSpeed())
+		//{
+		//	castCooldown = 0;
+		//	Bullet bullet(posPlayer, bulletTexture);
+		//	bullet.setDir(sf::Vector2f(
+		//		(posEnemy.x - posPlayer.x) / (std::abs(posEnemy.x - posPlayer.x) + std::abs(posEnemy.y - posPlayer.y)),
+		//		(posEnemy.y - posPlayer.y) / (std::abs(posEnemy.x - posPlayer.x) + std::abs(posEnemy.y - posPlayer.y))
+		//	));
+		//	bulletBuffer.push_back(bullet);
+		//	bulletCounter++;
+		//}
+	}
+	if (dist < 300 and castCooldown > player[0].getCastSpeed())
+	{
+		castCooldown = 0;
+		Bullet bullet(sf::Vector2f(player[0].getSprite().getPosition().x + 70, player[0].getSprite().getPosition().y + 15), bulletTexture);
+		bullet.setDir(sf::Vector2f(
+			(enemyBuffer[num].getSprite().getPosition().x - player[0].getSprite().getPosition().x - 50) / (std::abs(enemyBuffer[num].getSprite().getPosition().x - player[0].getSprite().getPosition().x - 50) + std::abs(enemyBuffer[num].getSprite().getPosition().y - player[0].getSprite().getPosition().y + 5)),
+			(enemyBuffer[num].getSprite().getPosition().y - player[0].getSprite().getPosition().y + 5) / (std::abs(enemyBuffer[num].getSprite().getPosition().x - player[0].getSprite().getPosition().x - 50) + std::abs(enemyBuffer[num].getSprite().getPosition().y - player[0].getSprite().getPosition().y + 5))
+		));
+		bulletBuffer.push_back(bullet);
+		bulletCounter++;
+	}
+
 	for (int i = 0; i < bulletCounter; i++)
 	{
 		sf::Vector2f dir;
@@ -666,11 +702,11 @@ void Game::updateEnemies(sf::Time elapsedTime, Player* player)
 	enemyTickCounter++;
 	sf::Vector2f posPlayer, posEnemy;
 	int dist;
-	posPlayer = player[0].getSprite().getPosition();
-	posEnemy.x = -2000 + posPlayer.x + rand() % 6000;
-	posEnemy.y = -2000 + posPlayer.y + rand() % 6000;
+	posPlayer = sf::Vector2f(player[0].getSprite().getPosition().x + 45, player[0].getSprite().getPosition().y + 60);
+	posEnemy.x = -2000 + posPlayer.x + rand() % 4000;
+	posEnemy.y = -2000 + posPlayer.y + rand() % 4000;
 	dist = sqrt(pow(posPlayer.x - posEnemy.x,2) + pow(posPlayer.y - posEnemy.y,2));
-	if (dist > 1000 and enemyCooldown > 50 and enemyCounter < 10000)
+	if (dist > 1000 and enemyCooldown > 50 and enemyCounter < 1000)
 	{
 		Enemy enemy(enemyTexture, posEnemy);
 		enemyBuffer.push_back(enemy);
@@ -680,10 +716,10 @@ void Game::updateEnemies(sf::Time elapsedTime, Player* player)
 	for (int i = 0; i < enemyCounter; i++)
 	{
 		posEnemy = enemyBuffer[i].getSprite().getPosition();
-		posPlayer = player[0].getSprite().getPosition();
+		posPlayer = sf::Vector2f(player[0].getSprite().getPosition().x + 45, player[0].getSprite().getPosition().y + 60);
 		enemyBuffer[i].setPos(sf::Vector2f(
-			posEnemy.x + enemyBuffer[i].getSpeed() * elapsedTime.asSeconds() * (((posPlayer.x + 30 - posEnemy.x) / ((std::abs(posPlayer.x + 30 - posEnemy.x) + std::abs(posPlayer.y + 30 - posEnemy.y))))),
-			posEnemy.y + enemyBuffer[i].getSpeed() * elapsedTime.asSeconds() * (((posPlayer.y + 30 - posEnemy.y) / ((std::abs(posPlayer.x + 30 - posEnemy.x) + std::abs(posPlayer.y + 30 - posEnemy.y)))))
+			posEnemy.x + enemyBuffer[i].getSpeed() * elapsedTime.asSeconds() * (((posPlayer.x - 20 - posEnemy.x) / ((std::abs(posPlayer.x - 20 - posEnemy.x) + std::abs(posPlayer.y - 20 - posEnemy.y))))),
+			posEnemy.y + enemyBuffer[i].getSpeed() * elapsedTime.asSeconds() * (((posPlayer.y - 20 - posEnemy.y) / ((std::abs(posPlayer.x - 20 - posEnemy.x) + std::abs(posPlayer.y - 20 - posEnemy.y)))))
 		));
 	}
 }
@@ -694,7 +730,7 @@ void Game::updateCollision(sf::Time elapsedTime, Player* player)
 	{
 		for (int j = 0; j < enemyCounter; j++)
 		{
-			if (abs(bulletBuffer[i].getSprite().getPosition().x - enemyBuffer[j].getSprite().getPosition().x) < 30 and abs(bulletBuffer[i].getSprite().getPosition().y - enemyBuffer[j].getSprite().getPosition().y) < 30)
+			if (abs(bulletBuffer[i].getSprite().getPosition().x - enemyBuffer[j].getSprite().getPosition().x - 10) < 20 and abs(bulletBuffer[i].getSprite().getPosition().y - enemyBuffer[j].getSprite().getPosition().y - 10) < 20)
 			{
 				bulletBuffer.erase(bulletBuffer.begin() + i);
 				enemyBuffer.erase(enemyBuffer.begin() + j);
@@ -707,7 +743,7 @@ void Game::updateCollision(sf::Time elapsedTime, Player* player)
 	}
 	for (int j = 0; j < enemyCounter; j++)
 	{
-		if (abs(player[0].getSprite().getPosition().x + 30 - enemyBuffer[j].getSprite().getPosition().x) < 30 and abs(player[0].getSprite().getPosition().y + 30 - enemyBuffer[j].getSprite().getPosition().y) < 50)
+		if (abs(player[0].getSprite().getPosition().x + 25 - enemyBuffer[j].getSprite().getPosition().x) < 30 and abs(player[0].getSprite().getPosition().y + 40 - enemyBuffer[j].getSprite().getPosition().y) < 40)
 		{
 			enemyBuffer.erase(enemyBuffer.begin() + j);
 			enemyCounter--;
@@ -718,7 +754,7 @@ void Game::updateCollision(sf::Time elapsedTime, Player* player)
 	}
 	for (int i = 0; i < manaCounter; i++)
 	{
-		if (abs(player[0].getSprite().getPosition().x + 30 - manaBuffer[i].getSprite().getPosition().x) < 30 and abs(player[0].getSprite().getPosition().y + 30 - manaBuffer[i].getSprite().getPosition().y) < 50)
+		if (abs(player[0].getSprite().getPosition().x + 35 - manaBuffer[i].getSprite().getPosition().x) < 30 and abs(player[0].getSprite().getPosition().y + 50 - manaBuffer[i].getSprite().getPosition().y) < 40)
 		{
 			manaBuffer.erase(manaBuffer.begin() + i);
 			manaCounter--;
@@ -734,11 +770,43 @@ void Game::updateCollision(sf::Time elapsedTime, Player* player)
 
 void Game::updateLevel(sf::Time elapsedTime, Player* player)
 {
-	if (player->getExp() >= player->getExpCap())
+	if (player[0].getExp() >= player[0].getExpCap())
 	{
-		player->setExp(player->getExp() - player->getExpCap());
-		player->setExpCap(player->getExpCap() * 1.1);
-		player->setLevel(player->getLevel() + 1);
+		player[0].setExp(player[0].getExp() - player[0].getExpCap());
+		player[0].setExpCap(player[0].getExpCap() * 1.1);
+		player[0].setLevel(player[0].getLevel() + 1);
+	}
+}
+
+void Game::collectFarObjects(sf::Time elapsedTime, Player* player)
+{
+	for (int i = 0; i < enemyCounter; i++)
+	{
+		sf::Vector2f posPlayer, posEnemy;
+		int dist;
+		posPlayer = sf::Vector2f(player[0].getSprite().getPosition().x + 45, player[0].getSprite().getPosition().y + 60);
+		posEnemy = enemyBuffer[i].getSprite().getPosition() + sf::Vector2f(20,20);
+		dist = sqrt(pow(posPlayer.x - posEnemy.x, 2) + pow(posPlayer.y - posEnemy.y, 2));
+		if (dist > 4000)
+		{
+			enemyBuffer.erase(enemyBuffer.begin() + i);
+			enemyCounter--;
+			i--;
+		}
+	}
+	for (int i = 0; i < manaCounter; i++)
+	{
+		sf::Vector2f posPlayer, posMana;
+		int dist;
+		posPlayer = sf::Vector2f(player[0].getSprite().getPosition().x + 45, player[0].getSprite().getPosition().y + 60);
+		posMana = manaBuffer[i].getSprite().getPosition() + sf::Vector2f(20, 20);
+		dist = sqrt(pow(posPlayer.x - posMana.x, 2) + pow(posPlayer.y - posMana.y, 2));
+		if (dist > 4000)
+		{
+			manaBuffer.erase(manaBuffer.begin() + i);
+			manaCounter--;
+			i--;
+		}
 	}
 }
 
@@ -799,7 +867,6 @@ void Game::arcadeModeDeathDraw()
 	window.draw(labelbuttonArcadeModePauseMM);
 	window.draw(cursor);
 }
-
 
 void Game::arcadeModeLevelUp(Player* player)
 {
@@ -870,7 +937,7 @@ void Game::arcadeModeLevelUpDraw(sf::Sprite prevFrame)
 	window.draw(buttonArcadeModeUpSpeed.getBody());
 	window.draw(labelbuttonArcadeModeUpCastSpeed);
 	window.draw(labelbuttonArcadeModeUpSpeed);
-	if (player->getHealth() < 100)
+	if (player[0].getHealth() < 100)
 	{
 		window.draw(buttonArcadeModeHeal.getBody());
 		window.draw(labelbuttonArcadeModeHeal);
@@ -878,27 +945,26 @@ void Game::arcadeModeLevelUpDraw(sf::Sprite prevFrame)
 	window.draw(cursor);
 }
 
-
 void Game::arcadeModeLevelUpUpdate(sf::Time elapsedTime, Player* player)
 {
 	if (inputs[5] == 1)
 	{
 		if (sf::Mouse::getPosition().x > 800 and sf::Mouse::getPosition().x < 1110 and sf::Mouse::getPosition().y > 490 and sf::Mouse::getPosition().y < 580) //up cast speed
 		{
-			player->setCastSpeed(player->getCastSpeed() - 10);
+			player[0].setCastSpeed(player[0].getCastSpeed() - 10);
 			levelUp = 0;
 		}
 		if (sf::Mouse::getPosition().x > 460 and sf::Mouse::getPosition().x < 740 and sf::Mouse::getPosition().y > 490 and sf::Mouse::getPosition().y < 580) //heal
 		{
-			if (player->getHealth() < 100)
+			if (player[0].getHealth() < 100)
 			{
-				player->setHealth(player->getHealth() + 10);
+				player[0].setHealth(player[0].getHealth() + 10);
 				levelUp = 0;
 			}
 		}
 		if (sf::Mouse::getPosition().x > 1140 and sf::Mouse::getPosition().x < 1450 and sf::Mouse::getPosition().y > 490 and sf::Mouse::getPosition().y < 580) //up speed
 		{
-			player->setSpeed(player->getSpeed() + 10);
+			player[0].setSpeed(player[0].getSpeed() + 10);
 			levelUp = 0;
 		}
 		

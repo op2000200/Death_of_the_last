@@ -1,0 +1,12 @@
+/* Webfont: Humane-ExtraBold */@font-face {
+    font-family: 'HumaneExtBd';
+    src: url('Humane-ExtraBold.eot'); /* IE9 Compat Modes */
+    src: url('Humane-ExtraBold.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+         url('Humane-ExtraBold.woff') format('woff'), /* Modern Browsers */
+         url('Humane-ExtraBold.woff2') format('woff2'), /* Modern Browsers */
+         url('Humane-ExtraBold.ttf') format('truetype'); /* Safari, Android, iOS */
+             font-style: normal;
+    font-weight: normal;
+    text-rendering: optimizeLegibility;
+}
+
