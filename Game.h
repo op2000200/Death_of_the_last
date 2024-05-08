@@ -33,7 +33,7 @@ private: //private methods
 	void arcadeModePause();
 	void arcadeModePauseDraw(sf::Sprite prevFrame);
 	void arcadeModeDeath();
-	void arcadeModeDeathDraw();
+	void arcadeModeDeathDraw(std::string time);
 	void arcadeModeLevelUp(Player* player);
 	void arcadeModeLevelUpUpdate(sf::Time elapsedTime, Player* player);
 	void arcadeModeLevelUpDraw(sf::Sprite prevFrame);
@@ -58,6 +58,7 @@ private: //private variables
 	sf::Text labelbuttonArcadeModeUpCastSpeed;
 	sf::Text labelbuttonArcadeModeUpSpeed;
 	sf::Text labelbuttonArcadeModeHeal;
+	sf::Text labelStatistic;
 	sf::RenderWindow window;
 	sf::Font fontMM;
 	sf::Font fontMM2;
@@ -68,6 +69,7 @@ private: //private variables
 	sf::Texture* bulletTexture;
 	sf::Texture* bgTexture;
 	sf::Texture* manaTexture;
+	sf::Clock timer;
 	Player* player;
 	int castCooldown;
 	std::vector<Enemy> enemyBuffer;
