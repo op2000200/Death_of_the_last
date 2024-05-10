@@ -48,6 +48,7 @@ Game::Game()
 	manaCounter = 0;
 	playerDeath = 0;
 	levelUp = 0;
+	settingState = 0; //0 = video 1 = audio 2 = gameplay
 }
 
 void Game::run()
@@ -68,7 +69,7 @@ void Game::run()
 		}
 		if (state == 3) //settings
 		{
-			state = 0;
+			settings();
 		}
 		if (state == 4) //exit
 		{
@@ -76,10 +77,6 @@ void Game::run()
 			break;
 		}
 	}
-}
-
-void Game::render()
-{
 }
 
 void Game::mainMenu()
@@ -158,8 +155,8 @@ void Game::drawMM()
 	//window.draw(labelButtonSM);
 	window.draw(buttonAM.getBody());
 	window.draw(labelButtonAM);
-	//window.draw(buttonSettings.getBody());
-	//window.draw(labelbuttonSettings);
+	window.draw(buttonSettings.getBody());
+	window.draw(labelbuttonSettings);
 	window.draw(buttonExit.getBody());
 	window.draw(labelbuttonExit);
 	window.draw(cursor);
@@ -205,6 +202,180 @@ void Game::readInputMM()
 				state = 4;
 			}
 		}
+	}
+}
+
+void Game::settings()
+{
+	sf::Time TimePerFrame = sf::seconds(1.f / 144.f);
+	sf::Time timeSinceLastUpdate = sf::Time::Zero;
+	int bufState;
+	while (window.isOpen())
+	{
+		bufState = state;
+
+		settingsReadInput();//checking what stupid human do
+
+		settingsUpdate();
+
+		window.clear();
+		settingsDraw();
+		window.display();
+		if (bufState != state)
+		{
+			return;
+		}
+	}
+}
+
+void Game::settingsReadInput()
+{
+	sf::Event event;
+	while (window.pollEvent(event))
+	{
+		if (event.type == sf::Event::LostFocus)
+		{
+			paused = 1;
+		}
+		if (event.type == sf::Event::KeyPressed)
+		{
+			if (event.key.code == sf::Keyboard::Escape)
+			{
+				inputs[0] = 1;
+			}
+		}
+		if (event.type == sf::Event::KeyReleased)
+		{
+			if (event.key.code == sf::Keyboard::Escape)
+			{
+				inputs[0] = 0;
+			}
+		}
+		if (event.type == sf::Event::MouseButtonPressed)
+		{
+			if (event.mouseButton.button == sf::Mouse::Left)
+			{
+				inputs[5] = 1;
+			}
+		}
+		if (event.type == sf::Event::MouseButtonReleased)
+		{
+			if (event.mouseButton.button == sf::Mouse::Left)
+			{
+				inputs[5] = 0;
+			}
+		}
+	}
+}
+
+void Game::settingsDraw()
+{
+	sf::View view = window.getView();
+	view.setCenter(1920 / 2, 1080 / 2);
+	window.setView(view);
+	sf::RectangleShape background;
+	background.setPosition(sf::Vector2f(0, 0));
+	background.setSize(sf::Vector2f(1920, 1080));
+	background.setFillColor(sf::Color::Color(105, 105, 105));
+
+	sf::RectangleShape* buttonsSettings = new sf::RectangleShape[4];
+	buttonsSettings[0].setPosition(sf::Vector2f(20, 20));
+	buttonsSettings[0].setSize(sf::Vector2f(300, 80));
+	buttonsSettings[0].setFillColor(sf::Color(60,60,60));
+	buttonsSettings[0].setOutlineColor(sf::Color(180,180,180));
+	buttonsSettings[0].setOutlineThickness(5.f);
+	buttonsSettings[1].setPosition(sf::Vector2f(540, 20));
+	buttonsSettings[1].setSize(sf::Vector2f(300, 80));
+	buttonsSettings[1].setFillColor(sf::Color(60, 60, 60));
+	buttonsSettings[1].setOutlineColor(sf::Color(180, 180, 180));
+	buttonsSettings[1].setOutlineThickness(5.f);
+	buttonsSettings[2].setPosition(sf::Vector2f(860, 20));
+	buttonsSettings[2].setSize(sf::Vector2f(300, 80));
+	buttonsSettings[2].setFillColor(sf::Color(60, 60, 60));
+	buttonsSettings[2].setOutlineColor(sf::Color(180, 180, 180));
+	buttonsSettings[2].setOutlineThickness(5.f);
+	buttonsSettings[3].setPosition(sf::Vector2f(1180, 20));
+	buttonsSettings[3].setSize(sf::Vector2f(300, 80));
+	buttonsSettings[3].setFillColor(sf::Color(60, 60, 60));
+	buttonsSettings[3].setOutlineColor(sf::Color(180, 180, 180));
+	buttonsSettings[3].setOutlineThickness(5.f);
+	sf::Text* labelButtonsSettings = new sf::Text[4];
+	labelButtonsSettings[0].setFont(fontMM2);
+	labelButtonsSettings[0].setString("BACK");
+	labelButtonsSettings[0].setPosition(buttonsSettings[0].getPosition() + sf::Vector2f(125, -5));
+	labelButtonsSettings[0].setFillColor(sf::Color(180, 180, 180));
+	labelButtonsSettings[0].setCharacterSize(70);
+	labelButtonsSettings[0].setLetterSpacing(1.5);
+	labelButtonsSettings[1].setFont(fontMM2);
+	labelButtonsSettings[1].setString("VIDEO");
+	labelButtonsSettings[1].setPosition(buttonsSettings[1].getPosition() + sf::Vector2f(125, -5));
+	labelButtonsSettings[1].setFillColor(sf::Color(180, 180, 180));
+	labelButtonsSettings[1].setCharacterSize(70);
+	labelButtonsSettings[1].setLetterSpacing(1.5);
+	labelButtonsSettings[2].setFont(fontMM2);
+	labelButtonsSettings[2].setString("TBD"); //audio
+	labelButtonsSettings[2].setPosition(buttonsSettings[2].getPosition() + sf::Vector2f(135, -5));
+	labelButtonsSettings[2].setFillColor(sf::Color(180, 180, 180));
+	labelButtonsSettings[2].setCharacterSize(70);
+	labelButtonsSettings[2].setLetterSpacing(1.5);
+	labelButtonsSettings[3].setFont(fontMM2);
+	labelButtonsSettings[3].setString("TBD"); //gameplay
+	labelButtonsSettings[3].setPosition(buttonsSettings[3].getPosition() + sf::Vector2f(135, -5));
+	labelButtonsSettings[3].setFillColor(sf::Color(180, 180, 180));
+	labelButtonsSettings[3].setCharacterSize(70);
+	labelButtonsSettings[3].setLetterSpacing(1.5);
+
+	window.draw(background);
+	for (int i = 0; i < 4; i++)
+	{
+		window.draw(buttonsSettings[i]);
+	}
+	for (int i = 0; i < 4; i++)
+	{
+		window.draw(labelButtonsSettings[i]);
+	}
+	if (settingState == 0)
+	{
+		sf::Text* textSettingsVideo = new sf::Text[3];
+		textSettingsVideo[0].setFont(fontMM2);
+		textSettingsVideo[0].setString("Resolution");
+		textSettingsVideo[0].setPosition(sf::Vector2f(400,400));
+		textSettingsVideo[0].setFillColor(sf::Color(180, 180, 180));
+		textSettingsVideo[0].setCharacterSize(120);
+		textSettingsVideo[0].setLetterSpacing(1.5);
+		textSettingsVideo[1].setFont(fontMM2);
+		textSettingsVideo[1].setString("V-sync");
+		textSettingsVideo[1].setPosition(sf::Vector2f(400, 600));
+		textSettingsVideo[1].setFillColor(sf::Color(180, 180, 180));
+		textSettingsVideo[1].setCharacterSize(120);
+		textSettingsVideo[1].setLetterSpacing(1.5);
+		textSettingsVideo[2].setFont(fontMM2);
+		textSettingsVideo[2].setString("FPS limiter");
+		textSettingsVideo[2].setPosition(sf::Vector2f(400, 800));
+		textSettingsVideo[2].setFillColor(sf::Color(180, 180, 180));
+		textSettingsVideo[2].setCharacterSize(120);
+		textSettingsVideo[2].setLetterSpacing(1.5);
+		for (int i = 0; i < 3; i++)
+		{
+			window.draw(textSettingsVideo[i]);
+		}
+	}
+	if (settingState == 1)
+	{
+
+	}
+	if (settingState == 2)
+	{
+
+	}
+}
+
+void Game::settingsUpdate()
+{
+	if (inputs[0] == 1)
+	{
+		state = 0;
+		inputs[0] = 0;
 	}
 }
 

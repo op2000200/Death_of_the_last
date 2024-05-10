@@ -38,9 +38,15 @@ private: //private methods
 	void arcadeModeLevelUpUpdate(sf::Time elapsedTime, Player* player);
 	void arcadeModeLevelUpDraw(sf::Sprite prevFrame);
 	void readInputAM();
+	//settings
+	void settings();
+	void settingsReadInput();
+	void settingsDraw();
+	void settingsUpdate();
+
 	//other
-	void render();
-	void processInput();
+	//void render();
+	//void processInput();
 private: //private variables
 	button buttonSM;
 	button buttonAM;
@@ -82,6 +88,8 @@ private: //private variables
 	std::vector<Mana> manaBuffer;
 	int manaCounter;
 	int manaTickCounter;
+
+	int settingState; //0 = video 1 = audio 2 = gameplay
 
 
 	int playerState;
