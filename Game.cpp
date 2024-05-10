@@ -393,6 +393,10 @@ void Game::arcadeMode()
 		manaCounter = 0;
 		playerDeath = 0;
 		manaTickCounter = 0;
+		timer.restart();
+		enemyBuffer.clear();
+		manaBuffer.clear();
+		bulletBuffer.clear();
 	}
 	while (true)
 	{
@@ -665,7 +669,42 @@ void Game::arcadeModeRunDraw(Player* player)
 	window.draw(expBarFill);
 	window.draw(healthBarOut);
 	window.draw(expBarOut);
-	
+
+	//draw text
+	labelStatistic.setFont(fontMM2);
+	std::string stat;
+	stat += "Timer: ";
+	stat += std::to_string(timer.getElapsedTime().asSeconds());
+	stat += "\n";
+	stat += "Coord: ";
+	stat +=	std::to_string(player[0].getSprite().getPosition().x);
+	stat += " ";
+	stat += std::to_string(player[0].getSprite().getPosition().y);
+	stat += "\n";
+	stat += "Level: ";
+	stat += std::to_string(player[0].getLevel());
+	stat += "\n";
+	stat += "Exp: ";
+	stat += std::to_string(player[0].getExp());
+	stat += " \\ ";
+	stat += std::to_string(player[0].getExpCap());
+	stat += "\n";
+	stat += "Health: ";
+	stat += std::to_string(player[0].getHealth());
+	stat += " \\ 100";
+	stat += "\n";
+	stat += "Speed: ";
+	stat += std::to_string(player[0].getSpeed());
+	stat += "\n";
+	stat += "Cast cooldown: ";
+	stat += std::to_string(player[0].getCastSpeed());
+	stat += "\n";
+	labelStatistic.setString(stat);
+	labelStatistic.setPosition(sf::Vector2f(view.getCenter().x-(1910/2), view.getCenter().y-(1070/2)));
+	labelStatistic.setFillColor(sf::Color::White);
+	labelStatistic.setCharacterSize(30);
+	labelStatistic.setLetterSpacing(1.5);
+	window.draw(labelStatistic);
 
 	////cursor
 	//window.draw(cursor);
@@ -985,6 +1024,8 @@ void Game::arcadeModeDeath()
 {
 	sf::Time TimePerFrame = sf::seconds(1.f / 144.f);
 	sf::Clock clock;
+
+	std::string time = std::to_string(timer.getElapsedTime().asSeconds());
 	sf::Time timeSinceLastUpdate = sf::Time::Zero;
 	int bufState;
 	while (window.isOpen())
@@ -1003,7 +1044,7 @@ void Game::arcadeModeDeath()
 		{
 			timeSinceLastUpdate -= TimePerFrame;
 			window.clear();
-			arcadeModeDeathDraw();
+			arcadeModeDeathDraw(time);
 			window.display();
 		}
 		if (bufState != state)
@@ -1013,7 +1054,7 @@ void Game::arcadeModeDeath()
 	}
 }
 
-void Game::arcadeModeDeathDraw()
+void Game::arcadeModeDeathDraw(std::string time)
 {
 	sf::View view = window.getView();
 	view.setCenter(1920 / 2, 1080 / 2);
@@ -1036,6 +1077,14 @@ void Game::arcadeModeDeathDraw()
 	window.draw(buf);
 	window.draw(buttonArcadeModePauseMM.getBody());
 	window.draw(labelbuttonArcadeModePauseMM);
+
+	labelStatistic.setString(time);
+	labelStatistic.setPosition(sf::Vector2f(820, 200));
+	labelStatistic.setFillColor(sf::Color::White);
+	labelStatistic.setCharacterSize(150);
+	labelStatistic.setLetterSpacing(1.5);
+	window.draw(labelStatistic);
+
 	window.draw(cursor);
 }
 
@@ -1104,10 +1153,13 @@ void Game::arcadeModeLevelUpDraw(sf::Sprite prevFrame)
 	labelbuttonArcadeModeHeal.setLetterSpacing(1.5);
 
 	window.draw(buf);
-	window.draw(buttonArcadeModeUpCastSpeed.getBody());
 	window.draw(buttonArcadeModeUpSpeed.getBody());
-	window.draw(labelbuttonArcadeModeUpCastSpeed);
 	window.draw(labelbuttonArcadeModeUpSpeed);
+	if (player[0].getCastSpeed() > 5)
+	{
+		window.draw(buttonArcadeModeUpCastSpeed.getBody());
+		window.draw(labelbuttonArcadeModeUpCastSpeed);
+	}
 	if (player[0].getHealth() < 100)
 	{
 		window.draw(buttonArcadeModeHeal.getBody());
@@ -1122,8 +1174,11 @@ void Game::arcadeModeLevelUpUpdate(sf::Time elapsedTime, Player* player)
 	{
 		if (sf::Mouse::getPosition().x > 800 and sf::Mouse::getPosition().x < 1110 and sf::Mouse::getPosition().y > 490 and sf::Mouse::getPosition().y < 580) //up cast speed
 		{
-			player[0].setCastSpeed(player[0].getCastSpeed() - 10);
-			levelUp = 0;
+			if (player[0].getCastSpeed() > 5)
+			{
+				player[0].setCastSpeed(player[0].getCastSpeed() - 10);
+				levelUp = 0;
+			}
 		}
 		if (sf::Mouse::getPosition().x > 460 and sf::Mouse::getPosition().x < 740 and sf::Mouse::getPosition().y > 490 and sf::Mouse::getPosition().y < 580) //heal
 		{
