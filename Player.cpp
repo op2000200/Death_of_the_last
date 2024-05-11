@@ -15,7 +15,7 @@ sf::Sprite Player::getSprite()
 {
 	return Player::sprite;
 }
-w
+
 void Player::setPos(sf::Vector2f pos)
 {
 	Player::sprite.setPosition(pos);

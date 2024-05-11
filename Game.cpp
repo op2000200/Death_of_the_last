@@ -210,16 +210,15 @@ void Game::settings()
 	sf::Time TimePerFrame = sf::seconds(1.f / 144.f);
 	sf::Time timeSinceLastUpdate = sf::Time::Zero;
 	int bufState;
+	CheckBox* checkBox = new CheckBox(sf::Vector2f(1200, 620), sf::Vector2f(100, 100));
 	while (window.isOpen())
 	{
 		bufState = state;
 
 		settingsReadInput();//checking what stupid human do
-
-		settingsUpdate();
-
+		settingsUpdate(checkBox[0]);
 		window.clear();
-		settingsDraw();
+		settingsDraw(checkBox[0]);
 		window.display();
 		if (bufState != state)
 		{
@@ -233,10 +232,6 @@ void Game::settingsReadInput()
 	sf::Event event;
 	while (window.pollEvent(event))
 	{
-		if (event.type == sf::Event::LostFocus)
-		{
-			paused = 1;
-		}
 		if (event.type == sf::Event::KeyPressed)
 		{
 			if (event.key.code == sf::Keyboard::Escape)
@@ -268,7 +263,7 @@ void Game::settingsReadInput()
 	}
 }
 
-void Game::settingsDraw()
+void Game::settingsDraw(CheckBox checkBox)
 {
 	sf::View view = window.getView();
 	view.setCenter(1920 / 2, 1080 / 2);
@@ -359,6 +354,15 @@ void Game::settingsDraw()
 		{
 			window.draw(textSettingsVideo[i]);
 		}
+		if (checkBox.getState() == 1)
+		{
+			window.draw(checkBox.getCirc());
+			window.draw(checkBox.getRect());
+		}
+		else
+		{
+			window.draw(checkBox.getRect());
+		}
 	}
 	if (settingState == 1)
 	{
@@ -368,14 +372,28 @@ void Game::settingsDraw()
 	{
 
 	}
+
+	sf::Sprite cursor;
+	cursor.setTexture(cursorTexture);
+	cursor.setPosition(sf::Vector2f(sf::Mouse::getPosition().x - 5, sf::Mouse::getPosition().y - 5));
+	cursor.setScale(sf::Vector2f(5, 5));
+	window.draw(cursor);
 }
 
-void Game::settingsUpdate()
+void Game::settingsUpdate(CheckBox checkBox)
 {
 	if (inputs[0] == 1)
 	{
 		state = 0;
 		inputs[0] = 0;
+	}
+	if (inputs[5] == 1)
+	{
+		if (sf::Mouse::getPosition().x > 1200 and sf::Mouse::getPosition().x < 1300 and sf::Mouse::getPosition().y > 620 and sf::Mouse::getPosition().y < 720)
+		{
+			checkBox.clicked();
+			inputs[5] == 0;
+		}
 	}
 }
 

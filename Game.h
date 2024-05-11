@@ -5,6 +5,7 @@
 #include "Enemy.h"
 #include "Player.h"
 #include "Mana.h"
+#include "CheckBox.h"
 class Game
 {
 public: //public methods
@@ -41,8 +42,8 @@ private: //private methods
 	//settings
 	void settings();
 	void settingsReadInput();
-	void settingsDraw();
-	void settingsUpdate();
+	void settingsDraw(CheckBox checkBox);
+	void settingsUpdate(CheckBox checkBox);
 
 	//other
 	//void render();
