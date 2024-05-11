@@ -11,7 +11,7 @@ Enemy::Enemy(sf::Texture* texture, sf::Vector2f pos)
 {
 	Enemy::sprite.setPosition(pos);
 	health = 100;
-	speed = 30;
+	speed = 100;
 }
 
 Enemy::~Enemy()

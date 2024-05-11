@@ -69,7 +69,8 @@ void Game::run()
 		}
 		if (state == 3) //settings
 		{
-			settings();
+			state = 0;
+			//settings();
 		}
 		if (state == 4) //exit
 		{
@@ -490,14 +491,18 @@ void Game::arcadeModeRun(Player* player)
 		{
 			return;
 		}
-		if (bufLevel != player[0].getLevel())
+		if (bufLevel != player[0].getLevel() and player[0].getLevel() < 51)
 		{
 			pausedScreen.create(window.getSize().x, window.getSize().y);
 			pausedScreen.update(window);
 			levelUp = 1;
 			return;
 		}
-
+		if (timer.getElapsedTime().asSeconds() > sf::seconds(1200).asSeconds())
+		{
+			playerDeath = 1;
+			return;
+		}
 		while (clock.getElapsedTime() < TimePerFrame)
 		{
 			;
@@ -769,8 +774,8 @@ void Game::updatePlayer(sf::Time elapsedTime, Player* player)
 	if (inputs[1] == 1 and inputs[2] == 0 and inputs[3] == 0 and inputs[4] == 1)
 	{
 		tmp = player[0].getSprite().getPosition();
-		tmp.y = tmp.y - player[0].getSpeed() * del;
-		tmp.x = tmp.x + player[0].getSpeed() * del;
+		tmp.y = tmp.y - player[0].getSpeed() * del * 0.707;
+		tmp.x = tmp.x + player[0].getSpeed() * del * 0.707;
 		player[0].setPos(tmp);
 		//std::cout << "up+r" << std::endl;
 	}
@@ -784,8 +789,8 @@ void Game::updatePlayer(sf::Time elapsedTime, Player* player)
 	if (inputs[1] == 0 and inputs[2] == 0 and inputs[3] == 1 and inputs[4] == 1)
 	{
 		tmp = player[0].getSprite().getPosition();
-		tmp.y = tmp.y + player[0].getSpeed() * del;
-		tmp.x = tmp.x + player[0].getSpeed() * del;
+		tmp.y = tmp.y + player[0].getSpeed() * del * 0.707;
+		tmp.x = tmp.x + player[0].getSpeed() * del * 0.707;
 		player[0].setPos(tmp);
 		//std::cout << "down+r" << std::endl;
 	}
@@ -799,8 +804,8 @@ void Game::updatePlayer(sf::Time elapsedTime, Player* player)
 	if (inputs[1] == 0 and inputs[2] == 1 and inputs[3] == 1 and inputs[4] == 0)
 	{
 		tmp = player[0].getSprite().getPosition();
-		tmp.y = tmp.y + player[0].getSpeed() * del;
-		tmp.x = tmp.x - player[0].getSpeed() * del;
+		tmp.y = tmp.y + player[0].getSpeed() * del * 0.707;
+		tmp.x = tmp.x - player[0].getSpeed() * del * 0.707;
 		player[0].setPos(tmp);
 		//std::cout << "down+l" << std::endl;
 	}
@@ -814,8 +819,8 @@ void Game::updatePlayer(sf::Time elapsedTime, Player* player)
 	if (inputs[1] == 1 and inputs[2] == 1 and inputs[3] == 0 and inputs[4] == 0)
 	{
 		tmp = player[0].getSprite().getPosition();
-		tmp.y = tmp.y - player[0].getSpeed() * del;
-		tmp.x = tmp.x - player[0].getSpeed() * del;
+		tmp.y = tmp.y - player[0].getSpeed() * del * 0.707;
+		tmp.x = tmp.x - player[0].getSpeed() * del * 0.707;
 		player[0].setPos(tmp);
 		//std::cout << "up+l" << std::endl;
 	}
@@ -833,7 +838,7 @@ void Game::updateMana(sf::Time elapsedTime, Player* player)
 	posMana.x = -3000 + posPlayer.x + rand() % 6000;
 	posMana.y = -3000 + posPlayer.y + rand() % 6000;
 	dist = sqrt(pow(posPlayer.x - posMana.x, 2) + pow(posPlayer.y - posMana.y, 2));
-	if (dist > 2000 and manaCounter < 2000)
+	if (dist > 2500 and manaCounter < 1000)
 	{
 		Mana mana(posMana, manaTexture);
 		manaBuffer.push_back(mana);
@@ -931,10 +936,10 @@ void Game::updateEnemies(sf::Time elapsedTime, Player* player)
 	sf::Vector2f posPlayer, posEnemy;
 	int dist;
 	posPlayer = sf::Vector2f(player[0].getSprite().getPosition().x + 45, player[0].getSprite().getPosition().y + 60);
-	posEnemy.x = -2000 + posPlayer.x + rand() % 4000;
-	posEnemy.y = -2000 + posPlayer.y + rand() % 4000;
+	posEnemy.x = -3000 + posPlayer.x + rand() % 6000;
+	posEnemy.y = -3000 + posPlayer.y + rand() % 6000;
 	dist = sqrt(pow(posPlayer.x - posEnemy.x,2) + pow(posPlayer.y - posEnemy.y,2));
-	if (dist > 1000 and enemyCooldown > 50 and enemyCounter < 1000)
+	if (dist > 1500 and enemyCooldown > 10 and enemyCounter < 5000)
 	{
 		Enemy enemy(enemyTexture, posEnemy);
 		enemyBuffer.push_back(enemy);
@@ -1171,8 +1176,11 @@ void Game::arcadeModeLevelUpDraw(sf::Sprite prevFrame)
 	labelbuttonArcadeModeHeal.setLetterSpacing(1.5);
 
 	window.draw(buf);
-	window.draw(buttonArcadeModeUpSpeed.getBody());
-	window.draw(labelbuttonArcadeModeUpSpeed);
+	if (player[0].getSpeed() < 500)
+	{
+		window.draw(buttonArcadeModeUpSpeed.getBody());
+		window.draw(labelbuttonArcadeModeUpSpeed);
+	}
 	if (player[0].getCastSpeed() > 5)
 	{
 		window.draw(buttonArcadeModeUpCastSpeed.getBody());
@@ -1194,7 +1202,7 @@ void Game::arcadeModeLevelUpUpdate(sf::Time elapsedTime, Player* player)
 		{
 			if (player[0].getCastSpeed() > 5)
 			{
-				player[0].setCastSpeed(player[0].getCastSpeed() - 10);
+				player[0].setCastSpeed(player[0].getCastSpeed() - player[0].getCastSpeed() * 0.05);
 				levelUp = 0;
 			}
 		}
@@ -1208,8 +1216,11 @@ void Game::arcadeModeLevelUpUpdate(sf::Time elapsedTime, Player* player)
 		}
 		if (sf::Mouse::getPosition().x > 1140 and sf::Mouse::getPosition().x < 1450 and sf::Mouse::getPosition().y > 490 and sf::Mouse::getPosition().y < 580) //up speed
 		{
-			player[0].setSpeed(player[0].getSpeed() + 10);
-			levelUp = 0;
+			if (player[0].getSpeed() < 500)
+			{
+				player[0].setSpeed(player[0].getSpeed() + 10);
+				levelUp = 0;
+			}
 		}
 		
 	}
