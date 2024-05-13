@@ -5,10 +5,29 @@ Player::Player(sf::Texture *texture)
 {
 	level = 0;
 	exp = 0;
-	expCap = 1000;
-	health = 100;
+	expCap = 1;
+
+
+	attack = 0;
+	defence = 0;
+	vitality = 0;
+	agility = 0;
+	knowledge = 0;
+	//secondary
+	baseAttack = 50;
+	critChance = 0;
+
+	//int shieldCoef;
+	resist = 0;
+
+	health = 50;
+	healthRecover = 1;
+
 	speed = 200;
-	castSpeed = 500;
+	castSpeed = 50;
+
+	mana = 100;
+	manaRecover = 1;
 }
 
 sf::Sprite Player::getSprite()
@@ -24,36 +43,6 @@ void Player::setPos(sf::Vector2f pos)
 void Player::setTexture(sf::Texture texture)
 {
 	Player::sprite.setTexture(texture);
-}
-
-int Player::getSpeed()
-{
-	return Player::speed;
-}
-
-int Player::getCastSpeed()
-{
-	return Player::castSpeed;
-}
-
-void Player::setSpeed(int num)
-{
-	Player::speed = num;
-}
-
-void Player::setCastSpeed(int num)
-{
-	Player::castSpeed = num;
-}
-
-void Player::setHealth(int num)
-{
-	Player::health = num;
-}
-
-int Player::getHealth()
-{
-	return Player::health;
 }
 
 void Player::setExpCap(int num)
@@ -84,4 +73,154 @@ void Player::setLevel(int num)
 int Player::getLevel()
 {
 	return Player::level;
+}
+
+void Player::setAttack(int num)
+{
+	Player::attack = num;
+}
+
+void Player::setDefence(int num)
+{
+	Player::defence = num;
+}
+
+void Player::setVitality(int num)
+{
+	Player::vitality = num;
+
+}
+void Player::setAgility(int num)
+{
+	Player::agility = num;
+}
+
+void Player::setKnowledge(int num)
+{
+	Player::knowledge = num;
+}
+
+void Player::setBaseAttack(int num)
+{
+	Player::baseAttack = num;
+}
+
+void Player::setCritChance(int num)
+{
+	Player::critChance = num;
+}
+
+void Player::setResist(int num)
+{
+	Player::resist = num;
+}
+
+void Player::setHealth(int num)
+{
+	Player::health = num;
+}
+
+void Player::setHealthRecover(int num)
+{
+	Player::healthRecover = num;
+}
+
+void Player::setSpeed(int num)
+{
+	Player::speed = num;
+}
+
+void Player::setCastSpeed(int num)
+{
+	Player::castSpeed = num;
+}
+
+void Player::setMana(int num)
+{
+	Player::mana = num;
+}
+
+void Player::setManaRecover(int num)
+{
+	Player::manaRecover = num;
+}
+
+void Player::setManaUsage(int num)
+{
+	Player::manaUsage = num;
+}
+ 
+int Player::getAttack()
+{
+	return Player::attack;
+}
+
+int Player::getDefence()
+{
+	return Player::defence;
+}
+
+int Player::getVitality()
+{
+	return Player::vitality;
+}
+
+int Player::getAgility()
+{
+	return Player::agility;
+}
+
+int Player::getKnowledge()
+{
+	return Player::knowledge;
+}
+
+int Player::getBaseAttack()
+{
+	return Player::baseAttack;
+}
+
+int Player::getCritChance()
+{
+	return Player::critChance;
+}
+
+int Player::getResist()
+{
+	return Player::resist;
+}
+
+int Player::getHealth()
+{
+	return Player::health;
+}
+
+int Player::getHealthRecover()
+{
+	return Player::healthRecover;
+}
+
+int Player::getSpeed()
+{
+	return Player::speed;
+}
+
+int Player::getCastSpeed()
+{
+	return Player::castSpeed;
+}
+
+int Player::getMana()
+{
+	return Player::mana;
+}
+
+int Player::getManaRecover()
+{
+	return Player::manaRecover;
+}
+
+int Player::getManaUsage()
+{
+	return Player::manaUsage;
 }

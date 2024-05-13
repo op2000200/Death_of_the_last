@@ -1191,6 +1191,93 @@ void Game::arcadeModeLevelUpDraw(sf::Sprite prevFrame)
 		window.draw(buttonArcadeModeHeal.getBody());
 		window.draw(labelbuttonArcadeModeHeal);
 	}
+
+	//new
+	sf::Text* labelSecondaryAttributes = new sf::Text[11];
+	sf::String str;
+	labelSecondaryAttributes[0].setFont(fontMM2);
+	labelSecondaryAttributes[0].setFillColor(sf::Color::White);
+	labelSecondaryAttributes[0].setCharacterSize(50);
+	labelSecondaryAttributes[0].setLetterSpacing(1.5);
+	labelSecondaryAttributes[0].setLineSpacing(1.045);
+	labelSecondaryAttributes[0].setPosition(sf::Vector2f(20, 300));
+	labelSecondaryAttributes[0].setString("Base attack:\nCrit chance:\nDamage resistance:\nHealth:\nHealth recover rate:\nSpeed:\nBase attack speed:\nMana:\nMana recover rate:\nMana usage rate:");
+	
+	labelSecondaryAttributes[1].setFont(fontMM2);
+	labelSecondaryAttributes[1].setFillColor(sf::Color::White);
+	labelSecondaryAttributes[1].setCharacterSize(50);
+	labelSecondaryAttributes[1].setLetterSpacing(1.5);
+	labelSecondaryAttributes[1].setPosition(sf::Vector2f(200, 300));
+	labelSecondaryAttributes[1].setString("Base attack:");
+
+	labelSecondaryAttributes[2].setFont(fontMM2);
+	labelSecondaryAttributes[2].setFillColor(sf::Color::White);
+	labelSecondaryAttributes[2].setCharacterSize(50);
+	labelSecondaryAttributes[2].setLetterSpacing(1.5);
+	labelSecondaryAttributes[2].setPosition(sf::Vector2f(200, 350));
+	labelSecondaryAttributes[2].setString("Base attack:");
+
+	labelSecondaryAttributes[3].setFont(fontMM2);
+	labelSecondaryAttributes[3].setFillColor(sf::Color::White);
+	labelSecondaryAttributes[3].setCharacterSize(50);
+	labelSecondaryAttributes[3].setLetterSpacing(1.5);
+	labelSecondaryAttributes[3].setPosition(sf::Vector2f(200, 400));
+	labelSecondaryAttributes[3].setString("Base attack:");
+
+	labelSecondaryAttributes[4].setFont(fontMM2);
+	labelSecondaryAttributes[4].setFillColor(sf::Color::White);
+	labelSecondaryAttributes[4].setCharacterSize(50);
+	labelSecondaryAttributes[4].setLetterSpacing(1.5);
+	labelSecondaryAttributes[4].setPosition(sf::Vector2f(200, 450));
+	labelSecondaryAttributes[4].setString("Base attack:");
+
+	labelSecondaryAttributes[5].setFont(fontMM2);
+	labelSecondaryAttributes[5].setFillColor(sf::Color::White);
+	labelSecondaryAttributes[5].setCharacterSize(50);
+	labelSecondaryAttributes[5].setLetterSpacing(1.5);
+	labelSecondaryAttributes[5].setPosition(sf::Vector2f(200, 500));
+	labelSecondaryAttributes[5].setString("Base attack:");
+
+	labelSecondaryAttributes[6].setFont(fontMM2);
+	labelSecondaryAttributes[6].setFillColor(sf::Color::White);
+	labelSecondaryAttributes[6].setCharacterSize(50);
+	labelSecondaryAttributes[6].setLetterSpacing(1.5);
+	labelSecondaryAttributes[6].setPosition(sf::Vector2f(200, 550));
+	labelSecondaryAttributes[6].setString("Base attack:");
+
+	labelSecondaryAttributes[7].setFont(fontMM2);
+	labelSecondaryAttributes[7].setFillColor(sf::Color::White);
+	labelSecondaryAttributes[7].setCharacterSize(50);
+	labelSecondaryAttributes[7].setLetterSpacing(1.5);
+	labelSecondaryAttributes[7].setPosition(sf::Vector2f(200, 600));
+	labelSecondaryAttributes[7].setString("Base attack:");
+
+	labelSecondaryAttributes[8].setFont(fontMM2);
+	labelSecondaryAttributes[8].setFillColor(sf::Color::White);
+	labelSecondaryAttributes[8].setCharacterSize(50);
+	labelSecondaryAttributes[8].setLetterSpacing(1.5);
+	labelSecondaryAttributes[8].setPosition(sf::Vector2f(200, 650));
+	labelSecondaryAttributes[8].setString("Base attack:");
+
+	labelSecondaryAttributes[9].setFont(fontMM2);
+	labelSecondaryAttributes[9].setFillColor(sf::Color::White);
+	labelSecondaryAttributes[9].setCharacterSize(50);
+	labelSecondaryAttributes[9].setLetterSpacing(1.5);
+	labelSecondaryAttributes[9].setPosition(sf::Vector2f(200, 700));
+	labelSecondaryAttributes[9].setString("Base attack:");
+
+	labelSecondaryAttributes[10].setFont(fontMM2);
+	labelSecondaryAttributes[10].setFillColor(sf::Color::White);
+	labelSecondaryAttributes[10].setCharacterSize(50);
+	labelSecondaryAttributes[10].setLetterSpacing(1.5);
+	labelSecondaryAttributes[10].setPosition(sf::Vector2f(200, 750));
+	labelSecondaryAttributes[10].setString("Base attack:");
+
+	for (int i = 0; i < 11; i++)
+	{
+		window.draw(labelSecondaryAttributes[i]);
+	}
+
 	window.draw(cursor);
 }
 
@@ -1204,6 +1291,8 @@ void Game::arcadeModeLevelUpUpdate(sf::Time elapsedTime, Player* player)
 			{
 				player[0].setCastSpeed(player[0].getCastSpeed() - player[0].getCastSpeed() * 0.05);
 				levelUp = 0;
+				inputs[5] = 0;
+				sf::sleep(sf::milliseconds(100));
 			}
 		}
 		if (sf::Mouse::getPosition().x > 460 and sf::Mouse::getPosition().x < 740 and sf::Mouse::getPosition().y > 490 and sf::Mouse::getPosition().y < 580) //heal
@@ -1212,6 +1301,8 @@ void Game::arcadeModeLevelUpUpdate(sf::Time elapsedTime, Player* player)
 			{
 				player[0].setHealth(player[0].getHealth() + 10);
 				levelUp = 0;
+				inputs[5] = 0;
+				sf::sleep(sf::milliseconds(100));
 			}
 		}
 		if (sf::Mouse::getPosition().x > 1140 and sf::Mouse::getPosition().x < 1450 and sf::Mouse::getPosition().y > 490 and sf::Mouse::getPosition().y < 580) //up speed
@@ -1220,6 +1311,8 @@ void Game::arcadeModeLevelUpUpdate(sf::Time elapsedTime, Player* player)
 			{
 				player[0].setSpeed(player[0].getSpeed() + 10);
 				levelUp = 0;
+				inputs[5] = 0;
+				sf::sleep(sf::milliseconds(100));
 			}
 		}
 		
