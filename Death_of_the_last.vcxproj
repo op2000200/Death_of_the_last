@@ -142,6 +142,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BasicMissleCold.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="button.cpp" />
     <ClCompile Include="CheckBox.cpp" />
@@ -152,6 +153,7 @@
     <ClCompile Include="start.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BasicMissleCold.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="button.h" />
     <ClInclude Include="CheckBox.h" />

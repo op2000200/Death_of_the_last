@@ -491,7 +491,7 @@ void Game::arcadeModeRun(Player* player)
 		{
 			return;
 		}
-		if (bufLevel != player[0].getLevel() and player[0].getLevel() < 51)
+		if (bufLevel != player[0].getLevel() and player[0].getLevel() < 251)
 		{
 			pausedScreen.create(window.getSize().x, window.getSize().y);
 			pausedScreen.update(window);
@@ -1006,7 +1006,7 @@ void Game::updateLevel(sf::Time elapsedTime, Player* player)
 	if (player[0].getExp() >= player[0].getExpCap())
 	{
 		player[0].setExp(player[0].getExp() - player[0].getExpCap());
-		player[0].setExpCap(player[0].getExpCap() * 1.1);
+		player[0].setExpCap(player[0].getExpCap() * 1.01);
 		player[0].setLevel(player[0].getLevel() + 1);
 	}
 }
@@ -1144,7 +1144,7 @@ void Game::arcadeModeLevelUpDraw(sf::Sprite prevFrame)
 	sf::View view = window.getView();
 	view.setCenter(1920 / 2, 1080 / 2);
 	window.setView(view);
-	window.draw(prevFrame);
+	//window.draw(prevFrame);
 	sf::RectangleShape buf(sf::Vector2f(1920, 1080));
 	buf.setPosition(0, 0);
 	buf.setFillColor(sf::Color(0, 0, 0, 200));
@@ -1154,43 +1154,43 @@ void Game::arcadeModeLevelUpDraw(sf::Sprite prevFrame)
 	cursor.setPosition(sf::Vector2f(sf::Mouse::getPosition().x - 5, sf::Mouse::getPosition().y - 5));
 	cursor.setScale(sf::Vector2f(5, 5));
 
-	labelbuttonArcadeModeUpCastSpeed.setFont(fontMM2);
-	labelbuttonArcadeModeUpCastSpeed.setString("UP CAST SPEED");
-	labelbuttonArcadeModeUpCastSpeed.setPosition(buttonArcadeModeUpCastSpeed.getBody().getPosition().x + 25, buttonArcadeModePauseMM.getBody().getPosition().y - 15);
-	labelbuttonArcadeModeUpCastSpeed.setFillColor(sf::Color(180, 180, 180));
-	labelbuttonArcadeModeUpCastSpeed.setCharacterSize(90);
-	labelbuttonArcadeModeUpCastSpeed.setLetterSpacing(1.5);
+	//labelbuttonArcadeModeUpCastSpeed.setFont(fontMM2);
+	//labelbuttonArcadeModeUpCastSpeed.setString("UP CAST SPEED");
+	//labelbuttonArcadeModeUpCastSpeed.setPosition(buttonArcadeModeUpCastSpeed.getBody().getPosition().x + 25, buttonArcadeModePauseMM.getBody().getPosition().y - 15);
+	//labelbuttonArcadeModeUpCastSpeed.setFillColor(sf::Color(180, 180, 180));
+	//labelbuttonArcadeModeUpCastSpeed.setCharacterSize(90);
+	//labelbuttonArcadeModeUpCastSpeed.setLetterSpacing(1.5);
 
-	labelbuttonArcadeModeUpSpeed.setFont(fontMM2);
-	labelbuttonArcadeModeUpSpeed.setString("UP PLAYER SPEED");
-	labelbuttonArcadeModeUpSpeed.setPosition(buttonArcadeModeUpSpeed.getBody().getPosition().x + 25, buttonArcadeModePauseMM.getBody().getPosition().y - 15);
-	labelbuttonArcadeModeUpSpeed.setFillColor(sf::Color(180, 180, 180));
-	labelbuttonArcadeModeUpSpeed.setCharacterSize(90);
-	labelbuttonArcadeModeUpSpeed.setLetterSpacing(1.5);
+	//labelbuttonArcadeModeUpSpeed.setFont(fontMM2);
+	//labelbuttonArcadeModeUpSpeed.setString("UP PLAYER SPEED");
+	//labelbuttonArcadeModeUpSpeed.setPosition(buttonArcadeModeUpSpeed.getBody().getPosition().x + 25, buttonArcadeModePauseMM.getBody().getPosition().y - 15);
+	//labelbuttonArcadeModeUpSpeed.setFillColor(sf::Color(180, 180, 180));
+	//labelbuttonArcadeModeUpSpeed.setCharacterSize(90);
+	//labelbuttonArcadeModeUpSpeed.setLetterSpacing(1.5);
 
-	labelbuttonArcadeModeHeal.setFont(fontMM2);
-	labelbuttonArcadeModeHeal.setString("HEAL");
-	labelbuttonArcadeModeHeal.setPosition(buttonArcadeModeHeal.getBody().getPosition().x + 25, buttonArcadeModePauseMM.getBody().getPosition().y - 15);
-	labelbuttonArcadeModeHeal.setFillColor(sf::Color(180, 180, 180));
-	labelbuttonArcadeModeHeal.setCharacterSize(90);
-	labelbuttonArcadeModeHeal.setLetterSpacing(1.5);
+	//labelbuttonArcadeModeHeal.setFont(fontMM2);
+	//labelbuttonArcadeModeHeal.setString("HEAL");
+	//labelbuttonArcadeModeHeal.setPosition(buttonArcadeModeHeal.getBody().getPosition().x + 25, buttonArcadeModePauseMM.getBody().getPosition().y - 15);
+	//labelbuttonArcadeModeHeal.setFillColor(sf::Color(180, 180, 180));
+	//labelbuttonArcadeModeHeal.setCharacterSize(90);
+	//labelbuttonArcadeModeHeal.setLetterSpacing(1.5);
 
-	window.draw(buf);
-	if (player[0].getSpeed() < 500)
-	{
-		window.draw(buttonArcadeModeUpSpeed.getBody());
-		window.draw(labelbuttonArcadeModeUpSpeed);
-	}
-	if (player[0].getCastSpeed() > 5)
-	{
-		window.draw(buttonArcadeModeUpCastSpeed.getBody());
-		window.draw(labelbuttonArcadeModeUpCastSpeed);
-	}
-	if (player[0].getHealth() < 100)
-	{
-		window.draw(buttonArcadeModeHeal.getBody());
-		window.draw(labelbuttonArcadeModeHeal);
-	}
+	//window.draw(buf);
+	//if (player[0].getSpeed() < 500)
+	//{
+	//	window.draw(buttonArcadeModeUpSpeed.getBody());
+	//	window.draw(labelbuttonArcadeModeUpSpeed);
+	//}
+	//if (player[0].getCastSpeed() > 5)
+	//{
+	//	window.draw(buttonArcadeModeUpCastSpeed.getBody());
+	//	window.draw(labelbuttonArcadeModeUpCastSpeed);
+	//}
+	//if (player[0].getHealth() < 100)
+	//{
+	//	window.draw(buttonArcadeModeHeal.getBody());
+	//	window.draw(labelbuttonArcadeModeHeal);
+	//}
 
 	//new
 	sf::Text* labelSecondaryAttributes = new sf::Text[11];
@@ -1201,81 +1201,242 @@ void Game::arcadeModeLevelUpDraw(sf::Sprite prevFrame)
 	labelSecondaryAttributes[0].setLetterSpacing(1.5);
 	labelSecondaryAttributes[0].setLineSpacing(1.045);
 	labelSecondaryAttributes[0].setPosition(sf::Vector2f(20, 300));
-	labelSecondaryAttributes[0].setString("Base attack:\nCrit chance:\nDamage resistance:\nHealth:\nHealth recover rate:\nSpeed:\nBase attack speed:\nMana:\nMana recover rate:\nMana usage rate:");
+	labelSecondaryAttributes[0].setString("Base attack:\nCrit chance:\nDamage resistance:\nHealth:\nHealth recover rate:\nSpeed:\nAttack speed MP:\nMana:\nMana recover rate:\nMana usage rate:");
 	
 	labelSecondaryAttributes[1].setFont(fontMM2);
 	labelSecondaryAttributes[1].setFillColor(sf::Color::White);
 	labelSecondaryAttributes[1].setCharacterSize(50);
 	labelSecondaryAttributes[1].setLetterSpacing(1.5);
 	labelSecondaryAttributes[1].setPosition(sf::Vector2f(200, 300));
-	labelSecondaryAttributes[1].setString("Base attack:");
+	str = std::to_string(player[0].getBaseAttack());
+	labelSecondaryAttributes[1].setString(str);
 
 	labelSecondaryAttributes[2].setFont(fontMM2);
 	labelSecondaryAttributes[2].setFillColor(sf::Color::White);
 	labelSecondaryAttributes[2].setCharacterSize(50);
 	labelSecondaryAttributes[2].setLetterSpacing(1.5);
 	labelSecondaryAttributes[2].setPosition(sf::Vector2f(200, 350));
-	labelSecondaryAttributes[2].setString("Base attack:");
+	str = std::to_string(player[0].getCritChance());
+	str += " %";
+	labelSecondaryAttributes[2].setString(str);
 
 	labelSecondaryAttributes[3].setFont(fontMM2);
 	labelSecondaryAttributes[3].setFillColor(sf::Color::White);
 	labelSecondaryAttributes[3].setCharacterSize(50);
 	labelSecondaryAttributes[3].setLetterSpacing(1.5);
 	labelSecondaryAttributes[3].setPosition(sf::Vector2f(200, 400));
-	labelSecondaryAttributes[3].setString("Base attack:");
+	str = std::to_string(player[0].getResist());
+	str += " %";
+	labelSecondaryAttributes[3].setString(str);
 
 	labelSecondaryAttributes[4].setFont(fontMM2);
 	labelSecondaryAttributes[4].setFillColor(sf::Color::White);
 	labelSecondaryAttributes[4].setCharacterSize(50);
 	labelSecondaryAttributes[4].setLetterSpacing(1.5);
 	labelSecondaryAttributes[4].setPosition(sf::Vector2f(200, 450));
-	labelSecondaryAttributes[4].setString("Base attack:");
+	str = std::to_string(player[0].getHealth());
+	labelSecondaryAttributes[4].setString(str);
 
 	labelSecondaryAttributes[5].setFont(fontMM2);
 	labelSecondaryAttributes[5].setFillColor(sf::Color::White);
 	labelSecondaryAttributes[5].setCharacterSize(50);
 	labelSecondaryAttributes[5].setLetterSpacing(1.5);
 	labelSecondaryAttributes[5].setPosition(sf::Vector2f(200, 500));
-	labelSecondaryAttributes[5].setString("Base attack:");
+	str = std::to_string(player[0].getHealthRecover());
+	str += " per second";
+	labelSecondaryAttributes[5].setString(str);
 
 	labelSecondaryAttributes[6].setFont(fontMM2);
 	labelSecondaryAttributes[6].setFillColor(sf::Color::White);
 	labelSecondaryAttributes[6].setCharacterSize(50);
 	labelSecondaryAttributes[6].setLetterSpacing(1.5);
 	labelSecondaryAttributes[6].setPosition(sf::Vector2f(200, 550));
-	labelSecondaryAttributes[6].setString("Base attack:");
+	str = std::to_string(player[0].getSpeed());
+	labelSecondaryAttributes[6].setString(str);
 
 	labelSecondaryAttributes[7].setFont(fontMM2);
 	labelSecondaryAttributes[7].setFillColor(sf::Color::White);
 	labelSecondaryAttributes[7].setCharacterSize(50);
 	labelSecondaryAttributes[7].setLetterSpacing(1.5);
 	labelSecondaryAttributes[7].setPosition(sf::Vector2f(200, 600));
-	labelSecondaryAttributes[7].setString("Base attack:");
+	str = std::to_string(player[0].getCastSpeed());
+	labelSecondaryAttributes[7].setString(str);
 
 	labelSecondaryAttributes[8].setFont(fontMM2);
 	labelSecondaryAttributes[8].setFillColor(sf::Color::White);
 	labelSecondaryAttributes[8].setCharacterSize(50);
 	labelSecondaryAttributes[8].setLetterSpacing(1.5);
 	labelSecondaryAttributes[8].setPosition(sf::Vector2f(200, 650));
-	labelSecondaryAttributes[8].setString("Base attack:");
+	str = std::to_string(player[0].getMana());
+	labelSecondaryAttributes[8].setString(str);
 
 	labelSecondaryAttributes[9].setFont(fontMM2);
 	labelSecondaryAttributes[9].setFillColor(sf::Color::White);
 	labelSecondaryAttributes[9].setCharacterSize(50);
 	labelSecondaryAttributes[9].setLetterSpacing(1.5);
 	labelSecondaryAttributes[9].setPosition(sf::Vector2f(200, 700));
-	labelSecondaryAttributes[9].setString("Base attack:");
+	str = std::to_string(player[0].getManaRecover());
+	str += " per second";
+	labelSecondaryAttributes[9].setString(str);
 
 	labelSecondaryAttributes[10].setFont(fontMM2);
 	labelSecondaryAttributes[10].setFillColor(sf::Color::White);
 	labelSecondaryAttributes[10].setCharacterSize(50);
 	labelSecondaryAttributes[10].setLetterSpacing(1.5);
 	labelSecondaryAttributes[10].setPosition(sf::Vector2f(200, 750));
-	labelSecondaryAttributes[10].setString("Base attack:");
+	str = std::to_string(player[0].getManaUsage());
+	str += " per second";
+	labelSecondaryAttributes[10].setString(str);
 
 	for (int i = 0; i < 11; i++)
 	{
 		window.draw(labelSecondaryAttributes[i]);
+	}
+
+	sf::ConvexShape charactristicOutlineMax;
+	charactristicOutlineMax.setPosition(1600, 400);
+	charactristicOutlineMax.setFillColor(sf::Color(0,0,0,0));
+	charactristicOutlineMax.setOutlineColor(sf::Color(204,0,0));
+	charactristicOutlineMax.setOutlineThickness(5.f);
+	charactristicOutlineMax.setPointCount(5);
+	charactristicOutlineMax.setPoint(0, sf::Vector2f(110, 0));
+	charactristicOutlineMax.setPoint(1, sf::Vector2f(110 + 110 * 0.951, 110 - 110 * 0.309));
+	charactristicOutlineMax.setPoint(2, sf::Vector2f(110 + 110 * 0.588, 110 + 110 * 0.809));
+	charactristicOutlineMax.setPoint(3, sf::Vector2f(110 - 110 * 0.588, 110 + 110 * 0.809));
+	charactristicOutlineMax.setPoint(4, sf::Vector2f(110 - 110 * 0.951, 110 - 110 * 0.309));
+
+	window.draw(charactristicOutlineMax);
+
+	sf::ConvexShape charactristicOutline;
+	charactristicOutline.setPosition(1610, 410);
+	charactristicOutline.setFillColor(sf::Color(0, 0, 0, 0));
+	charactristicOutline.setOutlineColor(sf::Color(204, 0, 0));
+	charactristicOutline.setOutlineThickness(5.f);
+	charactristicOutline.setPointCount(5);
+	charactristicOutline.setPoint(0, sf::Vector2f(100, 100 - player[0].getAttack()));
+	charactristicOutline.setPoint(1, sf::Vector2f(100 + player[0].getDefence() * 0.951, 100 - player[0].getDefence() * 0.309));
+	charactristicOutline.setPoint(2, sf::Vector2f(100 + player[0].getVitality() * 0.588, 100 + player[0].getVitality() * 0.809));
+	charactristicOutline.setPoint(3, sf::Vector2f(100 - player[0].getAgility() * 0.588, 100 + player[0].getAgility() * 0.809));
+	charactristicOutline.setPoint(4, sf::Vector2f(100 - player[0].getKnowledge() * 0.951, 100 - player[0].getKnowledge() * 0.309));
+
+	window.draw(charactristicOutline);
+
+	sf::Text* labelMainCharacteristics = new sf::Text[5];
+	labelMainCharacteristics[0].setFont(fontMM2);
+	labelMainCharacteristics[0].setFillColor(sf::Color::White);
+	labelMainCharacteristics[0].setCharacterSize(50);
+	labelMainCharacteristics[0].setLetterSpacing(1.5);
+	labelMainCharacteristics[0].setPosition(sf::Vector2f(1680, 340));
+	labelMainCharacteristics[0].setString("Attack");
+
+	labelMainCharacteristics[1].setFont(fontMM2);
+	labelMainCharacteristics[1].setFillColor(sf::Color::White);
+	labelMainCharacteristics[1].setCharacterSize(50);
+	labelMainCharacteristics[1].setLetterSpacing(1.5);
+	labelMainCharacteristics[1].setPosition(sf::Vector2f(1830, 440));
+	labelMainCharacteristics[1].setString("Defence");
+
+	labelMainCharacteristics[2].setFont(fontMM2);
+	labelMainCharacteristics[2].setFillColor(sf::Color::White);
+	labelMainCharacteristics[2].setCharacterSize(50);
+	labelMainCharacteristics[2].setLetterSpacing(1.5);
+	labelMainCharacteristics[2].setPosition(sf::Vector2f(1800, 590));
+	labelMainCharacteristics[2].setString("Vitality");
+
+	labelMainCharacteristics[3].setFont(fontMM2);
+	labelMainCharacteristics[3].setFillColor(sf::Color::White);
+	labelMainCharacteristics[3].setCharacterSize(50);
+	labelMainCharacteristics[3].setLetterSpacing(1.5);
+	labelMainCharacteristics[3].setPosition(sf::Vector2f(1580, 590));
+	labelMainCharacteristics[3].setString("Agility");
+
+	labelMainCharacteristics[4].setFont(fontMM2);
+	labelMainCharacteristics[4].setFillColor(sf::Color::White);
+	labelMainCharacteristics[4].setCharacterSize(50);
+	labelMainCharacteristics[4].setLetterSpacing(1.5);
+	labelMainCharacteristics[4].setPosition(sf::Vector2f(1500,440));
+	labelMainCharacteristics[4].setString("Knowledge");
+
+	for (int i = 0; i < 5; i++)
+	{
+		window.draw(labelMainCharacteristics[i]);
+	}
+
+	sf::RectangleShape* buttonsArcadeModeLevelUp = new sf::RectangleShape[5];
+	buttonsArcadeModeLevelUp[0].setPosition(sf::Vector2f(860, 300));
+	buttonsArcadeModeLevelUp[0].setSize(sf::Vector2f(300, 80));
+	buttonsArcadeModeLevelUp[0].setFillColor(sf::Color(60, 60, 60));
+	buttonsArcadeModeLevelUp[0].setOutlineColor(sf::Color(180, 180, 180));
+	buttonsArcadeModeLevelUp[0].setOutlineThickness(5.f);
+
+	buttonsArcadeModeLevelUp[1].setPosition(sf::Vector2f(860, 400));
+	buttonsArcadeModeLevelUp[1].setSize(sf::Vector2f(300, 80));
+	buttonsArcadeModeLevelUp[1].setFillColor(sf::Color(60, 60, 60));
+	buttonsArcadeModeLevelUp[1].setOutlineColor(sf::Color(180, 180, 180));
+	buttonsArcadeModeLevelUp[1].setOutlineThickness(5.f);
+
+	buttonsArcadeModeLevelUp[2].setPosition(sf::Vector2f(860, 500));
+	buttonsArcadeModeLevelUp[2].setSize(sf::Vector2f(300, 80));
+	buttonsArcadeModeLevelUp[2].setFillColor(sf::Color(60, 60, 60));
+	buttonsArcadeModeLevelUp[2].setOutlineColor(sf::Color(180, 180, 180));
+	buttonsArcadeModeLevelUp[2].setOutlineThickness(5.f);
+
+	buttonsArcadeModeLevelUp[3].setPosition(sf::Vector2f(860, 600));
+	buttonsArcadeModeLevelUp[3].setSize(sf::Vector2f(300, 80));
+	buttonsArcadeModeLevelUp[3].setFillColor(sf::Color(60, 60, 60));
+	buttonsArcadeModeLevelUp[3].setOutlineColor(sf::Color(180, 180, 180));
+	buttonsArcadeModeLevelUp[3].setOutlineThickness(5.f);
+
+	buttonsArcadeModeLevelUp[4].setPosition(sf::Vector2f(860, 700));
+	buttonsArcadeModeLevelUp[4].setSize(sf::Vector2f(300, 80));
+	buttonsArcadeModeLevelUp[4].setFillColor(sf::Color(60, 60, 60));
+	buttonsArcadeModeLevelUp[4].setOutlineColor(sf::Color(180, 180, 180));
+	buttonsArcadeModeLevelUp[4].setOutlineThickness(5.f);
+
+	for (int i = 0; i < 5; i++)
+	{
+		window.draw(buttonsArcadeModeLevelUp[i]);
+	}
+
+	sf::Text* labelButtonsArcadeModeLevelUp = new sf::Text[5];
+	labelButtonsArcadeModeLevelUp[0].setFont(fontMM2);
+	labelButtonsArcadeModeLevelUp[0].setFillColor(sf::Color(180, 180, 180));
+	labelButtonsArcadeModeLevelUp[0].setCharacterSize(70);
+	labelButtonsArcadeModeLevelUp[0].setLetterSpacing(1.5);
+	labelButtonsArcadeModeLevelUp[0].setPosition(sf::Vector2f(925, 300));
+	labelButtonsArcadeModeLevelUp[0].setString("Increase attack");
+
+	labelButtonsArcadeModeLevelUp[1].setFont(fontMM2);
+	labelButtonsArcadeModeLevelUp[1].setFillColor(sf::Color(180, 180, 180));
+	labelButtonsArcadeModeLevelUp[1].setCharacterSize(70);
+	labelButtonsArcadeModeLevelUp[1].setLetterSpacing(1.5);
+	labelButtonsArcadeModeLevelUp[1].setPosition(sf::Vector2f(920, 400));
+	labelButtonsArcadeModeLevelUp[1].setString("Increase defence");
+
+	labelButtonsArcadeModeLevelUp[2].setFont(fontMM2);
+	labelButtonsArcadeModeLevelUp[2].setFillColor(sf::Color(180, 180, 180));
+	labelButtonsArcadeModeLevelUp[2].setCharacterSize(70);
+	labelButtonsArcadeModeLevelUp[2].setLetterSpacing(1.5);
+	labelButtonsArcadeModeLevelUp[2].setPosition(sf::Vector2f(920, 500));
+	labelButtonsArcadeModeLevelUp[2].setString("Increase vitality");
+
+	labelButtonsArcadeModeLevelUp[3].setFont(fontMM2);
+	labelButtonsArcadeModeLevelUp[3].setFillColor(sf::Color::White);
+	labelButtonsArcadeModeLevelUp[3].setCharacterSize(70);
+	labelButtonsArcadeModeLevelUp[3].setLetterSpacing(1.5);
+	labelButtonsArcadeModeLevelUp[3].setPosition(sf::Vector2f(925, 600));
+	labelButtonsArcadeModeLevelUp[3].setString("Increase agility");
+
+	labelButtonsArcadeModeLevelUp[4].setFont(fontMM2);
+	labelButtonsArcadeModeLevelUp[4].setFillColor(sf::Color(180, 180, 180));
+	labelButtonsArcadeModeLevelUp[4].setCharacterSize(70);
+	labelButtonsArcadeModeLevelUp[4].setLetterSpacing(1.5);
+	labelButtonsArcadeModeLevelUp[4].setPosition(sf::Vector2f(895, 700));
+	labelButtonsArcadeModeLevelUp[4].setString("Increase knowlegde");
+
+	for (int i = 0; i < 5; i++)
+	{
+		window.draw(labelButtonsArcadeModeLevelUp[i]);
 	}
 
 	window.draw(cursor);
@@ -1285,36 +1446,55 @@ void Game::arcadeModeLevelUpUpdate(sf::Time elapsedTime, Player* player)
 {
 	if (inputs[5] == 1)
 	{
-		if (sf::Mouse::getPosition().x > 800 and sf::Mouse::getPosition().x < 1110 and sf::Mouse::getPosition().y > 490 and sf::Mouse::getPosition().y < 580) //up cast speed
+		if (sf::Mouse::getPosition().x > 860 and sf::Mouse::getPosition().x < 1160 and sf::Mouse::getPosition().y > 300 and sf::Mouse::getPosition().y < 380) //up attack
 		{
 			if (player[0].getCastSpeed() > 5)
 			{
-				player[0].setCastSpeed(player[0].getCastSpeed() - player[0].getCastSpeed() * 0.05);
+				player[0].setAttack(player[0].getAttack() + 1);
 				levelUp = 0;
 				inputs[5] = 0;
 				sf::sleep(sf::milliseconds(100));
 			}
 		}
-		if (sf::Mouse::getPosition().x > 460 and sf::Mouse::getPosition().x < 740 and sf::Mouse::getPosition().y > 490 and sf::Mouse::getPosition().y < 580) //heal
+		if (sf::Mouse::getPosition().x > 860 and sf::Mouse::getPosition().x < 1160 and sf::Mouse::getPosition().y > 400 and sf::Mouse::getPosition().y < 480) //up defence
 		{
 			if (player[0].getHealth() < 100)
 			{
-				player[0].setHealth(player[0].getHealth() + 10);
+				player[0].setDefence(player[0].getDefence() + 1);
 				levelUp = 0;
 				inputs[5] = 0;
 				sf::sleep(sf::milliseconds(100));
 			}
 		}
-		if (sf::Mouse::getPosition().x > 1140 and sf::Mouse::getPosition().x < 1450 and sf::Mouse::getPosition().y > 490 and sf::Mouse::getPosition().y < 580) //up speed
+		if (sf::Mouse::getPosition().x > 860 and sf::Mouse::getPosition().x < 1160 and sf::Mouse::getPosition().y > 500 and sf::Mouse::getPosition().y < 580) //up vitality
 		{
 			if (player[0].getSpeed() < 500)
 			{
-				player[0].setSpeed(player[0].getSpeed() + 10);
+				player[0].setVitality(player[0].getVitality() + 1);
 				levelUp = 0;
 				inputs[5] = 0;
 				sf::sleep(sf::milliseconds(100));
 			}
 		}
-		
+		if (sf::Mouse::getPosition().x > 860 and sf::Mouse::getPosition().x < 1160 and sf::Mouse::getPosition().y > 600 and sf::Mouse::getPosition().y < 680) //up agility
+		{
+			if (player[0].getSpeed() < 500)
+			{
+				player[0].setAgility(player[0].getAgility() + 1);
+				levelUp = 0;
+				inputs[5] = 0;
+				sf::sleep(sf::milliseconds(100));
+			}
+		}
+		if (sf::Mouse::getPosition().x > 860 and sf::Mouse::getPosition().x < 1160 and sf::Mouse::getPosition().y > 700 and sf::Mouse::getPosition().y < 780) //up knowledge
+		{
+			if (player[0].getSpeed() < 500)
+			{
+				player[0].setKnowledge(player[0].getKnowledge() + 1);
+				levelUp = 0;
+				inputs[5] = 0;
+				sf::sleep(sf::milliseconds(100));
+			}
+		}
 	}
 }

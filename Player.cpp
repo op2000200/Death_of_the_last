@@ -5,7 +5,7 @@ Player::Player(sf::Texture *texture)
 {
 	level = 0;
 	exp = 0;
-	expCap = 1;
+	expCap = 10;
 
 
 	attack = 0;
@@ -28,6 +28,8 @@ Player::Player(sf::Texture *texture)
 
 	mana = 100;
 	manaRecover = 1;
+
+	manaUsage = 1;
 }
 
 sf::Sprite Player::getSprite()
