@@ -4,32 +4,32 @@ Player::Player(sf::Texture *texture)
 	:sprite(*texture)
 {
 	level = 0;
-	exp = 0;
-	expCap = 10;
+	exp = 1000;
+	expCap = 1;
 
 
-	attack = 0;
-	defence = 0;
-	vitality = 0;
-	agility = 0;
-	knowledge = 0;
+	attack = 100;
+	defence = 100;
+	vitality = 100;
+	agility = 100;
+	knowledge = 100;
 	//secondary
-	baseAttack = 50;
+	baseAttack = 55;
 	critChance = 0;
 
 	//int shieldCoef;
 	resist = 0;
 
-	health = 50;
+	health = 55;
 	healthRecover = 1;
 
-	speed = 200;
+	speed = 104;
 	castSpeed = 50;
 
 	mana = 100;
 	manaRecover = 1;
 
-	manaUsage = 1;
+	manaUsage = 0;
 }
 
 sf::Sprite Player::getSprite()
