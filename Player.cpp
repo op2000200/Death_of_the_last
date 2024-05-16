@@ -4,15 +4,15 @@ Player::Player(sf::Texture *texture)
 	:sprite(*texture)
 {
 	level = 0;
-	exp = 1000;
-	expCap = 1;
+	exp = 0;
+	expCap = 10;
 
 
-	attack = 100;
-	defence = 100;
-	vitality = 100;
-	agility = 100;
-	knowledge = 100;
+	attack = 1;
+	defence = 1;
+	vitality = 1;
+	agility = 1;
+	knowledge = 1;
 	//secondary
 	baseAttack = 55;
 	critChance = 0;

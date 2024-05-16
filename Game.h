@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "Mana.h"
 #include "CheckBox.h"
+#include "BasicMissleCold.h"
 class Game
 {
 public: //public methods
@@ -25,6 +26,9 @@ private: //private methods
 	void updatePlayer(sf::Time elapsedTime, Player* player);
 	void updateMana(sf::Time elapsedTime, Player* player);
 	void updateBullets(sf::Time elapsedTime, Player* player);
+
+	void updateBasicMissle(sf::Time elapsedTime, Player* player);
+
 	void updateEnemies(sf::Time elapsedTime, Player* player);
 	void updateCollision(sf::Time elapsedTime, Player* player);
 	void updateLevel(sf::Time elapsedTime, Player* player);
@@ -76,6 +80,7 @@ private: //private variables
 	sf::Texture* bulletTexture;
 	sf::Texture* bgTexture;
 	sf::Texture* manaTexture;
+	sf::Texture* BasicMissleColdTexture;
 	sf::Clock timer;
 	Player* player;
 	int castCooldown;
@@ -91,6 +96,11 @@ private: //private variables
 	std::vector<Mana> manaBuffer;
 	int manaCounter;
 	int manaTickCounter;
+
+	std::vector<BasicMissleCold> basicMissleColdBuffer;
+	int basicMissleColdCounter;
+	int basicMissleColdCooldown;
+
 
 	int settingState; //0 = video 1 = audio 2 = gameplay
 

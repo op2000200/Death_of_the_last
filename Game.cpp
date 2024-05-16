@@ -34,6 +34,8 @@ Game::Game()
 	bgTexture->loadFromFile("assets/textures/bg2.jpg");
 	manaTexture = new sf::Texture;
 	manaTexture->loadFromFile("assets/textures/manaOrb1.png");
+	BasicMissleColdTexture = new sf::Texture;
+	BasicMissleColdTexture->loadFromFile("assets/textures/basicCold.png");
 	manaTickCounter = 0;
 	playerState = 0;
 	for (int i = 0; i < 200; i++)
@@ -49,6 +51,8 @@ Game::Game()
 	playerDeath = 0;
 	levelUp = 0;
 	settingState = 0; //0 = video 1 = audio 2 = gameplay
+	basicMissleColdCooldown = 0;
+	basicMissleColdCounter = 0;
 }
 
 void Game::run()
@@ -416,6 +420,9 @@ void Game::arcadeMode()
 		enemyBuffer.clear();
 		manaBuffer.clear();
 		bulletBuffer.clear();
+		basicMissleColdBuffer.clear();
+		basicMissleColdCooldown = 0;
+		basicMissleColdCounter = 0;
 	}
 	while (true)
 	{
@@ -438,7 +445,9 @@ void Game::arcadeMode()
 			}
 			if (paused == 1)
 			{
+				//sf::Clock breakTime;
 				arcadeModePause();
+				//timer = breakTime.getElapsedTime();
 				return;
 			}
 		}
@@ -464,7 +473,8 @@ void Game::arcadeModeRun(Player* player)
 		updatePlayer(TimePerFrame, player);
 		updateMana(TimePerFrame, player);
 		updateEnemies(TimePerFrame, player);
-		updateBullets(TimePerFrame, player);
+		//updateBullets(TimePerFrame, player);
+		updateBasicMissle(TimePerFrame, player);
 		updateCollision(TimePerFrame, player);
 		updateLevel(TimePerFrame, player);
 		collectFarObjects(TimePerFrame, player);
@@ -488,10 +498,10 @@ void Game::arcadeModeRun(Player* player)
 		{
 			return;
 		}
-		if (bufLevel != player[0].getLevel() and player[0].getLevel() < 500)
+		if (bufLevel != player[0].getLevel() and player[0].getLevel() < 501)
 		{
-			pausedScreen.create(window.getSize().x, window.getSize().y);
-			pausedScreen.update(window);
+			//pausedScreen.create(window.getSize().x, window.getSize().y);
+			//pausedScreen.update(window);
 			return;
 		}
 		if (timer.getElapsedTime().asSeconds() > sf::seconds(1200).asSeconds())
@@ -665,6 +675,11 @@ void Game::arcadeModeRunDraw(Player* player)
 	for (int i = 0; i < bulletCounter; i++)
 	{
 		window.draw(bulletBuffer[i].getSprite());
+	}
+
+	for (int i = 0; i < basicMissleColdCounter; i++)
+	{
+		window.draw(basicMissleColdBuffer[i].getSprite());
 	}
 
 	//draw hud
@@ -922,6 +937,95 @@ void Game::updateBullets(sf::Time elapsedTime, Player* player)
 	}
 }
 
+void Game::updateBasicMissle(sf::Time elapsedTime, Player* player)
+{
+	if (basicMissleColdCooldown > 144 * 0.5 * (100.f / static_cast<float>(player[0].getCastSpeed())))
+	{
+		int* distBuffer = new int[enemyCounter];
+		int num;
+		if (0.5 * (100.f / static_cast<float>(player[0].getCastSpeed())) > 144)
+		{
+			num = 1;
+		}
+		else
+		{
+			num = static_cast <float>(1 / (0.5 * (100.f / static_cast<float>(player[0].getCastSpeed()))));
+		}
+		int* distBuffer2 = new int[num];
+		int* nums = new int[num];
+		for (int j = 0; j < num; j++)
+		{
+			distBuffer2[j] = 10000;
+			nums[j] = 0;
+		}
+
+		for (int i = 0; i < enemyCounter; i++)
+		{
+			sf::Vector2f posPlayer, posEnemy;
+			int dist;
+			posPlayer = sf::Vector2f(player[0].getSprite().getPosition().x + 70, player[0].getSprite().getPosition().y + 15);
+			posEnemy = sf::Vector2f(enemyBuffer[i].getSprite().getPosition().x + 20, enemyBuffer[i].getSprite().getPosition().y + 20);
+			dist = sqrt(pow(posPlayer.x - posEnemy.x, 2) + pow(posPlayer.y - posEnemy.y, 2));
+			distBuffer[i] = dist;
+		}
+		for (int i = 0; i < enemyCounter; i++)
+		{
+			for (int j = 0; j < num; j++)
+			{
+				if (distBuffer[i] < distBuffer2[j])
+				{
+					for (int k = j; k < num - 1; k++)
+					{
+						distBuffer2[k + 1] = distBuffer2[k];
+						nums[k + 1] = nums[k];
+					}
+					distBuffer2[j] = distBuffer[i];
+					nums[j] = i;
+					break;
+				}
+			}
+		}
+		for (int i = 0; i < num; i++)
+		{
+			if (distBuffer2[i] < 1000)
+			{
+				BasicMissleCold missle(sf::Vector2f(player[0].getSprite().getPosition().x + 70, player[0].getSprite().getPosition().y + 15), BasicMissleColdTexture);
+				missle.setDirection(sf::Vector2f(
+					(enemyBuffer[nums[i]].getSprite().getPosition().x - player[0].getSprite().getPosition().x - 50) / (std::abs(enemyBuffer[nums[i]].getSprite().getPosition().x - player[0].getSprite().getPosition().x - 50) + std::abs(enemyBuffer[nums[i]].getSprite().getPosition().y - player[0].getSprite().getPosition().y + 5)),
+					(enemyBuffer[nums[i]].getSprite().getPosition().y - player[0].getSprite().getPosition().y + 5) / (std::abs(enemyBuffer[nums[i]].getSprite().getPosition().x - player[0].getSprite().getPosition().x - 50) + std::abs(enemyBuffer[nums[i]].getSprite().getPosition().y - player[0].getSprite().getPosition().y + 5))
+				));
+				//missle.setRotation(pow(static_cast<float>(acos(static_cast<float>((missle.getDirection().x * missle.getDirection().x + missle.getDirection().y * 0) / (sqrt(pow(missle.getDirection().x,2) + pow(0,2)) * sqrt(pow(missle.getDirection().x, 2) + pow(missle.getDirection().y, 2))), 1)))));
+				basicMissleColdBuffer.push_back(missle);
+				basicMissleColdCounter++;
+			}
+		}
+		basicMissleColdCooldown = 0;
+	}
+	else
+	{
+		basicMissleColdCooldown++;
+	}
+	for (int i = 0; i < basicMissleColdCounter; i++)
+	{
+		basicMissleColdBuffer[i].setPosition(sf::Vector2f(
+			basicMissleColdBuffer[i].getSprite().getPosition().x + basicMissleColdBuffer[i].getSpeed() * sf::seconds(1.f / 144.f).asSeconds() * basicMissleColdBuffer[i].getDirection().x,
+			basicMissleColdBuffer[i].getSprite().getPosition().y + basicMissleColdBuffer[i].getSpeed() * sf::seconds(1.f / 144.f).asSeconds() * basicMissleColdBuffer[i].getDirection().y
+		));
+		int buf;
+		buf = basicMissleColdBuffer[i].getHealth();
+		buf--;
+		if (buf < 0)
+		{
+			basicMissleColdBuffer.erase(basicMissleColdBuffer.begin() + i);
+			basicMissleColdCounter--;
+		}
+		else
+		{
+			basicMissleColdBuffer[i].setHealth(buf);
+		}
+	}
+}
+
 void Game::updateEnemies(sf::Time elapsedTime, Player* player)
 {
 	enemyCooldown++;
@@ -955,32 +1059,32 @@ void Game::updateEnemies(sf::Time elapsedTime, Player* player)
 	
 void Game::updateCollision(sf::Time elapsedTime, Player* player)
 {
-	for (int i = 0; i < bulletCounter; i++)
-	{
-		for (int j = 0; j < enemyCounter; j++)
-		{
-			if (abs(bulletBuffer[i].getSprite().getPosition().x - enemyBuffer[j].getSprite().getPosition().x - 10) < 20 and abs(bulletBuffer[i].getSprite().getPosition().y - enemyBuffer[j].getSprite().getPosition().y - 10) < 20)
-			{
-				bulletBuffer.erase(bulletBuffer.begin() + i);
-				enemyBuffer.erase(enemyBuffer.begin() + j);
-				bulletCounter--;
-				enemyCounter--;
-				player[0].setExp(player[0].getExp() + 10);
-				break;
-			}
-		}
-	}
-	for (int j = 0; j < enemyCounter; j++)
-	{
-		if (abs(player[0].getSprite().getPosition().x + 25 - enemyBuffer[j].getSprite().getPosition().x) < 30 and abs(player[0].getSprite().getPosition().y + 40 - enemyBuffer[j].getSprite().getPosition().y) < 40)
-		{
-			enemyBuffer.erase(enemyBuffer.begin() + j);
-			enemyCounter--;
-			player[0].setExp(player[0].getExp() + 10);
-			player[0].setHealth(player[0].getHealth() - 10);
-			break;
-		}
-	}
+	//for (int i = 0; i < bulletCounter; i++)
+	//{
+	//	for (int j = 0; j < enemyCounter; j++)
+	//	{
+	//		if (abs(bulletBuffer[i].getSprite().getPosition().x - enemyBuffer[j].getSprite().getPosition().x - 10) < 20 and abs(bulletBuffer[i].getSprite().getPosition().y - enemyBuffer[j].getSprite().getPosition().y - 10) < 20)
+	//		{
+	//			bulletBuffer.erase(bulletBuffer.begin() + i);
+	//			enemyBuffer.erase(enemyBuffer.begin() + j);
+	//			bulletCounter--;
+	//			enemyCounter--;
+	//			player[0].setExp(player[0].getExp() + 10);
+	//			break;
+	//		}
+	//	}
+	//}
+	//for (int j = 0; j < enemyCounter; j++)
+	//{
+	//	if (abs(player[0].getSprite().getPosition().x + 25 - enemyBuffer[j].getSprite().getPosition().x) < 30 and abs(player[0].getSprite().getPosition().y + 40 - enemyBuffer[j].getSprite().getPosition().y) < 40)
+	//	{
+	//		enemyBuffer.erase(enemyBuffer.begin() + j);
+	//		enemyCounter--;
+	//		player[0].setExp(player[0].getExp() + 10);
+	//		player[0].setHealth(player[0].getHealth() - 10);
+	//		break;
+	//	}
+	//}
 	for (int i = 0; i < manaCounter; i++)
 	{
 		if (abs(player[0].getSprite().getPosition().x + 35 - manaBuffer[i].getSprite().getPosition().x) < 30 and abs(player[0].getSprite().getPosition().y + 50 - manaBuffer[i].getSprite().getPosition().y) < 40)
@@ -991,24 +1095,29 @@ void Game::updateCollision(sf::Time elapsedTime, Player* player)
 			break;
 		}
 	}
-	if (player[0].getHealth() < 1)
-	{
-		playerDeath = 1; //die screen
-	}
+	//if (player[0].getHealth() < 1)
+	//{
+	//	playerDeath = 1; //die screen
+	//}
 }
 
 void Game::updateLevel(sf::Time elapsedTime, Player* player)
 {
 	while (player[0].getExp() >= player[0].getExpCap())
 	{
-		player[0].setExp(player[0].getExp() - player[0].getExpCap());
-		player[0].setExpCap(player[0].getExpCap() * 1.01);
-		player[0].setLevel(player[0].getLevel() + 1);
-		if (player[0].getLevel() > 500)
+		
+		if (player[0].getLevel() >= 500)
 		{
 			player[0].setLevel(500);
+			player[0].setExp(0);
 		}
-		levelUp++;
+		else
+		{
+			player[0].setExp(player[0].getExp() - player[0].getExpCap());
+			player[0].setExpCap(player[0].getExpCap() * 1.01);
+			player[0].setLevel(player[0].getLevel() + 1);
+			levelUp++;
+		}
 	}
 }
 
@@ -1512,27 +1621,27 @@ void Game::arcadeModeLevelUpDraw(sf::Sprite prevFrame)
 	labelButtonsArcadeModeLevelUp[4].setPosition(sf::Vector2f(695, 700));
 	labelButtonsArcadeModeLevelUp[4].setString("Increase knowlegde");
 
-	if (player[0].getAttack() < 100)
+	if (player[0].getAttack() < 101)
 	{
 		window.draw(buttonsArcadeModeLevelUp[0]);
 		window.draw(labelButtonsArcadeModeLevelUp[0]);
 	}
-	if (player[0].getDefence() < 100)
+	if (player[0].getDefence() < 101)
 	{
 		window.draw(buttonsArcadeModeLevelUp[1]);
 		window.draw(labelButtonsArcadeModeLevelUp[1]);
 	}
-	if (player[0].getVitality() < 100)
+	if (player[0].getVitality() < 101)
 	{
 		window.draw(buttonsArcadeModeLevelUp[2]);
 		window.draw(labelButtonsArcadeModeLevelUp[2]);
 	}
-	if (player[0].getAgility() < 100)
+	if (player[0].getAgility() < 101)
 	{
 		window.draw(buttonsArcadeModeLevelUp[3]);
 		window.draw(labelButtonsArcadeModeLevelUp[3]);
 	}
-	if (player[0].getKnowledge() < 100)
+	if (player[0].getKnowledge() < 101)
 	{
 		window.draw(buttonsArcadeModeLevelUp[4]);
 		window.draw(labelButtonsArcadeModeLevelUp[4]);
@@ -1547,7 +1656,7 @@ void Game::arcadeModeLevelUpUpdate(sf::Time elapsedTime, Player* player)
 	{
 		if (sf::Mouse::getPosition().x > 660 and sf::Mouse::getPosition().x < 960 and sf::Mouse::getPosition().y > 300 and sf::Mouse::getPosition().y < 380) //up attack
 		{
-			if (player[0].getAttack() < 100)
+			if (player[0].getAttack() < 101)
 			{
 				if (player[0].getAttack() > 0 and player[0].getAttack() < 10)
 				{
@@ -1622,7 +1731,7 @@ void Game::arcadeModeLevelUpUpdate(sf::Time elapsedTime, Player* player)
 												}
 												else
 												{
-													if (player[0].getAttack() >= 90 and player[0].getAttack() < 100)
+													if (player[0].getAttack() >= 90 and player[0].getAttack() < 101)
 													{
 														player[0].setBaseAttack(player[0].getBaseAttack() + 100);
 													}
@@ -1643,7 +1752,7 @@ void Game::arcadeModeLevelUpUpdate(sf::Time elapsedTime, Player* player)
 		}
 		if (sf::Mouse::getPosition().x > 660 and sf::Mouse::getPosition().x < 960 and sf::Mouse::getPosition().y > 400 and sf::Mouse::getPosition().y < 480) //up defence
 		{
-			if (player[0].getDefence() < 100)
+			if (player[0].getDefence() < 101)
 			{
 				if (player[0].getDefence() >= 30 and player[0].getDefence() < 79)
 				{
@@ -1657,7 +1766,7 @@ void Game::arcadeModeLevelUpUpdate(sf::Time elapsedTime, Player* player)
 		}
 		if (sf::Mouse::getPosition().x > 660 and sf::Mouse::getPosition().x < 960 and sf::Mouse::getPosition().y > 500 and sf::Mouse::getPosition().y < 580) //up vitality
 		{
-			if (player[0].getVitality() < 100)
+			if (player[0].getVitality() < 101)
 			{
 				if (player[0].getVitality() > 0 and player[0].getVitality() < 10)
 				{
@@ -1720,7 +1829,7 @@ void Game::arcadeModeLevelUpUpdate(sf::Time elapsedTime, Player* player)
 												}
 												else
 												{
-													if (player[0].getVitality() >= 90 and player[0].getVitality() < 100)
+													if (player[0].getVitality() >= 90 and player[0].getVitality() < 101)
 													{
 														player[0].setHealth(player[0].getHealth() + 50);
 													}
@@ -1742,7 +1851,7 @@ void Game::arcadeModeLevelUpUpdate(sf::Time elapsedTime, Player* player)
 		}
 		if (sf::Mouse::getPosition().x > 660 and sf::Mouse::getPosition().x < 960 and sf::Mouse::getPosition().y > 600 and sf::Mouse::getPosition().y < 680) //up agility
 		{
-			if (player[0].getAgility() < 100)
+			if (player[0].getAgility() < 101)
 			{
 				player[0].setAgility(player[0].getAgility() + 1);
 				player[0].setSpeed(player[0].getSpeed() + 4);
@@ -1754,7 +1863,7 @@ void Game::arcadeModeLevelUpUpdate(sf::Time elapsedTime, Player* player)
 		}
 		if (sf::Mouse::getPosition().x > 660 and sf::Mouse::getPosition().x < 960 and sf::Mouse::getPosition().y > 700 and sf::Mouse::getPosition().y < 780) //up knowledge
 		{
-			if (player[0].getKnowledge() < 100)
+			if (player[0].getKnowledge() < 101)
 			{
 				if (player[0].getKnowledge() > 0 and player[0].getKnowledge() < 20)
 				{
@@ -1770,7 +1879,7 @@ void Game::arcadeModeLevelUpUpdate(sf::Time elapsedTime, Player* player)
 					}
 					else
 					{
-						if (player[0].getKnowledge() >= 52 and player[0].getKnowledge() < 100)
+						if (player[0].getKnowledge() >= 52 and player[0].getKnowledge() < 101)
 						{
 							player[0].setMana(player[0].getMana() + 4000);
 							player[0].setManaRecover(player[0].getMana() / 10);
