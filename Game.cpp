@@ -994,7 +994,7 @@ void Game::updateBasicMissle(sf::Time elapsedTime, Player* player)
 					(enemyBuffer[nums[i]].getSprite().getPosition().x - player[0].getSprite().getPosition().x - 50) / (std::abs(enemyBuffer[nums[i]].getSprite().getPosition().x - player[0].getSprite().getPosition().x - 50) + std::abs(enemyBuffer[nums[i]].getSprite().getPosition().y - player[0].getSprite().getPosition().y + 5)),
 					(enemyBuffer[nums[i]].getSprite().getPosition().y - player[0].getSprite().getPosition().y + 5) / (std::abs(enemyBuffer[nums[i]].getSprite().getPosition().x - player[0].getSprite().getPosition().x - 50) + std::abs(enemyBuffer[nums[i]].getSprite().getPosition().y - player[0].getSprite().getPosition().y + 5))
 				));
-				missle.setRotation(acos((0*missle.getDirection().x + 1 * missle.getDirection().y) / (sqrt(pow(0,2)+pow(1,2))*sqrt(pow(missle.getDirection().x,2)+pow(missle.getDirection().y,2)))));
+				//missle.setRotation(acos((1 * missle.getDirection().y) / (1*sqrt(missle.getDirection().x * missle.getDirection().x + missle.getDirection().y * missle.getDirection().y))));
 				basicMissleColdBuffer.push_back(missle);
 				basicMissleColdCounter++;
 			}
