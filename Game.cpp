@@ -987,14 +987,14 @@ void Game::updateBasicMissle(sf::Time elapsedTime, Player* player)
 		}
 		for (int i = 0; i < num; i++)
 		{
-			if (distBuffer2[i] < 1000)
+			if (distBuffer2[i] < 100000)
 			{
 				BasicMissleCold missle(sf::Vector2f(player[0].getSprite().getPosition().x + 70, player[0].getSprite().getPosition().y + 15), BasicMissleColdTexture);
 				missle.setDirection(sf::Vector2f(
 					(enemyBuffer[nums[i]].getSprite().getPosition().x - player[0].getSprite().getPosition().x - 50) / (std::abs(enemyBuffer[nums[i]].getSprite().getPosition().x - player[0].getSprite().getPosition().x - 50) + std::abs(enemyBuffer[nums[i]].getSprite().getPosition().y - player[0].getSprite().getPosition().y + 5)),
 					(enemyBuffer[nums[i]].getSprite().getPosition().y - player[0].getSprite().getPosition().y + 5) / (std::abs(enemyBuffer[nums[i]].getSprite().getPosition().x - player[0].getSprite().getPosition().x - 50) + std::abs(enemyBuffer[nums[i]].getSprite().getPosition().y - player[0].getSprite().getPosition().y + 5))
 				));
-				//missle.setRotation(pow(static_cast<float>(acos(static_cast<float>((missle.getDirection().x * missle.getDirection().x + missle.getDirection().y * 0) / (sqrt(pow(missle.getDirection().x,2) + pow(0,2)) * sqrt(pow(missle.getDirection().x, 2) + pow(missle.getDirection().y, 2))), 1)))));
+				missle.setRotation(acos((0*missle.getDirection().x + 1 * missle.getDirection().y) / (sqrt(pow(0,2)+pow(1,2))*sqrt(pow(missle.getDirection().x,2)+pow(missle.getDirection().y,2)))));
 				basicMissleColdBuffer.push_back(missle);
 				basicMissleColdCounter++;
 			}
