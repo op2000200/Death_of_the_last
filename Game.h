@@ -104,6 +104,10 @@ private: //private variables
 
 	int settingState; //0 = video 1 = audio 2 = gameplay
 
+	int enemyCooldownVar;
+	int enemyCountVar;
+	int manaCountVar;
+
 
 	int playerState;
 	int playerDeath;

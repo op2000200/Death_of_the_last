@@ -8,8 +8,9 @@ BasicMissleCold::BasicMissleCold(sf::Vector2f pos, sf::Texture* texture)
 	: sprite(*texture)
 {
 	BasicMissleCold::sprite.setPosition(pos);
-	health = 100;
-	speed = 50;
+	//BasicMissleCold::sprite.setScale(sf::Vector2f(5.f,5.f));
+	health = 10000;
+	speed = 0;
 	damageMP = 50;
 	critRate = 10;
 	critDamage = 200;
@@ -54,7 +55,7 @@ sf::Vector2f BasicMissleCold::getDirection()
 
 float BasicMissleCold::getRotation()
 {
-	return BasicMissleCold::rotation;
+	return BasicMissleCold::sprite.getRotation();
 }
 
 int BasicMissleCold::getHealth()

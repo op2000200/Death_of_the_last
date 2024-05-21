@@ -36,6 +36,7 @@ Game::Game()
 	manaTexture->loadFromFile("assets/textures/manaOrb1.png");
 	BasicMissleColdTexture = new sf::Texture;
 	BasicMissleColdTexture->loadFromFile("assets/textures/basicCold.png");
+	BasicMissleColdTexture->setSmooth(true);
 	manaTickCounter = 0;
 	playerState = 0;
 	for (int i = 0; i < 200; i++)
@@ -53,6 +54,9 @@ Game::Game()
 	settingState = 0; //0 = video 1 = audio 2 = gameplay
 	basicMissleColdCooldown = 0;
 	basicMissleColdCounter = 0;
+	enemyCooldownVar = 2;
+	enemyCountVar = 100;
+	manaCountVar = 200;
 }
 
 void Game::run()
@@ -679,7 +683,32 @@ void Game::arcadeModeRunDraw(Player* player)
 
 	for (int i = 0; i < basicMissleColdCounter; i++)
 	{
+		
+		//window.draw(basicMissleColdBuffer[i].getSprite());
+		//basicMissleColdBuffer[i].setRotation(i);
+		basicMissleColdBuffer[i].setPosition(sf::Vector2f(
+			(basicMissleColdBuffer[i].getSprite().getPosition().x + (65 + 56.5 * cos((basicMissleColdBuffer[i].getRotation() + 225) / (180 / 3.14)))),
+			(basicMissleColdBuffer[i].getSprite().getPosition().y + (10 + 56.5 * sin((basicMissleColdBuffer[i].getRotation() + 225) / (180 / 3.14))))
+		));
+		
 		window.draw(basicMissleColdBuffer[i].getSprite());
+		basicMissleColdBuffer[i].setPosition(sf::Vector2f(
+			(basicMissleColdBuffer[i].getSprite().getPosition().x - (65 + 56.5 * cos((basicMissleColdBuffer[i].getRotation() + 225) / (180 / 3.14)))),
+			(basicMissleColdBuffer[i].getSprite().getPosition().y - (10 + 56.5 * sin((basicMissleColdBuffer[i].getRotation() + 225) / (180 / 3.14))))
+		));
+
+		//for (int j = 0; j < 360; j++)
+		//{
+		//	basicMissleColdBuffer[i].setPosition(sf::Vector2f(
+		//		(basicMissleColdBuffer[i].getSprite().getPosition().x + (80 + 113 * cos(j))),
+		//		(basicMissleColdBuffer[i].getSprite().getPosition().y + (80 + 113 * sin(j)))
+		//	));
+		//	window.draw(basicMissleColdBuffer[i].getSprite());
+		//	basicMissleColdBuffer[i].setPosition(sf::Vector2f(
+		//		(basicMissleColdBuffer[i].getSprite().getPosition().x - (80 + 113 * cos(j))),
+		//		(basicMissleColdBuffer[i].getSprite().getPosition().y - (80 + 113 * sin(j)))
+		//	));
+		//}
 	}
 
 	//draw hud
@@ -699,9 +728,9 @@ void Game::arcadeModeRunDraw(Player* player)
 	sf::RectangleShape expBarFill(sf::Vector2f(200*(static_cast<float>(player[0].getExp())/player[0].getExpCap()), 20));
 	expBarFill.setPosition(view.getCenter().x + 700, view.getCenter().y + 340);
 	expBarFill.setFillColor(sf::Color::Blue);
-	window.draw(healthBarFill);
+	//window.draw(healthBarFill);
 	window.draw(expBarFill);
-	window.draw(healthBarOut);
+	//window.draw(healthBarOut);
 	window.draw(expBarOut);
 
 	//draw text
@@ -723,16 +752,16 @@ void Game::arcadeModeRunDraw(Player* player)
 	stat += " \\ ";
 	stat += std::to_string(player[0].getExpCap());
 	stat += "\n";
-	stat += "Health: ";
-	stat += std::to_string(player[0].getHealth());
-	stat += " \\ 100";
-	stat += "\n";
-	stat += "Speed: ";
-	stat += std::to_string(player[0].getSpeed());
-	stat += "\n";
-	stat += "Cast cooldown: ";
-	stat += std::to_string(player[0].getCastSpeed());
-	stat += "\n";
+	//stat += "Health: ";
+	//stat += std::to_string(player[0].getHealth());
+	//stat += " \\ 100";
+	//stat += "\n";
+	//stat += "Speed: ";
+	//stat += std::to_string(player[0].getSpeed());
+	//stat += "\n";
+	//stat += "Cast cooldown: ";
+	//stat += std::to_string(player[0].getCastSpeed());
+	//stat += "\n";
 	labelStatistic.setString(stat);
 	labelStatistic.setPosition(sf::Vector2f(view.getCenter().x-(1910/2), view.getCenter().y-(1070/2)));
 	labelStatistic.setFillColor(sf::Color::White);
@@ -849,7 +878,7 @@ void Game::updateMana(sf::Time elapsedTime, Player* player)
 	posMana.x = -3000 + posPlayer.x + rand() % 6000;
 	posMana.y = -3000 + posPlayer.y + rand() % 6000;
 	dist = sqrt(pow(posPlayer.x - posMana.x, 2) + pow(posPlayer.y - posMana.y, 2));
-	if (dist > 2500 and manaCounter < 1000)
+	if (dist > 2500 and manaCounter < manaCountVar)
 	{
 		Mana mana(posMana, manaTexture);
 		manaBuffer.push_back(mana);
@@ -939,7 +968,7 @@ void Game::updateBullets(sf::Time elapsedTime, Player* player)
 
 void Game::updateBasicMissle(sf::Time elapsedTime, Player* player)
 {
-	if (basicMissleColdCooldown > 144 * 0.5 * (100.f / static_cast<float>(player[0].getCastSpeed())))
+	if (basicMissleColdCooldown > 144 * 0.001 * (100.f / static_cast<float>(player[0].getCastSpeed())))
 	{
 		int* distBuffer = new int[enemyCounter];
 		int num;
@@ -963,7 +992,7 @@ void Game::updateBasicMissle(sf::Time elapsedTime, Player* player)
 		{
 			sf::Vector2f posPlayer, posEnemy;
 			int dist;
-			posPlayer = sf::Vector2f(player[0].getSprite().getPosition().x + 70, player[0].getSprite().getPosition().y + 15);
+			posPlayer = sf::Vector2f(player[0].getSprite().getPosition().x + 45, player[0].getSprite().getPosition().y + 60);
 			posEnemy = sf::Vector2f(enemyBuffer[i].getSprite().getPosition().x + 20, enemyBuffer[i].getSprite().getPosition().y + 20);
 			dist = sqrt(pow(posPlayer.x - posEnemy.x, 2) + pow(posPlayer.y - posEnemy.y, 2));
 			distBuffer[i] = dist;
@@ -987,15 +1016,68 @@ void Game::updateBasicMissle(sf::Time elapsedTime, Player* player)
 		}
 		for (int i = 0; i < num; i++)
 		{
-			if (distBuffer2[i] < 100000)
+			if (distBuffer2[i] < 700)
 			{
-				BasicMissleCold missle(sf::Vector2f(player[0].getSprite().getPosition().x + 70, player[0].getSprite().getPosition().y + 15), BasicMissleColdTexture);
+				BasicMissleCold missle(sf::Vector2f(player[0].getSprite().getPosition().x + 30, player[0].getSprite().getPosition().y - 15), BasicMissleColdTexture);
+				//BasicMissleCold missle(sf::Vector2f(0, 0), BasicMissleColdTexture);
 				missle.setDirection(sf::Vector2f(
-					(enemyBuffer[nums[i]].getSprite().getPosition().x - player[0].getSprite().getPosition().x - 50) / (std::abs(enemyBuffer[nums[i]].getSprite().getPosition().x - player[0].getSprite().getPosition().x - 50) + std::abs(enemyBuffer[nums[i]].getSprite().getPosition().y - player[0].getSprite().getPosition().y + 5)),
-					(enemyBuffer[nums[i]].getSprite().getPosition().y - player[0].getSprite().getPosition().y + 5) / (std::abs(enemyBuffer[nums[i]].getSprite().getPosition().x - player[0].getSprite().getPosition().x - 50) + std::abs(enemyBuffer[nums[i]].getSprite().getPosition().y - player[0].getSprite().getPosition().y + 5))
+					(enemyBuffer[nums[i]].getSprite().getPosition().x - player[0].getSprite().getPosition().x - 10) / (std::abs(enemyBuffer[nums[i]].getSprite().getPosition().x - player[0].getSprite().getPosition().x - 10) + std::abs(enemyBuffer[nums[i]].getSprite().getPosition().y - player[0].getSprite().getPosition().y + 35)),
+					(enemyBuffer[nums[i]].getSprite().getPosition().y - player[0].getSprite().getPosition().y + 35) / (std::abs(enemyBuffer[nums[i]].getSprite().getPosition().x - player[0].getSprite().getPosition().x - 10) + std::abs(enemyBuffer[nums[i]].getSprite().getPosition().y - player[0].getSprite().getPosition().y + 35))
 				));
-				//missle.setRotation(acos((1 * missle.getDirection().y) / (1*sqrt(missle.getDirection().x * missle.getDirection().x + missle.getDirection().y * missle.getDirection().y))));
-				basicMissleColdBuffer.push_back(missle);
+				double rot1 = (std::acos((-1 * missle.getDirection().y) / (std::sqrt(missle.getDirection().x * missle.getDirection().x + missle.getDirection().y * missle.getDirection().y))) * (180.0 / 3.14));
+				//if (missle.getDirection().x < 0)
+				//{
+				//	rot1 = 360.f + rot1;
+				//}
+				//else
+				//{
+				//	rot1 = 360.f - rot1;
+				//}
+				missle.setRotation(rot1);
+				//missle.setRotation(350);
+				//missle.setPosition(sf::Vector2f(
+				//	(missle.getSprite().getPosition().x + 120.f * (rot1 - ((rot1 - 90.f) * 2) / 90.f)),
+				//	(missle.getSprite().getPosition().y + 120.f * (rot1 / 180.f))
+				//));
+				//missle.setPosition(sf::Vector2f(
+				//	(missle.getSprite().getPosition().x + 60.f),
+				//	(missle.getSprite().getPosition().y - 20.f)
+				//));
+				//if (rot1 > 0)
+				//{
+				//	if (rot1 > 90.f)
+				//	{
+				//		missle.setPosition(sf::Vector2f(
+				//			(missle.getSprite().getPosition().x + 120.f * (rot1 - ((rot1 - 90.f) * 2) / 90.f)),
+				//			(missle.getSprite().getPosition().y + 120.f * (rot1 / 180.f))
+				//		));
+				//	}
+				//	else
+				//	{
+				//		missle.setPosition(sf::Vector2f(
+				//			(missle.getSprite().getPosition().x + 120.f * (rot1 / 90.f)),
+				//			(missle.getSprite().getPosition().y + 120.f * (rot1 / 180.f))
+				//		));
+				//	}
+				//}
+				//else
+				//{
+				//	//if (rot1 > 90.f)
+				//	//{
+				//	//	missle.setPosition(sf::Vector2f(
+				//	//		(missle.getSprite().getPosition().x + 120.f * (rot1 - ((rot1 - 90.f) * 2) / 90.f)),
+				//	//		(missle.getSprite().getPosition().y + 160.f * (rot1 / 180.f))
+				//	//	));
+				//	//}
+				//	//else
+				//	//{
+				//	//	missle.setPosition(sf::Vector2f(
+				//	//		(missle.getSprite().getPosition().x + 120.f * (rot1 / 90.f)),
+				//	//		(missle.getSprite().getPosition().y + 160.f * (rot1 / 180.f))
+				//	//	));
+				//	//}
+				//}
+				basicMissleColdBuffer.push_back(missle); 
 				basicMissleColdCounter++;
 			}
 		}
@@ -1039,7 +1121,7 @@ void Game::updateEnemies(sf::Time elapsedTime, Player* player)
 	posEnemy.x = -3000 + posPlayer.x + rand() % 6000;
 	posEnemy.y = -3000 + posPlayer.y + rand() % 6000;
 	dist = sqrt(pow(posPlayer.x - posEnemy.x,2) + pow(posPlayer.y - posEnemy.y,2));
-	if (dist > 1500 and enemyCooldown > 10 and enemyCounter < 5000)
+	if (dist > 15 and enemyCooldown > enemyCooldownVar and enemyCounter < enemyCountVar)
 	{
 		Enemy enemy(enemyTexture, posEnemy);
 		enemyBuffer.push_back(enemy);
