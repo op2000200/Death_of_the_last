@@ -9,7 +9,7 @@ Mana::Mana(sf::Vector2f pos, sf::Texture* texture)
 	:	sprite(*texture)
 {
 	Mana::sprite.setPosition(pos);
-	Mana::value = 100;
+	Mana::value = 50;
 }
 
 Mana::~Mana()

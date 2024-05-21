@@ -1,0 +1,9 @@
+/* Webfont: Humane-Black */@font-face {
+    font-family: 'HumaneBlack';
+    src: url('Humane-Black.woff2') format('woff2'), /* Modern Browsers */
+         url('Humane-Black.otf') format('opentype'); /* Safari, Android, iOS */
+             font-style: normal;
+    font-weight: normal;
+    text-rendering: optimizeLegibility;
+}
+

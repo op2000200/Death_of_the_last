@@ -26,6 +26,7 @@ public:
 	void setBaseAttack(int num);
 	void setCritChance(int num);
 	void setResist(int num);
+	void setHealthCur(int num);
 	void setHealth(int num);
 	void setHealthRecover(int num);
 	void setSpeed(int num);
@@ -42,6 +43,7 @@ public:
 	int getBaseAttack();
 	int getCritChance();
 	int getResist();
+	int getHealthCur();
 	int getHealth();
 	int getHealthRecover();
 	int getSpeed();
@@ -70,6 +72,7 @@ private:
 	//int shieldCoef;
 	int resist;
 
+	int healthCur;
 	int health;
 	int healthRecover;
 

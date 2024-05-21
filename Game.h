@@ -82,6 +82,7 @@ private: //private variables
 	sf::Texture* manaTexture;
 	sf::Texture* BasicMissleColdTexture;
 	sf::Clock timer;
+	sf::Clock timerHealth;
 	Player* player;
 	int castCooldown;
 	std::vector<Enemy> enemyBuffer;

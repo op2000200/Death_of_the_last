@@ -5,7 +5,7 @@ Player::Player(sf::Texture *texture)
 {
 	level = 0;
 	exp = 0;
-	expCap = 10;
+	expCap = 100;
 
 
 	attack = 1;
@@ -20,6 +20,7 @@ Player::Player(sf::Texture *texture)
 	//int shieldCoef;
 	resist = 0;
 
+	healthCur = 55;
 	health = 55;
 	healthRecover = 1;
 
@@ -117,6 +118,11 @@ void Player::setResist(int num)
 	Player::resist = num;
 }
 
+void Player::setHealthCur(int num)
+{
+	Player::healthCur = num;
+}
+
 void Player::setHealth(int num)
 {
 	Player::health = num;
@@ -195,6 +201,11 @@ int Player::getResist()
 int Player::getHealth()
 {
 	return Player::health;
+}
+
+int Player::getHealthCur()
+{
+	return Player::healthCur;
 }
 
 int Player::getHealthRecover()

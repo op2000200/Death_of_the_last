@@ -9,11 +9,11 @@ BasicMissleCold::BasicMissleCold(sf::Vector2f pos, sf::Texture* texture)
 {
 	BasicMissleCold::sprite.setPosition(pos);
 	//BasicMissleCold::sprite.setScale(sf::Vector2f(5.f,5.f));
-	health = 10000;
-	speed = 0;
+	health = 600;
+	speed = 600;
 	damageMP = 50;
 	critRate = 10;
-	critDamage = 200;
+	critDamage = 150;
 }
 
 BasicMissleCold::~BasicMissleCold()

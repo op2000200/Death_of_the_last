@@ -10,8 +10,8 @@ Enemy::Enemy(sf::Texture* texture, sf::Vector2f pos)
 	:	sprite(*texture)
 {
 	Enemy::sprite.setPosition(pos);
-	health = 100;
-	speed = 0;
+	health = 300;
+	speed = 80;
 }
 
 Enemy::~Enemy()
@@ -34,3 +34,12 @@ int Enemy::getSpeed()
 	return Enemy::speed;
 }
 
+void Enemy::setHealth(int num)
+{
+	Enemy::health = num;
+}
+
+int Enemy::getHealth()
+{
+	return Enemy::health;
+}
