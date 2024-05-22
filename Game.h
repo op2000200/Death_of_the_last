@@ -7,6 +7,7 @@
 #include "Mana.h"
 #include "CheckBox.h"
 #include "BasicMissleCold.h"
+#include "StandartEnemy.h"
 class Game
 {
 public: //public methods
@@ -81,6 +82,7 @@ private: //private variables
 	sf::Texture* bgTexture;
 	sf::Texture* manaTexture;
 	sf::Texture* BasicMissleColdTexture;
+	sf::Texture* StandartEnemyFireTexture;
 	sf::Clock timer;
 	sf::Clock timerHealth;
 	Player* player;
@@ -89,6 +91,8 @@ private: //private variables
 	int enemyCooldown;
 	int enemyTickCounter;
 	int enemyCounter;
+
+	std::vector<StandartEnemy> StandartEnemyFireBuffer;
 
 	std::vector<Bullet> bulletBuffer;
 	int bulletCounter;

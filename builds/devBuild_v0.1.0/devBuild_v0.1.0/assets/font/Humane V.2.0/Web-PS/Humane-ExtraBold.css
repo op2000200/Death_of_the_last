@@ -1,0 +1,9 @@
+/* Webfont: Humane-ExtraBold */@font-face {
+    font-family: 'HumaneExtBd';
+    src: url('Humane-ExtraBold.woff2') format('woff2'), /* Modern Browsers */
+         url('Humane-ExtraBold.otf') format('opentype'); /* Safari, Android, iOS */
+             font-style: normal;
+    font-weight: normal;
+    text-rendering: optimizeLegibility;
+}
+

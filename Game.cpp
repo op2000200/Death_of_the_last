@@ -37,6 +37,8 @@ Game::Game()
 	BasicMissleColdTexture = new sf::Texture;
 	BasicMissleColdTexture->loadFromFile("assets/textures/basicCold.png");
 	BasicMissleColdTexture->setSmooth(true);
+	StandartEnemyFireTexture = new sf::Texture;
+	StandartEnemyFireTexture->loadFromFile("assets/textures/standartEnemyFire.png");
 	manaTickCounter = 0;
 	playerState = 0;
 	for (int i = 0; i < 200; i++)
@@ -503,7 +505,7 @@ void Game::arcadeModeRun(Player* player)
 		{
 			return;
 		}
-		if (bufLevel != player[0].getLevel() and player[0].getLevel() < 501)
+		if (bufLevel != player[0].getLevel() and player[0].getLevel() < 251)
 		{
 			//pausedScreen.create(window.getSize().x, window.getSize().y);
 			//pausedScreen.update(window);
@@ -516,56 +518,56 @@ void Game::arcadeModeRun(Player* player)
 		}
 		if (timer.getElapsedTime().asSeconds() > 120)
 		{
-			enemyCooldownVar = 300;
+			enemyCooldownVar = 160;
 			enemyCountVar = 400;
 			manaCountVar = 40;
 		}
 		if (timer.getElapsedTime().asSeconds() > 240)
 		{
-			enemyCooldownVar = 200;
+			enemyCooldownVar = 140;
 			enemyCountVar = 500;
 			manaCountVar = 60;
 		}
 		if (timer.getElapsedTime().asSeconds() > 360)
 		{
-			enemyCooldownVar = 150;
-			enemyCountVar = 600;
+			enemyCooldownVar = 120;
+			enemyCountVar = 1000;
 			manaCountVar = 80;
 		}
 		if (timer.getElapsedTime().asSeconds() > 480)
 		{
 			enemyCooldownVar = 100;
-			enemyCountVar = 800;
+			enemyCountVar = 2000;
 			manaCountVar = 100;
 		}
 		if (timer.getElapsedTime().asSeconds() > 600)
 		{
 			enemyCooldownVar = 50;
-			enemyCountVar = 1000;
+			enemyCountVar = 3000;
 			manaCountVar = 120;
 		}
 		if (timer.getElapsedTime().asSeconds() > 720)
 		{
 			enemyCooldownVar = 20;
-			enemyCountVar = 1500;
+			enemyCountVar = 4000;
 			manaCountVar = 140;
 		}
 		if (timer.getElapsedTime().asSeconds() > 840)
 		{
 			enemyCooldownVar = 10;
-			enemyCountVar = 2000;
+			enemyCountVar = 5000;
 			manaCountVar = 160;
 		}
 		if (timer.getElapsedTime().asSeconds() > 960)
 		{
 			enemyCooldownVar = 2;
-			enemyCountVar = 3000;
+			enemyCountVar = 8000;
 			manaCountVar = 180;
 		}
 		if (timer.getElapsedTime().asSeconds() > 1080)
 		{
 			enemyCooldownVar = 1;
-			enemyCountVar = 5000;
+			enemyCountVar = 10000;
 			manaCountVar = 200;
 		}
 		if (timerHealth.getElapsedTime().asSeconds() > 1 and player[0].getHealthCur() < player[0].getHealth())
@@ -709,7 +711,7 @@ void Game::arcadeModeRunDraw(Player* player)
 {
 
 	sf::View view = window.getView();
-	view.setCenter(player[0].getSprite().getPosition().x + 30, player[0].getSprite().getPosition().y + 30);
+	view.setCenter(static_cast<int>(player[0].getSprite().getPosition().x + 30), static_cast<int>(player[0].getSprite().getPosition().y + 30));
 	window.setView(view);
 	
 
@@ -734,7 +736,7 @@ void Game::arcadeModeRunDraw(Player* player)
 	//draw the enemies
 	for (int i = 0; i < enemyCounter; i++)
 	{
-		window.draw(enemyBuffer[i].getSprite());
+		window.draw(StandartEnemyFireBuffer[i].getSprite());
 	}
 
 	//draw bullets
@@ -1056,7 +1058,7 @@ void Game::updateBasicMissle(sf::Time elapsedTime, Player* player)
 			sf::Vector2f posPlayer, posEnemy;
 			int dist;
 			posPlayer = sf::Vector2f(player[0].getSprite().getPosition().x + 45, player[0].getSprite().getPosition().y + 60);
-			posEnemy = sf::Vector2f(enemyBuffer[i].getSprite().getPosition().x + 20, enemyBuffer[i].getSprite().getPosition().y + 20);
+			posEnemy = sf::Vector2f(StandartEnemyFireBuffer[i].getSprite().getPosition().x + 20, StandartEnemyFireBuffer[i].getSprite().getPosition().y + 20);
 			dist = sqrt(pow(posPlayer.x - posEnemy.x, 2) + pow(posPlayer.y - posEnemy.y, 2));
 			distBuffer[i] = dist;
 		}
@@ -1084,8 +1086,8 @@ void Game::updateBasicMissle(sf::Time elapsedTime, Player* player)
 				BasicMissleCold missle(sf::Vector2f(player[0].getSprite().getPosition().x + 30, player[0].getSprite().getPosition().y - 15), BasicMissleColdTexture);
 				//BasicMissleCold missle(sf::Vector2f(0, 0), BasicMissleColdTexture);
 				missle.setDirection(sf::Vector2f(
-					(enemyBuffer[nums[i]].getSprite().getPosition().x - player[0].getSprite().getPosition().x - 75) / (std::abs(enemyBuffer[nums[i]].getSprite().getPosition().x - player[0].getSprite().getPosition().x - 75) + std::abs(enemyBuffer[nums[i]].getSprite().getPosition().y - player[0].getSprite().getPosition().y + 25)),
-					(enemyBuffer[nums[i]].getSprite().getPosition().y - player[0].getSprite().getPosition().y + 25) / (std::abs(enemyBuffer[nums[i]].getSprite().getPosition().x - player[0].getSprite().getPosition().x - 75) + std::abs(enemyBuffer[nums[i]].getSprite().getPosition().y - player[0].getSprite().getPosition().y + 25))
+					(StandartEnemyFireBuffer[nums[i]].getSprite().getPosition().x - player[0].getSprite().getPosition().x - 75) / (std::abs(StandartEnemyFireBuffer[nums[i]].getSprite().getPosition().x - player[0].getSprite().getPosition().x - 75) + std::abs(StandartEnemyFireBuffer[nums[i]].getSprite().getPosition().y - player[0].getSprite().getPosition().y + 25)),
+					(StandartEnemyFireBuffer[nums[i]].getSprite().getPosition().y - player[0].getSprite().getPosition().y + 25) / (std::abs(StandartEnemyFireBuffer[nums[i]].getSprite().getPosition().x - player[0].getSprite().getPosition().x - 75) + std::abs(StandartEnemyFireBuffer[nums[i]].getSprite().getPosition().y - player[0].getSprite().getPosition().y + 25))
 				));
 				double rot1 = (std::acos((-1 * missle.getDirection().y) / (std::sqrt(missle.getDirection().x * missle.getDirection().x + missle.getDirection().y * missle.getDirection().y))) * (180.0 / 3.14));
 				if (missle.getDirection().x < 0)
@@ -1177,6 +1179,36 @@ void Game::updateBasicMissle(sf::Time elapsedTime, Player* player)
 
 void Game::updateEnemies(sf::Time elapsedTime, Player* player)
 {
+	//old
+	//enemyCooldown++;
+	//if (enemyTickCounter > 144)
+	//	enemyTickCounter = 0;
+	//srand(time(0) * enemyTickCounter);
+	//enemyTickCounter++;
+	//sf::Vector2f posPlayer, posEnemy;
+	//int dist;
+	//posPlayer = sf::Vector2f(player[0].getSprite().getPosition().x + 45, player[0].getSprite().getPosition().y + 60);
+	//posEnemy.x = -3000 + posPlayer.x + rand() % 6000;
+	//posEnemy.y = -3000 + posPlayer.y + rand() % 6000;
+	//dist = sqrt(pow(posPlayer.x - posEnemy.x,2) + pow(posPlayer.y - posEnemy.y,2));
+	//if (dist > 1500 and enemyCooldown > enemyCooldownVar and enemyCounter < enemyCountVar)
+	//{
+	//	Enemy enemy(enemyTexture, posEnemy);
+	//	enemyBuffer.push_back(enemy);
+	//	enemyCounter++;
+	//	enemyCooldown = 0;
+	//}
+	//for (int i = 0; i < enemyCounter; i++)
+	//{
+	//	posEnemy = enemyBuffer[i].getSprite().getPosition();
+	//	posPlayer = sf::Vector2f(player[0].getSprite().getPosition().x + 45, player[0].getSprite().getPosition().y + 60);
+	//	enemyBuffer[i].setPos(sf::Vector2f(
+	//		posEnemy.x + enemyBuffer[i].getSpeed() * elapsedTime.asSeconds() * (((posPlayer.x - 20 - posEnemy.x) / ((std::abs(posPlayer.x - 20 - posEnemy.x) + std::abs(posPlayer.y - 20 - posEnemy.y))))),
+	//		posEnemy.y + enemyBuffer[i].getSpeed() * elapsedTime.asSeconds() * (((posPlayer.y - 20 - posEnemy.y) / ((std::abs(posPlayer.x - 20 - posEnemy.x) + std::abs(posPlayer.y - 20 - posEnemy.y)))))
+	//	));
+	//}
+
+	//new
 	enemyCooldown++;
 	if (enemyTickCounter > 144)
 		enemyTickCounter = 0;
@@ -1187,21 +1219,21 @@ void Game::updateEnemies(sf::Time elapsedTime, Player* player)
 	posPlayer = sf::Vector2f(player[0].getSprite().getPosition().x + 45, player[0].getSprite().getPosition().y + 60);
 	posEnemy.x = -3000 + posPlayer.x + rand() % 6000;
 	posEnemy.y = -3000 + posPlayer.y + rand() % 6000;
-	dist = sqrt(pow(posPlayer.x - posEnemy.x,2) + pow(posPlayer.y - posEnemy.y,2));
+	dist = sqrt(pow(posPlayer.x - posEnemy.x, 2) + pow(posPlayer.y - posEnemy.y, 2));
 	if (dist > 1500 and enemyCooldown > enemyCooldownVar and enemyCounter < enemyCountVar)
 	{
-		Enemy enemy(enemyTexture, posEnemy);
-		enemyBuffer.push_back(enemy);
+		StandartEnemy enemy(StandartEnemyFireTexture, posEnemy, timer.getElapsedTime().asSeconds());
+		StandartEnemyFireBuffer.push_back(enemy);
 		enemyCounter++;
 		enemyCooldown = 0;
 	}
 	for (int i = 0; i < enemyCounter; i++)
 	{
-		posEnemy = enemyBuffer[i].getSprite().getPosition();
+		posEnemy = StandartEnemyFireBuffer[i].getSprite().getPosition();
 		posPlayer = sf::Vector2f(player[0].getSprite().getPosition().x + 45, player[0].getSprite().getPosition().y + 60);
-		enemyBuffer[i].setPos(sf::Vector2f(
-			posEnemy.x + enemyBuffer[i].getSpeed() * elapsedTime.asSeconds() * (((posPlayer.x - 20 - posEnemy.x) / ((std::abs(posPlayer.x - 20 - posEnemy.x) + std::abs(posPlayer.y - 20 - posEnemy.y))))),
-			posEnemy.y + enemyBuffer[i].getSpeed() * elapsedTime.asSeconds() * (((posPlayer.y - 20 - posEnemy.y) / ((std::abs(posPlayer.x - 20 - posEnemy.x) + std::abs(posPlayer.y - 20 - posEnemy.y)))))
+		StandartEnemyFireBuffer[i].setPosition(sf::Vector2f(
+			posEnemy.x + StandartEnemyFireBuffer[i].getSpeed() * elapsedTime.asSeconds() * (((posPlayer.x - 20 - posEnemy.x) / ((std::abs(posPlayer.x - 20 - posEnemy.x) + std::abs(posPlayer.y - 20 - posEnemy.y))))),
+			posEnemy.y + StandartEnemyFireBuffer[i].getSpeed() * elapsedTime.asSeconds() * (((posPlayer.y - 20 - posEnemy.y) / ((std::abs(posPlayer.x - 20 - posEnemy.x) + std::abs(posPlayer.y - 20 - posEnemy.y)))))
 		));
 	}
 }
@@ -1228,7 +1260,7 @@ void Game::updateCollision(sf::Time elapsedTime, Player* player)
 	{
 		for (int j = 0; j < enemyCounter; j++)
 		{
-			if (abs(basicMissleColdBuffer[i].getSprite().getPosition().x + (56.5 * cos((basicMissleColdBuffer[i].getRotation() + 45) / (180 / 3.14))) - enemyBuffer[j].getSprite().getPosition().x - 20) < 20 and abs(basicMissleColdBuffer[i].getSprite().getPosition().y + (56.5 * sin((basicMissleColdBuffer[i].getRotation() + 45) / (180 / 3.14))) - enemyBuffer[j].getSprite().getPosition().y - 20) < 20)
+			if (abs(basicMissleColdBuffer[i].getSprite().getPosition().x + (56.5 * cos((basicMissleColdBuffer[i].getRotation() + 45) / (180 / 3.14))) - StandartEnemyFireBuffer[j].getSprite().getPosition().x - 20) < 20 and abs(basicMissleColdBuffer[i].getSprite().getPosition().y + (56.5 * sin((basicMissleColdBuffer[i].getRotation() + 45) / (180 / 3.14))) - StandartEnemyFireBuffer[j].getSprite().getPosition().y - 20) < 20)
 			{
 				srand(time(0) * timer.getElapsedTime().asMicroseconds());
 				float crit = 1.f;
@@ -1238,12 +1270,15 @@ void Game::updateCollision(sf::Time elapsedTime, Player* player)
 				int damage = player[0].getBaseAttack() * (basicMissleColdBuffer[i].getDamageMP() / 100.f) * crit; 
 				basicMissleColdBuffer.erase(basicMissleColdBuffer.begin() + i);
 				basicMissleColdCounter--;
-				enemyBuffer[j].setHealth(enemyBuffer[i].getHealth() - damage);
-				if (enemyBuffer[j].getHealth() < 1)
+				StandartEnemyFireBuffer[j].setHealth(StandartEnemyFireBuffer[j].getHealth() - damage * ((100 - StandartEnemyFireBuffer[j].getResist()) / 100.f));
+				if (StandartEnemyFireBuffer[j].getHealth() < 1)
 				{
-					enemyBuffer.erase(enemyBuffer.begin() + j);
+					Mana mana(StandartEnemyFireBuffer[j].getSprite().getPosition() + sf::Vector2f(15,15), manaTexture);
+					manaBuffer.push_back(mana);
+					manaCounter++;
+					StandartEnemyFireBuffer.erase(StandartEnemyFireBuffer.begin() + j);
 					enemyCounter--;
-					player[0].setExp(player[0].getExp() + 10);
+					player[0].setExp(player[0].getExp() + StandartEnemyFireBuffer[j].getManaValue());
 				}
 				break;
 			}
@@ -1252,12 +1287,12 @@ void Game::updateCollision(sf::Time elapsedTime, Player* player)
 	
 	for (int j = 0; j < enemyCounter; j++)
 	{
-		if (abs(player[0].getSprite().getPosition().x + 25 - enemyBuffer[j].getSprite().getPosition().x) < 30 and abs(player[0].getSprite().getPosition().y + 40 - enemyBuffer[j].getSprite().getPosition().y) < 40)
+		if (abs(player[0].getSprite().getPosition().x + 25 - StandartEnemyFireBuffer[j].getSprite().getPosition().x) < 30 and abs(player[0].getSprite().getPosition().y + 40 - StandartEnemyFireBuffer[j].getSprite().getPosition().y) < 40)
 		{
-			enemyBuffer.erase(enemyBuffer.begin() + j);
+			StandartEnemyFireBuffer.erase(StandartEnemyFireBuffer.begin() + j);
 			enemyCounter--;
-			player[0].setExp(player[0].getExp() + 10);
-			player[0].setHealthCur(player[0].getHealthCur() - 10 * (1 - (player[0].getResist() / 100.f)));
+			player[0].setExp(player[0].getExp() + StandartEnemyFireBuffer[j].getManaValue());
+			player[0].setHealthCur(player[0].getHealthCur() - StandartEnemyFireBuffer[j].getDamage() * (1 - (player[0].getResist() / 100.f)));
 			break;
 		}
 	}
@@ -1284,16 +1319,17 @@ void Game::updateLevel(sf::Time elapsedTime, Player* player)
 	while (player[0].getExp() >= player[0].getExpCap())
 	{
 		
-		if (player[0].getLevel() >= 500)
+		if (player[0].getLevel() >= 250)
 		{
-			player[0].setLevel(500);
+			player[0].setLevel(250);
 			player[0].setExp(0);
 		}
 		else
 		{
 			player[0].setExp(player[0].getExp() - player[0].getExpCap());
-			player[0].setExpCap(player[0].getExpCap() * 1.05);
+			player[0].setExpCap(player[0].getExpCap() * 1.03);
 			player[0].setLevel(player[0].getLevel() + 1);
+			levelUp++;
 			levelUp++;
 		}
 	}
@@ -1306,11 +1342,11 @@ void Game::collectFarObjects(sf::Time elapsedTime, Player* player)
 		sf::Vector2f posPlayer, posEnemy;
 		int dist;
 		posPlayer = sf::Vector2f(player[0].getSprite().getPosition().x + 45, player[0].getSprite().getPosition().y + 60);
-		posEnemy = enemyBuffer[i].getSprite().getPosition() + sf::Vector2f(20,20);
+		posEnemy = StandartEnemyFireBuffer[i].getSprite().getPosition() + sf::Vector2f(20,20);
 		dist = sqrt(pow(posPlayer.x - posEnemy.x, 2) + pow(posPlayer.y - posEnemy.y, 2));
 		if (dist > 4000)
 		{
-			enemyBuffer.erase(enemyBuffer.begin() + i);
+			StandartEnemyFireBuffer.erase(StandartEnemyFireBuffer.begin() + i);
 			enemyCounter--;
 			i--;
 		}
@@ -1925,7 +1961,7 @@ void Game::arcadeModeLevelUpUpdate(sf::Time elapsedTime, Player* player)
 				player[0].setAttack(player[0].getAttack() + 1);
 				levelUp--;
 				//inputs[5] = 0;
-				sf::sleep(sf::milliseconds(100));
+				sf::sleep(sf::milliseconds(300));
 			}
 		}
 		if (sf::Mouse::getPosition().x > 660 and sf::Mouse::getPosition().x < 960 and sf::Mouse::getPosition().y > 400 and sf::Mouse::getPosition().y < 480) //up defence
@@ -1939,7 +1975,7 @@ void Game::arcadeModeLevelUpUpdate(sf::Time elapsedTime, Player* player)
 				player[0].setDefence(player[0].getDefence() + 1);
 				levelUp--;
 				//inputs[5] = 0;
-				sf::sleep(sf::milliseconds(100));
+				sf::sleep(sf::milliseconds(300));
 			}
 		}
 		if (sf::Mouse::getPosition().x > 660 and sf::Mouse::getPosition().x < 960 and sf::Mouse::getPosition().y > 500 and sf::Mouse::getPosition().y < 580) //up vitality
@@ -2024,7 +2060,7 @@ void Game::arcadeModeLevelUpUpdate(sf::Time elapsedTime, Player* player)
 				player[0].setVitality(player[0].getVitality() + 1);
 				levelUp--;
 				//inputs[5] = 0;
-				sf::sleep(sf::milliseconds(100));
+				sf::sleep(sf::milliseconds(300));
 			}
 		}
 		if (sf::Mouse::getPosition().x > 660 and sf::Mouse::getPosition().x < 960 and sf::Mouse::getPosition().y > 600 and sf::Mouse::getPosition().y < 680) //up agility
@@ -2036,7 +2072,7 @@ void Game::arcadeModeLevelUpUpdate(sf::Time elapsedTime, Player* player)
 				player[0].setCastSpeed(player[0].getCastSpeed() + 2);
 				levelUp--;
 				//inputs[5] = 0;
-				sf::sleep(sf::milliseconds(100));
+				sf::sleep(sf::milliseconds(300));
 			}
 		}
 		if (sf::Mouse::getPosition().x > 660 and sf::Mouse::getPosition().x < 960 and sf::Mouse::getPosition().y > 700 and sf::Mouse::getPosition().y < 780) //up knowledge
@@ -2067,7 +2103,7 @@ void Game::arcadeModeLevelUpUpdate(sf::Time elapsedTime, Player* player)
 				player[0].setKnowledge(player[0].getKnowledge() + 1);
 				levelUp--;
 				//inputs[5] = 0;
-				sf::sleep(sf::milliseconds(100));
+				sf::sleep(sf::milliseconds(300));
 			}
 		}
 	}
