@@ -8,6 +8,7 @@
 #include "CheckBox.h"
 #include "BasicMissleCold.h"
 #include "StandartEnemy.h"
+#include "Tile.h"
 class Game
 {
 public: //public methods
@@ -25,6 +26,7 @@ private: //private methods
 	void arcadeModeRun(Player* player);
 	void arcadeModeRunUpdate();
 	void updatePlayer(sf::Time elapsedTime, Player* player);
+	void updateTiles(Player* player);
 	void updateMana(sf::Time elapsedTime, Player* player);
 	void updateBullets(sf::Time elapsedTime, Player* player);
 
@@ -35,6 +37,7 @@ private: //private methods
 	void updateLevel(sf::Time elapsedTime, Player* player);
 	void collectFarObjects(sf::Time elapsedTime, Player* player);
 	void arcadeModeRunDraw(Player* player);
+	void arcadeModeRunCreateBG();
 	void arcadeModePauseUpdate();
 	void arcadeModePause();
 	void arcadeModePauseDraw(sf::Sprite prevFrame);
@@ -113,6 +116,7 @@ private: //private variables
 	int enemyCountVar;
 	int manaCountVar;
 
+	Tile** tileBuffer;
 
 	int playerState;
 	int playerDeath;

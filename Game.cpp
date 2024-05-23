@@ -59,6 +59,19 @@ Game::Game()
 	enemyCooldownVar = 300;
 	enemyCountVar = 100;
 	manaCountVar = 20;
+
+	tileBuffer = new Tile * [100];
+	for (int i = 0; i < 100; i++)
+	{
+		tileBuffer[i] = new Tile[100];
+	}
+	for (int i = 0; i < 100; i++)
+	{
+		for (int j = 0; j < 100; j++)
+		{
+			tileBuffer[i][j].setPosition(sf::Vector2f(i-50,j-50));
+		}
+	}
 }
 
 void Game::run()
@@ -715,12 +728,21 @@ void Game::arcadeModeRunDraw(Player* player)
 	window.setView(view);
 	
 
-	sf::Sprite bg(*bgTexture, sf::IntRect(0, 0, 2000000, 2000000));
-	bg.setScale(sf::Vector2f(10.f, 10.f));
-	bg.setPosition(sf::Vector2f(-1000000, -1000000));
+	//sf::Sprite bg(*bgTexture, sf::IntRect(0, 0, 2000000, 2000000));
+	//bg.setScale(sf::Vector2f(10.f, 10.f));
+	//bg.setPosition(sf::Vector2f(-1000000, -1000000));
 
 	//background
-	window.draw(bg);
+	//window.draw(bg);
+	//arcadeModeRunCreateBG();
+
+	for (int i = (player[0].getSprite().getPosition().x / 2000) + 49; i < (player[0].getSprite().getPosition().x / 2000) + 52; i++)
+	{
+		for (int j = (player[0].getSprite().getPosition().y / 2000) + 49; j < (player[0].getSprite().getPosition().x / 2000) + 52; j++)
+		{
+			window.draw(tileBuffer[i][j].getSprite());
+		}
+	}
 
 	//draw mana orbs
 	for (int i = 0; i < manaCounter; i++)
@@ -836,6 +858,26 @@ void Game::arcadeModeRunDraw(Player* player)
 
 	////cursor
 	//window.draw(cursor);
+}
+
+void Game::arcadeModeRunCreateBG()
+{
+	srand(0 * timer.getElapsedTime().asMicroseconds());
+	sf::Image background;
+	background.create(2000, 2000);
+	for (int i = 0; i < 2000; i++)
+	{
+		for (int j = 0; j < 2000; j++)
+		{
+			background.setPixel(i, j, sf::Color(90 + rand() % 5, 60 + rand() % 5, 32 + rand() % 5));
+		}
+	}
+	sf::Texture buf;
+	buf.loadFromImage(background);
+	buf.setSmooth(true);
+	sf::Sprite BG(buf);
+	//BG.setScale(sf::Vector2f(0.1, 0.1));
+	window.draw(BG);
 }
 
 void Game::arcadeModePauseDraw(sf::Sprite prevFrame)
