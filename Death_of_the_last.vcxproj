@@ -146,8 +146,10 @@
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="button.cpp" />
     <ClCompile Include="CheckBox.cpp" />
+    <ClCompile Include="Config.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameState.cpp" />
     <ClCompile Include="Mana.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="StandartEnemy.cpp" />
@@ -159,8 +161,10 @@
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="button.h" />
     <ClInclude Include="CheckBox.h" />
+    <ClInclude Include="Config.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GameState.h" />
     <ClInclude Include="Mana.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="StandartEnemy.h" />
