@@ -1,29 +1,59 @@
 #pragma once
+
+#include <iostream>
+#include <thread>
+
 #include <SFML/Graphics.hpp>
+#include "SFML/System.hpp"
 
 #include "Config.h"
+#include "RenderQueue.h";
 
 enum class Type
 {
 	MainMenu,
 	PlayMenu,
 	SettingsMenu,
-	ArchiveMenu
+	ArchiveMenu,
+	Exit
 };
 
 class Game
 {
 public: //methods
-	Game();
 	Game(Config startConfig);
 	~Game();
 	void run();
 	void render();
 
 	Type mainMenu();
+
+	void loadingScreen();
+	void loadingScreenReadUserData();
+	void loadingScreenDraw();
+	void loadingScreenReadInput();
+
+	void mainMenuScreen();
+	void mainMenuScreenReadInput();
+	void mainMenuScreenUpdate();
+	void mainMenuScreenDraw();
+
+
+	void exitScreen();
+	void exitScreenReadInput();
+	void exitScreenUpdate();
+	void exitScreenDraw();
+
+
 	Type settingsMenu();
+
+
 	Type playMenu();
+
+
 	Type archiveMenu();
+
+
 private: 
 
 public: //variables
@@ -32,7 +62,13 @@ private:
 	sf::RenderWindow window;
 	Config config;
 	Type state;
-	
+	sf::Vector2f sizeMultiplier;
+	RenderQueue renderQueue;
+
+	//main menu state variables
+	bool firstLaunch;
+	bool loaded;
+	bool clicked;
 };
 
 

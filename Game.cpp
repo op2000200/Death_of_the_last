@@ -1,16 +1,17 @@
 #include "Game.h"
 
-Game::Game()
-{
-
-}
-
 Game::Game(Config startConfig)
-	: window(sf::VideoMode(startConfig.getWidth(), startConfig.getHeigth()), "Death of the last")
+	: window(sf::VideoMode(startConfig.getWidth(), startConfig.getHeigth()), "Death of the last", sf::Style::None)
 {
 	window.setVerticalSyncEnabled(true);
+	window.setSize(sf::Vector2u(startConfig.getWidth(), startConfig.getHeigth()));
 	config.copyConfig(startConfig);
+	sizeMultiplier.x = (config.getWidth() / 1920.f);
+	sizeMultiplier.y = (config.getWidth() / 1080.f);
 	state = Type::MainMenu;
+	firstLaunch = true;
+	loaded = false;
+	clicked = false;
 }
 
 Game::~Game()
@@ -41,48 +42,147 @@ void Game::run()
 		{
 			state = archiveMenu();
 		}
+		if (state == Type::Exit)
+		{
+			break;
+		}
 	}
 }
 
 void Game::render()
 {
 	window.clear();
-	sf::RectangleShape test(sf::Vector2f(10, 10));
-	test.setFillColor(sf::Color::Blue);
-	window.draw(test);
+
+	for (int i = 0; i < renderQueue.spriteHolderGetSize(); i++)
+	{
+		window.draw(renderQueue.spriteHolderGet(i));
+	}
+
 	window.display();
 }
 
 Type Game::mainMenu()
 {
+	if (firstLaunch)
+	{
+		firstLaunch = false;
+		loadingScreen();
+	}
+	else
+	{
+
+	}
+	return Type::MainMenu;
+}
+
+void Game::loadingScreen()
+{
+	std::thread loading([&] {loadingScreenReadUserData(); });	//start data reading
+	loading.detach();
+	window.setActive(false);
+	std::thread drawing([&] {loadingScreenDraw(); });			//draw loading screen
+	drawing.detach();
+	while (loaded != true)										//wait for loading to end
+	{
+		sf::sleep(sf::Time::Zero);
+	}
+	loading.~thread();											//destroy thread
+	loadingScreenReadInput();
+	sf::sleep(sf::seconds(0.1));								//litle nap for thread to be done
+	drawing.~thread();											//destroy thread		
 	render();
-	sf::sleep(sf::seconds(1));
-	window.setTitle("main");
-	return Type::SettingsMenu;
+}
+
+void Game::loadingScreenReadUserData()
+{
+	sf::sleep(sf::seconds(2));
+	loaded = true;												//signalize that work is done
+}
+
+void Game::loadingScreenDraw()
+{
+	while (clicked != true)										//wait until clicked
+	{
+		window.clear();
+		sf::RectangleShape test(sf::Vector2f(10, 10));
+		if (loaded)												//sequence wheh load is complete
+		{
+			test.setFillColor(sf::Color::Green);
+		}
+		else													//sequence when data is loading
+		{
+			test.setFillColor(sf::Color::Blue);
+		}
+		window.draw(test);
+		window.display();
+	}
+	window.setActive(false);									//free the window
+}
+
+void Game::loadingScreenReadInput()
+{
+	while (true)
+	{
+		sf::Event event;
+		if (window.pollEvent(event))
+		{
+			if (event.type == sf::Event::MouseButtonPressed)	//wait for click
+			{
+				clicked = true;
+				break;
+			}
+		}
+	}
+}
+
+void Game::mainMenuScreen()
+{
+}
+
+void Game::mainMenuScreenReadInput()
+{
+}
+
+void Game::mainMenuScreenUpdate()
+{
+}
+
+void Game::mainMenuScreenDraw()
+{
+}
+
+void Game::exitScreen()
+{
+}
+
+void Game::exitScreenReadInput()
+{
+}
+
+void Game::exitScreenUpdate()
+{
+}
+
+void Game::exitScreenDraw()
+{
 }
 
 Type Game::settingsMenu()
 {
-	render();
-	sf::sleep(sf::seconds(1));
-	window.setTitle("set");
-	return Type::PlayMenu;
+
+	return Type::SettingsMenu;
 }
 
 Type Game::playMenu()
 {
-	render();
-	sf::sleep(sf::seconds(1));
-	window.setTitle("play");
-	return Type::ArchiveMenu;
+
+	return Type::PlayMenu;
 }
 
 Type Game::archiveMenu()
 {
-	render();
-	sf::sleep(sf::seconds(1));
-	window.setTitle("arc");
-	return Type::MainMenu;
+
+	return Type::ArchiveMenu;
 }
 
 
