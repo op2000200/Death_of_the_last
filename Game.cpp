@@ -1,9 +1,16 @@
 #include "Game.h"
 
+Game::Game()
+{
+
+}
+
 Game::Game(Config startConfig)
 	: window(sf::VideoMode(startConfig.getWidth(), startConfig.getHeigth()), "Death of the last")
 {
+	window.setVerticalSyncEnabled(true);
 	config.copyConfig(startConfig);
+	state = Type::MainMenu;
 }
 
 Game::~Game()
@@ -16,14 +23,67 @@ Game::~Game()
 
 void Game::run()
 {
-
+	while (true)
+	{
+		if (state == Type::MainMenu)
+		{
+			state = mainMenu();
+		}
+		if (state == Type::PlayMenu)
+		{
+			state = playMenu();
+		}
+		if (state == Type::SettingsMenu)
+		{
+			state = settingsMenu();
+		}
+		if (state == Type::ArchiveMenu)
+		{
+			state = archiveMenu();
+		}
+	}
 }
 
-GameState::GameState()
+void Game::render()
 {
-
+	window.clear();
+	sf::RectangleShape test(sf::Vector2f(10, 10));
+	test.setFillColor(sf::Color::Blue);
+	window.draw(test);
+	window.display();
 }
 
+Type Game::mainMenu()
+{
+	render();
+	sf::sleep(sf::seconds(1));
+	window.setTitle("main");
+	return Type::SettingsMenu;
+}
+
+Type Game::settingsMenu()
+{
+	render();
+	sf::sleep(sf::seconds(1));
+	window.setTitle("set");
+	return Type::PlayMenu;
+}
+
+Type Game::playMenu()
+{
+	render();
+	sf::sleep(sf::seconds(1));
+	window.setTitle("play");
+	return Type::ArchiveMenu;
+}
+
+Type Game::archiveMenu()
+{
+	render();
+	sf::sleep(sf::seconds(1));
+	window.setTitle("arc");
+	return Type::MainMenu;
+}
 
 
 //Game::Game()

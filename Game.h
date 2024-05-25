@@ -3,28 +3,38 @@
 
 #include "Config.h"
 
+enum class Type
+{
+	MainMenu,
+	PlayMenu,
+	SettingsMenu,
+	ArchiveMenu
+};
+
 class Game
 {
-public: //public
+public: //methods
+	Game();
 	Game(Config startConfig);
 	~Game();
 	void run();
-private: //methods
+	void render();
 
-private: //variables
-	//generals
+	Type mainMenu();
+	Type settingsMenu();
+	Type playMenu();
+	Type archiveMenu();
+private: 
+
+public: //variables
+	
+private:
 	sf::RenderWindow window;
 	Config config;
+	Type state;
+	
 };
 
-class GameState 
-	:	public Game
-{
-public:
-	GameState();
-	~GameState();
-private:
-};
 
 
 //#include "button.h"

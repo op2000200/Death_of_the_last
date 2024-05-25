@@ -9,5 +9,5 @@ int WinMain()
 	config.~Config();
 	game.run();
 	game.~Game();
-	//sf::sleep(sf::Time(sf::seconds(20)));
+	sf::sleep(sf::Time(sf::seconds(20)));
 }
