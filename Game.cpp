@@ -7,19 +7,20 @@ Game::Game(Config startConfig)
 	window.setSize(sf::Vector2u(startConfig.getWidth(), startConfig.getHeigth()));
 	config.copyConfig(startConfig);
 	sizeMultiplier.x = (config.getWidth() / 1920.f);
-	sizeMultiplier.y = (config.getWidth() / 1080.f);
+	sizeMultiplier.y = (config.getHeigth() / 1080.f);
+	NataSans.loadFromFile("assets/font/Nata_Sans_Typeface/ttf/NataSans-Regular.ttf");
+	screenHolder = new sf::Texture;
 	state = Type::MainMenu;
-	firstLaunch = true;
-	loaded = false;
-	clicked = false;
+	mainMenuState = Type::MainMenuFirstLaunch;
 }
 
 Game::~Game()
 {
-	config.~Config();
+	//config.~Config();
+	//renderQueue.~RenderQueue();
 
-	window.close();
-	window.~RenderWindow();
+	//window.close();
+	//window.~RenderWindow();
 }
 
 void Game::run()
@@ -49,114 +50,349 @@ void Game::run()
 	}
 }
 
-void Game::render()
-{
-	window.clear();
-
-	for (int i = 0; i < renderQueue.spriteHolderGetSize(); i++)
-	{
-		window.draw(renderQueue.spriteHolderGet(i));
-	}
-
-	window.display();
-}
-
 Type Game::mainMenu()
 {
-	if (firstLaunch)
+	window.setActive(false);
+	Type type = Type::MainMenu;
+	std::thread rendering([&] {renderMM(); });
+	rendering.detach();
+	while (state == Type::MainMenu)
 	{
-		firstLaunch = false;
-		loadingScreen();
+		if (mainMenuState == Type::MainMenuFirstLaunch)
+		{
+			mainMenuState = Type::MainMenuLoading;
+			loadingScreen();
+		}
+		else
+		{
+			if (mainMenuState == Type::MainMenuGeneral)
+			{
+				type = mainMenuScreen();
+			}
+			if (mainMenuState == Type::MainMenuExit)
+			{
+				type = exitScreen();
+			}
+		}
 	}
-	else
-	{
+	rendering.~thread();
+	return type;
+}
 
+void Game::renderMM()
+{
+	sf::Time TimePerFrame = sf::seconds(1.f / 30.f);
+	sf::Clock clock;
+	while (state == Type::MainMenu)
+	{
+		clock.restart();
+
+		window.clear();
+
+		if (mainMenuState == Type::MainMenuLoading or mainMenuState == Type::MainMenuLoaded)
+		{
+			window.draw(mainMenuRender.loadingScreen.background);
+			window.draw(mainMenuRender.loadingScreen.leftBlock);
+			window.draw(mainMenuRender.loadingScreen.rightBlock);
+			window.draw(mainMenuRender.loadingScreen.title);
+			window.draw(mainMenuRender.loadingScreen.loading);
+		}
+
+		if (mainMenuState == Type::MainMenuGeneral)
+		{
+			window.draw(mainMenuRender.mainMenuScreen.background);
+			window.draw(mainMenuRender.mainMenuScreen.leftBlock);
+			window.draw(mainMenuRender.mainMenuScreen.rightBlock);
+			window.draw(mainMenuRender.mainMenuScreen.title);
+			window.draw(mainMenuRender.mainMenuScreen.playBody);
+			window.draw(mainMenuRender.mainMenuScreen.playText);
+			window.draw(mainMenuRender.mainMenuScreen.archiveBody);
+			window.draw(mainMenuRender.mainMenuScreen.archiveText);
+			window.draw(mainMenuRender.mainMenuScreen.settingsBody);
+			window.draw(mainMenuRender.mainMenuScreen.settingsText);
+			window.draw(mainMenuRender.mainMenuScreen.exitBody);
+			window.draw(mainMenuRender.mainMenuScreen.exitText);
+		}
+
+		if (mainMenuState == Type::MainMenuExit)
+		{
+			window.draw(mainMenuRender.exitScreen.prevScreen);
+			//window.draw(mainMenuRender.exitScreen.shade);
+			//window.draw(mainMenuRender.exitScreen.exitWindow);
+			//window.draw(mainMenuRender.exitScreen.exitWindowText);
+			//window.draw(mainMenuRender.exitScreen.exitYes);
+			//window.draw(mainMenuRender.exitScreen.exitNo);
+			//window.draw(mainMenuRender.exitScreen.exitYesText);
+			//window.draw(mainMenuRender.exitScreen.exitNoText);
+		}
+
+		window.display();
+
+		while (clock.getElapsedTime() < TimePerFrame)
+		{
+			sf::sleep(sf::Time::Zero);
+		}
 	}
-	return Type::MainMenu;
+	window.setActive(false);
 }
 
 void Game::loadingScreen()
 {
-	std::thread loading([&] {loadingScreenReadUserData(); });	//start data reading
+	sf::Time TimePerFrame = sf::seconds(1.f / 1000.f);
+	sf::Clock clock;
+	std::thread loading([&] {loadingScreenReadUserData(); });							//start data reading
 	loading.detach();
-	window.setActive(false);
-	std::thread drawing([&] {loadingScreenDraw(); });			//draw loading screen
+	std::thread drawing([&] {loadingScreenDraw(); });									//draw loading screen
 	drawing.detach();
-	while (loaded != true)										//wait for loading to end
+	while (mainMenuState == Type::MainMenuLoading)										//wait for loading to end
 	{
-		sf::sleep(sf::Time::Zero);
-	}
-	loading.~thread();											//destroy thread
-	loadingScreenReadInput();
-	sf::sleep(sf::seconds(0.1));								//litle nap for thread to be done
-	drawing.~thread();											//destroy thread		
-	render();
+		sf::sleep(TimePerFrame);
+	}		
+	loading.~thread();																	//destroy thread
+	while (mainMenuState == Type::MainMenuLoaded)										//wait for loading to end
+	{
+		clock.restart();
+
+		loadingScreenReadInput();
+
+		while (clock.getElapsedTime() < TimePerFrame)
+		{
+			sf::sleep(sf::Time::Zero);
+		}
+	}	
+	sf::sleep(sf::seconds(0.1));														//litle nap for thread to be done
+	drawing.~thread();																	//destroy thread		
+	//render();
 }
 
 void Game::loadingScreenReadUserData()
 {
-	sf::sleep(sf::seconds(2));
-	loaded = true;												//signalize that work is done
+	sf::sleep(sf::seconds(0));
+	mainMenuState = Type::MainMenuLoaded;												//signalize that work is done
 }
 
 void Game::loadingScreenDraw()
 {
-	while (clicked != true)										//wait until clicked
+	sf::Time TimePerFrame = sf::seconds(1.f / 1000.f);
+	sf::Clock clock;
+	while (mainMenuState != Type::MainMenuGeneral)										//wait until clicked
 	{
-		window.clear();
-		sf::RectangleShape test(sf::Vector2f(10, 10));
-		if (loaded)												//sequence wheh load is complete
-		{
-			test.setFillColor(sf::Color::Green);
+		clock.restart();
+		
+		{//drawing screen
+			mainMenuRender.loadingScreen.background.setSize(sf::Vector2f(config.getWidth(), config.getHeigth()));
+			mainMenuRender.loadingScreen.background.setFillColor(sf::Color(100, 100, 100));
+
+			mainMenuRender.loadingScreen.leftBlock.setPointCount(4);
+			mainMenuRender.loadingScreen.leftBlock.setPoint(0, sf::Vector2f(-5, -5));
+			mainMenuRender.loadingScreen.leftBlock.setPoint(1, sf::Vector2f(850 * sizeMultiplier.x, -5));
+			mainMenuRender.loadingScreen.leftBlock.setPoint(2, sf::Vector2f(850 * sizeMultiplier.x, 650 * sizeMultiplier.y));
+			mainMenuRender.loadingScreen.leftBlock.setPoint(3, sf::Vector2f(-5, 750 * sizeMultiplier.y));
+			mainMenuRender.loadingScreen.leftBlock.setOutlineThickness(5.f);
+			mainMenuRender.loadingScreen.leftBlock.setOutlineColor(sf::Color(50, 50, 50));
+			mainMenuRender.loadingScreen.leftBlock.setFillColor(sf::Color(120, 120, 120));
+
+			mainMenuRender.loadingScreen.title.setFont(NataSans);
+			mainMenuRender.loadingScreen.title.setString("DEATH\nOF THE\nLAST");
+			mainMenuRender.loadingScreen.title.setPosition(sf::Vector2f(10, -10));
+			mainMenuRender.loadingScreen.title.setFillColor(sf::Color(20, 20, 20));
+			mainMenuRender.loadingScreen.title.setCharacterSize(200 * sizeMultiplier.y);
+			mainMenuRender.loadingScreen.title.setLetterSpacing(2.f);
+
+			mainMenuRender.loadingScreen.loading.setFont(NataSans);
+			mainMenuRender.loadingScreen.loading.setCharacterSize(100 * sizeMultiplier.y);
+			mainMenuRender.loadingScreen.loading.setLetterSpacing(1);
 		}
-		else													//sequence when data is loading
+
+		if (mainMenuState == Type::MainMenuLoaded)										//sequence wheh load is complete
 		{
-			test.setFillColor(sf::Color::Blue);
+			mainMenuRender.loadingScreen.loading.setFillColor(sf::Color(20, 20, 20));
+			mainMenuRender.loadingScreen.loading.setString("CLICK TO CONTINUE");
+			mainMenuRender.loadingScreen.loading.setPosition(sf::Vector2f(config.getWidth() / 2.f - 160 * sizeMultiplier.x, config.getHeigth() - 200 * sizeMultiplier.y));
 		}
-		window.draw(test);
-		window.display();
+		else																			//sequence when data is loading
+		{
+			mainMenuRender.loadingScreen.loading.setFillColor(sf::Color(180, 180, 180));
+			mainMenuRender.loadingScreen.loading.setString("LOADING");
+			mainMenuRender.loadingScreen.loading.setPosition(sf::Vector2f(config.getWidth() / 2.f - 60 * sizeMultiplier.x, config.getHeigth() - 200 * sizeMultiplier.y));
+		}
+
+		while (clock.getElapsedTime() < TimePerFrame)
+		{
+			sf::sleep(sf::Time::Zero);
+		}
 	}
-	window.setActive(false);									//free the window
 }
 
 void Game::loadingScreenReadInput()
 {
-	while (true)
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))							//wait for click
 	{
-		sf::Event event;
-		if (window.pollEvent(event))
-		{
-			if (event.type == sf::Event::MouseButtonPressed)	//wait for click
-			{
-				clicked = true;
-				break;
-			}
-		}
+		mainMenuState = Type::MainMenuGeneral;
 	}
 }
 
-void Game::mainMenuScreen()
+Type Game::mainMenuScreen()
 {
+	sf::Time TimePerFrame = sf::seconds(1.f / 1000.f);
+	sf::Clock clock;
+	std::thread drawing([&] {mainMenuScreenDraw(); });									
+	drawing.detach();
+	while (mainMenuState == Type::MainMenuGeneral)
+	{
+		clock.restart();
+
+		mainMenuScreenReadInput();
+		mainMenuScreenUpdate();
+
+		while (clock.getElapsedTime() < TimePerFrame)
+		{
+			sf::sleep(sf::Time::Zero);
+		}
+	}
+	drawing.~thread();
+	return state;
 }
 
 void Game::mainMenuScreenReadInput()
 {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))							
+	{
+		mainMenuState = Type::MainMenuExit;
+	}
 }
 
 void Game::mainMenuScreenUpdate()
 {
+	if (mainMenuState == Type::MainMenuExit)
+	{
+		screenHolder[0].create(config.getWidth(), config.getHeigth());
+		screenHolder[0].update(window);
+	}
 }
 
 void Game::mainMenuScreenDraw()
 {
+	sf::Time TimePerFrame = sf::seconds(1.f / 1000.f);
+	sf::Clock clock;
+	while (mainMenuState == Type::MainMenuGeneral)										
+	{
+		clock.restart();
+		
+		{//drawing screen
+			mainMenuRender.mainMenuScreen.background.setSize(sf::Vector2f(config.getWidth(), config.getHeigth()));
+			mainMenuRender.mainMenuScreen.background.setFillColor(sf::Color(100, 100, 100));
+
+			mainMenuRender.mainMenuScreen.leftBlock.setPointCount(4);
+			mainMenuRender.mainMenuScreen.leftBlock.setPoint(0, sf::Vector2f(-5, -5));
+			mainMenuRender.mainMenuScreen.leftBlock.setPoint(1, sf::Vector2f(850 * sizeMultiplier.x, -5));
+			mainMenuRender.mainMenuScreen.leftBlock.setPoint(2, sf::Vector2f(850 * sizeMultiplier.x, 650 * sizeMultiplier.y));
+			mainMenuRender.mainMenuScreen.leftBlock.setPoint(3, sf::Vector2f(-5, 750 * sizeMultiplier.y));
+			mainMenuRender.mainMenuScreen.leftBlock.setOutlineThickness(5.f);
+			mainMenuRender.mainMenuScreen.leftBlock.setOutlineColor(sf::Color(50, 50, 50));
+			mainMenuRender.mainMenuScreen.leftBlock.setFillColor(sf::Color(120, 120, 120));
+
+			mainMenuRender.mainMenuScreen.rightBlock.setSize(sf::Vector2f(500 * sizeMultiplier.x, 610 * sizeMultiplier.y));
+			mainMenuRender.mainMenuScreen.rightBlock.setPosition(sf::Vector2f(config.getWidth() - 495 * sizeMultiplier.x, config.getHeigth() - 605 * sizeMultiplier.y));
+			mainMenuRender.mainMenuScreen.rightBlock.setOutlineThickness(5.f);
+			mainMenuRender.mainMenuScreen.rightBlock.setOutlineColor(sf::Color(50, 50, 50));
+			mainMenuRender.mainMenuScreen.rightBlock.setFillColor(sf::Color(120, 120, 120));
+
+			mainMenuRender.mainMenuScreen.title.setFont(NataSans);
+			mainMenuRender.mainMenuScreen.title.setString("DEATH\nOF THE\nLAST");
+			mainMenuRender.mainMenuScreen.title.setPosition(sf::Vector2f(10, -10));
+			mainMenuRender.mainMenuScreen.title.setFillColor(sf::Color(20, 20, 20));
+			mainMenuRender.mainMenuScreen.title.setCharacterSize(200 * sizeMultiplier.y);
+			mainMenuRender.mainMenuScreen.title.setLetterSpacing(2.f);
+
+			mainMenuRender.mainMenuScreen.playBody.setSize(sf::Vector2f(480 * sizeMultiplier.x, 120 * sizeMultiplier.y));
+			mainMenuRender.mainMenuScreen.playBody.setPosition(sf::Vector2f(config.getWidth() - 475 * sizeMultiplier.x, config.getHeigth() - 585 * sizeMultiplier.y));
+			mainMenuRender.mainMenuScreen.playBody.setOutlineThickness(5.f);
+			mainMenuRender.mainMenuScreen.playBody.setOutlineColor(sf::Color(20, 20, 20));
+			mainMenuRender.mainMenuScreen.playBody.setFillColor(sf::Color(120, 120, 120));
+
+			mainMenuRender.mainMenuScreen.playText.setFont(NataSans);
+			mainMenuRender.mainMenuScreen.playText.setString("PLAY");
+			mainMenuRender.mainMenuScreen.playText.setPosition(sf::Vector2f(config.getWidth() - 465 * sizeMultiplier.x, config.getHeigth() - 595 * sizeMultiplier.y));
+			mainMenuRender.mainMenuScreen.playText.setFillColor(sf::Color(20, 20, 20));
+			mainMenuRender.mainMenuScreen.playText.setCharacterSize(100 * sizeMultiplier.y);
+
+			mainMenuRender.mainMenuScreen.archiveBody.setSize(sf::Vector2f(480 * sizeMultiplier.x, 120 * sizeMultiplier.y));
+			mainMenuRender.mainMenuScreen.archiveBody.setPosition(sf::Vector2f(config.getWidth() - 475 * sizeMultiplier.x, config.getHeigth() - 435 * sizeMultiplier.y));
+			mainMenuRender.mainMenuScreen.archiveBody.setOutlineThickness(5.f);
+			mainMenuRender.mainMenuScreen.archiveBody.setOutlineColor(sf::Color(20, 20, 20));
+			mainMenuRender.mainMenuScreen.archiveBody.setFillColor(sf::Color(120, 120, 120));
+
+			mainMenuRender.mainMenuScreen.archiveText.setFont(NataSans);
+			mainMenuRender.mainMenuScreen.archiveText.setString("ARCHIVE");
+			mainMenuRender.mainMenuScreen.archiveText.setPosition(sf::Vector2f(config.getWidth() - 465 * sizeMultiplier.x, config.getHeigth() - 445 * sizeMultiplier.y));
+			mainMenuRender.mainMenuScreen.archiveText.setFillColor(sf::Color(20, 20, 20));
+			mainMenuRender.mainMenuScreen.archiveText.setCharacterSize(100 * sizeMultiplier.y);
+
+			mainMenuRender.mainMenuScreen.settingsBody.setSize(sf::Vector2f(480 * sizeMultiplier.x, 120 * sizeMultiplier.y));
+			mainMenuRender.mainMenuScreen.settingsBody.setPosition(sf::Vector2f(config.getWidth() - 475 * sizeMultiplier.x, config.getHeigth() - 285 * sizeMultiplier.y));
+			mainMenuRender.mainMenuScreen.settingsBody.setOutlineThickness(5.f);
+			mainMenuRender.mainMenuScreen.settingsBody.setOutlineColor(sf::Color(20, 20, 20));
+			mainMenuRender.mainMenuScreen.settingsBody.setFillColor(sf::Color(120, 120, 120));
+
+			mainMenuRender.mainMenuScreen.settingsText.setFont(NataSans);
+			mainMenuRender.mainMenuScreen.settingsText.setString("SETTINGS");
+			mainMenuRender.mainMenuScreen.settingsText.setPosition(sf::Vector2f(config.getWidth() - 465 * sizeMultiplier.x, config.getHeigth() - 295 * sizeMultiplier.y));
+			mainMenuRender.mainMenuScreen.settingsText.setFillColor(sf::Color(20, 20, 20));
+			mainMenuRender.mainMenuScreen.settingsText.setCharacterSize(100 * sizeMultiplier.y);
+
+			mainMenuRender.mainMenuScreen.exitBody.setSize(sf::Vector2f(480 * sizeMultiplier.x, 120 * sizeMultiplier.y));
+			mainMenuRender.mainMenuScreen.exitBody.setPosition(sf::Vector2f(config.getWidth() - 475 * sizeMultiplier.x, config.getHeigth() - 135 * sizeMultiplier.y));
+			mainMenuRender.mainMenuScreen.exitBody.setOutlineThickness(5.f);
+			mainMenuRender.mainMenuScreen.exitBody.setOutlineColor(sf::Color(20, 20, 20));
+			mainMenuRender.mainMenuScreen.exitBody.setFillColor(sf::Color(120, 120, 120));
+
+			mainMenuRender.mainMenuScreen.exitText.setFont(NataSans);
+			mainMenuRender.mainMenuScreen.exitText.setString("EXIT");
+			mainMenuRender.mainMenuScreen.exitText.setPosition(sf::Vector2f(config.getWidth() - 465 * sizeMultiplier.x, config.getHeigth() - 145 * sizeMultiplier.y));
+			mainMenuRender.mainMenuScreen.exitText.setFillColor(sf::Color(20, 20, 20));
+			mainMenuRender.mainMenuScreen.exitText.setCharacterSize(100 * sizeMultiplier.y);
+		}
+
+		while (clock.getElapsedTime() < TimePerFrame)
+		{
+			sf::sleep(sf::Time::Zero);
+		}
+	}
 }
 
-void Game::exitScreen()
+Type Game::exitScreen()
 {
+	sf::Time TimePerFrame = sf::seconds(1.f / 1000.f);
+	sf::Clock clock;
+	std::thread drawing([&] {exitScreenDraw(); });
+	drawing.detach();
+	while (mainMenuState == Type::MainMenuExit)
+	{
+		clock.restart();
+
+		exitScreenReadInput();
+
+		while (clock.getElapsedTime() < TimePerFrame)
+		{
+			sf::sleep(sf::Time::Zero);
+		}
+	}
+	drawing.~thread();
+	return state;
 }
 
 void Game::exitScreenReadInput()
 {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+	{
+		mainMenuState = Type::Blank;
+		state = Type::Exit;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::F1))
+	{
+		mainMenuState = Type::MainMenuGeneral;
+	}
 }
 
 void Game::exitScreenUpdate()
@@ -165,6 +401,25 @@ void Game::exitScreenUpdate()
 
 void Game::exitScreenDraw()
 {
+	sf::Time TimePerFrame = sf::seconds(1.f / 1000.f);
+	sf::Clock clock;
+	while (mainMenuState == Type::MainMenuExit)
+	{
+		clock.restart();
+
+		mainMenuRender.exitScreen.prevScreen.setTexture(*screenHolder);
+		//mainMenuRender.exitScreen.prevScreen.setPosition(sf::Vector2f(0, 0));
+
+		//mainMenuRender.exitScreen.shade.setSize(sf::Vector2f(config.getWidth(), config.getHeigth()));
+		//mainMenuRender.exitScreen.shade.setFillColor(sf::Color(100, 100, 100, 10));
+
+
+
+		while (clock.getElapsedTime() < TimePerFrame)
+		{
+			sf::sleep(sf::Time::Zero);
+		}
+	}
 }
 
 Type Game::settingsMenu()
@@ -177,6 +432,33 @@ Type Game::playMenu()
 {
 
 	return Type::PlayMenu;
+}
+
+void Game::renderArcadeMode()
+{
+	window.clear();
+
+	for (int i = 0; i < renderQueue.backgroundHolderGetSize(); i++)
+	{
+		window.draw(renderQueue.backgroundHolderGet(i));
+	}
+
+	for (int i = 0; i < renderQueue.projectileHolderGetSize(); i++)
+	{
+		window.draw(renderQueue.projectileHolderGet(i));
+	}
+
+	for (int i = 0; i < renderQueue.enemyHolderGetSize(); i++)
+	{
+		window.draw(renderQueue.enemyHolderGet(i));
+	}
+
+	for (int i = 0; i < renderQueue.playerHolderGetSize(); i++)
+	{
+		window.draw(renderQueue.playerHolderGet(i));
+	}
+
+	window.display();
 }
 
 Type Game::archiveMenu()

@@ -7,6 +7,5 @@ int WinMain()
 	Game game(config);
 	config.~Config();
 	game.run();
-	game.~Game();
-	sf::sleep(sf::Time(sf::seconds(20)));
+	//game.~Game();
 }

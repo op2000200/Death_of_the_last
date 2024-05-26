@@ -7,33 +7,41 @@ public:
 	RenderQueue();
 	~RenderQueue();
 
+	void backgroundHolderPush(sf::Sprite sprite);
+	sf::Sprite backgroundHolderGet(int i);
+	int backgroundHolderGetSize();
+	void backgroundHolderErase(int i);
+	void backgroundHolderClear();
+
+	void projectileHolderPush(sf::Sprite sprite);
+	sf::Sprite projectileHolderGet(int i);
+	int projectileHolderGetSize();
+	void projectileHolderErase(int i);
+	void projectileHolderClear();
+
+	void enemyHolderPush(sf::Sprite sprite);
+	sf::Sprite enemyHolderGet(int i);
+	int enemyHolderGetSize();
+	void enemyHolderErase(int i);
+	void enemyHolderClear();
+
+	void playerHolderPush(sf::Sprite sprite);
+	sf::Sprite playerHolderGet(int i);
+	int playerHolderGetSize();
+	void playerHolderErase(int i);
+	void playerHolderClear();
+
 	void spriteHolderPush(sf::Sprite sprite);
 	sf::Sprite spriteHolderGet(int i);
 	int spriteHolderGetSize();
 	void spriteHolderErase(int i);
 	void spriteHolderClear();
 
-	void circleHolderPush(sf::CircleShape circle);
-	sf::CircleShape circleHolderGet(int i);
-	int circleHolderGetSize();
-	void circleHolderErase(int i);
-	void circleHolderClear();
-
-	void rectHolderPush(sf::RectangleShape rect);
-	sf::RectangleShape rectHolderGet(int i);
-	int rectHolderGetSize();
-	void rectHolderErase(int i);
-	void rectHolderClear();
-
-	void convexHolderPush(sf::ConvexShape convex);
-	sf::ConvexShape convexHolderGet(int i);
-	int convexHolderGetSize();
-	void convexHolderErase(int i);
-	void convexHolderClear();
 private:
+	std::vector<sf::Sprite> backgroundHolder;
+	std::vector<sf::Sprite> projectileHolder;
+	std::vector<sf::Sprite> enemyHolder;
+	std::vector<sf::Sprite> playerHolder;
 	std::vector<sf::Sprite> spriteHolder;
-	std::vector<sf::CircleShape> circleHolder;
-	std::vector<sf::RectangleShape> rectHolder;
-	std::vector<sf::ConvexShape> convexHolder;
 };
 

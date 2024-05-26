@@ -7,15 +7,63 @@
 #include "SFML/System.hpp"
 
 #include "Config.h"
-#include "RenderQueue.h";
+#include "RenderQueue.h"
 
 enum class Type
 {
 	MainMenu,
+	MainMenuFirstLaunch,
+	MainMenuLoading,
+	MainMenuLoaded,
+	MainMenuGeneral,
+	MainMenuExit,
 	PlayMenu,
 	SettingsMenu,
 	ArchiveMenu,
-	Exit
+	Exit,
+	Blank
+};
+
+struct MainMenuRender
+{
+public:
+	struct LoadingScreen
+	{
+		sf::RectangleShape background;
+		sf::ConvexShape leftBlock;
+		sf::RectangleShape rightBlock;
+		sf::Text title;
+		sf::Text loading;
+	};
+	struct MainMenuScreen
+	{
+		sf::RectangleShape background;
+		sf::ConvexShape leftBlock;
+		sf::RectangleShape rightBlock;
+		sf::Text title;
+		sf::RectangleShape playBody;
+		sf::RectangleShape archiveBody;
+		sf::RectangleShape settingsBody;
+		sf::RectangleShape exitBody;
+		sf::Text playText;
+		sf::Text archiveText;
+		sf::Text settingsText;
+		sf::Text exitText;
+	};
+	struct ExitScreen
+	{
+		sf::Sprite prevScreen;
+		sf::RectangleShape shade;
+		sf::RectangleShape exitWindow;
+		sf::RectangleShape exitYes;
+		sf::RectangleShape exitNo;
+		sf::Text exitWindowText;
+		sf::Text exitYesText;
+		sf::Text exitNoText;
+	};
+	LoadingScreen loadingScreen;
+	MainMenuScreen mainMenuScreen;
+	ExitScreen exitScreen;
 };
 
 class Game
@@ -24,22 +72,23 @@ public: //methods
 	Game(Config startConfig);
 	~Game();
 	void run();
-	void render();
-
+	
 	Type mainMenu();
+
+	void renderMM();
 
 	void loadingScreen();
 	void loadingScreenReadUserData();
 	void loadingScreenDraw();
 	void loadingScreenReadInput();
 
-	void mainMenuScreen();
+	Type mainMenuScreen();
 	void mainMenuScreenReadInput();
 	void mainMenuScreenUpdate();
 	void mainMenuScreenDraw();
 
 
-	void exitScreen();
+	Type exitScreen();
 	void exitScreenReadInput();
 	void exitScreenUpdate();
 	void exitScreenDraw();
@@ -49,6 +98,8 @@ public: //methods
 
 
 	Type playMenu();
+
+	void renderArcadeMode();
 
 
 	Type archiveMenu();
@@ -64,11 +115,14 @@ private:
 	Type state;
 	sf::Vector2f sizeMultiplier;
 	RenderQueue renderQueue;
+	sf::Font NataSans;
+	sf::Texture* screenHolder;
 
 	//main menu state variables
-	bool firstLaunch;
-	bool loaded;
-	bool clicked;
+	Type mainMenuState;
+	MainMenuRender mainMenuRender;
+
+
 };
 
 
