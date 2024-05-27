@@ -185,8 +185,8 @@ void Game::loadingScreenDraw()
 
 			mainMenuRender.loadingScreen.leftBlock.setPointCount(4);
 			mainMenuRender.loadingScreen.leftBlock.setPoint(0, sf::Vector2f(-5, -5));
-			mainMenuRender.loadingScreen.leftBlock.setPoint(1, sf::Vector2f(850 * sizeMultiplier.x, -5));
-			mainMenuRender.loadingScreen.leftBlock.setPoint(2, sf::Vector2f(850 * sizeMultiplier.x, 650 * sizeMultiplier.y));
+			mainMenuRender.loadingScreen.leftBlock.setPoint(1, sf::Vector2f(850 * sizeMultiplier.y, -5));
+			mainMenuRender.loadingScreen.leftBlock.setPoint(2, sf::Vector2f(850 * sizeMultiplier.y, 650 * sizeMultiplier.y));
 			mainMenuRender.loadingScreen.leftBlock.setPoint(3, sf::Vector2f(-5, 750 * sizeMultiplier.y));
 			mainMenuRender.loadingScreen.leftBlock.setOutlineThickness(5.f);
 			mainMenuRender.loadingScreen.leftBlock.setOutlineColor(sf::Color(50, 50, 50));
