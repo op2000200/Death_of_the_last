@@ -116,14 +116,27 @@ void Game::renderMM()
 
 		if (mainMenuState == Type::MainMenuExit)
 		{
-			window.draw(mainMenuRender.exitScreen.prevScreen);
-			//window.draw(mainMenuRender.exitScreen.shade);
-			//window.draw(mainMenuRender.exitScreen.exitWindow);
-			//window.draw(mainMenuRender.exitScreen.exitWindowText);
-			//window.draw(mainMenuRender.exitScreen.exitYes);
-			//window.draw(mainMenuRender.exitScreen.exitNo);
-			//window.draw(mainMenuRender.exitScreen.exitYesText);
-			//window.draw(mainMenuRender.exitScreen.exitNoText);
+			//window.draw(mainMenuRender.exitScreen.prevScreen);
+			window.draw(mainMenuRender.mainMenuScreen.background);
+			window.draw(mainMenuRender.mainMenuScreen.leftBlock);
+			window.draw(mainMenuRender.mainMenuScreen.rightBlock);
+			window.draw(mainMenuRender.mainMenuScreen.title);
+			window.draw(mainMenuRender.mainMenuScreen.playBody);
+			window.draw(mainMenuRender.mainMenuScreen.playText);
+			window.draw(mainMenuRender.mainMenuScreen.archiveBody);
+			window.draw(mainMenuRender.mainMenuScreen.archiveText);
+			window.draw(mainMenuRender.mainMenuScreen.settingsBody);
+			window.draw(mainMenuRender.mainMenuScreen.settingsText);
+			window.draw(mainMenuRender.mainMenuScreen.exitBody);
+			window.draw(mainMenuRender.mainMenuScreen.exitText);
+
+			window.draw(mainMenuRender.exitScreen.shade);
+			window.draw(mainMenuRender.exitScreen.exitWindow);
+			window.draw(mainMenuRender.exitScreen.exitWindowText);
+			window.draw(mainMenuRender.exitScreen.exitYes);
+			window.draw(mainMenuRender.exitScreen.exitNo);
+			window.draw(mainMenuRender.exitScreen.exitYesText);
+			window.draw(mainMenuRender.exitScreen.exitNoText);
 		}
 
 		window.display();
@@ -184,23 +197,49 @@ void Game::loadingScreenDraw()
 			mainMenuRender.loadingScreen.background.setFillColor(sf::Color(100, 100, 100));
 
 			mainMenuRender.loadingScreen.leftBlock.setPointCount(4);
-			mainMenuRender.loadingScreen.leftBlock.setPoint(0, sf::Vector2f(-5, -5));
-			mainMenuRender.loadingScreen.leftBlock.setPoint(1, sf::Vector2f(850 * sizeMultiplier.y, -5));
-			mainMenuRender.loadingScreen.leftBlock.setPoint(2, sf::Vector2f(850 * sizeMultiplier.y, 650 * sizeMultiplier.y));
-			mainMenuRender.loadingScreen.leftBlock.setPoint(3, sf::Vector2f(-5, 750 * sizeMultiplier.y));
+			
 			mainMenuRender.loadingScreen.leftBlock.setOutlineThickness(5.f);
 			mainMenuRender.loadingScreen.leftBlock.setOutlineColor(sf::Color(50, 50, 50));
 			mainMenuRender.loadingScreen.leftBlock.setFillColor(sf::Color(120, 120, 120));
+			mainMenuRender.loadingScreen.leftBlock.setPoint(0, sf::Vector2f(-5, -5));
+			if (sizeMultiplier.x > 1)
+			{
+				mainMenuRender.loadingScreen.leftBlock.setPoint(1, sf::Vector2f(850, -5));
+				mainMenuRender.loadingScreen.leftBlock.setPoint(2, sf::Vector2f(850, 650));
+				mainMenuRender.loadingScreen.leftBlock.setPoint(3, sf::Vector2f(-5, 750));
+				mainMenuRender.loadingScreen.title.setCharacterSize(200);
+				mainMenuRender.loadingScreen.loading.setCharacterSize(100);
+			}
+			else
+			{
+				if (sizeMultiplier.x < sizeMultiplier.y)
+				{
+					mainMenuRender.loadingScreen.leftBlock.setPoint(1, sf::Vector2f(850 * sizeMultiplier.x, -5));
+					mainMenuRender.loadingScreen.leftBlock.setPoint(2, sf::Vector2f(850 * sizeMultiplier.x, 650 * sizeMultiplier.x));
+					mainMenuRender.loadingScreen.leftBlock.setPoint(3, sf::Vector2f(-5, 750 * sizeMultiplier.x));
+					mainMenuRender.loadingScreen.title.setCharacterSize(200 * sizeMultiplier.x);
+					mainMenuRender.loadingScreen.loading.setCharacterSize(100 * sizeMultiplier.x);
+				}
+				else
+				{
+					mainMenuRender.loadingScreen.leftBlock.setPoint(1, sf::Vector2f(850 * sizeMultiplier.y, -5));
+					mainMenuRender.loadingScreen.leftBlock.setPoint(2, sf::Vector2f(850 * sizeMultiplier.y, 650 * sizeMultiplier.y));
+					mainMenuRender.loadingScreen.leftBlock.setPoint(3, sf::Vector2f(-5, 750 * sizeMultiplier.y));
+					mainMenuRender.loadingScreen.title.setCharacterSize(200 * sizeMultiplier.y);
+					mainMenuRender.loadingScreen.loading.setCharacterSize(100 * sizeMultiplier.y);
+				}
+
+			}
+
 
 			mainMenuRender.loadingScreen.title.setFont(NataSans);
 			mainMenuRender.loadingScreen.title.setString("DEATH\nOF THE\nLAST");
 			mainMenuRender.loadingScreen.title.setPosition(sf::Vector2f(10, -10));
 			mainMenuRender.loadingScreen.title.setFillColor(sf::Color(20, 20, 20));
-			mainMenuRender.loadingScreen.title.setCharacterSize(200 * sizeMultiplier.y);
 			mainMenuRender.loadingScreen.title.setLetterSpacing(2.f);
 
+
 			mainMenuRender.loadingScreen.loading.setFont(NataSans);
-			mainMenuRender.loadingScreen.loading.setCharacterSize(100 * sizeMultiplier.y);
 			mainMenuRender.loadingScreen.loading.setLetterSpacing(1);
 		}
 
@@ -285,15 +324,90 @@ void Game::mainMenuScreenDraw()
 
 			mainMenuRender.mainMenuScreen.leftBlock.setPointCount(4);
 			mainMenuRender.mainMenuScreen.leftBlock.setPoint(0, sf::Vector2f(-5, -5));
-			mainMenuRender.mainMenuScreen.leftBlock.setPoint(1, sf::Vector2f(850 * sizeMultiplier.x, -5));
-			mainMenuRender.mainMenuScreen.leftBlock.setPoint(2, sf::Vector2f(850 * sizeMultiplier.x, 650 * sizeMultiplier.y));
-			mainMenuRender.mainMenuScreen.leftBlock.setPoint(3, sf::Vector2f(-5, 750 * sizeMultiplier.y));
+			if (sizeMultiplier.x > 1)
+			{
+				mainMenuRender.mainMenuScreen.leftBlock.setPoint(1, sf::Vector2f(850, -5));
+				mainMenuRender.mainMenuScreen.leftBlock.setPoint(2, sf::Vector2f(850, 650));
+				mainMenuRender.mainMenuScreen.leftBlock.setPoint(3, sf::Vector2f(-5, 750));
+				mainMenuRender.mainMenuScreen.rightBlock.setSize(sf::Vector2f(500, 610));
+				mainMenuRender.mainMenuScreen.rightBlock.setPosition(sf::Vector2f(config.getWidth() - 495, config.getHeigth() - 605));
+				mainMenuRender.mainMenuScreen.title.setCharacterSize(200);
+				mainMenuRender.mainMenuScreen.playBody.setSize(sf::Vector2f(480, 120));
+				mainMenuRender.mainMenuScreen.playBody.setPosition(sf::Vector2f(config.getWidth() - 475, config.getHeigth() - 585));
+				mainMenuRender.mainMenuScreen.playText.setPosition(sf::Vector2f(config.getWidth() - 465, config.getHeigth() - 595));
+				mainMenuRender.mainMenuScreen.playText.setCharacterSize(100);
+				mainMenuRender.mainMenuScreen.archiveBody.setSize(sf::Vector2f(480, 120));
+				mainMenuRender.mainMenuScreen.archiveBody.setPosition(sf::Vector2f(config.getWidth() - 475, config.getHeigth() - 435));
+				mainMenuRender.mainMenuScreen.archiveText.setPosition(sf::Vector2f(config.getWidth() - 465, config.getHeigth() - 445));
+				mainMenuRender.mainMenuScreen.archiveText.setCharacterSize(100);
+				mainMenuRender.mainMenuScreen.settingsBody.setSize(sf::Vector2f(480, 120));
+				mainMenuRender.mainMenuScreen.settingsBody.setPosition(sf::Vector2f(config.getWidth() - 475, config.getHeigth() - 285));
+				mainMenuRender.mainMenuScreen.settingsText.setPosition(sf::Vector2f(config.getWidth() - 465, config.getHeigth() - 295));
+				mainMenuRender.mainMenuScreen.settingsText.setCharacterSize(100);
+				mainMenuRender.mainMenuScreen.exitBody.setSize(sf::Vector2f(480, 120));
+				mainMenuRender.mainMenuScreen.exitBody.setPosition(sf::Vector2f(config.getWidth() - 475, config.getHeigth() - 135));
+				mainMenuRender.mainMenuScreen.exitText.setPosition(sf::Vector2f(config.getWidth() - 465, config.getHeigth() - 145));
+				mainMenuRender.mainMenuScreen.exitText.setCharacterSize(100);
+			}
+			else
+			{
+				if (sizeMultiplier.x < sizeMultiplier.y)
+				{
+					mainMenuRender.mainMenuScreen.leftBlock.setPoint(1, sf::Vector2f(850 * sizeMultiplier.x, -5));
+					mainMenuRender.mainMenuScreen.leftBlock.setPoint(2, sf::Vector2f(850 * sizeMultiplier.x, 650 * sizeMultiplier.x));
+					mainMenuRender.mainMenuScreen.leftBlock.setPoint(3, sf::Vector2f(-5, 750 * sizeMultiplier.x));
+					mainMenuRender.mainMenuScreen.rightBlock.setSize(sf::Vector2f(500 * sizeMultiplier.x, 610 * sizeMultiplier.x));
+					mainMenuRender.mainMenuScreen.rightBlock.setPosition(sf::Vector2f(config.getWidth() - 495 * sizeMultiplier.x, config.getHeigth() - 605 * sizeMultiplier.x));
+					mainMenuRender.mainMenuScreen.title.setCharacterSize(200 * sizeMultiplier.x);
+					mainMenuRender.mainMenuScreen.playBody.setSize(sf::Vector2f(480 * sizeMultiplier.x, 120 * sizeMultiplier.x));
+					mainMenuRender.mainMenuScreen.playBody.setPosition(sf::Vector2f(config.getWidth() - 475 * sizeMultiplier.x, config.getHeigth() - 585 * sizeMultiplier.x));
+					mainMenuRender.mainMenuScreen.playText.setPosition(sf::Vector2f(config.getWidth() - 465 * sizeMultiplier.x, config.getHeigth() - 595 * sizeMultiplier.x));
+					mainMenuRender.mainMenuScreen.playText.setCharacterSize(100 * sizeMultiplier.x);
+					mainMenuRender.mainMenuScreen.archiveBody.setSize(sf::Vector2f(480 * sizeMultiplier.x, 120 * sizeMultiplier.x));
+					mainMenuRender.mainMenuScreen.archiveBody.setPosition(sf::Vector2f(config.getWidth() - 475 * sizeMultiplier.x, config.getHeigth() - 435 * sizeMultiplier.x));
+					mainMenuRender.mainMenuScreen.archiveText.setPosition(sf::Vector2f(config.getWidth() - 465 * sizeMultiplier.x, config.getHeigth() - 445 * sizeMultiplier.x));
+					mainMenuRender.mainMenuScreen.archiveText.setCharacterSize(100 * sizeMultiplier.x);
+					mainMenuRender.mainMenuScreen.settingsBody.setSize(sf::Vector2f(480 * sizeMultiplier.x, 120 * sizeMultiplier.x));
+					mainMenuRender.mainMenuScreen.settingsBody.setPosition(sf::Vector2f(config.getWidth() - 475 * sizeMultiplier.x, config.getHeigth() - 285 * sizeMultiplier.x));
+					mainMenuRender.mainMenuScreen.settingsText.setPosition(sf::Vector2f(config.getWidth() - 465 * sizeMultiplier.x, config.getHeigth() - 295 * sizeMultiplier.x));
+					mainMenuRender.mainMenuScreen.settingsText.setCharacterSize(100 * sizeMultiplier.x);
+					mainMenuRender.mainMenuScreen.exitBody.setSize(sf::Vector2f(480 * sizeMultiplier.x, 120 * sizeMultiplier.x));
+					mainMenuRender.mainMenuScreen.exitBody.setPosition(sf::Vector2f(config.getWidth() - 475 * sizeMultiplier.x, config.getHeigth() - 135 * sizeMultiplier.x));
+					mainMenuRender.mainMenuScreen.exitText.setPosition(sf::Vector2f(config.getWidth() - 465 * sizeMultiplier.x, config.getHeigth() - 145 * sizeMultiplier.x));
+					mainMenuRender.mainMenuScreen.exitText.setCharacterSize(100 * sizeMultiplier.x);
+				}
+				else
+				{
+					mainMenuRender.mainMenuScreen.leftBlock.setPoint(1, sf::Vector2f(850 * sizeMultiplier.y, -5));
+					mainMenuRender.mainMenuScreen.leftBlock.setPoint(2, sf::Vector2f(850 * sizeMultiplier.y, 650 * sizeMultiplier.y));
+					mainMenuRender.mainMenuScreen.leftBlock.setPoint(3, sf::Vector2f(-5, 750 * sizeMultiplier.y));
+					mainMenuRender.mainMenuScreen.rightBlock.setSize(sf::Vector2f(500 * sizeMultiplier.y, 610 * sizeMultiplier.y));
+					mainMenuRender.mainMenuScreen.rightBlock.setPosition(sf::Vector2f(config.getWidth() - 495 * sizeMultiplier.y, config.getHeigth() - 605 * sizeMultiplier.y));
+					mainMenuRender.mainMenuScreen.title.setCharacterSize(200 * sizeMultiplier.y);
+					mainMenuRender.mainMenuScreen.playBody.setSize(sf::Vector2f(480 * sizeMultiplier.y, 120 * sizeMultiplier.y));
+					mainMenuRender.mainMenuScreen.playBody.setPosition(sf::Vector2f(config.getWidth() - 475 * sizeMultiplier.y, config.getHeigth() - 585 * sizeMultiplier.y));
+					mainMenuRender.mainMenuScreen.playText.setPosition(sf::Vector2f(config.getWidth() - 465 * sizeMultiplier.y, config.getHeigth() - 595 * sizeMultiplier.y));
+					mainMenuRender.mainMenuScreen.playText.setCharacterSize(100 * sizeMultiplier.y);
+					mainMenuRender.mainMenuScreen.archiveBody.setSize(sf::Vector2f(480 * sizeMultiplier.y, 120 * sizeMultiplier.y));
+					mainMenuRender.mainMenuScreen.archiveBody.setPosition(sf::Vector2f(config.getWidth() - 475 * sizeMultiplier.y, config.getHeigth() - 435 * sizeMultiplier.y));
+					mainMenuRender.mainMenuScreen.archiveText.setPosition(sf::Vector2f(config.getWidth() - 465 * sizeMultiplier.y, config.getHeigth() - 445 * sizeMultiplier.y));
+					mainMenuRender.mainMenuScreen.archiveText.setCharacterSize(100 * sizeMultiplier.y);
+					mainMenuRender.mainMenuScreen.settingsBody.setSize(sf::Vector2f(480 * sizeMultiplier.y, 120 * sizeMultiplier.y));
+					mainMenuRender.mainMenuScreen.settingsBody.setPosition(sf::Vector2f(config.getWidth() - 475 * sizeMultiplier.y, config.getHeigth() - 285 * sizeMultiplier.y));
+					mainMenuRender.mainMenuScreen.settingsText.setPosition(sf::Vector2f(config.getWidth() - 465 * sizeMultiplier.y, config.getHeigth() - 295 * sizeMultiplier.y));
+					mainMenuRender.mainMenuScreen.settingsText.setCharacterSize(100 * sizeMultiplier.y);
+					mainMenuRender.mainMenuScreen.exitBody.setSize(sf::Vector2f(480 * sizeMultiplier.y, 120 * sizeMultiplier.y));
+					mainMenuRender.mainMenuScreen.exitBody.setPosition(sf::Vector2f(config.getWidth() - 475 * sizeMultiplier.y, config.getHeigth() - 135 * sizeMultiplier.y));
+					mainMenuRender.mainMenuScreen.exitText.setPosition(sf::Vector2f(config.getWidth() - 465 * sizeMultiplier.y, config.getHeigth() - 145 * sizeMultiplier.y));
+					mainMenuRender.mainMenuScreen.exitText.setCharacterSize(100 * sizeMultiplier.y);
+				}
+			}
+
 			mainMenuRender.mainMenuScreen.leftBlock.setOutlineThickness(5.f);
 			mainMenuRender.mainMenuScreen.leftBlock.setOutlineColor(sf::Color(50, 50, 50));
 			mainMenuRender.mainMenuScreen.leftBlock.setFillColor(sf::Color(120, 120, 120));
 
-			mainMenuRender.mainMenuScreen.rightBlock.setSize(sf::Vector2f(500 * sizeMultiplier.x, 610 * sizeMultiplier.y));
-			mainMenuRender.mainMenuScreen.rightBlock.setPosition(sf::Vector2f(config.getWidth() - 495 * sizeMultiplier.x, config.getHeigth() - 605 * sizeMultiplier.y));
+
 			mainMenuRender.mainMenuScreen.rightBlock.setOutlineThickness(5.f);
 			mainMenuRender.mainMenuScreen.rightBlock.setOutlineColor(sf::Color(50, 50, 50));
 			mainMenuRender.mainMenuScreen.rightBlock.setFillColor(sf::Color(120, 120, 120));
@@ -302,56 +416,40 @@ void Game::mainMenuScreenDraw()
 			mainMenuRender.mainMenuScreen.title.setString("DEATH\nOF THE\nLAST");
 			mainMenuRender.mainMenuScreen.title.setPosition(sf::Vector2f(10, -10));
 			mainMenuRender.mainMenuScreen.title.setFillColor(sf::Color(20, 20, 20));
-			mainMenuRender.mainMenuScreen.title.setCharacterSize(200 * sizeMultiplier.y);
 			mainMenuRender.mainMenuScreen.title.setLetterSpacing(2.f);
 
-			mainMenuRender.mainMenuScreen.playBody.setSize(sf::Vector2f(480 * sizeMultiplier.x, 120 * sizeMultiplier.y));
-			mainMenuRender.mainMenuScreen.playBody.setPosition(sf::Vector2f(config.getWidth() - 475 * sizeMultiplier.x, config.getHeigth() - 585 * sizeMultiplier.y));
+
 			mainMenuRender.mainMenuScreen.playBody.setOutlineThickness(5.f);
 			mainMenuRender.mainMenuScreen.playBody.setOutlineColor(sf::Color(20, 20, 20));
 			mainMenuRender.mainMenuScreen.playBody.setFillColor(sf::Color(120, 120, 120));
 
 			mainMenuRender.mainMenuScreen.playText.setFont(NataSans);
 			mainMenuRender.mainMenuScreen.playText.setString("PLAY");
-			mainMenuRender.mainMenuScreen.playText.setPosition(sf::Vector2f(config.getWidth() - 465 * sizeMultiplier.x, config.getHeigth() - 595 * sizeMultiplier.y));
 			mainMenuRender.mainMenuScreen.playText.setFillColor(sf::Color(20, 20, 20));
-			mainMenuRender.mainMenuScreen.playText.setCharacterSize(100 * sizeMultiplier.y);
 
-			mainMenuRender.mainMenuScreen.archiveBody.setSize(sf::Vector2f(480 * sizeMultiplier.x, 120 * sizeMultiplier.y));
-			mainMenuRender.mainMenuScreen.archiveBody.setPosition(sf::Vector2f(config.getWidth() - 475 * sizeMultiplier.x, config.getHeigth() - 435 * sizeMultiplier.y));
 			mainMenuRender.mainMenuScreen.archiveBody.setOutlineThickness(5.f);
 			mainMenuRender.mainMenuScreen.archiveBody.setOutlineColor(sf::Color(20, 20, 20));
 			mainMenuRender.mainMenuScreen.archiveBody.setFillColor(sf::Color(120, 120, 120));
 
 			mainMenuRender.mainMenuScreen.archiveText.setFont(NataSans);
 			mainMenuRender.mainMenuScreen.archiveText.setString("ARCHIVE");
-			mainMenuRender.mainMenuScreen.archiveText.setPosition(sf::Vector2f(config.getWidth() - 465 * sizeMultiplier.x, config.getHeigth() - 445 * sizeMultiplier.y));
 			mainMenuRender.mainMenuScreen.archiveText.setFillColor(sf::Color(20, 20, 20));
-			mainMenuRender.mainMenuScreen.archiveText.setCharacterSize(100 * sizeMultiplier.y);
 
-			mainMenuRender.mainMenuScreen.settingsBody.setSize(sf::Vector2f(480 * sizeMultiplier.x, 120 * sizeMultiplier.y));
-			mainMenuRender.mainMenuScreen.settingsBody.setPosition(sf::Vector2f(config.getWidth() - 475 * sizeMultiplier.x, config.getHeigth() - 285 * sizeMultiplier.y));
 			mainMenuRender.mainMenuScreen.settingsBody.setOutlineThickness(5.f);
 			mainMenuRender.mainMenuScreen.settingsBody.setOutlineColor(sf::Color(20, 20, 20));
 			mainMenuRender.mainMenuScreen.settingsBody.setFillColor(sf::Color(120, 120, 120));
 
 			mainMenuRender.mainMenuScreen.settingsText.setFont(NataSans);
 			mainMenuRender.mainMenuScreen.settingsText.setString("SETTINGS");
-			mainMenuRender.mainMenuScreen.settingsText.setPosition(sf::Vector2f(config.getWidth() - 465 * sizeMultiplier.x, config.getHeigth() - 295 * sizeMultiplier.y));
 			mainMenuRender.mainMenuScreen.settingsText.setFillColor(sf::Color(20, 20, 20));
-			mainMenuRender.mainMenuScreen.settingsText.setCharacterSize(100 * sizeMultiplier.y);
 
-			mainMenuRender.mainMenuScreen.exitBody.setSize(sf::Vector2f(480 * sizeMultiplier.x, 120 * sizeMultiplier.y));
-			mainMenuRender.mainMenuScreen.exitBody.setPosition(sf::Vector2f(config.getWidth() - 475 * sizeMultiplier.x, config.getHeigth() - 135 * sizeMultiplier.y));
 			mainMenuRender.mainMenuScreen.exitBody.setOutlineThickness(5.f);
 			mainMenuRender.mainMenuScreen.exitBody.setOutlineColor(sf::Color(20, 20, 20));
 			mainMenuRender.mainMenuScreen.exitBody.setFillColor(sf::Color(120, 120, 120));
 
 			mainMenuRender.mainMenuScreen.exitText.setFont(NataSans);
 			mainMenuRender.mainMenuScreen.exitText.setString("EXIT");
-			mainMenuRender.mainMenuScreen.exitText.setPosition(sf::Vector2f(config.getWidth() - 465 * sizeMultiplier.x, config.getHeigth() - 145 * sizeMultiplier.y));
 			mainMenuRender.mainMenuScreen.exitText.setFillColor(sf::Color(20, 20, 20));
-			mainMenuRender.mainMenuScreen.exitText.setCharacterSize(100 * sizeMultiplier.y);
 		}
 
 		while (clock.getElapsedTime() < TimePerFrame)
@@ -407,11 +505,19 @@ void Game::exitScreenDraw()
 	{
 		clock.restart();
 
-		mainMenuRender.exitScreen.prevScreen.setTexture(*screenHolder);
+		//mainMenuRender.exitScreen.prevScreen.setTexture(*screenHolder);
 		//mainMenuRender.exitScreen.prevScreen.setPosition(sf::Vector2f(0, 0));
 
-		//mainMenuRender.exitScreen.shade.setSize(sf::Vector2f(config.getWidth(), config.getHeigth()));
-		//mainMenuRender.exitScreen.shade.setFillColor(sf::Color(100, 100, 100, 10));
+		mainMenuRender.exitScreen.shade.setSize(sf::Vector2f(config.getWidth(), config.getHeigth()));
+		mainMenuRender.exitScreen.shade.setFillColor(sf::Color(0, 0, 0, 200));
+		
+		mainMenuRender.exitScreen.exitWindow.setPosition(sf::Vector2f(
+			(config.getWidth()/2) - 300,
+			(config.getHeigth() / 2) - 200
+		));
+		mainMenuRender.exitScreen.exitWindow.setFillColor(sf::Color(100, 100, 100));
+		mainMenuRender.exitScreen.exitWindow.setSize(sf::Vector2f(600,400));
+
 
 
 

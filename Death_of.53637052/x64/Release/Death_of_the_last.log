@@ -1,64 +1,208 @@
 ﻿  Game.cpp
-C:\Death_of_the_last\Game.cpp(163,24): warning C4305: аргумент: усечение из "double" в "float"
-C:\Death_of_the_last\Game.cpp(183,100): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\Death_of_the_last\Game.cpp(183,100): warning C4244:         with
-C:\Death_of_the_last\Game.cpp(183,100): warning C4244:         [
-C:\Death_of_the_last\Game.cpp(183,100): warning C4244:             T=float
-C:\Death_of_the_last\Game.cpp(183,100): warning C4244:         ]
-C:\Death_of_the_last\Game.cpp(183,80): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\Death_of_the_last\Game.cpp(183,80): warning C4244:         with
-C:\Death_of_the_last\Game.cpp(183,80): warning C4244:         [
-C:\Death_of_the_last\Game.cpp(183,80): warning C4244:             T=float
-C:\Death_of_the_last\Game.cpp(183,80): warning C4244:         ]
-C:\Death_of_the_last\Game.cpp(199,60): warning C4244: аргумент: преобразование "T" в "unsigned int", возможна потеря данных
-C:\Death_of_the_last\Game.cpp(199,60): warning C4244:         with
-C:\Death_of_the_last\Game.cpp(199,60): warning C4244:         [
-C:\Death_of_the_last\Game.cpp(199,60): warning C4244:             T=float
-C:\Death_of_the_last\Game.cpp(199,60): warning C4244:         ]
-C:\Death_of_the_last\Game.cpp(203,62): warning C4244: аргумент: преобразование "T" в "unsigned int", возможна потеря данных
-C:\Death_of_the_last\Game.cpp(203,62): warning C4244:         with
-C:\Death_of_the_last\Game.cpp(203,62): warning C4244:         [
-C:\Death_of_the_last\Game.cpp(203,62): warning C4244:             T=float
-C:\Death_of_the_last\Game.cpp(203,62): warning C4244:         ]
-C:\Death_of_the_last\Game.cpp(283,101): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\Death_of_the_last\Game.cpp(283,101): warning C4244:         with
-C:\Death_of_the_last\Game.cpp(283,101): warning C4244:         [
-C:\Death_of_the_last\Game.cpp(283,101): warning C4244:             T=float
-C:\Death_of_the_last\Game.cpp(283,101): warning C4244:         ]
-C:\Death_of_the_last\Game.cpp(283,81): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\Death_of_the_last\Game.cpp(283,81): warning C4244:         with
-C:\Death_of_the_last\Game.cpp(283,81): warning C4244:         [
-C:\Death_of_the_last\Game.cpp(283,81): warning C4244:             T=float
-C:\Death_of_the_last\Game.cpp(283,81): warning C4244:         ]
-C:\Death_of_the_last\Game.cpp(305,61): warning C4244: аргумент: преобразование "T" в "unsigned int", возможна потеря данных
-C:\Death_of_the_last\Game.cpp(305,61): warning C4244:         with
-C:\Death_of_the_last\Game.cpp(305,61): warning C4244:         [
-C:\Death_of_the_last\Game.cpp(305,61): warning C4244:             T=float
-C:\Death_of_the_last\Game.cpp(305,61): warning C4244:         ]
-C:\Death_of_the_last\Game.cpp(318,64): warning C4244: аргумент: преобразование "T" в "unsigned int", возможна потеря данных
-C:\Death_of_the_last\Game.cpp(318,64): warning C4244:         with
-C:\Death_of_the_last\Game.cpp(318,64): warning C4244:         [
-C:\Death_of_the_last\Game.cpp(318,64): warning C4244:             T=float
-C:\Death_of_the_last\Game.cpp(318,64): warning C4244:         ]
-C:\Death_of_the_last\Game.cpp(330,67): warning C4244: аргумент: преобразование "T" в "unsigned int", возможна потеря данных
-C:\Death_of_the_last\Game.cpp(330,67): warning C4244:         with
-C:\Death_of_the_last\Game.cpp(330,67): warning C4244:         [
-C:\Death_of_the_last\Game.cpp(330,67): warning C4244:             T=float
-C:\Death_of_the_last\Game.cpp(330,67): warning C4244:         ]
-C:\Death_of_the_last\Game.cpp(342,68): warning C4244: аргумент: преобразование "T" в "unsigned int", возможна потеря данных
-C:\Death_of_the_last\Game.cpp(342,68): warning C4244:         with
-C:\Death_of_the_last\Game.cpp(342,68): warning C4244:         [
-C:\Death_of_the_last\Game.cpp(342,68): warning C4244:             T=float
-C:\Death_of_the_last\Game.cpp(342,68): warning C4244:         ]
-C:\Death_of_the_last\Game.cpp(354,64): warning C4244: аргумент: преобразование "T" в "unsigned int", возможна потеря данных
-C:\Death_of_the_last\Game.cpp(354,64): warning C4244:         with
-C:\Death_of_the_last\Game.cpp(354,64): warning C4244:         [
-C:\Death_of_the_last\Game.cpp(354,64): warning C4244:             T=float
-C:\Death_of_the_last\Game.cpp(354,64): warning C4244:         ]
-  start.cpp
+C:\Death_of_the_last\Game.cpp(176,24): warning C4305: аргумент: усечение из "double" в "float"
+C:\Death_of_the_last\Game.cpp(196,100): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\Death_of_the_last\Game.cpp(196,100): warning C4244:         with
+C:\Death_of_the_last\Game.cpp(196,100): warning C4244:         [
+C:\Death_of_the_last\Game.cpp(196,100): warning C4244:             T=float
+C:\Death_of_the_last\Game.cpp(196,100): warning C4244:         ]
+C:\Death_of_the_last\Game.cpp(196,80): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\Death_of_the_last\Game.cpp(196,80): warning C4244:         with
+C:\Death_of_the_last\Game.cpp(196,80): warning C4244:         [
+C:\Death_of_the_last\Game.cpp(196,80): warning C4244:             T=float
+C:\Death_of_the_last\Game.cpp(196,80): warning C4244:         ]
+C:\Death_of_the_last\Game.cpp(220,62): warning C4244: аргумент: преобразование "T" в "unsigned int", возможна потеря данных
+C:\Death_of_the_last\Game.cpp(220,62): warning C4244:         with
+C:\Death_of_the_last\Game.cpp(220,62): warning C4244:         [
+C:\Death_of_the_last\Game.cpp(220,62): warning C4244:             T=float
+C:\Death_of_the_last\Game.cpp(220,62): warning C4244:         ]
+C:\Death_of_the_last\Game.cpp(221,64): warning C4244: аргумент: преобразование "T" в "unsigned int", возможна потеря данных
+C:\Death_of_the_last\Game.cpp(221,64): warning C4244:         with
+C:\Death_of_the_last\Game.cpp(221,64): warning C4244:         [
+C:\Death_of_the_last\Game.cpp(221,64): warning C4244:             T=float
+C:\Death_of_the_last\Game.cpp(221,64): warning C4244:         ]
+C:\Death_of_the_last\Game.cpp(228,62): warning C4244: аргумент: преобразование "T" в "unsigned int", возможна потеря данных
+C:\Death_of_the_last\Game.cpp(228,62): warning C4244:         with
+C:\Death_of_the_last\Game.cpp(228,62): warning C4244:         [
+C:\Death_of_the_last\Game.cpp(228,62): warning C4244:             T=float
+C:\Death_of_the_last\Game.cpp(228,62): warning C4244:         ]
+C:\Death_of_the_last\Game.cpp(229,64): warning C4244: аргумент: преобразование "T" в "unsigned int", возможна потеря данных
+C:\Death_of_the_last\Game.cpp(229,64): warning C4244:         with
+C:\Death_of_the_last\Game.cpp(229,64): warning C4244:         [
+C:\Death_of_the_last\Game.cpp(229,64): warning C4244:             T=float
+C:\Death_of_the_last\Game.cpp(229,64): warning C4244:         ]
+C:\Death_of_the_last\Game.cpp(322,101): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\Death_of_the_last\Game.cpp(322,101): warning C4244:         with
+C:\Death_of_the_last\Game.cpp(322,101): warning C4244:         [
+C:\Death_of_the_last\Game.cpp(322,101): warning C4244:             T=float
+C:\Death_of_the_last\Game.cpp(322,101): warning C4244:         ]
+C:\Death_of_the_last\Game.cpp(322,81): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\Death_of_the_last\Game.cpp(322,81): warning C4244:         with
+C:\Death_of_the_last\Game.cpp(322,81): warning C4244:         [
+C:\Death_of_the_last\Game.cpp(322,81): warning C4244:             T=float
+C:\Death_of_the_last\Game.cpp(322,81): warning C4244:         ]
+C:\Death_of_the_last\Game.cpp(333,115): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\Death_of_the_last\Game.cpp(333,115): warning C4244:         with
+C:\Death_of_the_last\Game.cpp(333,115): warning C4244:         [
+C:\Death_of_the_last\Game.cpp(333,115): warning C4244:             T=float
+C:\Death_of_the_last\Game.cpp(333,115): warning C4244:         ]
+C:\Death_of_the_last\Game.cpp(333,89): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\Death_of_the_last\Game.cpp(333,89): warning C4244:         with
+C:\Death_of_the_last\Game.cpp(333,89): warning C4244:         [
+C:\Death_of_the_last\Game.cpp(333,89): warning C4244:             T=float
+C:\Death_of_the_last\Game.cpp(333,89): warning C4244:         ]
+C:\Death_of_the_last\Game.cpp(336,113): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\Death_of_the_last\Game.cpp(336,113): warning C4244:         with
+C:\Death_of_the_last\Game.cpp(336,113): warning C4244:         [
+C:\Death_of_the_last\Game.cpp(336,113): warning C4244:             T=float
+C:\Death_of_the_last\Game.cpp(336,113): warning C4244:         ]
+C:\Death_of_the_last\Game.cpp(336,87): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\Death_of_the_last\Game.cpp(336,87): warning C4244:         with
+C:\Death_of_the_last\Game.cpp(336,87): warning C4244:         [
+C:\Death_of_the_last\Game.cpp(336,87): warning C4244:             T=float
+C:\Death_of_the_last\Game.cpp(336,87): warning C4244:         ]
+C:\Death_of_the_last\Game.cpp(337,113): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\Death_of_the_last\Game.cpp(337,113): warning C4244:         with
+C:\Death_of_the_last\Game.cpp(337,113): warning C4244:         [
+C:\Death_of_the_last\Game.cpp(337,113): warning C4244:             T=float
+C:\Death_of_the_last\Game.cpp(337,113): warning C4244:         ]
+C:\Death_of_the_last\Game.cpp(337,87): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\Death_of_the_last\Game.cpp(337,87): warning C4244:         with
+C:\Death_of_the_last\Game.cpp(337,87): warning C4244:         [
+C:\Death_of_the_last\Game.cpp(337,87): warning C4244:             T=float
+C:\Death_of_the_last\Game.cpp(337,87): warning C4244:         ]
+C:\Death_of_the_last\Game.cpp(340,116): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\Death_of_the_last\Game.cpp(340,116): warning C4244:         with
+C:\Death_of_the_last\Game.cpp(340,116): warning C4244:         [
+C:\Death_of_the_last\Game.cpp(340,116): warning C4244:             T=float
+C:\Death_of_the_last\Game.cpp(340,116): warning C4244:         ]
+C:\Death_of_the_last\Game.cpp(340,90): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\Death_of_the_last\Game.cpp(340,90): warning C4244:         with
+C:\Death_of_the_last\Game.cpp(340,90): warning C4244:         [
+C:\Death_of_the_last\Game.cpp(340,90): warning C4244:             T=float
+C:\Death_of_the_last\Game.cpp(340,90): warning C4244:         ]
+C:\Death_of_the_last\Game.cpp(341,116): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\Death_of_the_last\Game.cpp(341,116): warning C4244:         with
+C:\Death_of_the_last\Game.cpp(341,116): warning C4244:         [
+C:\Death_of_the_last\Game.cpp(341,116): warning C4244:             T=float
+C:\Death_of_the_last\Game.cpp(341,116): warning C4244:         ]
+C:\Death_of_the_last\Game.cpp(341,90): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\Death_of_the_last\Game.cpp(341,90): warning C4244:         with
+C:\Death_of_the_last\Game.cpp(341,90): warning C4244:         [
+C:\Death_of_the_last\Game.cpp(341,90): warning C4244:             T=float
+C:\Death_of_the_last\Game.cpp(341,90): warning C4244:         ]
+C:\Death_of_the_last\Game.cpp(344,117): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\Death_of_the_last\Game.cpp(344,117): warning C4244:         with
+C:\Death_of_the_last\Game.cpp(344,117): warning C4244:         [
+C:\Death_of_the_last\Game.cpp(344,117): warning C4244:             T=float
+C:\Death_of_the_last\Game.cpp(344,117): warning C4244:         ]
+C:\Death_of_the_last\Game.cpp(344,91): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\Death_of_the_last\Game.cpp(344,91): warning C4244:         with
+C:\Death_of_the_last\Game.cpp(344,91): warning C4244:         [
+C:\Death_of_the_last\Game.cpp(344,91): warning C4244:             T=float
+C:\Death_of_the_last\Game.cpp(344,91): warning C4244:         ]
+C:\Death_of_the_last\Game.cpp(345,117): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\Death_of_the_last\Game.cpp(345,117): warning C4244:         with
+C:\Death_of_the_last\Game.cpp(345,117): warning C4244:         [
+C:\Death_of_the_last\Game.cpp(345,117): warning C4244:             T=float
+C:\Death_of_the_last\Game.cpp(345,117): warning C4244:         ]
+C:\Death_of_the_last\Game.cpp(345,91): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\Death_of_the_last\Game.cpp(345,91): warning C4244:         with
+C:\Death_of_the_last\Game.cpp(345,91): warning C4244:         [
+C:\Death_of_the_last\Game.cpp(345,91): warning C4244:             T=float
+C:\Death_of_the_last\Game.cpp(345,91): warning C4244:         ]
+C:\Death_of_the_last\Game.cpp(348,113): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\Death_of_the_last\Game.cpp(348,113): warning C4244:         with
+C:\Death_of_the_last\Game.cpp(348,113): warning C4244:         [
+C:\Death_of_the_last\Game.cpp(348,113): warning C4244:             T=float
+C:\Death_of_the_last\Game.cpp(348,113): warning C4244:         ]
+C:\Death_of_the_last\Game.cpp(348,87): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\Death_of_the_last\Game.cpp(348,87): warning C4244:         with
+C:\Death_of_the_last\Game.cpp(348,87): warning C4244:         [
+C:\Death_of_the_last\Game.cpp(348,87): warning C4244:             T=float
+C:\Death_of_the_last\Game.cpp(348,87): warning C4244:         ]
+C:\Death_of_the_last\Game.cpp(349,113): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\Death_of_the_last\Game.cpp(349,113): warning C4244:         with
+C:\Death_of_the_last\Game.cpp(349,113): warning C4244:         [
+C:\Death_of_the_last\Game.cpp(349,113): warning C4244:             T=float
+C:\Death_of_the_last\Game.cpp(349,113): warning C4244:         ]
+C:\Death_of_the_last\Game.cpp(349,87): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\Death_of_the_last\Game.cpp(349,87): warning C4244:         with
+C:\Death_of_the_last\Game.cpp(349,87): warning C4244:         [
+C:\Death_of_the_last\Game.cpp(349,87): warning C4244:             T=float
+C:\Death_of_the_last\Game.cpp(349,87): warning C4244:         ]
+C:\Death_of_the_last\Game.cpp(361,63): warning C4244: аргумент: преобразование "T" в "unsigned int", возможна потеря данных
+C:\Death_of_the_last\Game.cpp(361,63): warning C4244:         with
+C:\Death_of_the_last\Game.cpp(361,63): warning C4244:         [
+C:\Death_of_the_last\Game.cpp(361,63): warning C4244:             T=float
+C:\Death_of_the_last\Game.cpp(361,63): warning C4244:         ]
+C:\Death_of_the_last\Game.cpp(365,66): warning C4244: аргумент: преобразование "T" в "unsigned int", возможна потеря данных
+C:\Death_of_the_last\Game.cpp(365,66): warning C4244:         with
+C:\Death_of_the_last\Game.cpp(365,66): warning C4244:         [
+C:\Death_of_the_last\Game.cpp(365,66): warning C4244:             T=float
+C:\Death_of_the_last\Game.cpp(365,66): warning C4244:         ]
+C:\Death_of_the_last\Game.cpp(369,69): warning C4244: аргумент: преобразование "T" в "unsigned int", возможна потеря данных
+C:\Death_of_the_last\Game.cpp(369,69): warning C4244:         with
+C:\Death_of_the_last\Game.cpp(369,69): warning C4244:         [
+C:\Death_of_the_last\Game.cpp(369,69): warning C4244:             T=float
+C:\Death_of_the_last\Game.cpp(369,69): warning C4244:         ]
+C:\Death_of_the_last\Game.cpp(373,70): warning C4244: аргумент: преобразование "T" в "unsigned int", возможна потеря данных
+C:\Death_of_the_last\Game.cpp(373,70): warning C4244:         with
+C:\Death_of_the_last\Game.cpp(373,70): warning C4244:         [
+C:\Death_of_the_last\Game.cpp(373,70): warning C4244:             T=float
+C:\Death_of_the_last\Game.cpp(373,70): warning C4244:         ]
+C:\Death_of_the_last\Game.cpp(377,66): warning C4244: аргумент: преобразование "T" в "unsigned int", возможна потеря данных
+C:\Death_of_the_last\Game.cpp(377,66): warning C4244:         with
+C:\Death_of_the_last\Game.cpp(377,66): warning C4244:         [
+C:\Death_of_the_last\Game.cpp(377,66): warning C4244:             T=float
+C:\Death_of_the_last\Game.cpp(377,66): warning C4244:         ]
+C:\Death_of_the_last\Game.cpp(386,63): warning C4244: аргумент: преобразование "T" в "unsigned int", возможна потеря данных
+C:\Death_of_the_last\Game.cpp(386,63): warning C4244:         with
+C:\Death_of_the_last\Game.cpp(386,63): warning C4244:         [
+C:\Death_of_the_last\Game.cpp(386,63): warning C4244:             T=float
+C:\Death_of_the_last\Game.cpp(386,63): warning C4244:         ]
+C:\Death_of_the_last\Game.cpp(390,66): warning C4244: аргумент: преобразование "T" в "unsigned int", возможна потеря данных
+C:\Death_of_the_last\Game.cpp(390,66): warning C4244:         with
+C:\Death_of_the_last\Game.cpp(390,66): warning C4244:         [
+C:\Death_of_the_last\Game.cpp(390,66): warning C4244:             T=float
+C:\Death_of_the_last\Game.cpp(390,66): warning C4244:         ]
+C:\Death_of_the_last\Game.cpp(394,69): warning C4244: аргумент: преобразование "T" в "unsigned int", возможна потеря данных
+C:\Death_of_the_last\Game.cpp(394,69): warning C4244:         with
+C:\Death_of_the_last\Game.cpp(394,69): warning C4244:         [
+C:\Death_of_the_last\Game.cpp(394,69): warning C4244:             T=float
+C:\Death_of_the_last\Game.cpp(394,69): warning C4244:         ]
+C:\Death_of_the_last\Game.cpp(398,70): warning C4244: аргумент: преобразование "T" в "unsigned int", возможна потеря данных
+C:\Death_of_the_last\Game.cpp(398,70): warning C4244:         with
+C:\Death_of_the_last\Game.cpp(398,70): warning C4244:         [
+C:\Death_of_the_last\Game.cpp(398,70): warning C4244:             T=float
+C:\Death_of_the_last\Game.cpp(398,70): warning C4244:         ]
+C:\Death_of_the_last\Game.cpp(402,66): warning C4244: аргумент: преобразование "T" в "unsigned int", возможна потеря данных
+C:\Death_of_the_last\Game.cpp(402,66): warning C4244:         with
+C:\Death_of_the_last\Game.cpp(402,66): warning C4244:         [
+C:\Death_of_the_last\Game.cpp(402,66): warning C4244:             T=float
+C:\Death_of_the_last\Game.cpp(402,66): warning C4244:         ]
+C:\Death_of_the_last\Game.cpp(511,91): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\Death_of_the_last\Game.cpp(511,91): warning C4244:         with
+C:\Death_of_the_last\Game.cpp(511,91): warning C4244:         [
+C:\Death_of_the_last\Game.cpp(511,91): warning C4244:             T=float
+C:\Death_of_the_last\Game.cpp(511,91): warning C4244:         ]
+C:\Death_of_the_last\Game.cpp(511,71): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\Death_of_the_last\Game.cpp(511,71): warning C4244:         with
+C:\Death_of_the_last\Game.cpp(511,71): warning C4244:         [
+C:\Death_of_the_last\Game.cpp(511,71): warning C4244:             T=float
+C:\Death_of_the_last\Game.cpp(511,71): warning C4244:         ]
+C:\Death_of_the_last\Game.cpp(516,29): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\Death_of_the_last\Game.cpp(516,29): warning C4244:         with
+C:\Death_of_the_last\Game.cpp(516,29): warning C4244:         [
+C:\Death_of_the_last\Game.cpp(516,29): warning C4244:             T=float
+C:\Death_of_the_last\Game.cpp(516,29): warning C4244:         ]
+C:\Death_of_the_last\Game.cpp(515,26): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\Death_of_the_last\Game.cpp(515,26): warning C4244:         with
+C:\Death_of_the_last\Game.cpp(515,26): warning C4244:         [
+C:\Death_of_the_last\Game.cpp(515,26): warning C4244:             T=float
+C:\Death_of_the_last\Game.cpp(515,26): warning C4244:         ]
   Создание кода
-  25 of 403 functions ( 6.2%) were compiled, the rest were copied from previous compilation.
+  8 of 403 functions ( 2.0%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    9 functions had inline decision re-evaluated but remain unchanged
+    2 functions had inline decision re-evaluated but remain unchanged
   Создание кода завершено
   Death_of_the_last.vcxproj -> C:\Death_of_the_last\x64\Release\Death_of_the_last.exe
