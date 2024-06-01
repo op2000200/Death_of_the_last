@@ -72,6 +72,7 @@ public: //methods
 	Game(Config startConfig);
 	~Game();
 	void run();
+	bool isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f objectSize);
 	
 	Type mainMenu();
 

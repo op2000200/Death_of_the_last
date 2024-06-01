@@ -9,3 +9,4 @@ int WinMain()
 	game.run();
 	//game.~Game();
 }
+
