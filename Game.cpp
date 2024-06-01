@@ -513,15 +513,6 @@ Type Game::exitScreen()
 
 void Game::exitScreenReadInput()
 {
-	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-	//{
-	//	mainMenuState = Type::Blank;
-	//	state = Type::Exit;
-	//}
-	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::F1))
-	//{
-	//	mainMenuState = Type::MainMenuGeneral;
-	//}
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 	{
 		if (isHover(sf::Mouse::getPosition(), mainMenuRender.exitScreen.exitNo.getPosition(), mainMenuRender.exitScreen.exitNo.getSize()))
