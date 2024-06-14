@@ -32,7 +32,7 @@
               "RelativeDocumentMoniker": "Game.cpp",
               "ToolTip": "C:\\Death_of_the_last\\Game.cpp",
               "RelativeToolTip": "Game.cpp",
-              "ViewState": "AQIAAO8BAAAAAAAAAAAAAAECAAAgAAAA",
+              "ViewState": "AQIAAF0AAAAAAAAAAAAAAJ0AAAADAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-05-25T12:58:56.392Z",
               "EditorCaption": ""
@@ -45,9 +45,10 @@
               "RelativeDocumentMoniker": "Game.h",
               "ToolTip": "C:\\Death_of_the_last\\Game.h",
               "RelativeToolTip": "Game.h",
-              "ViewState": "AQIAAGQAAAAAAAAAAAAAAHYAAAANAAAA",
+              "ViewState": "AQIAAFEAAAAAAAAAAAAAAGsAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-05-25T12:58:56.661Z"
+              "WhenOpened": "2024-05-25T12:58:56.661Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -59,7 +60,8 @@
               "RelativeToolTip": "start.cpp",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAADAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-05-25T12:58:56.669Z"
+              "WhenOpened": "2024-05-25T12:58:56.669Z",
+              "EditorCaption": ""
             }
           ]
         }

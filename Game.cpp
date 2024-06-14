@@ -128,7 +128,6 @@ void Game::renderMM()
 
 		if (mainMenuState == Type::MainMenuExit)
 		{
-			//window.draw(mainMenuRender.exitScreen.prevScreen);
 			window.draw(mainMenuRender.mainMenuScreen.background);
 			window.draw(mainMenuRender.mainMenuScreen.leftBlock);
 			window.draw(mainMenuRender.mainMenuScreen.rightBlock);
@@ -686,6 +685,16 @@ Type Game::playMenu()
 {
 
 	return Type::PlayMenu;
+}
+
+void Game::playMenuRenderMenu()
+{
+
+}
+
+void Game::playMenuRenderGame()
+{
+
 }
 
 void Game::renderArcadeMode()

@@ -18,6 +18,12 @@ enum class Type
 	MainMenuGeneral,
 	MainMenuExit,
 	PlayMenu,
+	PlayMenuModeSelector,
+	PlayMenuArcadeModeLevelSelector,
+	PlayMenuArcadeModeRun,
+	PlayMenuArcadeModePause,
+	PlayMenuArcadeModeLevelUp,
+	PlayMenuArcadeModeDeath, //of the last :)
 	SettingsMenu,
 	ArchiveMenu,
 	Exit,
@@ -99,6 +105,9 @@ public: //methods
 
 
 	Type playMenu();
+	void playMenuRenderMenu();
+	void playMenuRenderGame();
+
 
 	void renderArcadeMode();
 
