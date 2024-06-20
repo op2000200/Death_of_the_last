@@ -146,7 +146,6 @@
     <ClCompile Include="BasicMissleCold.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="button.cpp" />
-    <ClCompile Include="CheckBox.cpp" />
     <ClCompile Include="Config.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -161,7 +160,6 @@
     <ClInclude Include="BasicMissleCold.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="button.h" />
-    <ClInclude Include="CheckBox.h" />
     <ClInclude Include="Config.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Game.h" />

@@ -293,7 +293,6 @@ Type Game::mainMenuScreen()
 		clock.restart();
 
 		mainMenuScreenReadInput();
-		mainMenuScreenUpdate();
 
 		while (clock.getElapsedTime() < TimePerFrame)
 		{
@@ -334,10 +333,6 @@ void Game::mainMenuScreenReadInput()
 			return;
 		}
 	}
-}
-
-void Game::mainMenuScreenUpdate() //maybe delete
-{
 }
 
 void Game::mainMenuScreenDraw()
@@ -451,7 +446,14 @@ void Game::mainMenuScreenDraw()
 
 			mainMenuRender.mainMenuScreen.playBody.setOutlineThickness(5.f);
 			mainMenuRender.mainMenuScreen.playBody.setOutlineColor(sf::Color(20, 20, 20));
-			mainMenuRender.mainMenuScreen.playBody.setFillColor(sf::Color(120, 120, 120));
+			if (isHover(sf::Mouse::getPosition(), mainMenuRender.mainMenuScreen.playBody.getPosition(), mainMenuRender.mainMenuScreen.playBody.getSize()))
+			{
+				mainMenuRender.mainMenuScreen.playBody.setFillColor(sf::Color(100, 100, 100));
+			}
+			else
+			{
+				mainMenuRender.mainMenuScreen.playBody.setFillColor(sf::Color(120, 120, 120));
+			}
 
 			mainMenuRender.mainMenuScreen.playText.setFont(NataSans);
 			mainMenuRender.mainMenuScreen.playText.setString("PLAY");
@@ -459,7 +461,14 @@ void Game::mainMenuScreenDraw()
 
 			mainMenuRender.mainMenuScreen.archiveBody.setOutlineThickness(5.f);
 			mainMenuRender.mainMenuScreen.archiveBody.setOutlineColor(sf::Color(20, 20, 20));
-			mainMenuRender.mainMenuScreen.archiveBody.setFillColor(sf::Color(120, 120, 120));
+			if (isHover(sf::Mouse::getPosition(), mainMenuRender.mainMenuScreen.archiveBody.getPosition(), mainMenuRender.mainMenuScreen.archiveBody.getSize()))
+			{
+				mainMenuRender.mainMenuScreen.archiveBody.setFillColor(sf::Color(100, 100, 100));
+			}
+			else
+			{
+				mainMenuRender.mainMenuScreen.archiveBody.setFillColor(sf::Color(120, 120, 120));
+			}
 
 			mainMenuRender.mainMenuScreen.archiveText.setFont(NataSans);
 			mainMenuRender.mainMenuScreen.archiveText.setString("ARCHIVE");
@@ -467,7 +476,14 @@ void Game::mainMenuScreenDraw()
 
 			mainMenuRender.mainMenuScreen.settingsBody.setOutlineThickness(5.f);
 			mainMenuRender.mainMenuScreen.settingsBody.setOutlineColor(sf::Color(20, 20, 20));
-			mainMenuRender.mainMenuScreen.settingsBody.setFillColor(sf::Color(120, 120, 120));
+			if (isHover(sf::Mouse::getPosition(), mainMenuRender.mainMenuScreen.settingsBody.getPosition(), mainMenuRender.mainMenuScreen.settingsBody.getSize()))
+			{
+				mainMenuRender.mainMenuScreen.settingsBody.setFillColor(sf::Color(100, 100, 100));
+			}
+			else
+			{
+				mainMenuRender.mainMenuScreen.settingsBody.setFillColor(sf::Color(120, 120, 120));
+			}
 
 			mainMenuRender.mainMenuScreen.settingsText.setFont(NataSans);
 			mainMenuRender.mainMenuScreen.settingsText.setString("SETTINGS");
@@ -475,7 +491,14 @@ void Game::mainMenuScreenDraw()
 
 			mainMenuRender.mainMenuScreen.exitBody.setOutlineThickness(5.f);
 			mainMenuRender.mainMenuScreen.exitBody.setOutlineColor(sf::Color(20, 20, 20));
-			mainMenuRender.mainMenuScreen.exitBody.setFillColor(sf::Color(120, 120, 120));
+			if (isHover(sf::Mouse::getPosition(), mainMenuRender.mainMenuScreen.exitBody.getPosition(), mainMenuRender.mainMenuScreen.exitBody.getSize()))
+			{
+				mainMenuRender.mainMenuScreen.exitBody.setFillColor(sf::Color(100, 100, 100));
+			}
+			else
+			{
+				mainMenuRender.mainMenuScreen.exitBody.setFillColor(sf::Color(120, 120, 120));
+			}
 
 			mainMenuRender.mainMenuScreen.exitText.setFont(NataSans);
 			mainMenuRender.mainMenuScreen.exitText.setString("EXIT");
@@ -530,10 +553,6 @@ void Game::exitScreenReadInput()
 	}
 }
 
-void Game::exitScreenUpdate()
-{
-}
-
 void Game::exitScreenDraw()
 {
 	sf::Time TimePerFrame = sf::seconds(1.f / 1000.f);
@@ -562,10 +581,17 @@ void Game::exitScreenDraw()
 				mainMenuRender.exitScreen.exitWindowText.setFillColor(sf::Color(20, 20, 20));
 
 				mainMenuRender.exitScreen.exitNo.setPosition(sf::Vector2f(mainMenuRender.exitScreen.exitWindow.getPosition().x + 35, mainMenuRender.exitScreen.exitWindow.getPosition().y + 260));
-				mainMenuRender.exitScreen.exitNo.setFillColor(sf::Color(90, 90, 90));
 				mainMenuRender.exitScreen.exitNo.setOutlineColor(sf::Color(20, 20, 20));
 				mainMenuRender.exitScreen.exitNo.setOutlineThickness(5.f);
 				mainMenuRender.exitScreen.exitNo.setSize(sf::Vector2f(200, 100));
+				if (isHover(sf::Mouse::getPosition(), mainMenuRender.exitScreen.exitNo.getPosition(), mainMenuRender.exitScreen.exitNo.getSize()))
+				{
+					mainMenuRender.exitScreen.exitNo.setFillColor(sf::Color(70, 70, 70));
+				}
+				else
+				{
+					mainMenuRender.exitScreen.exitNo.setFillColor(sf::Color(90, 90, 90));
+				}
 
 				mainMenuRender.exitScreen.exitNoText.setFont(NataSans);
 				mainMenuRender.exitScreen.exitNoText.setString("No");
@@ -574,10 +600,17 @@ void Game::exitScreenDraw()
 				mainMenuRender.exitScreen.exitNoText.setCharacterSize(80);
 
 				mainMenuRender.exitScreen.exitYes.setPosition(sf::Vector2f(mainMenuRender.exitScreen.exitWindow.getPosition().x + 365, mainMenuRender.exitScreen.exitWindow.getPosition().y + 260));
-				mainMenuRender.exitScreen.exitYes.setFillColor(sf::Color(90, 90, 90));
 				mainMenuRender.exitScreen.exitYes.setOutlineColor(sf::Color(20, 20, 20));
 				mainMenuRender.exitScreen.exitYes.setOutlineThickness(5.f);
 				mainMenuRender.exitScreen.exitYes.setSize(sf::Vector2f(200, 100));
+				if (isHover(sf::Mouse::getPosition(), mainMenuRender.exitScreen.exitYes.getPosition(), mainMenuRender.exitScreen.exitYes.getSize()))
+				{
+					mainMenuRender.exitScreen.exitYes.setFillColor(sf::Color(70, 70, 70));
+				}
+				else
+				{
+					mainMenuRender.exitScreen.exitYes.setFillColor(sf::Color(90, 90, 90));
+				}
 
 				mainMenuRender.exitScreen.exitYesText.setFont(NataSans);
 				mainMenuRender.exitScreen.exitYesText.setString("Yes");
@@ -607,6 +640,14 @@ void Game::exitScreenDraw()
 					mainMenuRender.exitScreen.exitNo.setOutlineColor(sf::Color(20, 20, 20));
 					mainMenuRender.exitScreen.exitNo.setOutlineThickness(5.f * sizeMultiplier.x);
 					mainMenuRender.exitScreen.exitNo.setSize(sf::Vector2f(200 * sizeMultiplier.x, 100 * sizeMultiplier.x));
+					if (isHover(sf::Mouse::getPosition(), mainMenuRender.exitScreen.exitNo.getPosition(), mainMenuRender.exitScreen.exitNo.getSize()))
+					{
+						mainMenuRender.exitScreen.exitNo.setFillColor(sf::Color(70, 70, 70));
+					}
+					else
+					{
+						mainMenuRender.exitScreen.exitNo.setFillColor(sf::Color(90, 90, 90));
+					}
 
 					mainMenuRender.exitScreen.exitNoText.setFont(NataSans);
 					mainMenuRender.exitScreen.exitNoText.setString("No");
@@ -619,6 +660,14 @@ void Game::exitScreenDraw()
 					mainMenuRender.exitScreen.exitYes.setOutlineColor(sf::Color(20, 20, 20));
 					mainMenuRender.exitScreen.exitYes.setOutlineThickness(5.f * sizeMultiplier.x);
 					mainMenuRender.exitScreen.exitYes.setSize(sf::Vector2f(200 * sizeMultiplier.x, 100 * sizeMultiplier.x));
+					if (isHover(sf::Mouse::getPosition(), mainMenuRender.exitScreen.exitYes.getPosition(), mainMenuRender.exitScreen.exitYes.getSize()))
+					{
+						mainMenuRender.exitScreen.exitYes.setFillColor(sf::Color(70, 70, 70));
+					}
+					else
+					{
+						mainMenuRender.exitScreen.exitYes.setFillColor(sf::Color(90, 90, 90));
+					}
 
 					mainMenuRender.exitScreen.exitYesText.setFont(NataSans);
 					mainMenuRender.exitScreen.exitYesText.setString("Yes");
@@ -646,6 +695,14 @@ void Game::exitScreenDraw()
 					mainMenuRender.exitScreen.exitNo.setOutlineColor(sf::Color(20, 20, 20));
 					mainMenuRender.exitScreen.exitNo.setOutlineThickness(5.f);
 					mainMenuRender.exitScreen.exitNo.setSize(sf::Vector2f(200 * sizeMultiplier.y, 100 * sizeMultiplier.y));
+					if (isHover(sf::Mouse::getPosition(), mainMenuRender.exitScreen.exitNo.getPosition(), mainMenuRender.exitScreen.exitNo.getSize()))
+					{
+						mainMenuRender.exitScreen.exitNo.setFillColor(sf::Color(70, 70, 70));
+					}
+					else
+					{
+						mainMenuRender.exitScreen.exitNo.setFillColor(sf::Color(90, 90, 90));
+					}
 
 					mainMenuRender.exitScreen.exitNoText.setFont(NataSans);
 					mainMenuRender.exitScreen.exitNoText.setString("No");
@@ -658,6 +715,14 @@ void Game::exitScreenDraw()
 					mainMenuRender.exitScreen.exitYes.setOutlineColor(sf::Color(20, 20, 20));
 					mainMenuRender.exitScreen.exitYes.setOutlineThickness(5.f * sizeMultiplier.y);
 					mainMenuRender.exitScreen.exitYes.setSize(sf::Vector2f(200 * sizeMultiplier.y, 100 * sizeMultiplier.y));
+					if (isHover(sf::Mouse::getPosition(), mainMenuRender.exitScreen.exitYes.getPosition(), mainMenuRender.exitScreen.exitYes.getSize()))
+					{
+						mainMenuRender.exitScreen.exitYes.setFillColor(sf::Color(70, 70, 70));
+					}
+					else
+					{
+						mainMenuRender.exitScreen.exitYes.setFillColor(sf::Color(90, 90, 90));
+					}
 
 					mainMenuRender.exitScreen.exitYesText.setFont(NataSans);
 					mainMenuRender.exitScreen.exitYesText.setString("Yes");
@@ -677,8 +742,46 @@ void Game::exitScreenDraw()
 
 Type Game::settingsMenu()
 {
+	sf::Time TimePerFrame = sf::seconds(1.f / 1000.f);
+	sf::Clock clock;
+	std::thread drawing([&] {settingsMenuDraw(); });
+	drawing.detach();
+	while (mainMenuState == Type::SettingsMenu)
+	{
+		clock.restart();
 
-	return Type::SettingsMenu;
+		settingsMenuReadInput();
+
+		while (clock.getElapsedTime() < TimePerFrame)
+		{
+			sf::sleep(sf::Time::Zero);
+		}
+	}
+	drawing.~thread();
+	return state;
+}
+
+void Game::settingsMenuReadInput()
+{
+
+}
+
+void Game::settingsMenuDraw()
+{
+	sf::Time TimePerFrame = sf::seconds(1.f / 1000.f);
+	sf::Clock clock;
+	while (mainMenuState == Type::SettingsMenu)
+	{
+		clock.restart();
+
+		mainMenuRender.settingsScreen.background.
+
+
+		while (clock.getElapsedTime() < TimePerFrame)
+		{
+			sf::sleep(sf::Time::Zero);
+		}
+	}
 }
 
 Type Game::playMenu()

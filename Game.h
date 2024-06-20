@@ -7,7 +7,8 @@
 #include "SFML/System.hpp"
 
 #include "Config.h"
-#include "RenderQueue.h"
+
+
 
 enum class Type
 {
@@ -23,7 +24,7 @@ enum class Type
 	PlayMenuArcadeModeRun,
 	PlayMenuArcadeModePause,
 	PlayMenuArcadeModeLevelUp,
-	PlayMenuArcadeModeDeath, //of the last :)
+	PlayMenuArcadeModeDeath,
 	SettingsMenu,
 	ArchiveMenu,
 	Exit,
@@ -67,9 +68,53 @@ public:
 		sf::Text exitYesText;
 		sf::Text exitNoText;
 	};
+	struct SettingsScreen
+	{
+		sf::RectangleShape background;
+		sf::RectangleShape videoBody;
+		sf::Text videoLabel;
+		sf::RectangleShape audioBody;
+		sf::Text audioLabel;
+		sf::RectangleShape gameBody;
+		sf::Text gameLabel;
+		sf::RectangleShape otherBody;
+		sf::Text otherLabel;
+		struct TabVideo
+		{
+			sf::Text resolutionLabel;
+			//add dropdown list to resolution
+			sf::Text verticalSync;
+			//add checkbox to VSync
+			sf::Text framerate;
+			//add dropdown list to framerate
+			sf::Text showFPS;
+			//add checkbox to showFPS
+		};
+		struct TabAudio
+		{
+			sf::Text placeholder;
+		};
+		struct TabGame
+		{
+			sf::Text threadsNumber;
+			//add dropdown list to threadnumber
+		};
+		struct TabOther
+		{
+			sf::Text VersionLabel;
+			sf::Text VersionNum;
+			sf::Text AuthorLabel;
+			sf::Text AuthorName;
+		};
+		TabVideo tabVideo;
+		TabAudio tabAudio;
+		TabGame tabGame;
+		TabOther tabOther;
+	};
 	LoadingScreen loadingScreen;
 	MainMenuScreen mainMenuScreen;
 	ExitScreen exitScreen;
+	SettingsScreen settingsScreen;
 };
 
 class Game
@@ -91,17 +136,17 @@ public: //methods
 
 	Type mainMenuScreen();
 	void mainMenuScreenReadInput();
-	void mainMenuScreenUpdate();
 	void mainMenuScreenDraw();
 
 
 	Type exitScreen();
 	void exitScreenReadInput();
-	void exitScreenUpdate();
 	void exitScreenDraw();
 
 
 	Type settingsMenu();
+	void settingsMenuReadInput();
+	void settingsMenuDraw();
 
 
 	Type playMenu();
