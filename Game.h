@@ -13,25 +13,31 @@
 enum class Type
 {
 	MainMenu,
-	MainMenuFirstLaunch,
-	MainMenuLoading,
-	MainMenuLoaded,
-	MainMenuGeneral,
-	MainMenuExit,
+		MainMenuFirstLaunch,
+		MainMenuLoading,
+		MainMenuLoaded,
+		MainMenuGeneral,
+		MainMenuExit,
 	PlayMenu,
-	PlayMenuModeSelector,
-	PlayMenuArcadeModeLevelSelector,
-	PlayMenuArcadeModeRun,
-	PlayMenuArcadeModePause,
-	PlayMenuArcadeModeLevelUp,
-	PlayMenuArcadeModeDeath,
+		PlayMenuModeSelector,
+			PlayMenuArcadeModeLevelSelector,
+				PlayMenuArcadeModeRun,
+				PlayMenuArcadeModePause,
+				PlayMenuArcadeModeLevelUp,
+				PlayMenuArcadeModeDeath,
 	SettingsMenu,
+		SMVideo,
+		SMAudio,
+		SMGame,
+		SMOther,
 	ArchiveMenu,
+
 	Exit,
+
 	Blank
 };
 
-struct MainMenuRender
+struct RenderList
 {
 public:
 	struct LoadingScreen
@@ -71,6 +77,9 @@ public:
 	struct SettingsScreen
 	{
 		sf::RectangleShape background;
+		sf::RectangleShape buttonBlock;
+		sf::RectangleShape backBody;
+		sf::Text backLabel;
 		sf::RectangleShape videoBody;
 		sf::Text videoLabel;
 		sf::RectangleShape audioBody;
@@ -81,7 +90,7 @@ public:
 		sf::Text otherLabel;
 		struct TabVideo
 		{
-			sf::Text resolutionLabel;
+			sf::Text resolution;
 			//add dropdown list to resolution
 			sf::Text verticalSync;
 			//add checkbox to VSync
@@ -101,20 +110,73 @@ public:
 		};
 		struct TabOther
 		{
-			sf::Text VersionLabel;
-			sf::Text VersionNum;
-			sf::Text AuthorLabel;
-			sf::Text AuthorName;
+			sf::Text Version;
+			sf::Text Author;
 		};
 		TabVideo tabVideo;
 		TabAudio tabAudio;
 		TabGame tabGame;
 		TabOther tabOther;
 	};
+	struct ModeSelectorScreen
+	{
+		sf::RectangleShape background;
+		sf::RectangleShape backBody;
+		sf::Text backLabel;
+		sf::RectangleShape amBody;
+		sf::Text amLabel;
+		sf::RectangleShape smBody;
+		sf::Text smLabel;
+	};
+	struct ArcadeModeLevelSelectorScreen
+	{
+		sf::RectangleShape background;
+		sf::RectangleShape backBody;
+		sf::Text backLabel;
+		sf::RectangleShape left; //replace in future with triange
+		sf::Text leftLabel;
+		sf::RectangleShape right; //also replace
+		sf::Text rightLabel;
+		//make a comtainer for location thimbnails
+		sf::RectangleShape easyBody;
+		sf::Text easyLabel;
+		sf::RectangleShape mediumBody;
+		sf::Text mediumLabel;
+		sf::RectangleShape hardBody;
+		sf::Text hardLabel;
+		sf::RectangleShape infiniteBody;
+		sf::Text infiniteLabel;
+		sf::RectangleShape diffDescBody;
+		sf::Text diffDesc;
+		sf::RectangleShape playBody;
+		sf::Text playLabel;
+	};
+	struct ArcadeModeRunScreen
+	{
+
+	};
+	struct ArcadeModePauseScreen
+	{
+
+	};
+	struct ArcadeModeLevelUpScreen
+	{
+
+	};
+	struct ArcadeModeDeathScreen
+	{
+
+	};
 	LoadingScreen loadingScreen;
 	MainMenuScreen mainMenuScreen;
 	ExitScreen exitScreen;
 	SettingsScreen settingsScreen;
+	ModeSelectorScreen modeSelectorScreen;
+	ArcadeModeLevelSelectorScreen amLevelSelectorScreen;
+	ArcadeModeRunScreen amRunScreen;
+	ArcadeModePauseScreen amPauseScreen;
+	ArcadeModeLevelUpScreen amLevelUpScreen;
+	ArcadeModeDeathScreen amDeathScreen;
 };
 
 class Game
@@ -125,39 +187,61 @@ public: //methods
 	void run();
 	bool isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f objectSize);
 	
-	Type mainMenu();
+		Type mainMenu();
 
-	void renderMM();
+			void renderMM();
 
-	void loadingScreen();
-	void loadingScreenReadUserData();
-	void loadingScreenDraw();
-	void loadingScreenReadInput();
+			void loadingScreen();
+				void loadingScreenReadUserData();
+				void loadingScreenDraw();
+				void loadingScreenReadInput();
 
-	Type mainMenuScreen();
-	void mainMenuScreenReadInput();
-	void mainMenuScreenDraw();
-
-
-	Type exitScreen();
-	void exitScreenReadInput();
-	void exitScreenDraw();
+			Type mainMenuScreen();
+				void mainMenuScreenReadInput();
+				void mainMenuScreenDraw();
 
 
-	Type settingsMenu();
-	void settingsMenuReadInput();
-	void settingsMenuDraw();
+			Type exitScreen();
+				void exitScreenReadInput();
+				void exitScreenDraw();
 
 
-	Type playMenu();
-	void playMenuRenderMenu();
-	void playMenuRenderGame();
+		Type settingsMenu();
+			void renderSM();
+			void settingsMenuReadInput();
+			void settingsMenuDraw();
 
 
-	void renderArcadeMode();
+		Type playMenu();
+			void renderPMMenu(); //mode selector and AM level selector
+			void renderPMGame(); //AM run, pause, death and level up
+
+			void modeSelector();
+				void modeSelectorDraw();
+				void modeSelectorReadInput();
+				void AMLevelSelector();
+					void AMLevelSelectorDraw();
+					void AMLevelSelectorReadInput();
+					void AMRun();
+						void AMRunDraw();
+						void AMRunReadInput();
+
+						void AMRunUpdate();
+							void AMRunUpdatePlayer();
+							void AMRunUpdateEnemy();
+								void AMRunUpdateBosses();
+							void AMRunUpdateProjectiles();
+							void AMRunUpdateCollisions();
+							//void AMRunUpdateEnvironment();
 
 
-	Type archiveMenu();
+						void AMRunTile();
+					void AMPause();
+					void AMLevelUp();
+					void AMDeath();
+
+
+		Type archiveMenu();
 
 
 private: 
@@ -169,13 +253,19 @@ private:
 	Config config;
 	Type state;
 	sf::Vector2f sizeMultiplier;
-	RenderQueue renderQueue;
 	sf::Font NataSans;
 	sf::Texture* screenHolder;
+	RenderList allMenus;
 
 	//main menu state variables
 	Type mainMenuState;
-	MainMenuRender mainMenuRender;
+
+	//settings menu variables
+	Type settingsMenuState;
+
+	//play menu variables
+	Type playMenuState;
+	int diff;
 
 
 };
