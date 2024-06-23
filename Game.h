@@ -8,6 +8,7 @@
 
 #include "Config.h"
 #include "Tile.h"
+#include "Player.h"
 
 
 
@@ -278,6 +279,7 @@ private:
 	std::vector<Tile> map;
 	sf::Texture* tileTextureHolder;
 	sf::Image* image;
+	Player player;
 
 
 };

@@ -1346,73 +1346,76 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 					clock.restart();
 
 					window.clear();
-
-					if (map.size() == 10000)
+					//map and object on ground
 					{
-						int x = (window.getView().getCenter().x + 100000) / 2000;
-						int y = (window.getView().getCenter().y + 100000) / 2000;
-						if (x < 1)
+						if (map.size() == 10000)
 						{
-							x = 1;
-						}
-						if (y < 1)
-						{
-							y = 1;
-						}
-						if (x > 98)
-						{
-							x = 98;
-						}
-						if (y > 98)
-						{
-							y = 98;
-						}
-						window.draw(map[100 * (x-1) + (y-1)].getSprite());
-						for (int i = 0; i < map[100 * (x - 1) + (y - 1)].rockNum(); i++)
-						{
-							window.draw(map[100 * (x - 1) + (y - 1)].getRock(i));
-						}
-						window.draw(map[100 * (x-1) + (y)].getSprite());
-						for (int i = 0; i < map[100 * (x - 1) + (y)].rockNum(); i++)
-						{
-							window.draw(map[100 * (x - 1) + (y)].getRock(i));
-						}
-						window.draw(map[100 * (x-1) + (y+1)].getSprite());
-						for (int i = 0; i < map[100 * (x - 1) + (y + 1)].rockNum(); i++)
-						{
-							window.draw(map[100 * (x - 1) + (y + 1)].getRock(i));
-						}
-						window.draw(map[100 * (x) + (y-1)].getSprite());
-						for (int i = 0; i < map[100 * (x) + (y - 1)].rockNum(); i++)
-						{
-							window.draw(map[100 * (x) + (y - 1)].getRock(i));
-						}
-						window.draw(map[100 * (x) + (y)].getSprite());
-						for (int i = 0; i < map[100 * (x) + (y)].rockNum(); i++)
-						{
-							window.draw(map[100 * (x) + (y)].getRock(i));
-						}
-						window.draw(map[100 * (x) + (y+1)].getSprite());
-						for (int i = 0; i < map[100 * (x) + (y + 1)].rockNum(); i++)
-						{
-							window.draw(map[100 * (x) + (y + 1)].getRock(i));
-						}
-						window.draw(map[100 * (x+1) + (y-1)].getSprite());
-						for (int i = 0; i < map[100 * (x + 1) + (y - 1)].rockNum(); i++)
-						{
-							window.draw(map[100 * (x + 1) + (y - 1)].getRock(i));
-						}
-						window.draw(map[100 * (x+1) + (y)].getSprite());
-						for (int i = 0; i < map[100 * (x + 1) + (y)].rockNum(); i++)
-						{
-							window.draw(map[100 * (x + 1) + (y)].getRock(i));
-						}
-						window.draw(map[100 * (x+1) + (y+1)].getSprite());
-						for (int i = 0; i < map[100 * (x + 1) + (y + 1)].rockNum(); i++)
-						{
-							window.draw(map[100 * (x + 1) + (y + 1)].getRock(i));
+							int x = (window.getView().getCenter().x + 100000) / 2000;
+							int y = (window.getView().getCenter().y + 100000) / 2000;
+							if (x < 1)
+							{
+								x = 1;
+							}
+							if (y < 1)
+							{
+								y = 1;
+							}
+							if (x > 98)
+							{
+								x = 98;
+							}
+							if (y > 98)
+							{
+								y = 98;
+							}
+							window.draw(map[100 * (x - 1) + (y - 1)].getSprite());
+							for (int i = 0; i < map[100 * (x - 1) + (y - 1)].rockNum(); i++)
+							{
+								window.draw(map[100 * (x - 1) + (y - 1)].getRock(i));
+							}
+							window.draw(map[100 * (x - 1) + (y)].getSprite());
+							for (int i = 0; i < map[100 * (x - 1) + (y)].rockNum(); i++)
+							{
+								window.draw(map[100 * (x - 1) + (y)].getRock(i));
+							}
+							window.draw(map[100 * (x - 1) + (y + 1)].getSprite());
+							for (int i = 0; i < map[100 * (x - 1) + (y + 1)].rockNum(); i++)
+							{
+								window.draw(map[100 * (x - 1) + (y + 1)].getRock(i));
+							}
+							window.draw(map[100 * (x)+(y - 1)].getSprite());
+							for (int i = 0; i < map[100 * (x)+(y - 1)].rockNum(); i++)
+							{
+								window.draw(map[100 * (x)+(y - 1)].getRock(i));
+							}
+							window.draw(map[100 * (x)+(y)].getSprite());
+							for (int i = 0; i < map[100 * (x)+(y)].rockNum(); i++)
+							{
+								window.draw(map[100 * (x)+(y)].getRock(i));
+							}
+							window.draw(map[100 * (x)+(y + 1)].getSprite());
+							for (int i = 0; i < map[100 * (x)+(y + 1)].rockNum(); i++)
+							{
+								window.draw(map[100 * (x)+(y + 1)].getRock(i));
+							}
+							window.draw(map[100 * (x + 1) + (y - 1)].getSprite());
+							for (int i = 0; i < map[100 * (x + 1) + (y - 1)].rockNum(); i++)
+							{
+								window.draw(map[100 * (x + 1) + (y - 1)].getRock(i));
+							}
+							window.draw(map[100 * (x + 1) + (y)].getSprite());
+							for (int i = 0; i < map[100 * (x + 1) + (y)].rockNum(); i++)
+							{
+								window.draw(map[100 * (x + 1) + (y)].getRock(i));
+							}
+							window.draw(map[100 * (x + 1) + (y + 1)].getSprite());
+							for (int i = 0; i < map[100 * (x + 1) + (y + 1)].rockNum(); i++)
+							{
+								window.draw(map[100 * (x + 1) + (y + 1)].getRock(i));
+							}
 						}
 					}
+
 					window.display();
 
 					while (clock.getElapsedTime() < TimePerFrame)
@@ -1888,6 +1891,14 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 							sf::View view = window.getView();
 							view.move(sf::Vector2f(1, 0));
 							window.setView(view);
+						}
+						if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+						{
+							sf::View view = window.getView();
+							view.move(sf::Vector2f(1, 0));
+							view.move(sf::Vector2f(-(view.getCenter().x), -(view.getCenter().y)));
+							window.setView(view);
+							playMenuState = Type::PlayMenuArcadeModePause;
 						}
 					}
 

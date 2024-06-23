@@ -1,4 +1,6 @@
-//#include "Player.h"
+#include "Player.h"
+
+
 //
 //Player::Player(sf::Texture *texture)
 //	:sprite(*texture)

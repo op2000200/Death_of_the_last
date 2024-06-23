@@ -1,7 +1,11 @@
-//#pragma once
-//#include <SFML/Graphics.hpp>
-//class Player
-//{
+#pragma once
+#include <SFML/Graphics.hpp>
+
+
+
+class Player
+{
+}
 //public:
 //	Player();
 //	Player(sf::Texture* texture);
