@@ -7,6 +7,7 @@
 #include "SFML/System.hpp"
 
 #include "Config.h"
+#include "Tile.h"
 
 
 
@@ -226,16 +227,24 @@ public: //methods
 						void AMRunDraw();
 						void AMRunReadInput();
 
+						void AMRunCreateMap();
+
+						void AMRunSpawn();
+							void AMRunSpawnTile();
+							void AMRunSpawnPlayer();
+							void AMRunSpawnEnemy();
+							void AMRunSpawnProjectiles();
+							void AMRunSpawnEnvironment();
+
+
 						void AMRunUpdate();
 							void AMRunUpdatePlayer();
 							void AMRunUpdateEnemy();
 								void AMRunUpdateBosses();
 							void AMRunUpdateProjectiles();
 							void AMRunUpdateCollisions();
-							//void AMRunUpdateEnvironment();
+							void AMRunUpdateEnvironment();
 
-
-						void AMRunTile();
 					void AMPause();
 					void AMLevelUp();
 					void AMDeath();
@@ -266,6 +275,7 @@ private:
 	//play menu variables
 	Type playMenuState;
 	int diff;
+	std::vector<Tile> map;
 
 
 };

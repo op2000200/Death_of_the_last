@@ -1276,74 +1276,85 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 		{
 			sf::Time TimePerFrame = sf::seconds(1.f / 30.f);
 			sf::Clock clock;
-			while (state == Type::PlayMenu and (playMenuState == Type::PlayMenuModeSelector or playMenuState == Type::PlayMenuArcadeModeLevelSelector))
+			while (state == Type::PlayMenu)
 			{
-				clock.restart();
-
-				window.clear();
-
-				if (playMenuState == Type::PlayMenuModeSelector)
+				while (playMenuState == Type::PlayMenuModeSelector or playMenuState == Type::PlayMenuArcadeModeLevelSelector)
 				{
-					window.draw(allMenus.modeSelectorScreen.background);
-					window.draw(allMenus.modeSelectorScreen.backBody);
-					window.draw(allMenus.modeSelectorScreen.backLabel);
-					window.draw(allMenus.modeSelectorScreen.amBody);
-					window.draw(allMenus.modeSelectorScreen.amLabel);
-					window.draw(allMenus.modeSelectorScreen.smBody);
-					window.draw(allMenus.modeSelectorScreen.smLabel);
-				}
+					clock.restart();
 
-				if (playMenuState == Type::PlayMenuArcadeModeLevelSelector)
-				{
-					window.draw(allMenus.amLevelSelectorScreen.background);
-					window.draw(allMenus.amLevelSelectorScreen.backBody);
-					window.draw(allMenus.amLevelSelectorScreen.backLabel);
-					window.draw(allMenus.amLevelSelectorScreen.left);
-					window.draw(allMenus.amLevelSelectorScreen.leftLabel);
-					window.draw(allMenus.amLevelSelectorScreen.right);
-					window.draw(allMenus.amLevelSelectorScreen.rightLabel);
-					window.draw(allMenus.amLevelSelectorScreen.easyBody);
-					window.draw(allMenus.amLevelSelectorScreen.easyLabel);
-					window.draw(allMenus.amLevelSelectorScreen.mediumBody);
-					window.draw(allMenus.amLevelSelectorScreen.mediumLabel);
-					window.draw(allMenus.amLevelSelectorScreen.hardBody);
-					window.draw(allMenus.amLevelSelectorScreen.hardLabel);
-					window.draw(allMenus.amLevelSelectorScreen.infiniteBody);
-					window.draw(allMenus.amLevelSelectorScreen.infiniteLabel);
-					window.draw(allMenus.amLevelSelectorScreen.diffDescBody);
-					window.draw(allMenus.amLevelSelectorScreen.diffDesc);
-					window.draw(allMenus.amLevelSelectorScreen.playBody);
-					window.draw(allMenus.amLevelSelectorScreen.playLabel);
-				}
+					window.clear();
 
-				window.display();
+					if (playMenuState == Type::PlayMenuModeSelector)
+					{
+						window.draw(allMenus.modeSelectorScreen.background);
+						window.draw(allMenus.modeSelectorScreen.backBody);
+						window.draw(allMenus.modeSelectorScreen.backLabel);
+						window.draw(allMenus.modeSelectorScreen.amBody);
+						window.draw(allMenus.modeSelectorScreen.amLabel);
+						window.draw(allMenus.modeSelectorScreen.smBody);
+						window.draw(allMenus.modeSelectorScreen.smLabel);
+					}
 
-				while (clock.getElapsedTime() < TimePerFrame)
-				{
-					sf::sleep(sf::Time::Zero);
+					if (playMenuState == Type::PlayMenuArcadeModeLevelSelector)
+					{
+						window.draw(allMenus.amLevelSelectorScreen.background);
+						window.draw(allMenus.amLevelSelectorScreen.backBody);
+						window.draw(allMenus.amLevelSelectorScreen.backLabel);
+						window.draw(allMenus.amLevelSelectorScreen.left);
+						window.draw(allMenus.amLevelSelectorScreen.leftLabel);
+						window.draw(allMenus.amLevelSelectorScreen.right);
+						window.draw(allMenus.amLevelSelectorScreen.rightLabel);
+						window.draw(allMenus.amLevelSelectorScreen.easyBody);
+						window.draw(allMenus.amLevelSelectorScreen.easyLabel);
+						window.draw(allMenus.amLevelSelectorScreen.mediumBody);
+						window.draw(allMenus.amLevelSelectorScreen.mediumLabel);
+						window.draw(allMenus.amLevelSelectorScreen.hardBody);
+						window.draw(allMenus.amLevelSelectorScreen.hardLabel);
+						window.draw(allMenus.amLevelSelectorScreen.infiniteBody);
+						window.draw(allMenus.amLevelSelectorScreen.infiniteLabel);
+						window.draw(allMenus.amLevelSelectorScreen.diffDescBody);
+						window.draw(allMenus.amLevelSelectorScreen.diffDesc);
+						window.draw(allMenus.amLevelSelectorScreen.playBody);
+						window.draw(allMenus.amLevelSelectorScreen.playLabel);
+					}
+
+					window.display();
+
+					while (clock.getElapsedTime() < TimePerFrame)
+					{
+						sf::sleep(sf::Time::Zero);
+					}
 				}
+				window.setActive(false);
 			}
-			window.setActive(false);
 		}
 
 		void Game::renderPMGame()
 		{
 			sf::Time TimePerFrame = sf::seconds(1.f / 100.f);
 			sf::Clock clock;
-			while (state == Type::PlayMenu and (playMenuState == Type::PlayMenuArcadeModeRun or playMenuState == Type::PlayMenuArcadeModePause or playMenuState == Type::PlayMenuArcadeModeLevelUp or playMenuState == Type::PlayMenuArcadeModeDeath))
+			while (state == Type::PlayMenu)
 			{
-				clock.restart();
-
-				window.clear();
-
-				window.display();
-
-				while (clock.getElapsedTime() < TimePerFrame)
+				while (playMenuState == Type::PlayMenuArcadeModeRun or playMenuState == Type::PlayMenuArcadeModePause or playMenuState == Type::PlayMenuArcadeModeLevelUp or playMenuState == Type::PlayMenuArcadeModeDeath)
 				{
-					sf::sleep(sf::Time::Zero);
+					clock.restart();
+
+					window.clear();
+
+					if (!map.empty())
+					{
+						window.draw(map[0].getSprite());
+					}
+
+					window.display();
+
+					while (clock.getElapsedTime() < TimePerFrame)
+					{
+						sf::sleep(sf::Time::Zero);
+					}
 				}
+				window.setActive(false);
 			}
-			window.setActive(false);
 		}
 
 		void Game::modeSelector()
@@ -1451,12 +1462,12 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 						playMenuState = Type::Blank;
 						state = Type::MainMenu;
 						mainMenuState = Type::MainMenuGeneral;
-						return;
+						//return;
 					}
 					if (isHover(sf::Mouse::getPosition(), allMenus.modeSelectorScreen.amBody.getPosition(), allMenus.modeSelectorScreen.amBody.getSize()))
 					{
 						playMenuState = Type::PlayMenuArcadeModeLevelSelector;
-						return;
+						//return;
 					}
 				}
 			}
@@ -1747,15 +1758,130 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 						}
 						if (isHover(sf::Mouse::getPosition(), allMenus.amLevelSelectorScreen.playBody.getPosition(), allMenus.amLevelSelectorScreen.playBody.getSize()))
 						{
-							return;
+							playMenuState = Type::PlayMenuArcadeModeRun;
+							//return;
 						}
 					}
 				}
 
 				void Game::AMRun()
 				{
+					sf::sleep(sf::seconds(1));
+					sf::Time TimePerFrame = sf::seconds(1.f / 10.f);
+					sf::Clock clock;
+					std::thread drawing([&] {AMRunDraw(); });
+					drawing.detach();
 
+					AMRunCreateMap();
+
+					while (playMenuState == Type::PlayMenuArcadeModeRun)
+					{
+						clock.restart();
+
+						//AMRunReadInput();
+
+						while (clock.getElapsedTime() < TimePerFrame)
+						{
+							sf::sleep(sf::Time::Zero);
+						}
+					}
 				}
+
+					void Game::AMRunDraw()
+					{
+						//window.draw(map[0].getSprite());
+					}
+
+					void Game::AMRunReadInput()
+					{
+						if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+						{
+							sf::View view = window.getView();
+							view.move(sf::Vector2f(0,-1));
+							window.setView(view);
+						}
+						if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+						{
+							sf::View view = window.getView();
+							view.move(sf::Vector2f(-1, 0));
+							window.setView(view);
+						}
+						if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+						{
+							sf::View view = window.getView();
+							view.move(sf::Vector2f(0, 1));
+							window.setView(view);
+						}
+						if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+						{
+							sf::View view = window.getView();
+							view.move(sf::Vector2f(1, 0));
+							window.setView(view);
+						}
+					}
+
+					void Game::AMRunCreateMap()
+					{
+						unsigned int seed = time(0);
+						srand(0);
+						int* tileTypeHolder = new int[1];
+						//tileTypeHolder[0] = rand() % 5; //0-4
+						tileTypeHolder[0] = 0;
+						Tile tile(tileTypeHolder[0], rand());
+						map.push_back(tile);
+					}
+
+					void Game::AMRunSpawn()
+					{
+					}
+
+						void Game::AMRunSpawnTile()
+						{
+						}
+
+						void Game::AMRunSpawnPlayer()
+						{
+						}
+
+						void Game::AMRunSpawnEnemy()
+						{
+						}
+
+						void Game::AMRunSpawnProjectiles()
+						{
+						}
+
+						void Game::AMRunSpawnEnvironment()
+						{
+						}
+
+					void Game::AMRunUpdate()
+					{
+					}
+
+						void Game::AMRunUpdatePlayer()
+						{
+						}
+
+						void Game::AMRunUpdateEnemy()
+						{
+						}
+
+							void Game::AMRunUpdateBosses()
+							{
+							}
+
+						void Game::AMRunUpdateProjectiles()
+						{
+						}
+
+						void Game::AMRunUpdateCollisions()
+						{
+						}
+
+						void Game::AMRunUpdateEnvironment()
+						{
+						}
 
 				void Game::AMPause()
 				{
