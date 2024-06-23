@@ -227,10 +227,10 @@ public: //methods
 						void AMRunDraw();
 						void AMRunReadInput();
 
+						void AMRunCreateTexturesMap(int n);
 						void AMRunCreateMap();
 
 						void AMRunSpawn();
-							void AMRunSpawnTile();
 							void AMRunSpawnPlayer();
 							void AMRunSpawnEnemy();
 							void AMRunSpawnProjectiles();
@@ -276,6 +276,8 @@ private:
 	Type playMenuState;
 	int diff;
 	std::vector<Tile> map;
+	sf::Texture* tileTextureHolder;
+	sf::Image* image;
 
 
 };

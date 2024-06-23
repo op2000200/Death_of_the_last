@@ -15,6 +15,12 @@ Game::Game(Config startConfig)
 	settingsMenuState = Type::SMVideo;
 	playMenuState = Type::PlayMenuModeSelector;
 	diff = 0;
+	//tileBackgroundHolder = new sf::Texture*[1];
+	tileTextureHolder = new sf::Texture[9]; //5 for BG, 4 for rocks
+	tileTextureHolder[5].loadFromFile("assets/textures/rockSmall.png");
+	tileTextureHolder[6].loadFromFile("assets/textures/rockMedium.png");
+	tileTextureHolder[7].loadFromFile("assets/textures/rockLarge.png");
+	tileTextureHolder[8].loadFromFile("assets/textures/rockExtraLarge.png");
 }
 
 Game::~Game()
@@ -1341,11 +1347,72 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 
 					window.clear();
 
-					if (!map.empty())
+					if (map.size() == 10000)
 					{
-						window.draw(map[0].getSprite());
+						int x = (window.getView().getCenter().x + 100000) / 2000;
+						int y = (window.getView().getCenter().y + 100000) / 2000;
+						if (x < 1)
+						{
+							x = 1;
+						}
+						if (y < 1)
+						{
+							y = 1;
+						}
+						if (x > 98)
+						{
+							x = 98;
+						}
+						if (y > 98)
+						{
+							y = 98;
+						}
+						window.draw(map[100 * (x-1) + (y-1)].getSprite());
+						for (int i = 0; i < map[100 * (x - 1) + (y - 1)].rockNum(); i++)
+						{
+							window.draw(map[100 * (x - 1) + (y - 1)].getRock(i));
+						}
+						window.draw(map[100 * (x-1) + (y)].getSprite());
+						for (int i = 0; i < map[100 * (x - 1) + (y)].rockNum(); i++)
+						{
+							window.draw(map[100 * (x - 1) + (y)].getRock(i));
+						}
+						window.draw(map[100 * (x-1) + (y+1)].getSprite());
+						for (int i = 0; i < map[100 * (x - 1) + (y + 1)].rockNum(); i++)
+						{
+							window.draw(map[100 * (x - 1) + (y + 1)].getRock(i));
+						}
+						window.draw(map[100 * (x) + (y-1)].getSprite());
+						for (int i = 0; i < map[100 * (x) + (y - 1)].rockNum(); i++)
+						{
+							window.draw(map[100 * (x) + (y - 1)].getRock(i));
+						}
+						window.draw(map[100 * (x) + (y)].getSprite());
+						for (int i = 0; i < map[100 * (x) + (y)].rockNum(); i++)
+						{
+							window.draw(map[100 * (x) + (y)].getRock(i));
+						}
+						window.draw(map[100 * (x) + (y+1)].getSprite());
+						for (int i = 0; i < map[100 * (x) + (y + 1)].rockNum(); i++)
+						{
+							window.draw(map[100 * (x) + (y + 1)].getRock(i));
+						}
+						window.draw(map[100 * (x+1) + (y-1)].getSprite());
+						for (int i = 0; i < map[100 * (x + 1) + (y - 1)].rockNum(); i++)
+						{
+							window.draw(map[100 * (x + 1) + (y - 1)].getRock(i));
+						}
+						window.draw(map[100 * (x+1) + (y)].getSprite());
+						for (int i = 0; i < map[100 * (x + 1) + (y)].rockNum(); i++)
+						{
+							window.draw(map[100 * (x + 1) + (y)].getRock(i));
+						}
+						window.draw(map[100 * (x+1) + (y+1)].getSprite());
+						for (int i = 0; i < map[100 * (x + 1) + (y + 1)].rockNum(); i++)
+						{
+							window.draw(map[100 * (x + 1) + (y + 1)].getRock(i));
+						}
 					}
-
 					window.display();
 
 					while (clock.getElapsedTime() < TimePerFrame)
@@ -1767,18 +1834,22 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 				void Game::AMRun()
 				{
 					sf::sleep(sf::seconds(1));
-					sf::Time TimePerFrame = sf::seconds(1.f / 10.f);
+					sf::Time TimePerFrame = sf::seconds(1.f / 1000.f);
 					sf::Clock clock;
 					std::thread drawing([&] {AMRunDraw(); });
 					drawing.detach();
 
+					for (int i = 0; i < 5; i++)
+					{
+						AMRunCreateTexturesMap(i);
+					}
 					AMRunCreateMap();
 
 					while (playMenuState == Type::PlayMenuArcadeModeRun)
 					{
 						clock.restart();
 
-						//AMRunReadInput();
+						AMRunReadInput();
 
 						while (clock.getElapsedTime() < TimePerFrame)
 						{
@@ -1804,7 +1875,7 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 						{
 							sf::View view = window.getView();
 							view.move(sf::Vector2f(-1, 0));
-							window.setView(view);
+							window.setView(view); 
 						}
 						if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 						{
@@ -1820,24 +1891,44 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 						}
 					}
 
+					void Game::AMRunCreateTexturesMap(int n)
+					{
+						sf::Color* palette = new sf::Color[5];
+						palette[0] = sf::Color(79, 25, 16);
+						palette[1] = sf::Color(74, 25, 17);
+						palette[2] = sf::Color(94, 36, 26);
+						palette[3] = sf::Color(71, 22, 14);
+						palette[4] = sf::Color(64, 23, 16);
+						image = new sf::Image;
+						image[0].create(2000, 2000, palette[n]);
+						tileTextureHolder[n].loadFromImage(image[0]);
+					}
+
 					void Game::AMRunCreateMap()
 					{
 						unsigned int seed = time(0);
 						srand(0);
-						int* tileTypeHolder = new int[1];
-						//tileTypeHolder[0] = rand() % 5; //0-4
-						tileTypeHolder[0] = 0;
-						Tile tile(tileTypeHolder[0], rand());
-						map.push_back(tile);
+						int* tileTypeHolder = new int[10000];
+						int* randHolder = new int[10000];
+						int size = 2000*100;
+						for (int i = 0; i < 10000; i++)
+						{
+							tileTypeHolder[i] = rand() % 5;
+							randHolder[i] = rand();
+						}
+						for (int i = 0; i < 100; i++)
+						{
+							for (int j = 0; j < 100; j++)
+							{
+								Tile tile(tileTypeHolder[100 * i + j], randHolder[100 * i + j], sf::Vector2f(2000 * i - size / 2, 2000 * j - size / 2), tileTextureHolder, i, j);
+								map.push_back(tile);
+							}
+						}
 					}
 
 					void Game::AMRunSpawn()
 					{
 					}
-
-						void Game::AMRunSpawnTile()
-						{
-						}
 
 						void Game::AMRunSpawnPlayer()
 						{
