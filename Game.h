@@ -187,6 +187,7 @@ public: //methods
 	Game(Config startConfig);
 	~Game();
 	void run();
+	void run2();
 	bool isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f objectSize);
 	
 		Type mainMenu();
@@ -260,6 +261,7 @@ public: //variables
 	
 private:
 	sf::RenderWindow window;
+	sf::ContextSettings settings;
 	Config config;
 	Type state;
 	sf::Vector2f sizeMultiplier;

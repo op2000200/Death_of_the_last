@@ -1,7 +1,8 @@
 #include "Game.h"
 
 Game::Game(Config startConfig)
-	: window(sf::VideoMode(startConfig.getWidth(), startConfig.getHeigth()), "Death of the last", sf::Style::None)
+	: settings(0U, 0U, 16U, 1U, 1U, 0U, false)
+	, window(sf::VideoMode(startConfig.getWidth(), startConfig.getHeigth()), "Death of the last", sf::Style::None, settings)
 {
 	window.setVerticalSyncEnabled(true);
 	window.setSize(sf::Vector2u(startConfig.getWidth(), startConfig.getHeigth()));
