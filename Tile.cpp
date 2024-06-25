@@ -70,3 +70,13 @@ sf::Sprite Tile::getRock(int i)
 	return rocks[i];
 }
 
+int Tile::getRand()
+{
+	return randNum;
+}
+
+bool Tile::isBlocked(sf::Vector2f pos)
+{
+	return false;
+}
+

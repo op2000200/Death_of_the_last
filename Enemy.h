@@ -1,5 +1,19 @@
-//#pragma once
-//#include <SFML/Graphics.hpp>
+#pragma once
+#include <SFML/Graphics.hpp>
+
+class Enemy
+{
+public:
+	Enemy(sf::Vector2f pos, sf::Texture* texture);
+	~Enemy();
+
+	sf::Sprite getSprite();
+
+private:
+	sf::Sprite sprite;
+};
+
+
 //class Enemy
 //{
 //public:

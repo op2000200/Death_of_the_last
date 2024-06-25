@@ -1,14 +1,24 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 
+#include "Structures.h"
+
 class Player
 {
 public:
 	Player();
 	~Player();
 
-private:
+	bool processCommand(Commands command);
+	sf::Sprite getSprite();
+	PlayerState getState();
 
+private:
+	sf::Sprite sprite;
+	sf::Texture* texture;
+	PlayerState playerState;
+	//hitbox
+	Characteristics characteristics;
 };
 
 

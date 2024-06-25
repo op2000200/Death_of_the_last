@@ -162,11 +162,13 @@
     <ClInclude Include="button.h" />
     <ClInclude Include="Config.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="Enums.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Mana.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="RenderQueue.h" />
     <ClInclude Include="StandartEnemy.h" />
+    <ClInclude Include="Structures.h" />
     <ClInclude Include="Tile.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

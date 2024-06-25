@@ -2,10 +2,84 @@
 
 Player::Player()
 {
+	playerState = PlayerState::NotDefined;
+	texture = new sf::Texture;
+	characteristics.atk = 0;
+	characteristics.def = 0;
+	characteristics.agl = 0;
+	characteristics.vit = 0;
+	characteristics.knw = 0;
+	characteristics.atkMul = 0;
+	characteristics.critChance = 0;
+	characteristics.defMul = 0;
+	characteristics.resistAll = 0;
+	characteristics.resistElement = 0;
+	characteristics.speed = 2000;
+	characteristics.evasionChance = 0;
+	characteristics.healthMax = 0;
+	characteristics.healthCurrent = 0;
+	characteristics.healthRegen = 0;
+	characteristics.sprintLongevity = 0;
+	characteristics.atkSpeed = 0;
+	characteristics.manaMax = 0;
+	characteristics.manaReserved = 0;
+	characteristics.manaUsage = 0;
+	characteristics.manaRegen = 0;
 }
 
 Player::~Player()
 {
+}
+
+bool Player::processCommand(Commands command)
+{
+	if (command.command == CommandType::Created)
+	{
+		sprite.setOrigin(sf::Vector2f(50,50));
+		sprite.setPosition(sf::Vector2f(command.numbers[0] / 2, command.numbers[1] / 2));
+		texture[0].loadFromFile("assets/textures/player.png");
+		sprite.setTexture(*texture);
+		playerState = PlayerState::Alive;
+	}
+	if (command.command == CommandType::MovedUp)
+	{
+		sprite.setPosition(sf::Vector2f(
+			sprite.getPosition().x,
+			sprite.getPosition().y - characteristics.speed * (1.f/1000.f)
+		));
+	}
+	if (command.command == CommandType::MovedLeft)
+	{
+		sprite.setPosition(sf::Vector2f(
+			sprite.getPosition().x - characteristics.speed * (1.f / 1000.f),
+			sprite.getPosition().y
+		));
+	}
+	if (command.command == CommandType::MovedRight)
+	{
+		sprite.setPosition(sf::Vector2f(
+			sprite.getPosition().x + characteristics.speed * (1.f / 1000.f),
+			sprite.getPosition().y
+		));
+	}
+	if (command.command == CommandType::MovedDown)
+	{
+		sprite.setPosition(sf::Vector2f(
+			sprite.getPosition().x,
+			sprite.getPosition().y + characteristics.speed * (1.f / 1000.f)
+		));
+	}
+	return true;
+}
+
+sf::Sprite Player::getSprite()
+{
+	return sprite;
+}
+
+PlayerState Player::getState()
+{
+	return playerState;
 }
 
 

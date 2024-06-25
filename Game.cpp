@@ -1,11 +1,11 @@
 #include "Game.h"
 
 Game::Game(Config startConfig)
-	: settings(0U, 0U, 16U, 1U, 1U, 0U, false)
-	, window(sf::VideoMode(startConfig.getWidth(), startConfig.getHeigth()), "Death of the last", sf::Style::None, settings)
+	: window(sf::VideoMode(startConfig.getWidth(), startConfig.getHeigth()), "Death of the last", sf::Style::None, settings)
 {
 	window.setVerticalSyncEnabled(true);
 	window.setSize(sf::Vector2u(startConfig.getWidth(), startConfig.getHeigth()));
+	center = window.getView();
 	config.copyConfig(startConfig);
 	sizeMultiplier.x = (config.getWidth() / 1920.f);
 	sizeMultiplier.y = (config.getHeigth() / 1080.f);
@@ -22,6 +22,9 @@ Game::Game(Config startConfig)
 	tileTextureHolder[6].loadFromFile("assets/textures/rockMedium.png");
 	tileTextureHolder[7].loadFromFile("assets/textures/rockLarge.png");
 	tileTextureHolder[8].loadFromFile("assets/textures/rockExtraLarge.png");
+	enemyTexture = new sf::Texture;
+	enemyTexture[0].loadFromFile("assets/textures/enemyStandartFire.png");
+	enemyTimer = 0;
 }
 
 Game::~Game()
@@ -1347,6 +1350,7 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 					clock.restart();
 
 					window.clear();
+
 					//map and object on ground
 					{
 						if (map.size() == 10000)
@@ -1370,53 +1374,76 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 								y = 98;
 							}
 							window.draw(map[100 * (x - 1) + (y - 1)].getSprite());
+							window.draw(map[100 * (x - 1) + (y)].getSprite());
+							window.draw(map[100 * (x - 1) + (y + 1)].getSprite());
+							window.draw(map[100 * (x)+(y - 1)].getSprite());
+							window.draw(map[100 * (x)+(y)].getSprite());
+							window.draw(map[100 * (x)+(y + 1)].getSprite());
+							window.draw(map[100 * (x + 1) + (y - 1)].getSprite());
+							window.draw(map[100 * (x + 1) + (y)].getSprite());
+							window.draw(map[100 * (x + 1) + (y + 1)].getSprite());
 							for (int i = 0; i < map[100 * (x - 1) + (y - 1)].rockNum(); i++)
 							{
 								window.draw(map[100 * (x - 1) + (y - 1)].getRock(i));
 							}
-							window.draw(map[100 * (x - 1) + (y)].getSprite());
 							for (int i = 0; i < map[100 * (x - 1) + (y)].rockNum(); i++)
 							{
 								window.draw(map[100 * (x - 1) + (y)].getRock(i));
 							}
-							window.draw(map[100 * (x - 1) + (y + 1)].getSprite());
 							for (int i = 0; i < map[100 * (x - 1) + (y + 1)].rockNum(); i++)
 							{
 								window.draw(map[100 * (x - 1) + (y + 1)].getRock(i));
 							}
-							window.draw(map[100 * (x)+(y - 1)].getSprite());
 							for (int i = 0; i < map[100 * (x)+(y - 1)].rockNum(); i++)
 							{
 								window.draw(map[100 * (x)+(y - 1)].getRock(i));
 							}
-							window.draw(map[100 * (x)+(y)].getSprite());
 							for (int i = 0; i < map[100 * (x)+(y)].rockNum(); i++)
 							{
 								window.draw(map[100 * (x)+(y)].getRock(i));
 							}
-							window.draw(map[100 * (x)+(y + 1)].getSprite());
 							for (int i = 0; i < map[100 * (x)+(y + 1)].rockNum(); i++)
 							{
 								window.draw(map[100 * (x)+(y + 1)].getRock(i));
 							}
-							window.draw(map[100 * (x + 1) + (y - 1)].getSprite());
 							for (int i = 0; i < map[100 * (x + 1) + (y - 1)].rockNum(); i++)
 							{
 								window.draw(map[100 * (x + 1) + (y - 1)].getRock(i));
 							}
-							window.draw(map[100 * (x + 1) + (y)].getSprite());
 							for (int i = 0; i < map[100 * (x + 1) + (y)].rockNum(); i++)
 							{
 								window.draw(map[100 * (x + 1) + (y)].getRock(i));
 							}
-							window.draw(map[100 * (x + 1) + (y + 1)].getSprite());
 							for (int i = 0; i < map[100 * (x + 1) + (y + 1)].rockNum(); i++)
 							{
 								window.draw(map[100 * (x + 1) + (y + 1)].getRock(i));
 							}
 						}
 					}
+					//draw enemy
+					{
+						if (!enemyBuffer.empty())
+						{
+							for (int i = 0; i < enemyBuffer.size(); i++)
+							{
+								window.draw(enemyBuffer[i].getSprite());
+							}
+						}
+					}
+					//draw projectiles
 
+					//draw player
+					{
+						if (player != nullptr and player[0].getState() != PlayerState::NotDefined)
+						{
+							window.draw(player[0].getSprite());
+						}
+					}
+					//draw entity effects
+
+					//draw walls
+
+					//draw fullscreen effects
 					window.display();
 
 					while (clock.getElapsedTime() < TimePerFrame)
@@ -1430,6 +1457,7 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 
 		void Game::modeSelector()
 		{
+			window.setView(center);
 			sf::sleep(sf::seconds(0.1));
 			sf::Time TimePerFrame = sf::seconds(1.f / 1000.f);
 			sf::Clock clock;
@@ -1513,7 +1541,7 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 
 					allMenus.modeSelectorScreen.smLabel.setFont(NataSans);
 					allMenus.modeSelectorScreen.smLabel.setPosition(allMenus.modeSelectorScreen.smBody.getPosition() + sf::Vector2f(20, -5));
-					allMenus.modeSelectorScreen.smLabel.setString("Story mode\nUnder development");
+					allMenus.modeSelectorScreen.smLabel.setString("Story mode\nWork in progress");
 					allMenus.modeSelectorScreen.smLabel.setFillColor(sf::Color(20, 20, 20));
 					allMenus.modeSelectorScreen.smLabel.setCharacterSize(50);
 
@@ -1545,6 +1573,7 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 
 			void Game::AMLevelSelector()
 			{
+				window.setView(center);
 				diff = 1;
 				sf::sleep(sf::seconds(0.1));
 				sf::Time TimePerFrame = sf::seconds(1.f / 1000.f);
@@ -1837,7 +1866,7 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 
 				void Game::AMRun()
 				{
-					sf::sleep(sf::seconds(1));
+					sf::sleep(sf::seconds(0.1));
 					sf::Time TimePerFrame = sf::seconds(1.f / 1000.f);
 					sf::Clock clock;
 					std::thread drawing([&] {AMRunDraw(); });
@@ -1849,11 +1878,17 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 					}
 					AMRunCreateMap();
 
+					AMRunSpawnPlayer();
+
+					enemyBuffer.clear();
+
 					while (playMenuState == Type::PlayMenuArcadeModeRun)
 					{
 						clock.restart();
 
 						AMRunReadInput();
+
+						AMRunUpdate();
 
 						while (clock.getElapsedTime() < TimePerFrame)
 						{
@@ -1871,35 +1906,31 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 					{
 						if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 						{
-							sf::View view = window.getView();
-							view.move(sf::Vector2f(0,-1));
-							window.setView(view);
+							Commands command;
+							command.command = CommandType::MovedUp;
+							playerCommandStream.push_back(command);
 						}
 						if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 						{
-							sf::View view = window.getView();
-							view.move(sf::Vector2f(-1, 0));
-							window.setView(view); 
+							Commands command;
+							command.command = CommandType::MovedLeft;
+							playerCommandStream.push_back(command);
 						}
 						if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 						{
-							sf::View view = window.getView();
-							view.move(sf::Vector2f(0, 1));
-							window.setView(view);
+							Commands command;
+							command.command = CommandType::MovedDown;
+							playerCommandStream.push_back(command);
 						}
 						if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 						{
-							sf::View view = window.getView();
-							view.move(sf::Vector2f(1, 0));
-							window.setView(view);
+							Commands command;
+							command.command = CommandType::MovedRight;
+							playerCommandStream.push_back(command);
 						}
 						if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 						{
-							sf::View view = window.getView();
-							view.move(sf::Vector2f(1, 0));
-							view.move(sf::Vector2f(-(view.getCenter().x), -(view.getCenter().y)));
-							window.setView(view);
-							playMenuState = Type::PlayMenuArcadeModePause;
+							playMenuState = Type::PlayMenuArcadeModeLevelSelector;
 						}
 					}
 
@@ -1920,6 +1951,7 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 					{
 						unsigned int seed = time(0);
 						srand(0);
+						map.clear();
 						int* tileTypeHolder = new int[10000];
 						int* randHolder = new int[10000];
 						int size = 2000*100;
@@ -1938,36 +1970,94 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 						}
 					}
 
-					void Game::AMRunSpawn()
+					void Game::AMRunSpawnPlayer()
+					{
+						player = new Player;
+						Commands command;
+						command.command = CommandType::Created;
+						command.numbers[0] = config.getWidth();
+						command.numbers[1] = config.getHeigth();
+						player[0].processCommand(command);
+						playerCommandStream.clear();
+					}
+
+					void Game::AMRunSpawnEnemy(sf::Vector2f pos)
+					{
+						Enemy enemy(pos, enemyTexture);
+						enemyBuffer.push_back(enemy);
+					}
+
+					void Game::AMRunSpawnProjectiles()
 					{
 					}
 
-						void Game::AMRunSpawnPlayer()
-						{
-						}
-
-						void Game::AMRunSpawnEnemy()
-						{
-						}
-
-						void Game::AMRunSpawnProjectiles()
-						{
-						}
-
-						void Game::AMRunSpawnEnvironment()
-						{
-						}
-
 					void Game::AMRunUpdate()
 					{
+						AMRunUpdatePlayer();
+						AMRunUpdateCamera();
+						AMRunUpdateEnemy();
 					}
 
 						void Game::AMRunUpdatePlayer()
 						{
+							while (!playerCommandStream.empty())
+							{
+								bool buf = player[0].processCommand(playerCommandStream[0]);
+								if (buf)
+								{
+									playerCommandStream.erase(playerCommandStream.begin());
+								}
+							}
+						}
+
+						void Game::AMRunUpdateCamera()
+						{
+							sf::View view;
+							view = window.getView();
+							view.setCenter(player[0].getSprite().getPosition());
+							window.setView(view);
 						}
 
 						void Game::AMRunUpdateEnemy()
 						{
+							if (enemyTimer > 1000 and enemyBuffer.size() < 10000)
+							{
+								enemyTimer = 0;
+								int x, y, x1, y1;
+								x = (window.getView().getCenter().x + 100000) / 2000;
+								y = (window.getView().getCenter().x + 100000) / 2000;
+								for (int i = -2; i < 3; i++)
+								{
+									for (int j = -20; j < 30; j+=10)
+									{
+										if (i >= -1 and i <= 1 and j > -15 and j < 15)
+										{
+
+										}
+										else
+										{
+											srand(map[(y + j) * 10 + (x + i)].getRand()*time(0));
+											int randNum = rand() % 10 + 1000;
+											for (int k = 0; k < randNum; k++)
+											{
+												if (enemyBuffer.size() < 10000)
+												{
+													x1 = rand() % 2001;
+													y1 = rand() % 2001;
+													if (!map[(y + j) * 10 + (x + i)].isBlocked(sf::Vector2f(x1, y1)))
+													{
+														AMRunSpawnEnemy(sf::Vector2f((x + i) * 2000 - 100000 + x1, (y + j / 10) * 2000 - 100000 + y1));
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+							else
+							{
+								enemyTimer++;
+							}
 						}
 
 							void Game::AMRunUpdateBosses()
@@ -1988,7 +2078,29 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 
 				void Game::AMPause()
 				{
+					//sf::sleep(sf::seconds(0.1));
+					//sf::Time TimePerFrame = sf::seconds(1.f / 1000.f);
+					//sf::Clock clock;
+					//std::thread drawing([&] {AMRunDraw(); });
+					//drawing.detach();
 
+					//for (int i = 0; i < 5; i++)
+					//{
+					//	AMRunCreateTexturesMap(i);
+					//}
+					//AMRunCreateMap();
+
+					//while (playMenuState == Type::PlayMenuArcadeModeRun)
+					//{
+					//	clock.restart();
+
+					//	AMRunReadInput();
+
+					//	while (clock.getElapsedTime() < TimePerFrame)
+					//	{
+					//		sf::sleep(sf::Time::Zero);
+					//	}
+					//}
 				}
 
 				void Game::AMLevelUp()

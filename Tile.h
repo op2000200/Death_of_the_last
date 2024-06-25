@@ -10,6 +10,9 @@ public:
 
 	int rockNum();
 	sf::Sprite getRock(int i);
+	int getRand();
+
+	bool isBlocked(sf::Vector2f pos);
 private:
 	int type;
 	int randNum;

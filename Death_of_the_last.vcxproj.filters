@@ -86,5 +86,11 @@
     <ClInclude Include="RenderQueue.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Enums.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Structures.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

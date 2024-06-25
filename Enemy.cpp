@@ -1,4 +1,20 @@
-//#include "Enemy.h"
+#include "Enemy.h"
+
+Enemy::Enemy(sf::Vector2f pos, sf::Texture* texture)
+{
+	sprite.setTexture(*texture);
+	sprite.setOrigin(sf::Vector2f(texture[0].getSize().x / 2, texture[0].getSize().y / 2));
+	sprite.setPosition(pos);
+}
+
+Enemy::~Enemy()
+{
+}
+
+sf::Sprite Enemy::getSprite()
+{
+	return sprite;
+}
 //#include "SFML/Graphics.hpp"
 //
 //Enemy::Enemy()
