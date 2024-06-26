@@ -7,6 +7,34 @@ enum class PlayerState
 	Dead
 };
 
+enum class EnemyState
+{
+	Standing,
+	Moving
+};
+
+enum class EnemyType
+{
+	Standart,
+	Summoner,
+	Kamikaze,
+	Shooter
+};
+
+enum class Element
+{
+	Fire,
+	Ice,
+	Electricity,
+	Water,
+	Stone,
+	Wind,
+	Light,
+	Dark,
+	Force,
+	Phys
+};
+
 enum class CommandType
 {
 	MovedUpRight,

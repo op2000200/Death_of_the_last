@@ -18,17 +18,26 @@ Tile::Tile(int num, int numR, sf::Vector2f pos, sf::Texture* tex, int x, int y)
 		sprite.setPosition(pos);
 		int rockNum = rand() % 50;
 		int rockCreated = 0;
+		int o = 1;
 		while (rockCreated <= rockNum)
 		{
-			int rockType = rand() % 3;
-			int coordX, coordY;
-			coordX = rand() % 2001;
-			coordY = rand() % 2001;
-			sf::Sprite rock(tex[rockType + 5]);
-			rock.setOrigin(sf::Vector2f(tex[rockType + 5].getSize().x / 2, tex[rockType + 5].getSize().y / 2));
-			rock.setPosition(sf::Vector2f(2000 * x + coordX - 100000, 2000 * y + coordY - 100000));
-			rock.setRotation(rand());
-			rocks.push_back(rock);
+			if (rand() % o == 0)
+			{
+				int rockType = rand() % 3;
+				int coordX, coordY;
+				coordX = rand() % 2001;
+				coordY = rand() % 2001;
+				sf::Sprite rock(tex[rockType + 5]);
+				rock.setOrigin(sf::Vector2f(tex[rockType + 5].getSize().x / 2, tex[rockType + 5].getSize().y / 2));
+				rock.setPosition(sf::Vector2f(2000 * x + coordX - 100000, 2000 * y + coordY - 100000));
+				rock.setRotation(rand());
+				rocks.push_back(rock);
+				o++;
+			}
+			else
+			{
+				break;
+			}
 			rockCreated++;
 		}
 

@@ -25,6 +25,7 @@ Player::Player()
 	characteristics.manaReserved = 0;
 	characteristics.manaUsage = 0;
 	characteristics.manaRegen = 0;
+	characteristics.element = Element::Fire;
 }
 
 Player::~Player()
@@ -37,7 +38,7 @@ bool Player::processCommand(Commands command)
 	{
 		sprite.setOrigin(sf::Vector2f(50,50));
 		sprite.setPosition(sf::Vector2f(command.numbers[0] / 2, command.numbers[1] / 2));
-		texture[0].loadFromFile("assets/textures/player.png");
+		texture[0].loadFromFile("assets/textures/playerNew.png");
 		sprite.setTexture(*texture);
 		playerState = PlayerState::Alive;
 	}
@@ -80,6 +81,11 @@ sf::Sprite Player::getSprite()
 PlayerState Player::getState()
 {
 	return playerState;
+}
+
+Characteristics Player::getChar()
+{
+	return characteristics;
 }
 
 

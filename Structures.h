@@ -179,4 +179,6 @@ struct Characteristics
 	float manaReserved;
 	float manaUsage;
 	float manaRegen;
+
+	Element element;
 };

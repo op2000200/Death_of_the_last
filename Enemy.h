@@ -1,16 +1,27 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "Structures.h"
 
 class Enemy
 {
 public:
-	Enemy(sf::Vector2f pos, sf::Texture* texture);
+	Enemy(sf::Vector2f pos, sf::Texture* texture, EnemyType type, Element element);
 	~Enemy();
 
 	sf::Sprite getSprite();
-
+	Characteristics getChar();
+	EnemyState getState();
+	void setState(EnemyState st);
+	sf::Vector2f getDest();
+	void setDest(sf::Vector2f pos);
+	void setPos(sf::Vector2f pos);
+	EnemyType getType();
 private:
 	sf::Sprite sprite;
+	Characteristics characteristics;
+	EnemyState enemyState;
+	EnemyType enemyType;
+	sf::Vector2f dest;
 };
 
 

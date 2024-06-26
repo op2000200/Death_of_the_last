@@ -56,28 +56,33 @@ public: //methods
 				void AMLevelSelector();
 					void AMLevelSelectorDraw();
 					void AMLevelSelectorReadInput();
-					void AMRun();
-						void AMRunDraw();
-						void AMRunReadInput();
+					void AMCharacterPrepare();
+						void AMCharacterPrepareDraw();
+						void AMCharacterPrepareReadInput();
+						void AMRun();
+							void AMRunDraw();
+							void AMRunReadInput();
 
-						void AMRunCreateTexturesMap(int n);
-						void AMRunCreateMap();
+							void AMRunCreateTexturesMap(int n);
+							void AMRunCreateMap();
 
-						void AMRunSpawn();
-							void AMRunSpawnPlayer();
-							void AMRunSpawnEnemy(sf::Vector2f pos);
-							void AMRunSpawnProjectiles();
-							void AMRunSpawnEnvironment();
+							void AMRunSpawn();
+								void AMRunSpawnPlayer();
+								void AMRunSpawnEnemy(sf::Vector2f pos, EnemyType type, Element element);
+								void AMRunSpawnProjectiles();
+								void AMRunSpawnEnvironment();
 
 
-						void AMRunUpdate();
-							void AMRunUpdatePlayer();
-							void AMRunUpdateCamera();
-							void AMRunUpdateEnemy();
-								void AMRunUpdateBosses();
-							void AMRunUpdateProjectiles();
-							void AMRunUpdateCollisions();
-							void AMRunUpdateEnvironment();
+							void AMRunUpdate();
+								void AMRunUpdatePlayer();
+								void AMRunUpdateCamera();
+								void AMRunUpdateEnemy();
+									void AMRunUpdateBosses();
+								void AMRunUpdateProjectiles();
+								void AMRunUpdateCollisions();
+								void AMRunUpdateEnvironment();
+
+							void AMRunDestroyFarEntities();
 
 					void AMPause();
 						void AMPauseDraw();
@@ -119,8 +124,18 @@ private:
 	std::vector<Commands> playerCommandStream;
 	Player* player;
 	std::vector<Enemy> enemyBuffer;
-	sf::Texture* enemyTexture;
+	sf::Texture* enemyTextureFire;
+	sf::Texture* enemyTextureIce;
+	sf::Texture* enemyTextureElectricity;
+	sf::Texture* enemyTextureWater;
+	sf::Texture* enemyTextureStone;
+	sf::Texture* enemyTextureWind;
+	sf::Texture* enemyTextureLight;
+	sf::Texture* enemyTextureDark;
+	sf::Texture* enemyTextureForce;
+	sf::Texture* enemyTexturePhys;
 	int enemyTimer;
+	int autoCastCooldown;
 
 
 };

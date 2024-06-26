@@ -3,7 +3,7 @@
 Game::Game(Config startConfig)
 	: window(sf::VideoMode(startConfig.getWidth(), startConfig.getHeigth()), "Death of the last", sf::Style::None, settings)
 {
-	window.setVerticalSyncEnabled(true);
+	//window.setVerticalSyncEnabled(true);
 	window.setSize(sf::Vector2u(startConfig.getWidth(), startConfig.getHeigth()));
 	center = window.getView();
 	config.copyConfig(startConfig);
@@ -22,8 +22,26 @@ Game::Game(Config startConfig)
 	tileTextureHolder[6].loadFromFile("assets/textures/rockMedium.png");
 	tileTextureHolder[7].loadFromFile("assets/textures/rockLarge.png");
 	tileTextureHolder[8].loadFromFile("assets/textures/rockExtraLarge.png");
-	enemyTexture = new sf::Texture;
-	enemyTexture[0].loadFromFile("assets/textures/enemyStandartFire.png");
+	enemyTextureFire = new sf::Texture;
+	enemyTextureFire[0].loadFromFile("assets/textures/enemyStandartFire.png");
+	enemyTextureIce = new sf::Texture;
+	enemyTextureIce[0].loadFromFile("assets/textures/enemyStandartIce.png");
+	enemyTextureElectricity = new sf::Texture;
+	enemyTextureElectricity[0].loadFromFile("assets/textures/enemyStandartElectricity.png");
+	enemyTextureWater = new sf::Texture;
+	enemyTextureWater[0].loadFromFile("assets/textures/enemyStandartWater.png");
+	enemyTextureStone = new sf::Texture;
+	enemyTextureStone[0].loadFromFile("assets/textures/enemyStandartStone.png");
+	enemyTextureWind = new sf::Texture;
+	enemyTextureWind[0].loadFromFile("assets/textures/enemyStandartWind.png");
+	//enemyTextureLight = new sf::Texture;
+	//enemyTextureLight[0].loadFromFile("assets/textures/enemyStandartLight.png");
+	//enemyTextureDark = new sf::Texture;
+	//enemyTextureDark[0].loadFromFile("assets/textures/enemyStandartDark.png");
+	//enemyTextureForce = new sf::Texture;
+	//enemyTextureForce[0].loadFromFile("assets/textures/enemyStandartForce.png");
+	//enemyTexturePhys = new sf::Texture;
+	//enemyTexturePhys[0].loadFromFile("assets/textures/enemyStandartPhys.png");
 	enemyTimer = 0;
 }
 
@@ -1341,7 +1359,7 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 
 		void Game::renderPMGame()
 		{
-			sf::Time TimePerFrame = sf::seconds(1.f / 100.f);
+			sf::Time TimePerFrame = sf::seconds(1.f / 1000.f);
 			sf::Clock clock;
 			while (state == Type::PlayMenu)
 			{
@@ -1422,9 +1440,27 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 					}
 					//draw enemy
 					{
-						if (!enemyBuffer.empty())
+						for (int i = 0; i < enemyBuffer.size(); i++)
 						{
-							for (int i = 0; i < enemyBuffer.size(); i++)
+							int x = (window.getView().getCenter().x + 100000) / 2000;
+							int y = (window.getView().getCenter().y + 100000) / 2000;
+							if (x < 1)
+							{
+								x = 1;
+							}
+							if (y < 1)
+							{
+								y = 1;
+							}
+							if (x > 98)
+							{
+								x = 98;
+							}
+							if (y > 98)
+							{
+								y = 98;
+							}
+							if (enemyBuffer[i].getSprite().getPosition().x > (x - 1) * 2000 - 100000 and enemyBuffer[i].getSprite().getPosition().x < (x + 2) * 2000 - 100000 and enemyBuffer[i].getSprite().getPosition().y > (y - 1) * 2000 - 100000 and enemyBuffer[i].getSprite().getPosition().y < (y + 2) * 2000 - 100000)
 							{
 								window.draw(enemyBuffer[i].getSprite());
 							}
@@ -1444,6 +1480,8 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 					//draw walls
 
 					//draw fullscreen effects
+
+
 					window.display();
 
 					while (clock.getElapsedTime() < TimePerFrame)
@@ -1781,7 +1819,7 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 
 						allMenus.amLevelSelectorScreen.playLabel.setFont(NataSans);
 						allMenus.amLevelSelectorScreen.playLabel.setPosition(allMenus.amLevelSelectorScreen.playBody.getPosition() + sf::Vector2f(20, -10));
-						allMenus.amLevelSelectorScreen.playLabel.setString("   Play");
+						allMenus.amLevelSelectorScreen.playLabel.setString("   Next");
 						allMenus.amLevelSelectorScreen.playLabel.setFillColor(sf::Color(20, 20, 20));
 						allMenus.amLevelSelectorScreen.playLabel.setCharacterSize(100);
 
@@ -1890,6 +1928,8 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 
 						AMRunUpdate();
 
+						AMRunDestroyFarEntities();
+
 						while (clock.getElapsedTime() < TimePerFrame)
 						{
 							sf::sleep(sf::Time::Zero);
@@ -1981,10 +2021,38 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 						playerCommandStream.clear();
 					}
 
-					void Game::AMRunSpawnEnemy(sf::Vector2f pos)
+					void Game::AMRunSpawnEnemy(sf::Vector2f pos, EnemyType type, Element element)
 					{
-						Enemy enemy(pos, enemyTexture);
-						enemyBuffer.push_back(enemy);
+						if (element == Element::Fire)
+						{
+							Enemy enemy(pos, enemyTextureFire, type, element);
+							enemyBuffer.push_back(enemy);
+						}
+						if (element == Element::Ice)
+						{
+							Enemy enemy(pos, enemyTextureIce, type, element);
+							enemyBuffer.push_back(enemy);
+						}
+						if (element == Element::Electricity)
+						{
+							Enemy enemy(pos, enemyTextureElectricity, type, element);
+							enemyBuffer.push_back(enemy);
+						}
+						if (element == Element::Stone)
+						{
+							Enemy enemy(pos, enemyTextureStone, type, element);
+							enemyBuffer.push_back(enemy);
+						}
+						if (element == Element::Water)
+						{
+							Enemy enemy(pos, enemyTextureWater, type, element);
+							enemyBuffer.push_back(enemy);
+						}
+						if (element == Element::Wind)
+						{
+							Enemy enemy(pos, enemyTextureWind, type, element);
+							enemyBuffer.push_back(enemy);
+						}
 					}
 
 					void Game::AMRunSpawnProjectiles()
@@ -2020,44 +2088,141 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 
 						void Game::AMRunUpdateEnemy()
 						{
-							if (enemyTimer > 1000 and enemyBuffer.size() < 10000)
+							//spawn
 							{
-								enemyTimer = 0;
-								int x, y, x1, y1;
-								x = (window.getView().getCenter().x + 100000) / 2000;
-								y = (window.getView().getCenter().x + 100000) / 2000;
-								for (int i = -2; i < 3; i++)
+								if (enemyTimer > 1000 and enemyBuffer.size() < 2000)
 								{
-									for (int j = -20; j < 30; j+=10)
+									enemyTimer = 0;
+									int x, y, x1, y1;
+									x = (window.getView().getCenter().x + 100000) / 2000;
+									y = (window.getView().getCenter().y + 100000) / 2000;
+									for (int i = -2; i < 3; i++)
 									{
-										if (i >= -1 and i <= 1 and j > -15 and j < 15)
+										for (int j = -20; j < 30; j += 10)
 										{
-
-										}
-										else
-										{
-											srand(map[(y + j) * 10 + (x + i)].getRand()*time(0));
-											int randNum = rand() % 10 + 1000;
-											for (int k = 0; k < randNum; k++)
+											if (i >= -1 and i <= 1 and j > -15 and j < 15)
 											{
-												if (enemyBuffer.size() < 10000)
+
+											}
+											else
+											{
+												srand(map[(y + j) * 10 + (x + i)].getRand() * time(0));
+												int randNum = rand() % 10;
+												for (int k = 0; k < randNum; k++)
 												{
-													x1 = rand() % 2001;
-													y1 = rand() % 2001;
-													if (!map[(y + j) * 10 + (x + i)].isBlocked(sf::Vector2f(x1, y1)))
+													if (enemyBuffer.size() < 2000)
 													{
-														AMRunSpawnEnemy(sf::Vector2f((x + i) * 2000 - 100000 + x1, (y + j / 10) * 2000 - 100000 + y1));
+														x1 = rand() % 2001;
+														y1 = rand() % 2001;
+														if (!map[(y + j) * 10 + (x + i)].isBlocked(sf::Vector2f(x1, y1)))
+														{
+															int o = 1;
+															while (true)
+															{
+																if (rand() % o == 0)
+																{
+																	EnemyType enemyType;
+																	Element element;
+																	int enType = rand() % 4;
+																	enType = 0;
+																	if (enType == 0)
+																	{
+																		enemyType = EnemyType::Standart;
+																	}
+																	if (enType == 1)
+																	{
+																		enemyType = EnemyType::Summoner;
+																	}
+																	if (enType == 2)
+																	{
+																		enemyType = EnemyType::Kamikaze;
+																	}
+																	if (enType == 3)
+																	{
+																		enemyType = EnemyType::Shooter;
+																	}
+																	int elType = rand() % 10;
+																	if (elType < 5)
+																	{
+																		element = Element::Fire;
+																	}
+																	else
+																	{
+																		if (elType == 5)
+																		{
+																			element = Element::Ice;
+																		}
+																		if (elType == 6)
+																		{
+																			element = Element::Electricity;
+																		}
+																		if (elType == 7)
+																		{
+																			element = Element::Stone;
+																		}
+																		if (elType == 8)
+																		{
+																			element = Element::Water;
+																		}
+																		if (elType == 9)
+																		{
+																			element = Element::Wind;
+																		}
+																	}
+																	AMRunSpawnEnemy(sf::Vector2f((x + i) * 2000 - 100000 + x1 + (rand() % 100 - 50), (y + j / 10) * 2000 - 100000 + y1 + (rand() % 100 - 50)), enemyType, element);
+																	o++;
+																}
+																else
+																{
+																	break;
+																}
+															}
+														}
 													}
 												}
 											}
 										}
 									}
 								}
+								else
+								{
+									enemyTimer++;
+								}
 							}
-							else
+							//movement
 							{
-								enemyTimer++;
+								for (int i = 0; i < enemyBuffer.size(); i++)
+								{
+									if (enemyBuffer[i].getType() == EnemyType::Standart)
+									{
+										if (enemyBuffer[i].getState() == EnemyState::Standing)
+										{
+											int x, y, x1, y1;
+											x = (enemyBuffer[i].getSprite().getPosition().x);
+											y = (enemyBuffer[i].getSprite().getPosition().y);
+											srand(x * y * time(0));
+											x1 = rand() % 10000 - 5000;
+											y1 = rand() % 10000 - 5000;
+
+											enemyBuffer[i].setDest(sf::Vector2f(x + x1, y + y1));
+
+											enemyBuffer[i].setState(EnemyState::Moving);
+										}
+										if (enemyBuffer[i].getState() == EnemyState::Moving)
+										{
+											enemyBuffer[i].setPos(sf::Vector2f(
+												enemyBuffer[i].getSprite().getPosition().x + enemyBuffer[i].getChar().speed * (1.f / 1000.f) * ((enemyBuffer[i].getDest().x - enemyBuffer[i].getSprite().getPosition().x) / (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getSprite().getPosition().x) + abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getSprite().getPosition().y))),
+												enemyBuffer[i].getSprite().getPosition().y + enemyBuffer[i].getChar().speed * (1.f / 1000.f) * ((enemyBuffer[i].getDest().y - enemyBuffer[i].getSprite().getPosition().y) / (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getSprite().getPosition().x) + abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getSprite().getPosition().y)))
+											));
+											if (abs(enemyBuffer[i].getSprite().getPosition().x - enemyBuffer[i].getDest().x) < 10 and abs(enemyBuffer[i].getSprite().getPosition().y - enemyBuffer[i].getDest().y) < 10)
+											{
+												enemyBuffer[i].setState(EnemyState::Standing);
+											}
+										}
+									}
+								}
 							}
+							
 						}
 
 							void Game::AMRunUpdateBosses()
@@ -2066,7 +2231,162 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 
 						void Game::AMRunUpdateProjectiles()
 						{
+							if (autoCastCooldown > 1000 * 0.5 * (100.f / static_cast<float>(player[0].getChar().atkSpeed)))
+							{
+								autoCastCooldown = 0;
+
+							}
+							else
+							{
+								autoCastCooldown++;
+							}
 						}
+
+							//void Game::updateBasicMissle(sf::Time elapsedTime, Player* player)
+							//{
+							//	if (basicMissleColdCooldown > 144 * 0.5 * (100.f / static_cast<float>(player[0].getCastSpeed())))
+							//	{
+							//		int* distBuffer = new int[enemyCounter];
+							//		int num;
+							//		if (0.5 * (100.f / static_cast<float>(player[0].getCastSpeed())) > 144)
+							//		{
+							//			num = 1;
+							//		}
+							//		else
+							//		{
+							//			num = static_cast <float>(1 / (0.5 * (100.f / static_cast<float>(player[0].getCastSpeed()))));
+							//		}
+							//		int* distBuffer2 = new int[num];
+							//		int* nums = new int[num];
+							//		for (int j = 0; j < num; j++)
+							//		{
+							//			distBuffer2[j] = 10000;
+							//			nums[j] = 0;
+							//		}
+							//
+							//		for (int i = 0; i < enemyCounter; i++)
+							//		{
+							//			sf::Vector2f posPlayer, posEnemy;
+							//			int dist;
+							//			posPlayer = sf::Vector2f(player[0].getSprite().getPosition().x + 45, player[0].getSprite().getPosition().y + 60);
+							//			posEnemy = sf::Vector2f(StandartEnemyFireBuffer[i].getSprite().getPosition().x + 20, StandartEnemyFireBuffer[i].getSprite().getPosition().y + 20);
+							//			dist = sqrt(pow(posPlayer.x - posEnemy.x, 2) + pow(posPlayer.y - posEnemy.y, 2));
+							//			distBuffer[i] = dist;
+							//		}
+							//		for (int i = 0; i < enemyCounter; i++)
+							//		{
+							//			for (int j = 0; j < num; j++)
+							//			{
+							//				if (distBuffer[i] < distBuffer2[j])
+							//				{
+							//					for (int k = j; k < num - 1; k++)
+							//					{
+							//						distBuffer2[k + 1] = distBuffer2[k];
+							//						nums[k + 1] = nums[k];
+							//					}
+							//					distBuffer2[j] = distBuffer[i];
+							//					nums[j] = i;
+							//					break;
+							//				}
+							//			}
+							//		}
+							//		for (int i = 0; i < num; i++)
+							//		{
+							//			if (distBuffer2[i] < 700)
+							//			{
+							//				BasicMissleCold missle(sf::Vector2f(player[0].getSprite().getPosition().x + 30, player[0].getSprite().getPosition().y - 15), BasicMissleColdTexture);
+							//				//BasicMissleCold missle(sf::Vector2f(0, 0), BasicMissleColdTexture);
+							//				missle.setDirection(sf::Vector2f(
+							//					(StandartEnemyFireBuffer[nums[i]].getSprite().getPosition().x - player[0].getSprite().getPosition().x - 75) / (std::abs(StandartEnemyFireBuffer[nums[i]].getSprite().getPosition().x - player[0].getSprite().getPosition().x - 75) + std::abs(StandartEnemyFireBuffer[nums[i]].getSprite().getPosition().y - player[0].getSprite().getPosition().y + 25)),
+							//					(StandartEnemyFireBuffer[nums[i]].getSprite().getPosition().y - player[0].getSprite().getPosition().y + 25) / (std::abs(StandartEnemyFireBuffer[nums[i]].getSprite().getPosition().x - player[0].getSprite().getPosition().x - 75) + std::abs(StandartEnemyFireBuffer[nums[i]].getSprite().getPosition().y - player[0].getSprite().getPosition().y + 25))
+							//				));
+							//				double rot1 = (std::acos((-1 * missle.getDirection().y) / (std::sqrt(missle.getDirection().x * missle.getDirection().x + missle.getDirection().y * missle.getDirection().y))) * (180.0 / 3.14));
+							//				if (missle.getDirection().x < 0)
+							//				{
+							//					rot1 = 360.f - rot1;
+							//				}
+							//				//else
+							//				//{
+							//				//	rot1 = 360.f - rot1;
+							//				//}
+							//				missle.setRotation(rot1);
+							//				missle.setPosition(sf::Vector2f(
+							//					(missle.getSprite().getPosition().x + (65 + 56.5 * cos((missle.getRotation() + 225) / (180 / 3.14)))),
+							//					(missle.getSprite().getPosition().y + (10 + 56.5 * sin((missle.getRotation() + 225) / (180 / 3.14))))
+							//				));
+							//				//missle.setRotation(350);
+							//				//missle.setPosition(sf::Vector2f(
+							//				//	(missle.getSprite().getPosition().x + 120.f * (rot1 - ((rot1 - 90.f) * 2) / 90.f)),
+							//				//	(missle.getSprite().getPosition().y + 120.f * (rot1 / 180.f))
+							//				//));
+							//				//missle.setPosition(sf::Vector2f(
+							//				//	(missle.getSprite().getPosition().x + 60.f),
+							//				//	(missle.getSprite().getPosition().y - 20.f)
+							//				//));
+							//				//if (rot1 > 0)
+							//				//{
+							//				//	if (rot1 > 90.f)
+							//				//	{
+							//				//		missle.setPosition(sf::Vector2f(
+							//				//			(missle.getSprite().getPosition().x + 120.f * (rot1 - ((rot1 - 90.f) * 2) / 90.f)),
+							//				//			(missle.getSprite().getPosition().y + 120.f * (rot1 / 180.f))
+							//				//		));
+							//				//	}
+							//				//	else
+							//				//	{
+							//				//		missle.setPosition(sf::Vector2f(
+							//				//			(missle.getSprite().getPosition().x + 120.f * (rot1 / 90.f)),
+							//				//			(missle.getSprite().getPosition().y + 120.f * (rot1 / 180.f))
+							//				//		));
+							//				//	}
+							//				//}
+							//				//else
+							//				//{
+							//				//	//if (rot1 > 90.f)
+							//				//	//{
+							//				//	//	missle.setPosition(sf::Vector2f(
+							//				//	//		(missle.getSprite().getPosition().x + 120.f * (rot1 - ((rot1 - 90.f) * 2) / 90.f)),
+							//				//	//		(missle.getSprite().getPosition().y + 160.f * (rot1 / 180.f))
+							//				//	//	));
+							//				//	//}
+							//				//	//else
+							//				//	//{
+							//				//	//	missle.setPosition(sf::Vector2f(
+							//				//	//		(missle.getSprite().getPosition().x + 120.f * (rot1 / 90.f)),
+							//				//	//		(missle.getSprite().getPosition().y + 160.f * (rot1 / 180.f))
+							//				//	//	));
+							//				//	//}
+							//				//}
+							//				basicMissleColdBuffer.push_back(missle); 
+							//				basicMissleColdCounter++;
+							//			}
+							//		}
+							//		basicMissleColdCooldown = 0;
+							//	}
+							//	else
+							//	{
+							//		basicMissleColdCooldown++;
+							//	}
+							//	for (int i = 0; i < basicMissleColdCounter; i++)
+							//	{
+							//		basicMissleColdBuffer[i].setPosition(sf::Vector2f(
+							//			basicMissleColdBuffer[i].getSprite().getPosition().x + basicMissleColdBuffer[i].getSpeed() * sf::seconds(1.f / 144.f).asSeconds() * basicMissleColdBuffer[i].getDirection().x,
+							//			basicMissleColdBuffer[i].getSprite().getPosition().y + basicMissleColdBuffer[i].getSpeed() * sf::seconds(1.f / 144.f).asSeconds() * basicMissleColdBuffer[i].getDirection().y
+							//		));
+							//		int buf;
+							//		buf = basicMissleColdBuffer[i].getHealth();
+							//		buf--;
+							//		if (buf < 0)
+							//		{
+							//			basicMissleColdBuffer.erase(basicMissleColdBuffer.begin() + i);
+							//			basicMissleColdCounter--;
+							//		}
+							//		else
+							//		{
+							//			basicMissleColdBuffer[i].setHealth(buf);
+							//		}
+							//	}
+							//}
 
 						void Game::AMRunUpdateCollisions()
 						{
@@ -2075,6 +2395,38 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 						void Game::AMRunUpdateEnvironment()
 						{
 						}
+
+					void Game::AMRunDestroyFarEntities()
+					{
+						int x, y, x1, y1;
+						x = (window.getView().getCenter().x + 100000) / 2000;
+						y = (window.getView().getCenter().x + 100000) / 2000;
+						for (int i = 0; i < enemyBuffer.size(); i++)
+						{
+							if (x < 1)
+							{
+								x = 1;
+							}
+							if (y < 1)
+							{
+								y = 1;
+							}
+							if (x > 98)
+							{
+								x = 98;
+							}
+							if (y > 98)
+							{
+								y = 98;
+							}
+							if (enemyBuffer[i].getSprite().getPosition().x < (x - 3) * 2000 - 100000 or enemyBuffer[i].getSprite().getPosition().x > (x + 4) * 2000 - 100000 or enemyBuffer[i].getSprite().getPosition().y < (y - 3) * 2000 - 100000 or enemyBuffer[i].getSprite().getPosition().y > (y + 4) * 2000 - 100000)
+							{
+								enemyBuffer.erase(enemyBuffer.begin() + i);
+								//window.draw(enemyBuffer[i].getSprite());
+							}
+						}
+
+					}
 
 				void Game::AMPause()
 				{

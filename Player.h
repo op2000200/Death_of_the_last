@@ -12,6 +12,7 @@ public:
 	bool processCommand(Commands command);
 	sf::Sprite getSprite();
 	PlayerState getState();
+	Characteristics getChar();
 
 private:
 	sf::Sprite sprite;
