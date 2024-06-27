@@ -43,6 +43,8 @@ Game::Game(Config startConfig)
 	//enemyTexturePhys = new sf::Texture;
 	//enemyTexturePhys[0].loadFromFile("assets/textures/enemyStandartPhys.png");
 	enemyTimer = 0;
+	elementClicked = false;
+	elementChoosen = Element::Fire;
 }
 
 Game::~Game()
@@ -1277,6 +1279,10 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 			{
 				AMLevelSelector();
 			}
+			if (playMenuState == Type::PlayMenuArcadeModeCharacterPrepare)
+			{
+				AMCharacterPrepare();
+			}
 			if (playMenuState == Type::PlayMenuArcadeModeRun)
 			{
 				AMRun();
@@ -1306,7 +1312,7 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 			sf::Clock clock;
 			while (state == Type::PlayMenu)
 			{
-				while (playMenuState == Type::PlayMenuModeSelector or playMenuState == Type::PlayMenuArcadeModeLevelSelector)
+				while (playMenuState == Type::PlayMenuModeSelector or playMenuState == Type::PlayMenuArcadeModeLevelSelector or playMenuState == Type::PlayMenuArcadeModeCharacterPrepare)
 				{
 					clock.restart();
 
@@ -1344,6 +1350,43 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 						window.draw(allMenus.amLevelSelectorScreen.diffDesc);
 						window.draw(allMenus.amLevelSelectorScreen.playBody);
 						window.draw(allMenus.amLevelSelectorScreen.playLabel);
+					}
+					if (playMenuState == Type::PlayMenuArcadeModeCharacterPrepare)
+					{
+						window.draw(allMenus.amCharPrepareScreen.background);
+						window.draw(allMenus.amCharPrepareScreen.backBody);
+						window.draw(allMenus.amCharPrepareScreen.backLabel);
+
+						window.draw(allMenus.amCharPrepareScreen.classBody);
+						window.draw(allMenus.amCharPrepareScreen.classImage);
+						window.draw(allMenus.amCharPrepareScreen.elementBorder);
+
+						if (elementClicked)
+						{
+							window.draw(allMenus.amCharPrepareScreen.fireBody);
+							window.draw(allMenus.amCharPrepareScreen.fireLabel);
+							window.draw(allMenus.amCharPrepareScreen.iceBody);
+							window.draw(allMenus.amCharPrepareScreen.iceLabel);
+							window.draw(allMenus.amCharPrepareScreen.stoneBody);
+							window.draw(allMenus.amCharPrepareScreen.stoneLabel);
+							window.draw(allMenus.amCharPrepareScreen.elecBody);
+							window.draw(allMenus.amCharPrepareScreen.elecLabel);
+							window.draw(allMenus.amCharPrepareScreen.waterBody);
+							window.draw(allMenus.amCharPrepareScreen.waterLabel);
+							window.draw(allMenus.amCharPrepareScreen.windBody);
+							window.draw(allMenus.amCharPrepareScreen.windLabel);
+							window.draw(allMenus.amCharPrepareScreen.lightBody);
+							window.draw(allMenus.amCharPrepareScreen.lightLabel);
+							window.draw(allMenus.amCharPrepareScreen.darkBody);
+							window.draw(allMenus.amCharPrepareScreen.darkLabel);
+						}
+						else
+						{
+							window.draw(allMenus.amCharPrepareScreen.elementImage);
+						}
+
+						window.draw(allMenus.amCharPrepareScreen.playBody);
+						window.draw(allMenus.amCharPrepareScreen.playLabel);
 					}
 
 					window.display();
@@ -1896,11 +1939,395 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 						}
 						if (isHover(sf::Mouse::getPosition(), allMenus.amLevelSelectorScreen.playBody.getPosition(), allMenus.amLevelSelectorScreen.playBody.getSize()))
 						{
-							playMenuState = Type::PlayMenuArcadeModeRun;
-							//return;
+							playMenuState = Type::PlayMenuArcadeModeCharacterPrepare;
+							return;
 						}
 					}
 				}
+
+				void Game::AMCharacterPrepare()
+				{
+					window.setView(center);
+					diff = 1;
+					sf::sleep(sf::seconds(0.1));
+					sf::Time TimePerFrame = sf::seconds(1.f / 1000.f);
+					sf::Clock clock;
+					allMenus.amCharPrepareScreen.classImageTexture.loadFromFile("assets/textures/playerNew.png");
+					allMenus.amCharPrepareScreen.elementTextureFire.loadFromFile("assets/textures/iconFire.png");
+					allMenus.amCharPrepareScreen.elementTextureIce.loadFromFile("assets/textures/iconIce.png");
+					allMenus.amCharPrepareScreen.elementTextureStone.loadFromFile("assets/textures/iconStone.png");
+					allMenus.amCharPrepareScreen.elementTextureElec.loadFromFile("assets/textures/iconElectricity.png");
+					allMenus.amCharPrepareScreen.elementTextureWater.loadFromFile("assets/textures/iconWater.png");
+					allMenus.amCharPrepareScreen.elementTextureWind.loadFromFile("assets/textures/iconWind.png");
+					allMenus.amCharPrepareScreen.elementTextureLight.loadFromFile("assets/textures/iconLight.png");
+					allMenus.amCharPrepareScreen.elementTextureDark.loadFromFile("assets/textures/iconDark.png");
+					std::thread drawing([&] {AMCharacterPrepareDraw(); });
+					drawing.detach();
+					while (playMenuState == Type::PlayMenuArcadeModeCharacterPrepare)
+					{
+						clock.restart();
+
+						AMCharacterPrepareReadInput();
+
+						while (clock.getElapsedTime() < TimePerFrame)
+						{
+							sf::sleep(sf::Time::Zero);
+						}
+					}
+					drawing.~thread();
+				}
+
+					void Game::AMCharacterPrepareDraw()
+					{
+						sf::Time TimePerFrame = sf::seconds(1.f / 1000.f);
+						sf::Clock clock;
+						while (playMenuState == Type::PlayMenuArcadeModeCharacterPrepare)
+						{
+							clock.restart();
+
+							allMenus.amCharPrepareScreen.background.setSize(sf::Vector2f(config.getWidth(), config.getHeigth()));
+							allMenus.amCharPrepareScreen.background.setFillColor(sf::Color(100, 100, 100));
+
+							allMenus.amCharPrepareScreen.backBody.setSize(sf::Vector2f(310, 110));
+							allMenus.amCharPrepareScreen.backBody.setPosition(sf::Vector2f(10, 10));
+							if (isHover(sf::Mouse::getPosition(), allMenus.amCharPrepareScreen.backBody.getPosition(), allMenus.amCharPrepareScreen.backBody.getSize()))
+							{
+								allMenus.amCharPrepareScreen.backBody.setFillColor(sf::Color(100, 100, 100));
+							}
+							else
+							{
+								allMenus.amCharPrepareScreen.backBody.setFillColor(sf::Color(120, 120, 120));
+							}
+							allMenus.amCharPrepareScreen.backBody.setOutlineThickness(5);
+							allMenus.amCharPrepareScreen.backBody.setOutlineColor(sf::Color(20, 20, 20));
+
+							allMenus.amCharPrepareScreen.backLabel.setFont(NataSans);
+							allMenus.amCharPrepareScreen.backLabel.setPosition(allMenus.amCharPrepareScreen.backBody.getPosition() + sf::Vector2f(20, -5));
+							allMenus.amCharPrepareScreen.backLabel.setString("Back");
+							allMenus.amCharPrepareScreen.backLabel.setFillColor(sf::Color(20, 20, 20));
+							allMenus.amCharPrepareScreen.backLabel.setCharacterSize(100);
+
+							allMenus.amCharPrepareScreen.classBody.setSize(sf::Vector2f(600, 600));
+							allMenus.amCharPrepareScreen.classBody.setPosition(sf::Vector2f(20,240));
+							allMenus.amCharPrepareScreen.classBody.setOutlineColor(sf::Color(20, 20, 20));
+							allMenus.amCharPrepareScreen.classBody.setOutlineThickness(5);
+							if (isHover(sf::Mouse::getPosition(), allMenus.amCharPrepareScreen.classBody.getPosition(), allMenus.amCharPrepareScreen.classBody.getSize()))
+							{
+								allMenus.amCharPrepareScreen.classBody.setFillColor(sf::Color(100, 100, 100));
+							}
+							else
+							{
+								allMenus.amCharPrepareScreen.classBody.setFillColor(sf::Color(120, 120, 120));
+							}
+
+							allMenus.amCharPrepareScreen.classImage.setTexture(allMenus.amCharPrepareScreen.classImageTexture);
+							allMenus.amCharPrepareScreen.classImage.setScale(sf::Vector2f(6.f, 6.f));
+							allMenus.amCharPrepareScreen.classImage.setPosition(sf::Vector2f(20, 240));
+
+							allMenus.amCharPrepareScreen.elementBorder.setSize(sf::Vector2f(600, 600));
+							allMenus.amCharPrepareScreen.elementBorder.setPosition(sf::Vector2f(660, 240));
+							allMenus.amCharPrepareScreen.elementBorder.setOutlineColor(sf::Color(20, 20, 20));
+							allMenus.amCharPrepareScreen.elementBorder.setOutlineThickness(5);
+							if (isHover(sf::Mouse::getPosition(), allMenus.amCharPrepareScreen.elementBorder.getPosition(), allMenus.amCharPrepareScreen.elementBorder.getSize()))
+							{
+								allMenus.amCharPrepareScreen.elementBorder.setFillColor(sf::Color(100, 100, 100));
+							}
+							else
+							{
+								allMenus.amCharPrepareScreen.elementBorder.setFillColor(sf::Color(120, 120, 120));
+							}
+
+							if (elementChoosen == Element::Fire)
+							{
+								allMenus.amCharPrepareScreen.elementImage.setTexture(allMenus.amCharPrepareScreen.elementTextureFire);
+							}
+							if (elementChoosen == Element::Ice)
+							{
+								allMenus.amCharPrepareScreen.elementImage.setTexture(allMenus.amCharPrepareScreen.elementTextureIce);
+							}
+							if (elementChoosen == Element::Stone)
+							{
+								allMenus.amCharPrepareScreen.elementImage.setTexture(allMenus.amCharPrepareScreen.elementTextureStone);
+							}
+							if (elementChoosen == Element::Electricity)
+							{
+								allMenus.amCharPrepareScreen.elementImage.setTexture(allMenus.amCharPrepareScreen.elementTextureElec);
+							}
+							if (elementChoosen == Element::Water)
+							{
+								allMenus.amCharPrepareScreen.elementImage.setTexture(allMenus.amCharPrepareScreen.elementTextureWater);
+							}
+							if (elementChoosen == Element::Wind)
+							{
+								allMenus.amCharPrepareScreen.elementImage.setTexture(allMenus.amCharPrepareScreen.elementTextureWind);
+							}
+							if (elementChoosen == Element::Light)
+							{
+								allMenus.amCharPrepareScreen.elementImage.setTexture(allMenus.amCharPrepareScreen.elementTextureLight);
+							}
+							if (elementChoosen == Element::Dark)
+							{
+								allMenus.amCharPrepareScreen.elementImage.setTexture(allMenus.amCharPrepareScreen.elementTextureDark);
+							}
+							allMenus.amCharPrepareScreen.elementImage.setScale(sf::Vector2f(15.f, 15.f));
+							allMenus.amCharPrepareScreen.elementImage.setPosition(sf::Vector2f(660, 240));
+
+							allMenus.amCharPrepareScreen.fireBody.setSize(sf::Vector2f(600, 75));
+							allMenus.amCharPrepareScreen.fireBody.setPosition(sf::Vector2f(660, 240));
+							allMenus.amCharPrepareScreen.fireBody.setOutlineColor(sf::Color(20, 20, 20));
+							allMenus.amCharPrepareScreen.fireBody.setOutlineThickness(5);
+							if (isHover(sf::Mouse::getPosition(), allMenus.amCharPrepareScreen.fireBody.getPosition(), allMenus.amCharPrepareScreen.fireBody.getSize()))
+							{
+								allMenus.amCharPrepareScreen.fireBody.setFillColor(sf::Color(100, 100, 100));
+							}
+							else
+							{
+								allMenus.amCharPrepareScreen.fireBody.setFillColor(sf::Color(120, 120, 120));
+							}
+
+							allMenus.amCharPrepareScreen.fireLabel.setFont(NataSans);
+							allMenus.amCharPrepareScreen.fireLabel.setPosition(allMenus.amCharPrepareScreen.fireBody.getPosition() + sf::Vector2f(200, -10));
+							allMenus.amCharPrepareScreen.fireLabel.setString("Fire");
+							allMenus.amCharPrepareScreen.fireLabel.setFillColor(sf::Color(20, 20, 20));
+							allMenus.amCharPrepareScreen.fireLabel.setCharacterSize(70);
+
+							allMenus.amCharPrepareScreen.iceBody.setSize(sf::Vector2f(600, 75));
+							allMenus.amCharPrepareScreen.iceBody.setPosition(sf::Vector2f(660, 315));
+							allMenus.amCharPrepareScreen.iceBody.setOutlineColor(sf::Color(20, 20, 20));
+							allMenus.amCharPrepareScreen.iceBody.setOutlineThickness(5);
+							if (isHover(sf::Mouse::getPosition(), allMenus.amCharPrepareScreen.iceBody.getPosition(), allMenus.amCharPrepareScreen.iceBody.getSize()))
+							{
+								allMenus.amCharPrepareScreen.iceBody.setFillColor(sf::Color(100, 100, 100));
+							}
+							else
+							{
+								allMenus.amCharPrepareScreen.iceBody.setFillColor(sf::Color(120, 120, 120));
+							}
+
+							allMenus.amCharPrepareScreen.iceLabel.setFont(NataSans);
+							allMenus.amCharPrepareScreen.iceLabel.setPosition(allMenus.amCharPrepareScreen.iceBody.getPosition() + sf::Vector2f(200, -10));
+							allMenus.amCharPrepareScreen.iceLabel.setString("Ice");
+							allMenus.amCharPrepareScreen.iceLabel.setFillColor(sf::Color(20, 20, 20));
+							allMenus.amCharPrepareScreen.iceLabel.setCharacterSize(70);
+
+							allMenus.amCharPrepareScreen.elecBody.setSize(sf::Vector2f(600, 75));
+							allMenus.amCharPrepareScreen.elecBody.setPosition(sf::Vector2f(660, 390));
+							allMenus.amCharPrepareScreen.elecBody.setOutlineColor(sf::Color(20, 20, 20));
+							allMenus.amCharPrepareScreen.elecBody.setOutlineThickness(5);
+							if (isHover(sf::Mouse::getPosition(), allMenus.amCharPrepareScreen.elecBody.getPosition(), allMenus.amCharPrepareScreen.elecBody.getSize()))
+							{
+								allMenus.amCharPrepareScreen.elecBody.setFillColor(sf::Color(100, 100, 100));
+							}
+							else
+							{
+								allMenus.amCharPrepareScreen.elecBody.setFillColor(sf::Color(120, 120, 120));
+							}
+
+							allMenus.amCharPrepareScreen.elecLabel.setFont(NataSans);
+							allMenus.amCharPrepareScreen.elecLabel.setPosition(allMenus.amCharPrepareScreen.elecBody.getPosition() + sf::Vector2f(200, -10));
+							allMenus.amCharPrepareScreen.elecLabel.setString("Electricity");
+							allMenus.amCharPrepareScreen.elecLabel.setFillColor(sf::Color(20, 20, 20));
+							allMenus.amCharPrepareScreen.elecLabel.setCharacterSize(70);
+
+							allMenus.amCharPrepareScreen.stoneBody.setSize(sf::Vector2f(600, 75));
+							allMenus.amCharPrepareScreen.stoneBody.setPosition(sf::Vector2f(660, 465));
+							allMenus.amCharPrepareScreen.stoneBody.setOutlineColor(sf::Color(20, 20, 20));
+							allMenus.amCharPrepareScreen.stoneBody.setOutlineThickness(5);
+							if (isHover(sf::Mouse::getPosition(), allMenus.amCharPrepareScreen.stoneBody.getPosition(), allMenus.amCharPrepareScreen.stoneBody.getSize()))
+							{
+								allMenus.amCharPrepareScreen.stoneBody.setFillColor(sf::Color(100, 100, 100));
+							}
+							else
+							{
+								allMenus.amCharPrepareScreen.stoneBody.setFillColor(sf::Color(120, 120, 120));
+							}
+
+							allMenus.amCharPrepareScreen.stoneLabel.setFont(NataSans);
+							allMenus.amCharPrepareScreen.stoneLabel.setPosition(allMenus.amCharPrepareScreen.stoneBody.getPosition() + sf::Vector2f(200, -10));
+							allMenus.amCharPrepareScreen.stoneLabel.setString("Stone");
+							allMenus.amCharPrepareScreen.stoneLabel.setFillColor(sf::Color(20, 20, 20));
+							allMenus.amCharPrepareScreen.stoneLabel.setCharacterSize(70);
+
+							allMenus.amCharPrepareScreen.waterBody.setSize(sf::Vector2f(600, 75));
+							allMenus.amCharPrepareScreen.waterBody.setPosition(sf::Vector2f(660, 540));
+							allMenus.amCharPrepareScreen.waterBody.setOutlineColor(sf::Color(20, 20, 20));
+							allMenus.amCharPrepareScreen.waterBody.setOutlineThickness(5);
+							if (isHover(sf::Mouse::getPosition(), allMenus.amCharPrepareScreen.waterBody.getPosition(), allMenus.amCharPrepareScreen.waterBody.getSize()))
+							{
+								allMenus.amCharPrepareScreen.waterBody.setFillColor(sf::Color(100, 100, 100));
+							}
+							else
+							{
+								allMenus.amCharPrepareScreen.waterBody.setFillColor(sf::Color(120, 120, 120));
+							}
+
+							allMenus.amCharPrepareScreen.waterLabel.setFont(NataSans);
+							allMenus.amCharPrepareScreen.waterLabel.setPosition(allMenus.amCharPrepareScreen.waterBody.getPosition() + sf::Vector2f(200, -10));
+							allMenus.amCharPrepareScreen.waterLabel.setString("Water");
+							allMenus.amCharPrepareScreen.waterLabel.setFillColor(sf::Color(20, 20, 20));
+							allMenus.amCharPrepareScreen.waterLabel.setCharacterSize(70);
+
+							allMenus.amCharPrepareScreen.windBody.setSize(sf::Vector2f(600, 75));
+							allMenus.amCharPrepareScreen.windBody.setPosition(sf::Vector2f(660, 615));
+							allMenus.amCharPrepareScreen.windBody.setOutlineColor(sf::Color(20, 20, 20));
+							allMenus.amCharPrepareScreen.windBody.setOutlineThickness(5);
+							if (isHover(sf::Mouse::getPosition(), allMenus.amCharPrepareScreen.windBody.getPosition(), allMenus.amCharPrepareScreen.windBody.getSize()))
+							{
+								allMenus.amCharPrepareScreen.windBody.setFillColor(sf::Color(100, 100, 100));
+							}
+							else
+							{
+								allMenus.amCharPrepareScreen.windBody.setFillColor(sf::Color(120, 120, 120));
+							}
+
+							allMenus.amCharPrepareScreen.windLabel.setFont(NataSans);
+							allMenus.amCharPrepareScreen.windLabel.setPosition(allMenus.amCharPrepareScreen.windBody.getPosition() + sf::Vector2f(200, -10));
+							allMenus.amCharPrepareScreen.windLabel.setString("Wind");
+							allMenus.amCharPrepareScreen.windLabel.setFillColor(sf::Color(20, 20, 20));
+							allMenus.amCharPrepareScreen.windLabel.setCharacterSize(70);
+
+							allMenus.amCharPrepareScreen.lightBody.setSize(sf::Vector2f(600, 75));
+							allMenus.amCharPrepareScreen.lightBody.setPosition(sf::Vector2f(660, 690));
+							allMenus.amCharPrepareScreen.lightBody.setOutlineColor(sf::Color(20, 20, 20));
+							allMenus.amCharPrepareScreen.lightBody.setOutlineThickness(5);
+							if (isHover(sf::Mouse::getPosition(), allMenus.amCharPrepareScreen.lightBody.getPosition(), allMenus.amCharPrepareScreen.lightBody.getSize()))
+							{
+								allMenus.amCharPrepareScreen.lightBody.setFillColor(sf::Color(100, 100, 100));
+							}
+							else
+							{
+								allMenus.amCharPrepareScreen.lightBody.setFillColor(sf::Color(120, 120, 120));
+							}
+
+							allMenus.amCharPrepareScreen.lightLabel.setFont(NataSans);
+							allMenus.amCharPrepareScreen.lightLabel.setPosition(allMenus.amCharPrepareScreen.lightBody.getPosition() + sf::Vector2f(200, -10));
+							allMenus.amCharPrepareScreen.lightLabel.setString("Light");
+							allMenus.amCharPrepareScreen.lightLabel.setFillColor(sf::Color(20, 20, 20));
+							allMenus.amCharPrepareScreen.lightLabel.setCharacterSize(70);
+
+							allMenus.amCharPrepareScreen.darkBody.setSize(sf::Vector2f(600, 75));
+							allMenus.amCharPrepareScreen.darkBody.setPosition(sf::Vector2f(660, 765));
+							allMenus.amCharPrepareScreen.darkBody.setOutlineColor(sf::Color(20, 20, 20));
+							allMenus.amCharPrepareScreen.darkBody.setOutlineThickness(5);
+							if (isHover(sf::Mouse::getPosition(), allMenus.amCharPrepareScreen.darkBody.getPosition(), allMenus.amCharPrepareScreen.darkBody.getSize()))
+							{
+								allMenus.amCharPrepareScreen.darkBody.setFillColor(sf::Color(100, 100, 100));
+							}
+							else
+							{
+								allMenus.amCharPrepareScreen.darkBody.setFillColor(sf::Color(120, 120, 120));
+							}
+
+							allMenus.amCharPrepareScreen.darkLabel.setFont(NataSans);
+							allMenus.amCharPrepareScreen.darkLabel.setPosition(allMenus.amCharPrepareScreen.darkBody.getPosition() + sf::Vector2f(200, -10));
+							allMenus.amCharPrepareScreen.darkLabel.setString("Dark");
+							allMenus.amCharPrepareScreen.darkLabel.setFillColor(sf::Color(20, 20, 20));
+							allMenus.amCharPrepareScreen.darkLabel.setCharacterSize(70);
+
+							allMenus.amCharPrepareScreen.playBody.setSize(sf::Vector2f(430, 110));
+							allMenus.amCharPrepareScreen.playBody.setPosition(sf::Vector2f(1385, 485));
+							if (isHover(sf::Mouse::getPosition(), allMenus.amCharPrepareScreen.playBody.getPosition(), allMenus.amCharPrepareScreen.playBody.getSize()))
+							{
+								allMenus.amCharPrepareScreen.playBody.setFillColor(sf::Color(100, 100, 100));
+							}
+							else
+							{
+								allMenus.amCharPrepareScreen.playBody.setFillColor(sf::Color(120, 120, 120));
+							}
+							allMenus.amCharPrepareScreen.playBody.setOutlineThickness(5);
+							allMenus.amCharPrepareScreen.playBody.setOutlineColor(sf::Color(20, 20, 20));
+
+							allMenus.amCharPrepareScreen.playLabel.setFont(NataSans);
+							allMenus.amCharPrepareScreen.playLabel.setPosition(allMenus.amCharPrepareScreen.playBody.getPosition() + sf::Vector2f(20, -10));
+							allMenus.amCharPrepareScreen.playLabel.setString("   Play");
+							allMenus.amCharPrepareScreen.playLabel.setFillColor(sf::Color(20, 20, 20));
+							allMenus.amCharPrepareScreen.playLabel.setCharacterSize(100);
+
+							while (clock.getElapsedTime() < TimePerFrame)
+							{
+								sf::sleep(sf::Time::Zero);
+							}
+						}
+					}
+
+					void Game::AMCharacterPrepareReadInput()
+					{
+						if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+						{
+							if (isHover(sf::Mouse::getPosition(), allMenus.amCharPrepareScreen.backBody.getPosition(), allMenus.amCharPrepareScreen.backBody.getSize()))
+							{
+								playMenuState = Type::PlayMenuArcadeModeLevelSelector;
+								return;
+							}
+							if (isHover(sf::Mouse::getPosition(), allMenus.amCharPrepareScreen.elementBorder.getPosition(), allMenus.amCharPrepareScreen.elementBorder.getSize()) and !elementClicked)
+							{
+								elementClicked = true;
+								sf::sleep(sf::seconds(0.1));
+								return;
+							}
+							if (isHover(sf::Mouse::getPosition(), allMenus.amCharPrepareScreen.fireBody.getPosition(), allMenus.amCharPrepareScreen.fireBody.getSize()) and elementClicked)
+							{
+								elementClicked = false;
+								elementChoosen = Element::Fire;
+								sf::sleep(sf::seconds(0.1));
+								return;
+							}
+							if (isHover(sf::Mouse::getPosition(), allMenus.amCharPrepareScreen.darkBody.getPosition(), allMenus.amCharPrepareScreen.darkBody.getSize()) and elementClicked)
+							{
+								elementClicked = false;
+								elementChoosen = Element::Dark;
+								sf::sleep(sf::seconds(0.1));
+								return;
+							}
+							if (isHover(sf::Mouse::getPosition(), allMenus.amCharPrepareScreen.iceBody.getPosition(), allMenus.amCharPrepareScreen.iceBody.getSize()) and elementClicked)
+							{
+								elementClicked = false;
+								elementChoosen = Element::Ice;
+								sf::sleep(sf::seconds(0.1));
+								return;
+							}
+							if (isHover(sf::Mouse::getPosition(), allMenus.amCharPrepareScreen.elecBody.getPosition(), allMenus.amCharPrepareScreen.elecBody.getSize()) and elementClicked)
+							{
+								elementClicked = false;
+								elementChoosen = Element::Electricity;
+								sf::sleep(sf::seconds(0.1));
+								return;
+							}
+							if (isHover(sf::Mouse::getPosition(), allMenus.amCharPrepareScreen.stoneBody.getPosition(), allMenus.amCharPrepareScreen.stoneBody.getSize()) and elementClicked)
+							{
+								elementClicked = false;
+								elementChoosen = Element::Stone;
+								sf::sleep(sf::seconds(0.1));
+								return;
+							}
+							if (isHover(sf::Mouse::getPosition(), allMenus.amCharPrepareScreen.waterBody.getPosition(), allMenus.amCharPrepareScreen.waterBody.getSize()) and elementClicked)
+							{
+								elementClicked = false;
+								elementChoosen = Element::Water;
+								sf::sleep(sf::seconds(0.1));
+								return;
+							}
+							if (isHover(sf::Mouse::getPosition(), allMenus.amCharPrepareScreen.windBody.getPosition(), allMenus.amCharPrepareScreen.windBody.getSize()) and elementClicked)
+							{
+								elementClicked = false;
+								elementChoosen = Element::Wind;
+								sf::sleep(sf::seconds(0.1));
+								return;
+							}
+							if (isHover(sf::Mouse::getPosition(), allMenus.amCharPrepareScreen.lightBody.getPosition(), allMenus.amCharPrepareScreen.lightBody.getSize()) and elementClicked)
+							{
+								elementClicked = false;
+								elementChoosen = Element::Light;
+								sf::sleep(sf::seconds(0.1));
+								return;
+							}
+							if (isHover(sf::Mouse::getPosition(), allMenus.amCharPrepareScreen.playBody.getPosition(), allMenus.amCharPrepareScreen.playBody.getSize()))
+							{
+								playMenuState = Type::PlayMenuArcadeModeRun;
+								return;
+							}
+						}
+					}
 
 				void Game::AMRun()
 				{
@@ -1970,7 +2397,7 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 						}
 						if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 						{
-							playMenuState = Type::PlayMenuArcadeModeLevelSelector;
+							playMenuState = Type::PlayMenuArcadeModeCharacterPrepare;
 						}
 					}
 
@@ -2231,10 +2658,9 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 
 						void Game::AMRunUpdateProjectiles()
 						{
-							if (autoCastCooldown > 1000 * 0.5 * (100.f / static_cast<float>(player[0].getChar().atkSpeed)))
+							if (autoCastCooldown > 1000.f * 0.5 * (100.f / static_cast<float>(player[0].getChar().atkSpeed)))
 							{
 								autoCastCooldown = 0;
-
 							}
 							else
 							{

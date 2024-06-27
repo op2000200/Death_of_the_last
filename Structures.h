@@ -116,6 +116,43 @@ public:
 		sf::RectangleShape playBody;
 		sf::Text playLabel;
 	};
+	struct ArcadeModeCharacterPrepareScreen
+	{
+		sf::RectangleShape background;
+		sf::RectangleShape backBody;
+		sf::Text backLabel;
+		sf::RectangleShape classBody;
+		sf::Sprite classImage;
+		sf::Texture classImageTexture;
+		sf::RectangleShape elementBorder;
+		sf::Sprite elementImage;
+		sf::Texture elementTextureFire;
+		sf::Texture elementTextureIce;
+		sf::Texture elementTextureStone;
+		sf::Texture elementTextureElec;
+		sf::Texture elementTextureWater;
+		sf::Texture elementTextureWind;
+		sf::Texture elementTextureLight;
+		sf::Texture elementTextureDark;
+		sf::RectangleShape fireBody;
+		sf::RectangleShape iceBody;
+		sf::RectangleShape stoneBody;
+		sf::RectangleShape elecBody;
+		sf::RectangleShape waterBody;
+		sf::RectangleShape windBody;
+		sf::RectangleShape lightBody;
+		sf::RectangleShape darkBody;
+		sf::Text fireLabel;
+		sf::Text iceLabel;
+		sf::Text stoneLabel;
+		sf::Text elecLabel;
+		sf::Text waterLabel;
+		sf::Text windLabel;
+		sf::Text lightLabel;
+		sf::Text darkLabel;
+		sf::RectangleShape playBody;
+		sf::Text playLabel;
+	};
 	struct ArcadeModeRunScreen
 	{
 
@@ -138,6 +175,7 @@ public:
 	SettingsScreen settingsScreen;
 	ModeSelectorScreen modeSelectorScreen;
 	ArcadeModeLevelSelectorScreen amLevelSelectorScreen;
+	ArcadeModeCharacterPrepareScreen amCharPrepareScreen;
 	ArcadeModeRunScreen amRunScreen;
 	ArcadeModePauseScreen amPauseScreen;
 	ArcadeModeLevelUpScreen amLevelUpScreen;

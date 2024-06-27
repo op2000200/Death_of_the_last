@@ -7,6 +7,10 @@
       "RelativeMoniker": "D:0:0:{53637052-1056-49FA-8AF6-BCF893AE5232}|Death_of_the_last.vcxproj|solutionrelative:Game.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{53637052-1056-49FA-8AF6-BCF893AE5232}|Death_of_the_last.vcxproj|C:\\Death_of_the_last\\Structures.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{53637052-1056-49FA-8AF6-BCF893AE5232}|Death_of_the_last.vcxproj|solutionrelative:Structures.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{53637052-1056-49FA-8AF6-BCF893AE5232}|Death_of_the_last.vcxproj|C:\\Death_of_the_last\\Game.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{53637052-1056-49FA-8AF6-BCF893AE5232}|Death_of_the_last.vcxproj|solutionrelative:Game.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
@@ -21,16 +25,29 @@
   ],
   "DocumentGroupContainers": [
     {
-      "Orientation": 1,
+      "Orientation": 0,
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedHeight": 200,
-          "SelectedChildIndex": 2,
+          "DockedWidth": 129,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
+              "Title": "Structures.h",
+              "DocumentMoniker": "C:\\Death_of_the_last\\Structures.h",
+              "RelativeDocumentMoniker": "Structures.h",
+              "ToolTip": "C:\\Death_of_the_last\\Structures.h",
+              "RelativeToolTip": "Structures.h",
+              "ViewState": "AQIAAG4AAAAAAAAAAAAAAH8AAAAaAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-06-27T12:50:03.639Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "Player.cpp",
               "DocumentMoniker": "C:\\Death_of_the_last\\Player.cpp",
               "RelativeDocumentMoniker": "Player.cpp",
@@ -38,12 +55,11 @@
               "RelativeToolTip": "Player.cpp",
               "ViewState": "AQIAAEAAAAAAAAAAAAAwwFoAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-06-25T04:38:13.362Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-25T04:38:13.362Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "Player.h",
               "DocumentMoniker": "C:\\Death_of_the_last\\Player.h",
               "RelativeDocumentMoniker": "Player.h",
@@ -51,8 +67,7 @@
               "RelativeToolTip": "Player.h",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAVAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-06-25T04:38:18.247Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-25T04:38:18.247Z"
             },
             {
               "$type": "Document",
@@ -62,20 +77,20 @@
               "RelativeDocumentMoniker": "Game.cpp",
               "ToolTip": "C:\\Death_of_the_last\\Game.cpp",
               "RelativeToolTip": "Game.cpp",
-              "ViewState": "AQIAACAIAAAAAAAAAAAuwMAIAAAbAAAA",
+              "ViewState": "AQIAAPYIAAAAAAAAAAAiwBEJAAAPAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-05-25T12:58:56.392Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Game.h",
               "DocumentMoniker": "C:\\Death_of_the_last\\Game.h",
               "RelativeDocumentMoniker": "Game.h",
               "ToolTip": "C:\\Death_of_the_last\\Game.h",
               "RelativeToolTip": "Game.h",
-              "ViewState": "AQIAAGYAAAAAAAAAAAAAAIkAAAAWAAAA",
+              "ViewState": "AQIAAGYAAAAAAAAAAAAAAIsAAAAXAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2024-05-25T12:58:56.661Z",
               "EditorCaption": ""

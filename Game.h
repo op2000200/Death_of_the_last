@@ -136,6 +136,8 @@ private:
 	sf::Texture* enemyTexturePhys;
 	int enemyTimer;
 	int autoCastCooldown;
+	bool elementClicked;	//for amCharPrepScreen
+	Element elementChoosen;
 
 
 };
