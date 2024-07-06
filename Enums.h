@@ -67,6 +67,7 @@ enum class Type
 	PlayMenuModeSelector,
 	PlayMenuArcadeModeLevelSelector,
 	PlayMenuArcadeModeCharacterPrepare,
+	PlayMenuArcadeModeSpell,
 	PlayMenuArcadeModeRun,
 	PlayMenuArcadeModePause,
 	PlayMenuArcadeModeLevelUp,

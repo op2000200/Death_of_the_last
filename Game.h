@@ -59,6 +59,9 @@ public: //methods
 					void AMCharacterPrepare();
 						void AMCharacterPrepareDraw();
 						void AMCharacterPrepareReadInput();
+						void AMSpellScreen();
+							void AMSpellScreenDraw();
+							void AMSpellScreenReadInput();
 						void AMRun();
 							void AMRunDraw();
 							void AMRunReadInput();

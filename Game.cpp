@@ -1283,6 +1283,10 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 			{
 				AMCharacterPrepare();
 			}
+			if (playMenuState == Type::PlayMenuArcadeModeSpell)
+			{
+				AMSpellScreenDraw();
+			}
 			if (playMenuState == Type::PlayMenuArcadeModeRun)
 			{
 				AMRun();
@@ -1312,7 +1316,7 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 			sf::Clock clock;
 			while (state == Type::PlayMenu)
 			{
-				while (playMenuState == Type::PlayMenuModeSelector or playMenuState == Type::PlayMenuArcadeModeLevelSelector or playMenuState == Type::PlayMenuArcadeModeCharacterPrepare)
+				while (playMenuState == Type::PlayMenuModeSelector or playMenuState == Type::PlayMenuArcadeModeLevelSelector or playMenuState == Type::PlayMenuArcadeModeCharacterPrepare or playMenuState == Type::PlayMenuArcadeModeSpell)
 				{
 					clock.restart();
 
@@ -1387,6 +1391,13 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 
 						window.draw(allMenus.amCharPrepareScreen.playBody);
 						window.draw(allMenus.amCharPrepareScreen.playLabel);
+						window.draw(allMenus.amCharPrepareScreen.castSettings);
+						window.draw(allMenus.amCharPrepareScreen.castLabel);
+					}
+
+					if (playMenuState == Type::PlayMenuArcadeModeSpell)
+					{
+						
 					}
 
 					window.display();
@@ -2243,6 +2254,25 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 							allMenus.amCharPrepareScreen.playLabel.setFillColor(sf::Color(20, 20, 20));
 							allMenus.amCharPrepareScreen.playLabel.setCharacterSize(100);
 
+							allMenus.amCharPrepareScreen.castSettings.setSize(sf::Vector2f(430, 110));
+							allMenus.amCharPrepareScreen.castSettings.setPosition(sf::Vector2f(1385, 285));
+							if (isHover(sf::Mouse::getPosition(), allMenus.amCharPrepareScreen.castSettings.getPosition(), allMenus.amCharPrepareScreen.castSettings.getSize()))
+							{
+								allMenus.amCharPrepareScreen.castSettings.setFillColor(sf::Color(100, 100, 100));
+							}
+							else
+							{
+								allMenus.amCharPrepareScreen.castSettings.setFillColor(sf::Color(120, 120, 120));
+							}
+							allMenus.amCharPrepareScreen.castSettings.setOutlineThickness(5);
+							allMenus.amCharPrepareScreen.castSettings.setOutlineColor(sf::Color(20, 20, 20));
+
+							allMenus.amCharPrepareScreen.castLabel.setFont(NataSans);
+							allMenus.amCharPrepareScreen.castLabel.setPosition(allMenus.amCharPrepareScreen.castSettings.getPosition() + sf::Vector2f(110, -10));
+							allMenus.amCharPrepareScreen.castLabel.setString("Prepare\n spell`s");
+							allMenus.amCharPrepareScreen.castLabel.setFillColor(sf::Color(20, 20, 20));
+							allMenus.amCharPrepareScreen.castLabel.setCharacterSize(50);
+
 							while (clock.getElapsedTime() < TimePerFrame)
 							{
 								sf::sleep(sf::Time::Zero);
@@ -2326,8 +2356,53 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 								playMenuState = Type::PlayMenuArcadeModeRun;
 								return;
 							}
+							if (isHover(sf::Mouse::getPosition(), allMenus.amCharPrepareScreen.castSettings.getPosition(), allMenus.amCharPrepareScreen.castSettings.getSize()))
+							{
+								playMenuState = Type::PlayMenuArcadeModeSpell;
+								return;
+							}
 						}
 					}
+
+					void Game::AMSpellScreen()
+					{
+						window.setView(center);
+						diff = 1;
+						sf::sleep(sf::seconds(0.1));
+						sf::Time TimePerFrame = sf::seconds(1.f / 1000.f);
+						sf::Clock clock;
+						allMenus.amCharPrepareScreen.classImageTexture.loadFromFile("assets/textures/playerNew.png");
+						allMenus.amCharPrepareScreen.elementTextureFire.loadFromFile("assets/textures/iconFire.png");
+						allMenus.amCharPrepareScreen.elementTextureIce.loadFromFile("assets/textures/iconIce.png");
+						allMenus.amCharPrepareScreen.elementTextureStone.loadFromFile("assets/textures/iconStone.png");
+						allMenus.amCharPrepareScreen.elementTextureElec.loadFromFile("assets/textures/iconElectricity.png");
+						allMenus.amCharPrepareScreen.elementTextureWater.loadFromFile("assets/textures/iconWater.png");
+						allMenus.amCharPrepareScreen.elementTextureWind.loadFromFile("assets/textures/iconWind.png");
+						allMenus.amCharPrepareScreen.elementTextureLight.loadFromFile("assets/textures/iconLight.png");
+						allMenus.amCharPrepareScreen.elementTextureDark.loadFromFile("assets/textures/iconDark.png");
+						std::thread drawing([&] {AMCharacterPrepareDraw(); });
+						drawing.detach();
+						while (playMenuState == Type::PlayMenuArcadeModeCharacterPrepare)
+						{
+							clock.restart();
+
+							AMCharacterPrepareReadInput();
+
+							while (clock.getElapsedTime() < TimePerFrame)
+							{
+								sf::sleep(sf::Time::Zero);
+							}
+						}
+						drawing.~thread();
+					}
+
+						void Game::AMSpellScreenDraw()
+						{
+						}
+
+						void Game::AMSpellScreenReadInput()
+						{
+						}
 
 				void Game::AMRun()
 				{

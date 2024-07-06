@@ -152,6 +152,8 @@ public:
 		sf::Text darkLabel;
 		sf::RectangleShape playBody;
 		sf::Text playLabel;
+		sf::RectangleShape castSettings;
+		sf::Text castLabel;
 	};
 	struct ArcadeModeRunScreen
 	{
