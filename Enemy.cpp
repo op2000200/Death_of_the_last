@@ -46,7 +46,48 @@ Enemy::Enemy(sf::Vector2f pos, sf::Texture* texture, EnemyType type, Element ele
 	}
 	if (type == EnemyType::Summoner)
 	{
+		sprite.setTexture(*texture);
+		sprite.setScale(sf::Vector2f(5, 5));
+		sprite.setOrigin(sf::Vector2f(texture[0].getSize().x * 5 / 2, texture[0].getSize().y * 5 / 2));
+		sprite.setPosition(pos);
+		sprite.setRotation(rand());
 
+		dest = pos;
+
+		enemyState = EnemyState::Standing;
+
+		enemyType = type;
+
+		characteristics.element = element;
+
+		abilityCooldown = 5000;
+
+		abilityCooldown = 0;
+
+		if (element == Element::Fire)
+		{
+			characteristics.speed = 75;
+		}
+		if (element == Element::Ice)
+		{
+			characteristics.speed = 75;
+		}
+		if (element == Element::Electricity)
+		{
+			characteristics.speed = 112.5;
+		}
+		if (element == Element::Stone)
+		{
+			characteristics.speed = 37.5;
+		}
+		if (element == Element::Water)
+		{
+			characteristics.speed = 112.5;
+		}
+		if (element == Element::Wind)
+		{
+			characteristics.speed = 150;
+		}
 	}
 	if (type == EnemyType::Kamikaze)
 	{
@@ -94,6 +135,22 @@ void Enemy::setPos(sf::Vector2f pos)
 EnemyType Enemy::getType()
 {
 	return enemyType;
+}
+int Enemy::getAbilC()
+{
+	return abilityCooldown;
+}
+int Enemy::getAbilCC()
+{
+	return abilityCooldownCounter;
+}
+void Enemy::ticlAbilCC()
+{
+	abilityCooldownCounter++;
+}
+void Enemy::resAbilCC()
+{
+	abilityCooldownCounter = 0;
 }
 //#include "SFML/Graphics.hpp"
 //

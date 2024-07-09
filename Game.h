@@ -141,6 +141,9 @@ private:
 	int autoCastCooldown;
 	bool elementClicked;	//for amCharPrepScreen
 	Element elementChoosen;
+	int mainSpell;
+	int* spellElem;
+	bool enemyBufferReady;
 
 
 };

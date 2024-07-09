@@ -45,6 +45,13 @@ Game::Game(Config startConfig)
 	enemyTimer = 0;
 	elementClicked = false;
 	elementChoosen = Element::Fire;
+	mainSpell = 1;
+	spellElem = new int[16];
+	for (int i = 0; i < 16; i++)
+	{
+		spellElem[i] = 1;
+	}
+	enemyBufferReady = false;
 }
 
 Game::~Game()
@@ -1285,7 +1292,7 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 			}
 			if (playMenuState == Type::PlayMenuArcadeModeSpell)
 			{
-				AMSpellScreenDraw();
+				AMSpellScreen();
 			}
 			if (playMenuState == Type::PlayMenuArcadeModeRun)
 			{
@@ -1397,7 +1404,311 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 
 					if (playMenuState == Type::PlayMenuArcadeModeSpell)
 					{
-						
+						if (player == nullptr) //from main menu
+						{
+							window.draw(allMenus.amSpellScreen.background);
+							window.draw(allMenus.amSpellScreen.backBody);
+							window.draw(allMenus.amSpellScreen.backLabel);
+
+
+							window.draw(allMenus.amSpellScreen.spell1Back);
+							window.draw(allMenus.amSpellScreen.spell1Sprite);
+							window.draw(allMenus.amSpellScreen.spell1IsMain);
+							window.draw(allMenus.amSpellScreen.spell1elem1);
+							window.draw(allMenus.amSpellScreen.spell1elem2);
+							window.draw(allMenus.amSpellScreen.spell1elem3);
+							window.draw(allMenus.amSpellScreen.spell1elem4);
+							window.draw(allMenus.amSpellScreen.spell1elem5);
+							window.draw(allMenus.amSpellScreen.spell1elem6);
+							window.draw(allMenus.amSpellScreen.spell1elem7);
+							window.draw(allMenus.amSpellScreen.spell1elem8);
+							window.draw(allMenus.amSpellScreen.spell1elem9);
+							window.draw(allMenus.amSpellScreen.spell1elem10);
+
+
+							window.draw(allMenus.amSpellScreen.spell2Back);
+							window.draw(allMenus.amSpellScreen.spell2Sprite);
+							window.draw(allMenus.amSpellScreen.spell2IsMain);
+							window.draw(allMenus.amSpellScreen.spell2elem1);
+							window.draw(allMenus.amSpellScreen.spell2elem2);
+							window.draw(allMenus.amSpellScreen.spell2elem3);
+							window.draw(allMenus.amSpellScreen.spell2elem4);
+							window.draw(allMenus.amSpellScreen.spell2elem5);
+							window.draw(allMenus.amSpellScreen.spell2elem6);
+							window.draw(allMenus.amSpellScreen.spell2elem7);
+							window.draw(allMenus.amSpellScreen.spell2elem8);
+							window.draw(allMenus.amSpellScreen.spell2elem9);
+							window.draw(allMenus.amSpellScreen.spell2elem10);
+
+
+							window.draw(allMenus.amSpellScreen.spell3Back);
+							window.draw(allMenus.amSpellScreen.spell3Sprite);
+							window.draw(allMenus.amSpellScreen.spell3IsMain);
+							window.draw(allMenus.amSpellScreen.spell3elem1);
+							window.draw(allMenus.amSpellScreen.spell3elem2);
+							window.draw(allMenus.amSpellScreen.spell3elem3);
+							window.draw(allMenus.amSpellScreen.spell3elem4);
+							window.draw(allMenus.amSpellScreen.spell3elem5);
+							window.draw(allMenus.amSpellScreen.spell3elem6);
+							window.draw(allMenus.amSpellScreen.spell3elem7);
+							window.draw(allMenus.amSpellScreen.spell3elem8);
+							window.draw(allMenus.amSpellScreen.spell3elem9);
+							window.draw(allMenus.amSpellScreen.spell3elem10);
+
+
+							window.draw(allMenus.amSpellScreen.spell4Back);
+							window.draw(allMenus.amSpellScreen.spell4Sprite);
+							window.draw(allMenus.amSpellScreen.spell4IsMain);
+							window.draw(allMenus.amSpellScreen.spell4elem1);
+							window.draw(allMenus.amSpellScreen.spell4elem2);
+							window.draw(allMenus.amSpellScreen.spell4elem3);
+							window.draw(allMenus.amSpellScreen.spell4elem4);
+							window.draw(allMenus.amSpellScreen.spell4elem5);
+							window.draw(allMenus.amSpellScreen.spell4elem6);
+							window.draw(allMenus.amSpellScreen.spell4elem7);
+							window.draw(allMenus.amSpellScreen.spell4elem8);
+							window.draw(allMenus.amSpellScreen.spell4elem9);
+							window.draw(allMenus.amSpellScreen.spell4elem10);
+
+
+							window.draw(allMenus.amSpellScreen.spell5Back);
+							window.draw(allMenus.amSpellScreen.spell5Sprite);
+							window.draw(allMenus.amSpellScreen.spell5elem1);
+							window.draw(allMenus.amSpellScreen.spell5elem2);
+							window.draw(allMenus.amSpellScreen.spell5elem3);
+							window.draw(allMenus.amSpellScreen.spell5elem4);
+							window.draw(allMenus.amSpellScreen.spell5elem5);
+							window.draw(allMenus.amSpellScreen.spell5elem6);
+							window.draw(allMenus.amSpellScreen.spell5elem7);
+							window.draw(allMenus.amSpellScreen.spell5elem8);
+							window.draw(allMenus.amSpellScreen.spell5elem9);
+							window.draw(allMenus.amSpellScreen.spell5elem10);
+
+
+							window.draw(allMenus.amSpellScreen.spell6Back);
+							window.draw(allMenus.amSpellScreen.spell6Sprite);
+							window.draw(allMenus.amSpellScreen.spell6elem1);
+							window.draw(allMenus.amSpellScreen.spell6elem2);
+							window.draw(allMenus.amSpellScreen.spell6elem3);
+							window.draw(allMenus.amSpellScreen.spell6elem4);
+							window.draw(allMenus.amSpellScreen.spell6elem5);
+							window.draw(allMenus.amSpellScreen.spell6elem6);
+							window.draw(allMenus.amSpellScreen.spell6elem7);
+							window.draw(allMenus.amSpellScreen.spell6elem8);
+							window.draw(allMenus.amSpellScreen.spell6elem9);
+							window.draw(allMenus.amSpellScreen.spell6elem10);
+
+
+							window.draw(allMenus.amSpellScreen.spell7Back);
+							window.draw(allMenus.amSpellScreen.spell7Sprite);
+							window.draw(allMenus.amSpellScreen.spell7elem1);
+							window.draw(allMenus.amSpellScreen.spell7elem2);
+							window.draw(allMenus.amSpellScreen.spell7elem3);
+							window.draw(allMenus.amSpellScreen.spell7elem4);
+							window.draw(allMenus.amSpellScreen.spell7elem5);
+							window.draw(allMenus.amSpellScreen.spell7elem6);
+							window.draw(allMenus.amSpellScreen.spell7elem7);
+							window.draw(allMenus.amSpellScreen.spell7elem8);
+							window.draw(allMenus.amSpellScreen.spell7elem9);
+							window.draw(allMenus.amSpellScreen.spell7elem10);
+
+
+							window.draw(allMenus.amSpellScreen.spell8Back);
+							window.draw(allMenus.amSpellScreen.spell8Sprite);
+							window.draw(allMenus.amSpellScreen.spell8elem1);
+							window.draw(allMenus.amSpellScreen.spell8elem2);
+							window.draw(allMenus.amSpellScreen.spell8elem3);
+							window.draw(allMenus.amSpellScreen.spell8elem4);
+							window.draw(allMenus.amSpellScreen.spell8elem5);
+							window.draw(allMenus.amSpellScreen.spell8elem6);
+							window.draw(allMenus.amSpellScreen.spell8elem7);
+							window.draw(allMenus.amSpellScreen.spell8elem8);
+							window.draw(allMenus.amSpellScreen.spell8elem9);
+							window.draw(allMenus.amSpellScreen.spell8elem10);
+
+
+							window.draw(allMenus.amSpellScreen.spell9Back);
+							window.draw(allMenus.amSpellScreen.spell9Sprite);
+							window.draw(allMenus.amSpellScreen.spell9elem1);
+							window.draw(allMenus.amSpellScreen.spell9elem2);
+							window.draw(allMenus.amSpellScreen.spell9elem3);
+							window.draw(allMenus.amSpellScreen.spell9elem4);
+							window.draw(allMenus.amSpellScreen.spell9elem5);
+							window.draw(allMenus.amSpellScreen.spell9elem6);
+							window.draw(allMenus.amSpellScreen.spell9elem7);
+							window.draw(allMenus.amSpellScreen.spell9elem8);
+							window.draw(allMenus.amSpellScreen.spell9elem9);
+							window.draw(allMenus.amSpellScreen.spell9elem10);
+
+
+							window.draw(allMenus.amSpellScreen.spell10Back);
+							window.draw(allMenus.amSpellScreen.spell10Sprite);
+
+
+							window.draw(allMenus.amSpellScreen.spell11Back);
+							window.draw(allMenus.amSpellScreen.spell11Sprite);
+
+
+							window.draw(allMenus.amSpellScreen.spell12Back);
+							window.draw(allMenus.amSpellScreen.spell12Sprite);
+
+
+							window.draw(allMenus.amSpellScreen.spell13Back);
+							window.draw(allMenus.amSpellScreen.spell13Sprite);
+							window.draw(allMenus.amSpellScreen.spell13elem1);
+							window.draw(allMenus.amSpellScreen.spell13elem2);
+							window.draw(allMenus.amSpellScreen.spell13elem3);
+							window.draw(allMenus.amSpellScreen.spell13elem4);
+							window.draw(allMenus.amSpellScreen.spell13elem5);
+							window.draw(allMenus.amSpellScreen.spell13elem6);
+							window.draw(allMenus.amSpellScreen.spell13elem7);
+							window.draw(allMenus.amSpellScreen.spell13elem8);
+							window.draw(allMenus.amSpellScreen.spell13elem9);
+							window.draw(allMenus.amSpellScreen.spell13elem10);
+
+
+							window.draw(allMenus.amSpellScreen.spell14Back);
+							window.draw(allMenus.amSpellScreen.spell14Sprite);
+
+
+							window.draw(allMenus.amSpellScreen.spell15Back);
+							window.draw(allMenus.amSpellScreen.spell15Sprite);
+
+
+						}
+						else //from pause
+						{
+							window.draw(allMenus.amSpellScreen.background);
+							window.draw(allMenus.amSpellScreen.backBody);
+							window.draw(allMenus.amSpellScreen.backLabel);
+
+
+							window.draw(allMenus.amSpellScreen.spell1Back);
+							window.draw(allMenus.amSpellScreen.spell1elem1);
+							window.draw(allMenus.amSpellScreen.spell1elem2);
+							window.draw(allMenus.amSpellScreen.spell1elem3);
+							window.draw(allMenus.amSpellScreen.spell1elem4);
+							window.draw(allMenus.amSpellScreen.spell1elem5);
+							window.draw(allMenus.amSpellScreen.spell1elem6);
+							window.draw(allMenus.amSpellScreen.spell1elem7);
+							window.draw(allMenus.amSpellScreen.spell1elem8);
+
+
+							window.draw(allMenus.amSpellScreen.spell2Back);
+							window.draw(allMenus.amSpellScreen.spell2elem1);
+							window.draw(allMenus.amSpellScreen.spell2elem2);
+							window.draw(allMenus.amSpellScreen.spell2elem3);
+							window.draw(allMenus.amSpellScreen.spell2elem4);
+							window.draw(allMenus.amSpellScreen.spell2elem5);
+							window.draw(allMenus.amSpellScreen.spell2elem6);
+							window.draw(allMenus.amSpellScreen.spell2elem7);
+							window.draw(allMenus.amSpellScreen.spell2elem8);
+
+
+							window.draw(allMenus.amSpellScreen.spell3Back);
+							window.draw(allMenus.amSpellScreen.spell3elem1);
+							window.draw(allMenus.amSpellScreen.spell3elem2);
+							window.draw(allMenus.amSpellScreen.spell3elem3);
+							window.draw(allMenus.amSpellScreen.spell3elem4);
+							window.draw(allMenus.amSpellScreen.spell3elem5);
+							window.draw(allMenus.amSpellScreen.spell3elem6);
+							window.draw(allMenus.amSpellScreen.spell3elem7);
+							window.draw(allMenus.amSpellScreen.spell3elem8);
+
+
+							window.draw(allMenus.amSpellScreen.spell4Back);
+							window.draw(allMenus.amSpellScreen.spell4elem1);
+							window.draw(allMenus.amSpellScreen.spell4elem2);
+							window.draw(allMenus.amSpellScreen.spell4elem3);
+							window.draw(allMenus.amSpellScreen.spell4elem4);
+							window.draw(allMenus.amSpellScreen.spell4elem5);
+							window.draw(allMenus.amSpellScreen.spell4elem6);
+							window.draw(allMenus.amSpellScreen.spell4elem7);
+							window.draw(allMenus.amSpellScreen.spell4elem8);
+
+
+							window.draw(allMenus.amSpellScreen.spell5Back);
+							window.draw(allMenus.amSpellScreen.spell5elem1);
+							window.draw(allMenus.amSpellScreen.spell5elem2);
+							window.draw(allMenus.amSpellScreen.spell5elem3);
+							window.draw(allMenus.amSpellScreen.spell5elem4);
+							window.draw(allMenus.amSpellScreen.spell5elem5);
+							window.draw(allMenus.amSpellScreen.spell5elem6);
+							window.draw(allMenus.amSpellScreen.spell5elem7);
+							window.draw(allMenus.amSpellScreen.spell5elem8);
+
+
+							window.draw(allMenus.amSpellScreen.spell6Back);
+							window.draw(allMenus.amSpellScreen.spell6elem1);
+							window.draw(allMenus.amSpellScreen.spell6elem2);
+							window.draw(allMenus.amSpellScreen.spell6elem3);
+							window.draw(allMenus.amSpellScreen.spell6elem4);
+							window.draw(allMenus.amSpellScreen.spell6elem5);
+							window.draw(allMenus.amSpellScreen.spell6elem6);
+							window.draw(allMenus.amSpellScreen.spell6elem7);
+							window.draw(allMenus.amSpellScreen.spell6elem8);
+
+
+							window.draw(allMenus.amSpellScreen.spell7Back);
+							window.draw(allMenus.amSpellScreen.spell7elem1);
+							window.draw(allMenus.amSpellScreen.spell7elem2);
+							window.draw(allMenus.amSpellScreen.spell7elem3);
+							window.draw(allMenus.amSpellScreen.spell7elem4);
+							window.draw(allMenus.amSpellScreen.spell7elem5);
+							window.draw(allMenus.amSpellScreen.spell7elem6);
+							window.draw(allMenus.amSpellScreen.spell7elem7);
+							window.draw(allMenus.amSpellScreen.spell7elem8);
+
+
+							window.draw(allMenus.amSpellScreen.spell8Back);
+							window.draw(allMenus.amSpellScreen.spell8elem1);
+							window.draw(allMenus.amSpellScreen.spell8elem2);
+							window.draw(allMenus.amSpellScreen.spell8elem3);
+							window.draw(allMenus.amSpellScreen.spell8elem4);
+							window.draw(allMenus.amSpellScreen.spell8elem5);
+							window.draw(allMenus.amSpellScreen.spell8elem6);
+							window.draw(allMenus.amSpellScreen.spell8elem7);
+							window.draw(allMenus.amSpellScreen.spell8elem8);
+
+
+							window.draw(allMenus.amSpellScreen.spell9Back);
+							window.draw(allMenus.amSpellScreen.spell9elem1);
+							window.draw(allMenus.amSpellScreen.spell9elem2);
+							window.draw(allMenus.amSpellScreen.spell9elem3);
+							window.draw(allMenus.amSpellScreen.spell9elem4);
+							window.draw(allMenus.amSpellScreen.spell9elem5);
+							window.draw(allMenus.amSpellScreen.spell9elem6);
+							window.draw(allMenus.amSpellScreen.spell9elem7);
+							window.draw(allMenus.amSpellScreen.spell9elem8);
+
+
+							window.draw(allMenus.amSpellScreen.spell10Back);
+
+
+							window.draw(allMenus.amSpellScreen.spell11Back);
+							
+							
+							window.draw(allMenus.amSpellScreen.spell12Back);
+
+
+							window.draw(allMenus.amSpellScreen.spell13Back);
+							window.draw(allMenus.amSpellScreen.spell13elem1);
+							window.draw(allMenus.amSpellScreen.spell13elem2);
+							window.draw(allMenus.amSpellScreen.spell13elem3);
+							window.draw(allMenus.amSpellScreen.spell13elem4);
+							window.draw(allMenus.amSpellScreen.spell13elem5);
+							window.draw(allMenus.amSpellScreen.spell13elem6);
+							window.draw(allMenus.amSpellScreen.spell13elem7);
+							window.draw(allMenus.amSpellScreen.spell13elem8);
+
+
+							window.draw(allMenus.amSpellScreen.spell14Back);
+
+
+							window.draw(allMenus.amSpellScreen.spell15Back);
+
+
+						}
 					}
 
 					window.display();
@@ -1493,6 +1804,7 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 						}
 					}
 					//draw enemy
+					
 					{
 						for (int i = 0; i < enemyBuffer.size(); i++)
 						{
@@ -2302,55 +2614,55 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 								sf::sleep(sf::seconds(0.1));
 								return;
 							}
-							if (isHover(sf::Mouse::getPosition(), allMenus.amCharPrepareScreen.darkBody.getPosition(), allMenus.amCharPrepareScreen.darkBody.getSize()) and elementClicked)
-							{
-								elementClicked = false;
-								elementChoosen = Element::Dark;
-								sf::sleep(sf::seconds(0.1));
-								return;
-							}
-							if (isHover(sf::Mouse::getPosition(), allMenus.amCharPrepareScreen.iceBody.getPosition(), allMenus.amCharPrepareScreen.iceBody.getSize()) and elementClicked)
-							{
-								elementClicked = false;
-								elementChoosen = Element::Ice;
-								sf::sleep(sf::seconds(0.1));
-								return;
-							}
-							if (isHover(sf::Mouse::getPosition(), allMenus.amCharPrepareScreen.elecBody.getPosition(), allMenus.amCharPrepareScreen.elecBody.getSize()) and elementClicked)
-							{
-								elementClicked = false;
-								elementChoosen = Element::Electricity;
-								sf::sleep(sf::seconds(0.1));
-								return;
-							}
-							if (isHover(sf::Mouse::getPosition(), allMenus.amCharPrepareScreen.stoneBody.getPosition(), allMenus.amCharPrepareScreen.stoneBody.getSize()) and elementClicked)
-							{
-								elementClicked = false;
-								elementChoosen = Element::Stone;
-								sf::sleep(sf::seconds(0.1));
-								return;
-							}
-							if (isHover(sf::Mouse::getPosition(), allMenus.amCharPrepareScreen.waterBody.getPosition(), allMenus.amCharPrepareScreen.waterBody.getSize()) and elementClicked)
-							{
-								elementClicked = false;
-								elementChoosen = Element::Water;
-								sf::sleep(sf::seconds(0.1));
-								return;
-							}
-							if (isHover(sf::Mouse::getPosition(), allMenus.amCharPrepareScreen.windBody.getPosition(), allMenus.amCharPrepareScreen.windBody.getSize()) and elementClicked)
-							{
-								elementClicked = false;
-								elementChoosen = Element::Wind;
-								sf::sleep(sf::seconds(0.1));
-								return;
-							}
-							if (isHover(sf::Mouse::getPosition(), allMenus.amCharPrepareScreen.lightBody.getPosition(), allMenus.amCharPrepareScreen.lightBody.getSize()) and elementClicked)
-							{
-								elementClicked = false;
-								elementChoosen = Element::Light;
-								sf::sleep(sf::seconds(0.1));
-								return;
-							}
+							//if (isHover(sf::Mouse::getPosition(), allMenus.amCharPrepareScreen.darkBody.getPosition(), allMenus.amCharPrepareScreen.darkBody.getSize()) and elementClicked)
+							//{
+							//	elementClicked = false;
+							//	elementChoosen = Element::Dark;
+							//	sf::sleep(sf::seconds(0.1));
+							//	return;
+							//}
+							//if (isHover(sf::Mouse::getPosition(), allMenus.amCharPrepareScreen.iceBody.getPosition(), allMenus.amCharPrepareScreen.iceBody.getSize()) and elementClicked)
+							//{
+							//	elementClicked = false;
+							//	elementChoosen = Element::Ice;
+							//	sf::sleep(sf::seconds(0.1));
+							//	return;
+							//}
+							//if (isHover(sf::Mouse::getPosition(), allMenus.amCharPrepareScreen.elecBody.getPosition(), allMenus.amCharPrepareScreen.elecBody.getSize()) and elementClicked)
+							//{
+							//	elementClicked = false;
+							//	elementChoosen = Element::Electricity;
+							//	sf::sleep(sf::seconds(0.1));
+							//	return;
+							//}
+							//if (isHover(sf::Mouse::getPosition(), allMenus.amCharPrepareScreen.stoneBody.getPosition(), allMenus.amCharPrepareScreen.stoneBody.getSize()) and elementClicked)
+							//{
+							//	elementClicked = false;
+							//	elementChoosen = Element::Stone;
+							//	sf::sleep(sf::seconds(0.1));
+							//	return;
+							//}
+							//if (isHover(sf::Mouse::getPosition(), allMenus.amCharPrepareScreen.waterBody.getPosition(), allMenus.amCharPrepareScreen.waterBody.getSize()) and elementClicked)
+							//{
+							//	elementClicked = false;
+							//	elementChoosen = Element::Water;
+							//	sf::sleep(sf::seconds(0.1));
+							//	return;
+							//}
+							//if (isHover(sf::Mouse::getPosition(), allMenus.amCharPrepareScreen.windBody.getPosition(), allMenus.amCharPrepareScreen.windBody.getSize()) and elementClicked)
+							//{
+							//	elementClicked = false;
+							//	elementChoosen = Element::Wind;
+							//	sf::sleep(sf::seconds(0.1));
+							//	return;
+							//}
+							//if (isHover(sf::Mouse::getPosition(), allMenus.amCharPrepareScreen.lightBody.getPosition(), allMenus.amCharPrepareScreen.lightBody.getSize()) and elementClicked)
+							//{
+							//	elementClicked = false;
+							//	elementChoosen = Element::Light;
+							//	sf::sleep(sf::seconds(0.1));
+							//	return;
+							//}
 							if (isHover(sf::Mouse::getPosition(), allMenus.amCharPrepareScreen.playBody.getPosition(), allMenus.amCharPrepareScreen.playBody.getSize()))
 							{
 								playMenuState = Type::PlayMenuArcadeModeRun;
@@ -2371,22 +2683,70 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 						sf::sleep(sf::seconds(0.1));
 						sf::Time TimePerFrame = sf::seconds(1.f / 1000.f);
 						sf::Clock clock;
-						allMenus.amCharPrepareScreen.classImageTexture.loadFromFile("assets/textures/playerNew.png");
-						allMenus.amCharPrepareScreen.elementTextureFire.loadFromFile("assets/textures/iconFire.png");
-						allMenus.amCharPrepareScreen.elementTextureIce.loadFromFile("assets/textures/iconIce.png");
-						allMenus.amCharPrepareScreen.elementTextureStone.loadFromFile("assets/textures/iconStone.png");
-						allMenus.amCharPrepareScreen.elementTextureElec.loadFromFile("assets/textures/iconElectricity.png");
-						allMenus.amCharPrepareScreen.elementTextureWater.loadFromFile("assets/textures/iconWater.png");
-						allMenus.amCharPrepareScreen.elementTextureWind.loadFromFile("assets/textures/iconWind.png");
-						allMenus.amCharPrepareScreen.elementTextureLight.loadFromFile("assets/textures/iconLight.png");
-						allMenus.amCharPrepareScreen.elementTextureDark.loadFromFile("assets/textures/iconDark.png");
-						std::thread drawing([&] {AMCharacterPrepareDraw(); });
+						//allMenus.amCharPrepareScreen.classImageTexture.loadFromFile("assets/textures/playerNew.png");
+						//allMenus.amCharPrepareScreen.elementTextureFire.loadFromFile("assets/textures/iconFire.png");
+						//allMenus.amCharPrepareScreen.elementTextureIce.loadFromFile("assets/textures/iconIce.png");
+						//allMenus.amCharPrepareScreen.elementTextureStone.loadFromFile("assets/textures/iconStone.png");
+						//allMenus.amCharPrepareScreen.elementTextureElec.loadFromFile("assets/textures/iconElectricity.png");
+						//allMenus.amCharPrepareScreen.elementTextureWater.loadFromFile("assets/textures/iconWater.png");
+						//allMenus.amCharPrepareScreen.elementTextureWind.loadFromFile("assets/textures/iconWind.png");
+						//allMenus.amCharPrepareScreen.elementTextureLight.loadFromFile("assets/textures/iconLight.png");
+						//allMenus.amCharPrepareScreen.elementTextureDark.loadFromFile("assets/textures/iconDark.png");
+						allMenus.amSpellScreen.spell1Texture.loadFromFile("assets/textures/basicMissleFire.png");
+						allMenus.amSpellScreen.spell2Texture.loadFromFile("assets/textures/aimedMissleFire.png");
+						allMenus.amSpellScreen.spell3Texture.loadFromFile("assets/textures/expMissleFire.png");
+						allMenus.amSpellScreen.spell4Texture.loadFromFile("assets/textures/fastMissleFire.png");
+						allMenus.amSpellScreen.spell5Texture.loadFromFile("assets/textures/meteorFire.png");
+						allMenus.amSpellScreen.spell6Texture.loadFromFile("assets/textures/manaColFire.png");
+						allMenus.amSpellScreen.spell7Texture.loadFromFile("assets/textures/manaSatFire.png");
+						allMenus.amSpellScreen.spell8Texture.loadFromFile("assets/textures/manaSatFire.png");
+						allMenus.amSpellScreen.spell9Texture.loadFromFile("assets/textures/AOEFire.png");
+						allMenus.amSpellScreen.spell10Texture.loadFromFile("assets/textures/iconDark.png");
+						allMenus.amSpellScreen.spell11Texture.loadFromFile("assets/textures/iconDark.png");
+						allMenus.amSpellScreen.spell12Texture.loadFromFile("assets/textures/iconDark.png");
+						allMenus.amSpellScreen.spell13Texture.loadFromFile("assets/textures/manaShieldFire.png");
+						allMenus.amSpellScreen.spell14Texture.loadFromFile("assets/textures/iconDark.png");
+						allMenus.amSpellScreen.spell15Texture.loadFromFile("assets/textures/iconDark.png");
+
+						allMenus.amSpellScreen.spell1Sprite.setTexture(allMenus.amSpellScreen.spell1Texture);
+						allMenus.amSpellScreen.spell2Sprite.setTexture(allMenus.amSpellScreen.spell2Texture);
+						allMenus.amSpellScreen.spell3Sprite.setTexture(allMenus.amSpellScreen.spell3Texture);
+						allMenus.amSpellScreen.spell4Sprite.setTexture(allMenus.amSpellScreen.spell4Texture);
+						allMenus.amSpellScreen.spell5Sprite.setTexture(allMenus.amSpellScreen.spell5Texture);
+						allMenus.amSpellScreen.spell6Sprite.setTexture(allMenus.amSpellScreen.spell6Texture);
+						allMenus.amSpellScreen.spell7Sprite.setTexture(allMenus.amSpellScreen.spell7Texture);
+						allMenus.amSpellScreen.spell8Sprite.setTexture(allMenus.amSpellScreen.spell8Texture);
+						allMenus.amSpellScreen.spell9Sprite.setTexture(allMenus.amSpellScreen.spell9Texture);
+						allMenus.amSpellScreen.spell10Sprite.setTexture(allMenus.amSpellScreen.spell10Texture);
+						allMenus.amSpellScreen.spell11Sprite.setTexture(allMenus.amSpellScreen.spell11Texture);
+						allMenus.amSpellScreen.spell12Sprite.setTexture(allMenus.amSpellScreen.spell12Texture);
+						allMenus.amSpellScreen.spell13Sprite.setTexture(allMenus.amSpellScreen.spell13Texture);
+						allMenus.amSpellScreen.spell14Sprite.setTexture(allMenus.amSpellScreen.spell14Texture);
+						allMenus.amSpellScreen.spell15Sprite.setTexture(allMenus.amSpellScreen.spell15Texture);
+
+						allMenus.amSpellScreen.spell1Sprite.setScale(sf::Vector2f(5, 5));
+						allMenus.amSpellScreen.spell2Sprite.setScale(sf::Vector2f(5, 5));
+						allMenus.amSpellScreen.spell3Sprite.setScale(sf::Vector2f(5, 5));
+						allMenus.amSpellScreen.spell4Sprite.setScale(sf::Vector2f(5, 5));
+						allMenus.amSpellScreen.spell5Sprite.setScale(sf::Vector2f(5, 5));
+						allMenus.amSpellScreen.spell6Sprite.setScale(sf::Vector2f(5, 5));
+						allMenus.amSpellScreen.spell7Sprite.setScale(sf::Vector2f(5, 5));
+						allMenus.amSpellScreen.spell8Sprite.setScale(sf::Vector2f(2.5, 2.5));
+						allMenus.amSpellScreen.spell9Sprite.setScale(sf::Vector2f(5, 5));
+						allMenus.amSpellScreen.spell10Sprite.setScale(sf::Vector2f(5, 5));
+						allMenus.amSpellScreen.spell11Sprite.setScale(sf::Vector2f(5, 5));
+						allMenus.amSpellScreen.spell12Sprite.setScale(sf::Vector2f(5, 5));
+						allMenus.amSpellScreen.spell13Sprite.setScale(sf::Vector2f(5, 5));
+						allMenus.amSpellScreen.spell14Sprite.setScale(sf::Vector2f(5, 5));
+						allMenus.amSpellScreen.spell15Sprite.setScale(sf::Vector2f(5, 5));
+
+						std::thread drawing([&] {AMSpellScreenDraw(); });
 						drawing.detach();
-						while (playMenuState == Type::PlayMenuArcadeModeCharacterPrepare)
+						while (playMenuState == Type::PlayMenuArcadeModeSpell)
 						{
 							clock.restart();
 
-							AMCharacterPrepareReadInput();
+							AMSpellScreenReadInput();
 
 							while (clock.getElapsedTime() < TimePerFrame)
 							{
@@ -2398,10 +2758,2416 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 
 						void Game::AMSpellScreenDraw()
 						{
+							sf::Time TimePerFrame = sf::seconds(1.f / 1000.f);
+							sf::Clock clock;
+							while (playMenuState == Type::PlayMenuArcadeModeSpell)
+							{
+									clock.restart();
+
+									allMenus.amSpellScreen.background.setSize(sf::Vector2f(config.getWidth(), config.getHeigth()));
+									allMenus.amSpellScreen.background.setFillColor(sf::Color(100, 100, 100));
+
+									allMenus.amSpellScreen.backBody.setSize(sf::Vector2f(310, 110));
+									allMenus.amSpellScreen.backBody.setPosition(sf::Vector2f(10, 10));
+									if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.backBody.getPosition(), allMenus.amSpellScreen.backBody.getSize()))
+									{
+										allMenus.amSpellScreen.backBody.setFillColor(sf::Color(100, 100, 100));
+									}
+									else
+									{
+										allMenus.amSpellScreen.backBody.setFillColor(sf::Color(120, 120, 120));
+									}
+									allMenus.amSpellScreen.backBody.setOutlineThickness(5);
+									allMenus.amSpellScreen.backBody.setOutlineColor(sf::Color(20, 20, 20));
+
+									allMenus.amSpellScreen.backLabel.setFont(NataSans);
+									allMenus.amSpellScreen.backLabel.setPosition(allMenus.amCharPrepareScreen.backBody.getPosition() + sf::Vector2f(20, -5));
+									allMenus.amSpellScreen.backLabel.setString("Back");
+									allMenus.amSpellScreen.backLabel.setFillColor(sf::Color(20, 20, 20));
+									allMenus.amSpellScreen.backLabel.setCharacterSize(100);
+
+									allMenus.amSpellScreen.spell1Back.setSize(sf::Vector2f(200, 200));
+									allMenus.amSpellScreen.spell1Back.setPosition(sf::Vector2f(20, 200));
+									allMenus.amSpellScreen.spell1Sprite.setPosition(sf::Vector2f(20, 200));
+									if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell1Back.getPosition(), allMenus.amSpellScreen.spell1Back.getSize()))
+									{
+										allMenus.amSpellScreen.spell1Back.setFillColor(sf::Color(100, 100, 100));
+									}
+									else
+									{
+										allMenus.amSpellScreen.spell1Back.setFillColor(sf::Color(120, 120, 120));
+									}
+									allMenus.amSpellScreen.spell1Back.setOutlineThickness(5);
+									allMenus.amSpellScreen.spell1Back.setOutlineColor(sf::Color(20, 20, 20));
+
+									allMenus.amSpellScreen.spell1IsMain.setSize(sf::Vector2f(20, 20));
+									allMenus.amSpellScreen.spell1IsMain.setPosition(allMenus.amSpellScreen.spell1Back.getPosition());
+									if (mainSpell == 1)
+									{
+										allMenus.amSpellScreen.spell1IsMain.setFillColor(sf::Color(0, 120, 0));
+									}
+									else
+									{
+										if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell1IsMain.getPosition(), allMenus.amSpellScreen.spell1IsMain.getSize()))
+										{
+											allMenus.amSpellScreen.spell1IsMain.setFillColor(sf::Color(80, 80, 80));
+										}
+										else
+										{
+											allMenus.amSpellScreen.spell1IsMain.setFillColor(sf::Color(100, 100, 100));
+										}
+									}
+									allMenus.amSpellScreen.spell1IsMain.setOutlineThickness(5);
+									allMenus.amSpellScreen.spell1IsMain.setOutlineColor(sf::Color(20, 20, 20));
+
+									{
+										allMenus.amSpellScreen.spell1elem1.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell1elem1.setPosition(allMenus.amSpellScreen.spell1Back.getPosition() + sf::Vector2f(125, 5));
+										allMenus.amSpellScreen.spell1elem1.setFillColor(sf::Color(120, 0, 0));
+										allMenus.amSpellScreen.spell1elem1.setOutlineThickness(5);
+										if (spellElem[1] == 1)
+										{
+											allMenus.amSpellScreen.spell1elem1.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell1elem1.getPosition(), allMenus.amSpellScreen.spell1elem1.getSize()))
+											{
+												allMenus.amSpellScreen.spell1elem1.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell1elem1.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell1elem2.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell1elem2.setPosition(allMenus.amSpellScreen.spell1Back.getPosition() + sf::Vector2f(125, 45));
+										allMenus.amSpellScreen.spell1elem2.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell1elem2.setOutlineThickness(5);
+										if (spellElem[1] == 2)
+										{
+											allMenus.amSpellScreen.spell1elem2.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell1elem2.getPosition(), allMenus.amSpellScreen.spell1elem2.getSize()))
+											{
+												allMenus.amSpellScreen.spell1elem2.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell1elem2.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell1elem3.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell1elem3.setPosition(allMenus.amSpellScreen.spell1Back.getPosition() + sf::Vector2f(125, 85));
+										allMenus.amSpellScreen.spell1elem3.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell1elem3.setOutlineThickness(5);
+										if (spellElem[1] == 3)
+										{
+											allMenus.amSpellScreen.spell1elem3.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell1elem3.getPosition(), allMenus.amSpellScreen.spell1elem3.getSize()))
+											{
+												allMenus.amSpellScreen.spell1elem3.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell1elem3.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell1elem4.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell1elem4.setPosition(allMenus.amSpellScreen.spell1Back.getPosition() + sf::Vector2f(125, 125));
+										allMenus.amSpellScreen.spell1elem4.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell1elem4.setOutlineThickness(5);
+										if (spellElem[1] == 4)
+										{
+											allMenus.amSpellScreen.spell1elem4.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell1elem4.getPosition(), allMenus.amSpellScreen.spell1elem4.getSize()))
+											{
+												allMenus.amSpellScreen.spell1elem4.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell1elem4.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell1elem5.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell1elem5.setPosition(allMenus.amSpellScreen.spell1Back.getPosition() + sf::Vector2f(125, 165));
+										allMenus.amSpellScreen.spell1elem5.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell1elem5.setOutlineThickness(5);
+										if (spellElem[1] == 5)
+										{
+											allMenus.amSpellScreen.spell1elem5.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell1elem5.getPosition(), allMenus.amSpellScreen.spell1elem5.getSize()))
+											{
+												allMenus.amSpellScreen.spell1elem5.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell1elem5.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell1elem6.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell1elem6.setPosition(allMenus.amSpellScreen.spell1Back.getPosition() + sf::Vector2f(165, 5));
+										allMenus.amSpellScreen.spell1elem6.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell1elem6.setOutlineThickness(5);
+										if (spellElem[1] == 6)
+										{
+											allMenus.amSpellScreen.spell1elem6.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell1elem6.getPosition(), allMenus.amSpellScreen.spell1elem6.getSize()))
+											{
+												allMenus.amSpellScreen.spell1elem6.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell1elem6.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell1elem7.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell1elem7.setPosition(allMenus.amSpellScreen.spell1Back.getPosition() + sf::Vector2f(165, 45));
+										allMenus.amSpellScreen.spell1elem7.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell1elem7.setOutlineThickness(5);
+										if (spellElem[1] == 7)
+										{
+											allMenus.amSpellScreen.spell1elem7.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell1elem7.getPosition(), allMenus.amSpellScreen.spell1elem7.getSize()))
+											{
+												allMenus.amSpellScreen.spell1elem7.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell1elem7.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell1elem8.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell1elem8.setPosition(allMenus.amSpellScreen.spell1Back.getPosition() + sf::Vector2f(165, 85));
+										allMenus.amSpellScreen.spell1elem8.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell1elem8.setOutlineThickness(5);
+										if (spellElem[1] == 8)
+										{
+											allMenus.amSpellScreen.spell1elem8.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell1elem8.getPosition(), allMenus.amSpellScreen.spell1elem8.getSize()))
+											{
+												allMenus.amSpellScreen.spell1elem8.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell1elem8.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell1elem9.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell1elem9.setPosition(allMenus.amSpellScreen.spell1Back.getPosition() + sf::Vector2f(165, 125));
+										allMenus.amSpellScreen.spell1elem9.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell1elem9.setOutlineThickness(5);
+										if (spellElem[1] == 9)
+										{
+											allMenus.amSpellScreen.spell1elem9.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell1elem9.getPosition(), allMenus.amSpellScreen.spell1elem9.getSize()))
+											{
+												allMenus.amSpellScreen.spell1elem9.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell1elem9.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell1elem10.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell1elem10.setPosition(allMenus.amSpellScreen.spell1Back.getPosition() + sf::Vector2f(165, 165));
+										allMenus.amSpellScreen.spell1elem10.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell1elem10.setOutlineThickness(5);
+										if (spellElem[1] == 10)
+										{
+											allMenus.amSpellScreen.spell1elem10.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell1elem10.getPosition(), allMenus.amSpellScreen.spell1elem10.getSize()))
+											{
+												allMenus.amSpellScreen.spell1elem10.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell1elem10.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+									}
+
+									allMenus.amSpellScreen.spell2Back.setSize(sf::Vector2f(200, 200));
+									allMenus.amSpellScreen.spell2Back.setPosition(sf::Vector2f(260, 200));
+									allMenus.amSpellScreen.spell2Sprite.setPosition(sf::Vector2f(260, 200));
+									if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell2Back.getPosition(), allMenus.amSpellScreen.spell2Back.getSize()))
+									{
+										allMenus.amSpellScreen.spell2Back.setFillColor(sf::Color(100, 100, 100));
+									}
+									else
+									{
+										allMenus.amSpellScreen.spell2Back.setFillColor(sf::Color(120, 120, 120));
+									}
+									allMenus.amSpellScreen.spell2Back.setOutlineThickness(5);
+									allMenus.amSpellScreen.spell2Back.setOutlineColor(sf::Color(20, 20, 20));
+
+									allMenus.amSpellScreen.spell2IsMain.setSize(sf::Vector2f(20, 20));
+									allMenus.amSpellScreen.spell2IsMain.setPosition(allMenus.amSpellScreen.spell2Back.getPosition());
+									if (mainSpell == 2)
+									{
+										allMenus.amSpellScreen.spell2IsMain.setFillColor(sf::Color(0, 120, 0));
+									}
+									else
+									{
+										if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell2IsMain.getPosition(), allMenus.amSpellScreen.spell2IsMain.getSize()))
+										{
+											allMenus.amSpellScreen.spell2IsMain.setFillColor(sf::Color(80, 80, 80));
+										}
+										else
+										{
+											allMenus.amSpellScreen.spell2IsMain.setFillColor(sf::Color(100, 100, 100));
+										}
+									}
+									allMenus.amSpellScreen.spell2IsMain.setOutlineThickness(5);
+									allMenus.amSpellScreen.spell2IsMain.setOutlineColor(sf::Color(20, 20, 20));
+
+									{
+										allMenus.amSpellScreen.spell2elem1.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell2elem1.setPosition(allMenus.amSpellScreen.spell2Back.getPosition() + sf::Vector2f(125, 5));
+										allMenus.amSpellScreen.spell2elem1.setFillColor(sf::Color(120, 0, 0));
+										allMenus.amSpellScreen.spell2elem1.setOutlineThickness(5);
+										if (spellElem[2] == 1)
+										{
+											allMenus.amSpellScreen.spell2elem1.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell2elem1.getPosition(), allMenus.amSpellScreen.spell2elem1.getSize()))
+											{
+												allMenus.amSpellScreen.spell2elem1.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell2elem1.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell2elem2.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell2elem2.setPosition(allMenus.amSpellScreen.spell2Back.getPosition() + sf::Vector2f(125, 45));
+										allMenus.amSpellScreen.spell2elem2.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell2elem2.setOutlineThickness(5);
+										if (spellElem[2] == 2)
+										{
+											allMenus.amSpellScreen.spell2elem2.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell2elem2.getPosition(), allMenus.amSpellScreen.spell2elem2.getSize()))
+											{
+												allMenus.amSpellScreen.spell2elem2.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell2elem2.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell2elem3.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell2elem3.setPosition(allMenus.amSpellScreen.spell2Back.getPosition() + sf::Vector2f(125, 85));
+										allMenus.amSpellScreen.spell2elem3.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell2elem3.setOutlineThickness(5);
+										if (spellElem[2] == 3)
+										{
+											allMenus.amSpellScreen.spell2elem3.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell2elem3.getPosition(), allMenus.amSpellScreen.spell2elem3.getSize()))
+											{
+												allMenus.amSpellScreen.spell2elem3.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell2elem3.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell2elem4.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell2elem4.setPosition(allMenus.amSpellScreen.spell2Back.getPosition() + sf::Vector2f(125, 125));
+										allMenus.amSpellScreen.spell2elem4.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell2elem4.setOutlineThickness(5);
+										if (spellElem[2] == 4)
+										{
+											allMenus.amSpellScreen.spell2elem4.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell2elem4.getPosition(), allMenus.amSpellScreen.spell2elem4.getSize()))
+											{
+												allMenus.amSpellScreen.spell2elem4.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell2elem4.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell2elem5.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell2elem5.setPosition(allMenus.amSpellScreen.spell2Back.getPosition() + sf::Vector2f(125, 165));
+										allMenus.amSpellScreen.spell2elem5.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell2elem5.setOutlineThickness(5);
+										if (spellElem[2] == 5)
+										{
+											allMenus.amSpellScreen.spell2elem5.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell2elem5.getPosition(), allMenus.amSpellScreen.spell2elem5.getSize()))
+											{
+												allMenus.amSpellScreen.spell2elem5.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell2elem5.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell2elem6.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell2elem6.setPosition(allMenus.amSpellScreen.spell2Back.getPosition() + sf::Vector2f(165, 5));
+										allMenus.amSpellScreen.spell2elem6.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell2elem6.setOutlineThickness(5);
+										if (spellElem[2] == 6)
+										{
+											allMenus.amSpellScreen.spell2elem6.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell2elem6.getPosition(), allMenus.amSpellScreen.spell2elem6.getSize()))
+											{
+												allMenus.amSpellScreen.spell2elem6.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell2elem6.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell2elem7.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell2elem7.setPosition(allMenus.amSpellScreen.spell2Back.getPosition() + sf::Vector2f(165, 45));
+										allMenus.amSpellScreen.spell2elem7.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell2elem7.setOutlineThickness(5);
+										if (spellElem[2] == 7)
+										{
+											allMenus.amSpellScreen.spell2elem7.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell2elem7.getPosition(), allMenus.amSpellScreen.spell2elem7.getSize()))
+											{
+												allMenus.amSpellScreen.spell2elem7.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell2elem7.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell2elem8.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell2elem8.setPosition(allMenus.amSpellScreen.spell2Back.getPosition() + sf::Vector2f(165, 85));
+										allMenus.amSpellScreen.spell2elem8.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell2elem8.setOutlineThickness(5);
+										if (spellElem[2] == 8)
+										{
+											allMenus.amSpellScreen.spell2elem8.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell2elem8.getPosition(), allMenus.amSpellScreen.spell2elem8.getSize()))
+											{
+												allMenus.amSpellScreen.spell2elem8.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell2elem8.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell2elem9.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell2elem9.setPosition(allMenus.amSpellScreen.spell2Back.getPosition() + sf::Vector2f(165, 125));
+										allMenus.amSpellScreen.spell2elem9.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell2elem9.setOutlineThickness(5);
+										if (spellElem[2] == 9)
+										{
+											allMenus.amSpellScreen.spell2elem9.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell2elem9.getPosition(), allMenus.amSpellScreen.spell2elem9.getSize()))
+											{
+												allMenus.amSpellScreen.spell2elem9.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell2elem9.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell2elem10.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell2elem10.setPosition(allMenus.amSpellScreen.spell2Back.getPosition() + sf::Vector2f(165, 165));
+										allMenus.amSpellScreen.spell2elem10.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell2elem10.setOutlineThickness(5);
+										if (spellElem[2] == 10)
+										{
+											allMenus.amSpellScreen.spell2elem10.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell2elem10.getPosition(), allMenus.amSpellScreen.spell2elem10.getSize()))
+											{
+												allMenus.amSpellScreen.spell2elem10.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell2elem10.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+									}
+
+									allMenus.amSpellScreen.spell3Back.setSize(sf::Vector2f(200, 200));
+									allMenus.amSpellScreen.spell3Back.setPosition(sf::Vector2f(500, 200));
+									allMenus.amSpellScreen.spell3Sprite.setPosition(sf::Vector2f(500, 200));
+									if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell3Back.getPosition(), allMenus.amSpellScreen.spell3Back.getSize()))
+									{
+										allMenus.amSpellScreen.spell3Back.setFillColor(sf::Color(100, 100, 100));
+									}
+									else
+									{
+										allMenus.amSpellScreen.spell3Back.setFillColor(sf::Color(120, 120, 120));
+									}
+									allMenus.amSpellScreen.spell3Back.setOutlineThickness(5);
+									allMenus.amSpellScreen.spell3Back.setOutlineColor(sf::Color(20, 20, 20));
+
+									allMenus.amSpellScreen.spell3IsMain.setSize(sf::Vector2f(20, 20));
+									allMenus.amSpellScreen.spell3IsMain.setPosition(allMenus.amSpellScreen.spell3Back.getPosition());
+									if (mainSpell == 3)
+									{
+										allMenus.amSpellScreen.spell3IsMain.setFillColor(sf::Color(0, 120, 0));
+									}
+									else
+									{
+										if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell3IsMain.getPosition(), allMenus.amSpellScreen.spell3IsMain.getSize()))
+										{
+											allMenus.amSpellScreen.spell3IsMain.setFillColor(sf::Color(80, 80, 80));
+										}
+										else
+										{
+											allMenus.amSpellScreen.spell3IsMain.setFillColor(sf::Color(100, 100, 100));
+										}
+									}
+									allMenus.amSpellScreen.spell3IsMain.setOutlineThickness(5);
+									allMenus.amSpellScreen.spell3IsMain.setOutlineColor(sf::Color(20, 20, 20));
+
+									{
+										allMenus.amSpellScreen.spell3elem1.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell3elem1.setPosition(allMenus.amSpellScreen.spell3Back.getPosition() + sf::Vector2f(125, 5));
+										allMenus.amSpellScreen.spell3elem1.setFillColor(sf::Color(120, 0, 0));
+										allMenus.amSpellScreen.spell3elem1.setOutlineThickness(5);
+										if (spellElem[3] == 1)
+										{
+											allMenus.amSpellScreen.spell3elem1.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell3elem1.getPosition(), allMenus.amSpellScreen.spell3elem1.getSize()))
+											{
+												allMenus.amSpellScreen.spell3elem1.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell3elem1.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell3elem2.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell3elem2.setPosition(allMenus.amSpellScreen.spell3Back.getPosition() + sf::Vector2f(125, 45));
+										allMenus.amSpellScreen.spell3elem2.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell3elem2.setOutlineThickness(5);
+										if (spellElem[3] == 2)
+										{
+											allMenus.amSpellScreen.spell3elem2.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell3elem2.getPosition(), allMenus.amSpellScreen.spell3elem2.getSize()))
+											{
+												allMenus.amSpellScreen.spell3elem2.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell3elem2.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell3elem3.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell3elem3.setPosition(allMenus.amSpellScreen.spell3Back.getPosition() + sf::Vector2f(125, 85));
+										allMenus.amSpellScreen.spell3elem3.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell3elem3.setOutlineThickness(5);
+										if (spellElem[3] == 3)
+										{
+											allMenus.amSpellScreen.spell3elem3.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell3elem3.getPosition(), allMenus.amSpellScreen.spell3elem3.getSize()))
+											{
+												allMenus.amSpellScreen.spell3elem3.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell3elem3.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell3elem4.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell3elem4.setPosition(allMenus.amSpellScreen.spell3Back.getPosition() + sf::Vector2f(125, 125));
+										allMenus.amSpellScreen.spell3elem4.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell3elem4.setOutlineThickness(5);
+										if (spellElem[3] == 4)
+										{
+											allMenus.amSpellScreen.spell3elem4.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell3elem4.getPosition(), allMenus.amSpellScreen.spell3elem4.getSize()))
+											{
+												allMenus.amSpellScreen.spell3elem4.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell3elem4.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell3elem5.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell3elem5.setPosition(allMenus.amSpellScreen.spell3Back.getPosition() + sf::Vector2f(125, 165));
+										allMenus.amSpellScreen.spell3elem5.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell3elem5.setOutlineThickness(5);
+										if (spellElem[3] == 5)
+										{
+											allMenus.amSpellScreen.spell3elem5.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell3elem5.getPosition(), allMenus.amSpellScreen.spell3elem5.getSize()))
+											{
+												allMenus.amSpellScreen.spell3elem5.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell3elem5.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell3elem6.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell3elem6.setPosition(allMenus.amSpellScreen.spell3Back.getPosition() + sf::Vector2f(165, 5));
+										allMenus.amSpellScreen.spell3elem6.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell3elem6.setOutlineThickness(5);
+										if (spellElem[3] == 6)
+										{
+											allMenus.amSpellScreen.spell3elem6.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell3elem6.getPosition(), allMenus.amSpellScreen.spell3elem6.getSize()))
+											{
+												allMenus.amSpellScreen.spell3elem6.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell3elem6.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell3elem7.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell3elem7.setPosition(allMenus.amSpellScreen.spell3Back.getPosition() + sf::Vector2f(165, 45));
+										allMenus.amSpellScreen.spell3elem7.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell3elem7.setOutlineThickness(5);
+										if (spellElem[3] == 7)
+										{
+											allMenus.amSpellScreen.spell3elem7.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell3elem7.getPosition(), allMenus.amSpellScreen.spell3elem7.getSize()))
+											{
+												allMenus.amSpellScreen.spell3elem7.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell3elem7.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell3elem8.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell3elem8.setPosition(allMenus.amSpellScreen.spell3Back.getPosition() + sf::Vector2f(165, 85));
+										allMenus.amSpellScreen.spell3elem8.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell3elem8.setOutlineThickness(5);
+										if (spellElem[3] == 8)
+										{
+											allMenus.amSpellScreen.spell3elem8.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell3elem8.getPosition(), allMenus.amSpellScreen.spell3elem8.getSize()))
+											{
+												allMenus.amSpellScreen.spell3elem8.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell3elem8.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell3elem9.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell3elem9.setPosition(allMenus.amSpellScreen.spell3Back.getPosition() + sf::Vector2f(165, 125));
+										allMenus.amSpellScreen.spell3elem9.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell3elem9.setOutlineThickness(5);
+										if (spellElem[3] == 9)
+										{
+											allMenus.amSpellScreen.spell3elem9.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell3elem9.getPosition(), allMenus.amSpellScreen.spell3elem9.getSize()))
+											{
+												allMenus.amSpellScreen.spell3elem9.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell3elem9.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell3elem10.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell3elem10.setPosition(allMenus.amSpellScreen.spell3Back.getPosition() + sf::Vector2f(165, 165));
+										allMenus.amSpellScreen.spell3elem10.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell3elem10.setOutlineThickness(5);
+										if (spellElem[3] == 10)
+										{
+											allMenus.amSpellScreen.spell3elem10.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell3elem10.getPosition(), allMenus.amSpellScreen.spell3elem10.getSize()))
+											{
+												allMenus.amSpellScreen.spell3elem10.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell3elem10.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+									}
+
+									allMenus.amSpellScreen.spell4Back.setSize(sf::Vector2f(200, 200));
+									allMenus.amSpellScreen.spell4Back.setPosition(sf::Vector2f(740, 200));
+									allMenus.amSpellScreen.spell4Sprite.setPosition(sf::Vector2f(740, 200));
+									if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell4Back.getPosition(), allMenus.amSpellScreen.spell4Back.getSize()))
+									{
+										allMenus.amSpellScreen.spell4Back.setFillColor(sf::Color(100, 100, 100));
+									}
+									else
+									{
+										allMenus.amSpellScreen.spell4Back.setFillColor(sf::Color(120, 120, 120));
+									}
+									allMenus.amSpellScreen.spell4Back.setOutlineThickness(5);
+									allMenus.amSpellScreen.spell4Back.setOutlineColor(sf::Color(20, 20, 20));
+
+									allMenus.amSpellScreen.spell4IsMain.setSize(sf::Vector2f(20, 20));
+									allMenus.amSpellScreen.spell4IsMain.setPosition(allMenus.amSpellScreen.spell4Back.getPosition());
+									if (mainSpell == 4)
+									{
+										allMenus.amSpellScreen.spell4IsMain.setFillColor(sf::Color(0, 120, 0));
+									}
+									else
+									{
+										if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell4IsMain.getPosition(), allMenus.amSpellScreen.spell4IsMain.getSize()))
+										{
+											allMenus.amSpellScreen.spell4IsMain.setFillColor(sf::Color(80, 80, 80));
+										}
+										else
+										{
+											allMenus.amSpellScreen.spell4IsMain.setFillColor(sf::Color(100, 100, 100));
+										}
+									}
+									allMenus.amSpellScreen.spell4IsMain.setOutlineThickness(5);
+									allMenus.amSpellScreen.spell4IsMain.setOutlineColor(sf::Color(20, 20, 20));
+
+									{
+										allMenus.amSpellScreen.spell4elem1.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell4elem1.setPosition(allMenus.amSpellScreen.spell4Back.getPosition() + sf::Vector2f(125, 5));
+										allMenus.amSpellScreen.spell4elem1.setFillColor(sf::Color(120, 0, 0));
+										allMenus.amSpellScreen.spell4elem1.setOutlineThickness(5);
+										if (spellElem[4] == 1)
+										{
+											allMenus.amSpellScreen.spell4elem1.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell4elem1.getPosition(), allMenus.amSpellScreen.spell4elem1.getSize()))
+											{
+												allMenus.amSpellScreen.spell4elem1.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell4elem1.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell4elem2.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell4elem2.setPosition(allMenus.amSpellScreen.spell4Back.getPosition() + sf::Vector2f(125, 45));
+										allMenus.amSpellScreen.spell4elem2.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell4elem2.setOutlineThickness(5);
+										if (spellElem[4] == 2)
+										{
+											allMenus.amSpellScreen.spell4elem2.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell4elem2.getPosition(), allMenus.amSpellScreen.spell4elem2.getSize()))
+											{
+												allMenus.amSpellScreen.spell4elem2.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell4elem2.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell4elem3.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell4elem3.setPosition(allMenus.amSpellScreen.spell4Back.getPosition() + sf::Vector2f(125, 85));
+										allMenus.amSpellScreen.spell4elem3.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell4elem3.setOutlineThickness(5);
+										if (spellElem[4] == 3)
+										{
+											allMenus.amSpellScreen.spell4elem3.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell4elem3.getPosition(), allMenus.amSpellScreen.spell4elem3.getSize()))
+											{
+												allMenus.amSpellScreen.spell4elem3.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell4elem3.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell4elem4.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell4elem4.setPosition(allMenus.amSpellScreen.spell4Back.getPosition() + sf::Vector2f(125, 125));
+										allMenus.amSpellScreen.spell4elem4.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell4elem4.setOutlineThickness(5);
+										if (spellElem[4] == 4)
+										{
+											allMenus.amSpellScreen.spell4elem4.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell4elem4.getPosition(), allMenus.amSpellScreen.spell4elem4.getSize()))
+											{
+												allMenus.amSpellScreen.spell4elem4.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell4elem4.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell4elem5.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell4elem5.setPosition(allMenus.amSpellScreen.spell4Back.getPosition() + sf::Vector2f(125, 165));
+										allMenus.amSpellScreen.spell4elem5.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell4elem5.setOutlineThickness(5);
+										if (spellElem[4] == 5)
+										{
+											allMenus.amSpellScreen.spell4elem5.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell4elem5.getPosition(), allMenus.amSpellScreen.spell4elem5.getSize()))
+											{
+												allMenus.amSpellScreen.spell4elem5.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell4elem5.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell4elem6.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell4elem6.setPosition(allMenus.amSpellScreen.spell4Back.getPosition() + sf::Vector2f(165, 5));
+										allMenus.amSpellScreen.spell4elem6.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell4elem6.setOutlineThickness(5);
+										if (spellElem[4] == 6)
+										{
+											allMenus.amSpellScreen.spell4elem6.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell4elem6.getPosition(), allMenus.amSpellScreen.spell4elem6.getSize()))
+											{
+												allMenus.amSpellScreen.spell4elem6.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell4elem6.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell4elem7.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell4elem7.setPosition(allMenus.amSpellScreen.spell4Back.getPosition() + sf::Vector2f(165, 45));
+										allMenus.amSpellScreen.spell4elem7.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell4elem7.setOutlineThickness(5);
+										if (spellElem[4] == 7)
+										{
+											allMenus.amSpellScreen.spell4elem7.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell4elem7.getPosition(), allMenus.amSpellScreen.spell4elem7.getSize()))
+											{
+												allMenus.amSpellScreen.spell4elem7.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell4elem7.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell4elem8.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell4elem8.setPosition(allMenus.amSpellScreen.spell4Back.getPosition() + sf::Vector2f(165, 85));
+										allMenus.amSpellScreen.spell4elem8.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell4elem8.setOutlineThickness(5);
+										if (spellElem[4] == 8)
+										{
+											allMenus.amSpellScreen.spell4elem8.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell4elem8.getPosition(), allMenus.amSpellScreen.spell4elem8.getSize()))
+											{
+												allMenus.amSpellScreen.spell4elem8.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell4elem8.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell4elem9.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell4elem9.setPosition(allMenus.amSpellScreen.spell4Back.getPosition() + sf::Vector2f(165, 125));
+										allMenus.amSpellScreen.spell4elem9.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell4elem9.setOutlineThickness(5);
+										if (spellElem[4] == 9)
+										{
+											allMenus.amSpellScreen.spell4elem9.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell4elem9.getPosition(), allMenus.amSpellScreen.spell4elem9.getSize()))
+											{
+												allMenus.amSpellScreen.spell4elem9.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell4elem9.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell4elem10.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell4elem10.setPosition(allMenus.amSpellScreen.spell4Back.getPosition() + sf::Vector2f(165, 165));
+										allMenus.amSpellScreen.spell4elem10.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell4elem10.setOutlineThickness(5);
+										if (spellElem[4] == 10)
+										{
+											allMenus.amSpellScreen.spell4elem10.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell4elem10.getPosition(), allMenus.amSpellScreen.spell4elem10.getSize()))
+											{
+												allMenus.amSpellScreen.spell4elem10.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell4elem10.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+									}
+
+									allMenus.amSpellScreen.spell5Back.setSize(sf::Vector2f(200, 200));
+									allMenus.amSpellScreen.spell5Back.setPosition(sf::Vector2f(980, 200));
+									allMenus.amSpellScreen.spell5Sprite.setPosition(sf::Vector2f(980, 200));
+									if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell5Back.getPosition(), allMenus.amSpellScreen.spell5Back.getSize()))
+									{
+										allMenus.amSpellScreen.spell5Back.setFillColor(sf::Color(100, 100, 100));
+									}
+									else
+									{
+										allMenus.amSpellScreen.spell5Back.setFillColor(sf::Color(120, 120, 120));
+									}
+									allMenus.amSpellScreen.spell5Back.setOutlineThickness(5);
+									allMenus.amSpellScreen.spell5Back.setOutlineColor(sf::Color(20, 20, 20));
+
+									{
+										allMenus.amSpellScreen.spell5elem1.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell5elem1.setPosition(allMenus.amSpellScreen.spell5Back.getPosition() + sf::Vector2f(125, 5));
+										allMenus.amSpellScreen.spell5elem1.setFillColor(sf::Color(120, 0, 0));
+										allMenus.amSpellScreen.spell5elem1.setOutlineThickness(5);
+										if (spellElem[5] == 1)
+										{
+											allMenus.amSpellScreen.spell5elem1.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell5elem1.getPosition(), allMenus.amSpellScreen.spell5elem1.getSize()))
+											{
+												allMenus.amSpellScreen.spell5elem1.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell5elem1.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell5elem2.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell5elem2.setPosition(allMenus.amSpellScreen.spell5Back.getPosition() + sf::Vector2f(125, 45));
+										allMenus.amSpellScreen.spell5elem2.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell5elem2.setOutlineThickness(5);
+										if (spellElem[5] == 2)
+										{
+											allMenus.amSpellScreen.spell5elem2.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell5elem2.getPosition(), allMenus.amSpellScreen.spell5elem2.getSize()))
+											{
+												allMenus.amSpellScreen.spell5elem2.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell5elem2.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell5elem3.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell5elem3.setPosition(allMenus.amSpellScreen.spell5Back.getPosition() + sf::Vector2f(125, 85));
+										allMenus.amSpellScreen.spell5elem3.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell5elem3.setOutlineThickness(5);
+										if (spellElem[5] == 3)
+										{
+											allMenus.amSpellScreen.spell5elem3.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell5elem3.getPosition(), allMenus.amSpellScreen.spell5elem3.getSize()))
+											{
+												allMenus.amSpellScreen.spell5elem3.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell5elem3.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell5elem4.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell5elem4.setPosition(allMenus.amSpellScreen.spell5Back.getPosition() + sf::Vector2f(125, 125));
+										allMenus.amSpellScreen.spell5elem4.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell5elem4.setOutlineThickness(5);
+										if (spellElem[5] == 4)
+										{
+											allMenus.amSpellScreen.spell5elem4.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell5elem4.getPosition(), allMenus.amSpellScreen.spell5elem4.getSize()))
+											{
+												allMenus.amSpellScreen.spell5elem4.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell5elem4.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell5elem5.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell5elem5.setPosition(allMenus.amSpellScreen.spell5Back.getPosition() + sf::Vector2f(125, 165));
+										allMenus.amSpellScreen.spell5elem5.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell5elem5.setOutlineThickness(5);
+										if (spellElem[5] == 5)
+										{
+											allMenus.amSpellScreen.spell5elem5.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell5elem5.getPosition(), allMenus.amSpellScreen.spell5elem5.getSize()))
+											{
+												allMenus.amSpellScreen.spell5elem5.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell5elem5.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell5elem6.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell5elem6.setPosition(allMenus.amSpellScreen.spell5Back.getPosition() + sf::Vector2f(165, 5));
+										allMenus.amSpellScreen.spell5elem6.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell5elem6.setOutlineThickness(5);
+										if (spellElem[5] == 6)
+										{
+											allMenus.amSpellScreen.spell5elem6.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell5elem6.getPosition(), allMenus.amSpellScreen.spell5elem6.getSize()))
+											{
+												allMenus.amSpellScreen.spell5elem6.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell5elem6.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell5elem7.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell5elem7.setPosition(allMenus.amSpellScreen.spell5Back.getPosition() + sf::Vector2f(165, 45));
+										allMenus.amSpellScreen.spell5elem7.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell5elem7.setOutlineThickness(5);
+										if (spellElem[5] == 7)
+										{
+											allMenus.amSpellScreen.spell5elem7.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell5elem7.getPosition(), allMenus.amSpellScreen.spell5elem7.getSize()))
+											{
+												allMenus.amSpellScreen.spell5elem7.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell5elem7.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell5elem8.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell5elem8.setPosition(allMenus.amSpellScreen.spell5Back.getPosition() + sf::Vector2f(165, 85));
+										allMenus.amSpellScreen.spell5elem8.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell5elem8.setOutlineThickness(5);
+										if (spellElem[5] == 8)
+										{
+											allMenus.amSpellScreen.spell5elem8.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell5elem8.getPosition(), allMenus.amSpellScreen.spell5elem8.getSize()))
+											{
+												allMenus.amSpellScreen.spell5elem8.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell5elem8.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell5elem9.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell5elem9.setPosition(allMenus.amSpellScreen.spell5Back.getPosition() + sf::Vector2f(165, 125));
+										allMenus.amSpellScreen.spell5elem9.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell5elem9.setOutlineThickness(5);
+										if (spellElem[5] == 9)
+										{
+											allMenus.amSpellScreen.spell5elem9.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell5elem9.getPosition(), allMenus.amSpellScreen.spell5elem9.getSize()))
+											{
+												allMenus.amSpellScreen.spell5elem9.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell5elem9.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell5elem10.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell5elem10.setPosition(allMenus.amSpellScreen.spell5Back.getPosition() + sf::Vector2f(165, 165));
+										allMenus.amSpellScreen.spell5elem10.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell5elem10.setOutlineThickness(5);
+										if (spellElem[5] == 10)
+										{
+											allMenus.amSpellScreen.spell5elem10.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell5elem10.getPosition(), allMenus.amSpellScreen.spell5elem10.getSize()))
+											{
+												allMenus.amSpellScreen.spell5elem10.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell5elem10.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+									}
+
+
+									allMenus.amSpellScreen.spell6Back.setSize(sf::Vector2f(200, 200));
+									allMenus.amSpellScreen.spell6Back.setPosition(sf::Vector2f(1220, 200));
+									allMenus.amSpellScreen.spell6Sprite.setPosition(sf::Vector2f(1220, 200));
+									if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell6Back.getPosition(), allMenus.amSpellScreen.spell6Back.getSize()))
+									{
+										allMenus.amSpellScreen.spell6Back.setFillColor(sf::Color(100, 100, 100));
+									}
+									else
+									{
+										allMenus.amSpellScreen.spell6Back.setFillColor(sf::Color(120, 120, 120));
+									}
+									allMenus.amSpellScreen.spell6Back.setOutlineThickness(5);
+									allMenus.amSpellScreen.spell6Back.setOutlineColor(sf::Color(20, 20, 20));
+
+									{
+										allMenus.amSpellScreen.spell6elem1.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell6elem1.setPosition(allMenus.amSpellScreen.spell6Back.getPosition() + sf::Vector2f(125, 5));
+										allMenus.amSpellScreen.spell6elem1.setFillColor(sf::Color(120, 0, 0));
+										allMenus.amSpellScreen.spell6elem1.setOutlineThickness(5);
+										if (spellElem[6] == 1)
+										{
+											allMenus.amSpellScreen.spell6elem1.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell6elem1.getPosition(), allMenus.amSpellScreen.spell6elem1.getSize()))
+											{
+												allMenus.amSpellScreen.spell6elem1.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell6elem1.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell6elem2.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell6elem2.setPosition(allMenus.amSpellScreen.spell6Back.getPosition() + sf::Vector2f(125, 45));
+										allMenus.amSpellScreen.spell6elem2.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell6elem2.setOutlineThickness(5);
+										if (spellElem[6] == 2)
+										{
+											allMenus.amSpellScreen.spell6elem2.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell6elem2.getPosition(), allMenus.amSpellScreen.spell6elem2.getSize()))
+											{
+												allMenus.amSpellScreen.spell6elem2.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell6elem2.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell6elem3.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell6elem3.setPosition(allMenus.amSpellScreen.spell6Back.getPosition() + sf::Vector2f(125, 85));
+										allMenus.amSpellScreen.spell6elem3.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell6elem3.setOutlineThickness(5);
+										if (spellElem[6] == 3)
+										{
+											allMenus.amSpellScreen.spell6elem3.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell6elem3.getPosition(), allMenus.amSpellScreen.spell6elem3.getSize()))
+											{
+												allMenus.amSpellScreen.spell6elem3.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell6elem3.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell6elem4.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell6elem4.setPosition(allMenus.amSpellScreen.spell6Back.getPosition() + sf::Vector2f(125, 125));
+										allMenus.amSpellScreen.spell6elem4.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell6elem4.setOutlineThickness(5);
+										if (spellElem[6] == 4)
+										{
+											allMenus.amSpellScreen.spell6elem4.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell6elem4.getPosition(), allMenus.amSpellScreen.spell6elem4.getSize()))
+											{
+												allMenus.amSpellScreen.spell6elem4.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell6elem4.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell6elem5.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell6elem5.setPosition(allMenus.amSpellScreen.spell6Back.getPosition() + sf::Vector2f(125, 165));
+										allMenus.amSpellScreen.spell6elem5.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell6elem5.setOutlineThickness(5);
+										if (spellElem[6] == 5)
+										{
+											allMenus.amSpellScreen.spell6elem5.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell6elem5.getPosition(), allMenus.amSpellScreen.spell6elem5.getSize()))
+											{
+												allMenus.amSpellScreen.spell6elem5.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell6elem5.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell6elem6.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell6elem6.setPosition(allMenus.amSpellScreen.spell6Back.getPosition() + sf::Vector2f(165, 5));
+										allMenus.amSpellScreen.spell6elem6.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell6elem6.setOutlineThickness(5);
+										if (spellElem[6] == 6)
+										{
+											allMenus.amSpellScreen.spell6elem6.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell6elem6.getPosition(), allMenus.amSpellScreen.spell6elem6.getSize()))
+											{
+												allMenus.amSpellScreen.spell6elem6.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell6elem6.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell6elem7.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell6elem7.setPosition(allMenus.amSpellScreen.spell6Back.getPosition() + sf::Vector2f(165, 45));
+										allMenus.amSpellScreen.spell6elem7.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell6elem7.setOutlineThickness(5);
+										if (spellElem[6] == 7)
+										{
+											allMenus.amSpellScreen.spell6elem7.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell6elem7.getPosition(), allMenus.amSpellScreen.spell6elem7.getSize()))
+											{
+												allMenus.amSpellScreen.spell6elem7.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell6elem7.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell6elem8.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell6elem8.setPosition(allMenus.amSpellScreen.spell6Back.getPosition() + sf::Vector2f(165, 85));
+										allMenus.amSpellScreen.spell6elem8.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell6elem8.setOutlineThickness(5);
+										if (spellElem[6] == 8)
+										{
+											allMenus.amSpellScreen.spell6elem8.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell6elem8.getPosition(), allMenus.amSpellScreen.spell6elem8.getSize()))
+											{
+												allMenus.amSpellScreen.spell6elem8.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell6elem8.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell6elem9.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell6elem9.setPosition(allMenus.amSpellScreen.spell6Back.getPosition() + sf::Vector2f(165, 125));
+										allMenus.amSpellScreen.spell6elem9.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell6elem9.setOutlineThickness(5);
+										if (spellElem[6] == 9)
+										{
+											allMenus.amSpellScreen.spell6elem9.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell6elem9.getPosition(), allMenus.amSpellScreen.spell6elem9.getSize()))
+											{
+												allMenus.amSpellScreen.spell6elem9.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell6elem9.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell6elem10.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell6elem10.setPosition(allMenus.amSpellScreen.spell6Back.getPosition() + sf::Vector2f(165, 165));
+										allMenus.amSpellScreen.spell6elem10.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell6elem10.setOutlineThickness(5);
+										if (spellElem[6] == 10)
+										{
+											allMenus.amSpellScreen.spell6elem10.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell6elem10.getPosition(), allMenus.amSpellScreen.spell6elem10.getSize()))
+											{
+												allMenus.amSpellScreen.spell6elem10.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell6elem10.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+									}
+
+									allMenus.amSpellScreen.spell7Back.setSize(sf::Vector2f(200, 200));
+									allMenus.amSpellScreen.spell7Back.setPosition(sf::Vector2f(1460, 200));
+									allMenus.amSpellScreen.spell7Sprite.setPosition(sf::Vector2f(1460, 200));
+									if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell7Back.getPosition(), allMenus.amSpellScreen.spell7Back.getSize()))
+									{
+										allMenus.amSpellScreen.spell7Back.setFillColor(sf::Color(100, 100, 100));
+									}
+									else
+									{
+										allMenus.amSpellScreen.spell7Back.setFillColor(sf::Color(120, 120, 120));
+									}
+									allMenus.amSpellScreen.spell7Back.setOutlineThickness(5);
+									allMenus.amSpellScreen.spell7Back.setOutlineColor(sf::Color(20, 20, 20));
+
+									{
+										allMenus.amSpellScreen.spell7elem1.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell7elem1.setPosition(allMenus.amSpellScreen.spell7Back.getPosition() + sf::Vector2f(125, 5));
+										allMenus.amSpellScreen.spell7elem1.setFillColor(sf::Color(120, 0, 0));
+										allMenus.amSpellScreen.spell7elem1.setOutlineThickness(5);
+										if (spellElem[7] == 1)
+										{
+											allMenus.amSpellScreen.spell7elem1.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell7elem1.getPosition(), allMenus.amSpellScreen.spell7elem1.getSize()))
+											{
+												allMenus.amSpellScreen.spell7elem1.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell7elem1.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell7elem2.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell7elem2.setPosition(allMenus.amSpellScreen.spell7Back.getPosition() + sf::Vector2f(125, 45));
+										allMenus.amSpellScreen.spell7elem2.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell7elem2.setOutlineThickness(5);
+										if (spellElem[7] == 2)
+										{
+											allMenus.amSpellScreen.spell7elem2.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell7elem2.getPosition(), allMenus.amSpellScreen.spell7elem2.getSize()))
+											{
+												allMenus.amSpellScreen.spell7elem2.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell7elem2.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell7elem3.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell7elem3.setPosition(allMenus.amSpellScreen.spell7Back.getPosition() + sf::Vector2f(125, 85));
+										allMenus.amSpellScreen.spell7elem3.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell7elem3.setOutlineThickness(5);
+										if (spellElem[7] == 3)
+										{
+											allMenus.amSpellScreen.spell7elem3.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell7elem3.getPosition(), allMenus.amSpellScreen.spell7elem3.getSize()))
+											{
+												allMenus.amSpellScreen.spell7elem3.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell7elem3.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell7elem4.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell7elem4.setPosition(allMenus.amSpellScreen.spell7Back.getPosition() + sf::Vector2f(125, 125));
+										allMenus.amSpellScreen.spell7elem4.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell7elem4.setOutlineThickness(5);
+										if (spellElem[7] == 4)
+										{
+											allMenus.amSpellScreen.spell7elem4.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell7elem4.getPosition(), allMenus.amSpellScreen.spell7elem4.getSize()))
+											{
+												allMenus.amSpellScreen.spell7elem4.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell7elem4.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell7elem5.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell7elem5.setPosition(allMenus.amSpellScreen.spell7Back.getPosition() + sf::Vector2f(125, 165));
+										allMenus.amSpellScreen.spell7elem5.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell7elem5.setOutlineThickness(5);
+										if (spellElem[7] == 5)
+										{
+											allMenus.amSpellScreen.spell7elem5.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell7elem5.getPosition(), allMenus.amSpellScreen.spell7elem5.getSize()))
+											{
+												allMenus.amSpellScreen.spell7elem5.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell7elem5.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell7elem6.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell7elem6.setPosition(allMenus.amSpellScreen.spell7Back.getPosition() + sf::Vector2f(165, 5));
+										allMenus.amSpellScreen.spell7elem6.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell7elem6.setOutlineThickness(5);
+										if (spellElem[7] == 6)
+										{
+											allMenus.amSpellScreen.spell7elem6.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell7elem6.getPosition(), allMenus.amSpellScreen.spell7elem6.getSize()))
+											{
+												allMenus.amSpellScreen.spell7elem6.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell7elem6.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell7elem7.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell7elem7.setPosition(allMenus.amSpellScreen.spell7Back.getPosition() + sf::Vector2f(165, 45));
+										allMenus.amSpellScreen.spell7elem7.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell7elem7.setOutlineThickness(5);
+										if (spellElem[7] == 7)
+										{
+											allMenus.amSpellScreen.spell7elem7.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell7elem7.getPosition(), allMenus.amSpellScreen.spell7elem7.getSize()))
+											{
+												allMenus.amSpellScreen.spell7elem7.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell7elem7.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell7elem8.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell7elem8.setPosition(allMenus.amSpellScreen.spell7Back.getPosition() + sf::Vector2f(165, 85));
+										allMenus.amSpellScreen.spell7elem8.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell7elem8.setOutlineThickness(5);
+										if (spellElem[7] == 8)
+										{
+											allMenus.amSpellScreen.spell7elem8.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell7elem8.getPosition(), allMenus.amSpellScreen.spell7elem8.getSize()))
+											{
+												allMenus.amSpellScreen.spell7elem8.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell7elem8.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell7elem9.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell7elem9.setPosition(allMenus.amSpellScreen.spell7Back.getPosition() + sf::Vector2f(165, 125));
+										allMenus.amSpellScreen.spell7elem9.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell7elem9.setOutlineThickness(5);
+										if (spellElem[7] == 9)
+										{
+											allMenus.amSpellScreen.spell7elem9.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell7elem9.getPosition(), allMenus.amSpellScreen.spell7elem9.getSize()))
+											{
+												allMenus.amSpellScreen.spell7elem9.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell7elem9.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell7elem10.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell7elem10.setPosition(allMenus.amSpellScreen.spell7Back.getPosition() + sf::Vector2f(165, 165));
+										allMenus.amSpellScreen.spell7elem10.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell7elem10.setOutlineThickness(5);
+										if (spellElem[7] == 10)
+										{
+											allMenus.amSpellScreen.spell7elem10.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell7elem10.getPosition(), allMenus.amSpellScreen.spell7elem10.getSize()))
+											{
+												allMenus.amSpellScreen.spell7elem10.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell7elem10.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+									}
+
+									allMenus.amSpellScreen.spell8Back.setSize(sf::Vector2f(200, 200));
+									allMenus.amSpellScreen.spell8Back.setPosition(sf::Vector2f(1700, 200));
+									allMenus.amSpellScreen.spell8Sprite.setPosition(sf::Vector2f(1700, 250));
+									if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell8Back.getPosition(), allMenus.amSpellScreen.spell8Back.getSize()))
+									{
+										allMenus.amSpellScreen.spell8Back.setFillColor(sf::Color(100, 100, 100));
+									}
+									else
+									{
+										allMenus.amSpellScreen.spell8Back.setFillColor(sf::Color(120, 120, 120));
+									}
+									allMenus.amSpellScreen.spell8Back.setOutlineThickness(5);
+									allMenus.amSpellScreen.spell8Back.setOutlineColor(sf::Color(20, 20, 20));
+
+									{
+										allMenus.amSpellScreen.spell8elem1.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell8elem1.setPosition(allMenus.amSpellScreen.spell8Back.getPosition() + sf::Vector2f(125, 5));
+										allMenus.amSpellScreen.spell8elem1.setFillColor(sf::Color(120, 0, 0));
+										allMenus.amSpellScreen.spell8elem1.setOutlineThickness(5);
+										if (spellElem[8] == 1)
+										{
+											allMenus.amSpellScreen.spell8elem1.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell8elem1.getPosition(), allMenus.amSpellScreen.spell8elem1.getSize()))
+											{
+												allMenus.amSpellScreen.spell8elem1.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell8elem1.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell8elem2.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell8elem2.setPosition(allMenus.amSpellScreen.spell8Back.getPosition() + sf::Vector2f(125, 45));
+										allMenus.amSpellScreen.spell8elem2.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell8elem2.setOutlineThickness(5);
+										if (spellElem[8] == 2)
+										{
+											allMenus.amSpellScreen.spell8elem2.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell8elem2.getPosition(), allMenus.amSpellScreen.spell8elem2.getSize()))
+											{
+												allMenus.amSpellScreen.spell8elem2.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell8elem2.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell8elem3.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell8elem3.setPosition(allMenus.amSpellScreen.spell8Back.getPosition() + sf::Vector2f(125, 85));
+										allMenus.amSpellScreen.spell8elem3.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell8elem3.setOutlineThickness(5);
+										if (spellElem[8] == 3)
+										{
+											allMenus.amSpellScreen.spell8elem3.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell8elem3.getPosition(), allMenus.amSpellScreen.spell8elem3.getSize()))
+											{
+												allMenus.amSpellScreen.spell8elem3.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell8elem3.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell8elem4.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell8elem4.setPosition(allMenus.amSpellScreen.spell8Back.getPosition() + sf::Vector2f(125, 125));
+										allMenus.amSpellScreen.spell8elem4.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell8elem4.setOutlineThickness(5);
+										if (spellElem[8] == 4)
+										{
+											allMenus.amSpellScreen.spell8elem4.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell8elem4.getPosition(), allMenus.amSpellScreen.spell8elem4.getSize()))
+											{
+												allMenus.amSpellScreen.spell8elem4.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell8elem4.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell8elem5.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell8elem5.setPosition(allMenus.amSpellScreen.spell8Back.getPosition() + sf::Vector2f(125, 165));
+										allMenus.amSpellScreen.spell8elem5.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell8elem5.setOutlineThickness(5);
+										if (spellElem[8] == 5)
+										{
+											allMenus.amSpellScreen.spell8elem5.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell8elem5.getPosition(), allMenus.amSpellScreen.spell8elem5.getSize()))
+											{
+												allMenus.amSpellScreen.spell8elem5.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell8elem5.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell8elem6.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell8elem6.setPosition(allMenus.amSpellScreen.spell8Back.getPosition() + sf::Vector2f(165, 5));
+										allMenus.amSpellScreen.spell8elem6.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell8elem6.setOutlineThickness(5);
+										if (spellElem[8] == 6)
+										{
+											allMenus.amSpellScreen.spell8elem6.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell8elem6.getPosition(), allMenus.amSpellScreen.spell8elem6.getSize()))
+											{
+												allMenus.amSpellScreen.spell8elem6.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell8elem6.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell8elem7.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell8elem7.setPosition(allMenus.amSpellScreen.spell8Back.getPosition() + sf::Vector2f(165, 45));
+										allMenus.amSpellScreen.spell8elem7.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell8elem7.setOutlineThickness(5);
+										if (spellElem[8] == 7)
+										{
+											allMenus.amSpellScreen.spell8elem7.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell8elem7.getPosition(), allMenus.amSpellScreen.spell8elem7.getSize()))
+											{
+												allMenus.amSpellScreen.spell8elem7.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell8elem7.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell8elem8.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell8elem8.setPosition(allMenus.amSpellScreen.spell8Back.getPosition() + sf::Vector2f(165, 85));
+										allMenus.amSpellScreen.spell8elem8.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell8elem8.setOutlineThickness(5);
+										if (spellElem[8] == 8)
+										{
+											allMenus.amSpellScreen.spell8elem8.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell8elem8.getPosition(), allMenus.amSpellScreen.spell8elem8.getSize()))
+											{
+												allMenus.amSpellScreen.spell8elem8.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell8elem8.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell8elem9.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell8elem9.setPosition(allMenus.amSpellScreen.spell8Back.getPosition() + sf::Vector2f(165, 125));
+										allMenus.amSpellScreen.spell8elem9.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell8elem9.setOutlineThickness(5);
+										if (spellElem[8] == 9)
+										{
+											allMenus.amSpellScreen.spell8elem9.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell8elem9.getPosition(), allMenus.amSpellScreen.spell8elem9.getSize()))
+											{
+												allMenus.amSpellScreen.spell8elem9.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell8elem9.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell8elem10.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell8elem10.setPosition(allMenus.amSpellScreen.spell8Back.getPosition() + sf::Vector2f(165, 165));
+										allMenus.amSpellScreen.spell8elem10.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell8elem10.setOutlineThickness(5);
+										if (spellElem[8] == 10)
+										{
+											allMenus.amSpellScreen.spell8elem10.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell8elem10.getPosition(), allMenus.amSpellScreen.spell8elem10.getSize()))
+											{
+												allMenus.amSpellScreen.spell8elem10.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell8elem10.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+									}
+
+									allMenus.amSpellScreen.spell9Back.setSize(sf::Vector2f(200, 200));
+									allMenus.amSpellScreen.spell9Back.setPosition(sf::Vector2f(20, 440));
+									allMenus.amSpellScreen.spell9Sprite.setPosition(sf::Vector2f(20, 440));
+									if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell9Back.getPosition(), allMenus.amSpellScreen.spell9Back.getSize()))
+									{
+										allMenus.amSpellScreen.spell9Back.setFillColor(sf::Color(100, 100, 100));
+									}
+									else
+									{
+										allMenus.amSpellScreen.spell9Back.setFillColor(sf::Color(120, 120, 120));
+									}
+									allMenus.amSpellScreen.spell9Back.setOutlineThickness(5);
+									allMenus.amSpellScreen.spell9Back.setOutlineColor(sf::Color(20, 20, 20));
+
+									{
+										allMenus.amSpellScreen.spell9elem1.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell9elem1.setPosition(allMenus.amSpellScreen.spell9Back.getPosition() + sf::Vector2f(125, 5));
+										allMenus.amSpellScreen.spell9elem1.setFillColor(sf::Color(120, 0, 0));
+										allMenus.amSpellScreen.spell9elem1.setOutlineThickness(5);
+										if (spellElem[9] == 1)
+										{
+											allMenus.amSpellScreen.spell9elem1.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell9elem1.getPosition(), allMenus.amSpellScreen.spell9elem1.getSize()))
+											{
+												allMenus.amSpellScreen.spell9elem1.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell9elem1.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell9elem2.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell9elem2.setPosition(allMenus.amSpellScreen.spell9Back.getPosition() + sf::Vector2f(125, 45));
+										allMenus.amSpellScreen.spell9elem2.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell9elem2.setOutlineThickness(5);
+										if (spellElem[9] == 2)
+										{
+											allMenus.amSpellScreen.spell9elem2.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell9elem2.getPosition(), allMenus.amSpellScreen.spell9elem2.getSize()))
+											{
+												allMenus.amSpellScreen.spell9elem2.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell9elem2.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell9elem3.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell9elem3.setPosition(allMenus.amSpellScreen.spell9Back.getPosition() + sf::Vector2f(125, 85));
+										allMenus.amSpellScreen.spell9elem3.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell9elem3.setOutlineThickness(5);
+										if (spellElem[9] == 3)
+										{
+											allMenus.amSpellScreen.spell9elem3.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell9elem3.getPosition(), allMenus.amSpellScreen.spell9elem3.getSize()))
+											{
+												allMenus.amSpellScreen.spell9elem3.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell9elem3.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell9elem4.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell9elem4.setPosition(allMenus.amSpellScreen.spell9Back.getPosition() + sf::Vector2f(125, 125));
+										allMenus.amSpellScreen.spell9elem4.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell9elem4.setOutlineThickness(5);
+										if (spellElem[9] == 4)
+										{
+											allMenus.amSpellScreen.spell9elem4.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell9elem4.getPosition(), allMenus.amSpellScreen.spell9elem4.getSize()))
+											{
+												allMenus.amSpellScreen.spell9elem4.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell9elem4.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell9elem5.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell9elem5.setPosition(allMenus.amSpellScreen.spell9Back.getPosition() + sf::Vector2f(125, 165));
+										allMenus.amSpellScreen.spell9elem5.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell9elem5.setOutlineThickness(5);
+										if (spellElem[9] == 5)
+										{
+											allMenus.amSpellScreen.spell9elem5.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell9elem5.getPosition(), allMenus.amSpellScreen.spell9elem5.getSize()))
+											{
+												allMenus.amSpellScreen.spell9elem5.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell9elem5.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell9elem6.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell9elem6.setPosition(allMenus.amSpellScreen.spell9Back.getPosition() + sf::Vector2f(165, 5));
+										allMenus.amSpellScreen.spell9elem6.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell9elem6.setOutlineThickness(5);
+										if (spellElem[9] == 6)
+										{
+											allMenus.amSpellScreen.spell9elem6.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell9elem6.getPosition(), allMenus.amSpellScreen.spell9elem6.getSize()))
+											{
+												allMenus.amSpellScreen.spell9elem6.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell9elem6.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell9elem7.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell9elem7.setPosition(allMenus.amSpellScreen.spell9Back.getPosition() + sf::Vector2f(165, 45));
+										allMenus.amSpellScreen.spell9elem7.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell9elem7.setOutlineThickness(5);
+										if (spellElem[9] == 7)
+										{
+											allMenus.amSpellScreen.spell9elem7.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell9elem7.getPosition(), allMenus.amSpellScreen.spell9elem7.getSize()))
+											{
+												allMenus.amSpellScreen.spell9elem7.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell9elem7.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell9elem8.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell9elem8.setPosition(allMenus.amSpellScreen.spell9Back.getPosition() + sf::Vector2f(165, 85));
+										allMenus.amSpellScreen.spell9elem8.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell9elem8.setOutlineThickness(5);
+										if (spellElem[9] == 8)
+										{
+											allMenus.amSpellScreen.spell9elem8.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell9elem8.getPosition(), allMenus.amSpellScreen.spell9elem8.getSize()))
+											{
+												allMenus.amSpellScreen.spell9elem8.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell9elem8.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell9elem9.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell9elem9.setPosition(allMenus.amSpellScreen.spell9Back.getPosition() + sf::Vector2f(165, 125));
+										allMenus.amSpellScreen.spell9elem9.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell9elem9.setOutlineThickness(5);
+										if (spellElem[9] == 9)
+										{
+											allMenus.amSpellScreen.spell9elem9.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell9elem9.getPosition(), allMenus.amSpellScreen.spell9elem9.getSize()))
+											{
+												allMenus.amSpellScreen.spell9elem9.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell9elem9.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell9elem10.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell9elem10.setPosition(allMenus.amSpellScreen.spell9Back.getPosition() + sf::Vector2f(165, 165));
+										allMenus.amSpellScreen.spell9elem10.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell9elem10.setOutlineThickness(5);
+										if (spellElem[9] == 10)
+										{
+											allMenus.amSpellScreen.spell9elem10.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell9elem10.getPosition(), allMenus.amSpellScreen.spell9elem10.getSize()))
+											{
+												allMenus.amSpellScreen.spell9elem10.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell9elem10.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+									}
+
+									allMenus.amSpellScreen.spell10Back.setSize(sf::Vector2f(200, 200));
+									allMenus.amSpellScreen.spell10Back.setPosition(sf::Vector2f(260, 440));
+									allMenus.amSpellScreen.spell10Sprite.setPosition(sf::Vector2f(260, 440));
+									if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell10Back.getPosition(), allMenus.amSpellScreen.spell10Back.getSize()))
+									{
+										allMenus.amSpellScreen.spell10Back.setFillColor(sf::Color(100, 100, 100));
+									}
+									else
+									{
+										allMenus.amSpellScreen.spell10Back.setFillColor(sf::Color(120, 120, 120));
+									}
+									allMenus.amSpellScreen.spell10Back.setOutlineThickness(5);
+									allMenus.amSpellScreen.spell10Back.setOutlineColor(sf::Color(20, 20, 20));
+
+									allMenus.amSpellScreen.spell11Back.setSize(sf::Vector2f(200, 200));
+									allMenus.amSpellScreen.spell11Back.setPosition(sf::Vector2f(500, 440));
+									allMenus.amSpellScreen.spell11Sprite.setPosition(sf::Vector2f(500, 440));
+									if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell11Back.getPosition(), allMenus.amSpellScreen.spell11Back.getSize()))
+									{
+										allMenus.amSpellScreen.spell11Back.setFillColor(sf::Color(100, 100, 100));
+									}
+									else
+									{
+										allMenus.amSpellScreen.spell11Back.setFillColor(sf::Color(120, 120, 120));
+									}
+									allMenus.amSpellScreen.spell11Back.setOutlineThickness(5);
+									allMenus.amSpellScreen.spell11Back.setOutlineColor(sf::Color(20, 20, 20));
+
+									allMenus.amSpellScreen.spell12Back.setSize(sf::Vector2f(200, 200));
+									allMenus.amSpellScreen.spell12Back.setPosition(sf::Vector2f(740, 440));
+									allMenus.amSpellScreen.spell12Sprite.setPosition(sf::Vector2f(740, 440));
+									if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell12Back.getPosition(), allMenus.amSpellScreen.spell12Back.getSize()))
+									{
+										allMenus.amSpellScreen.spell12Back.setFillColor(sf::Color(100, 100, 100));
+									}
+									else
+									{
+										allMenus.amSpellScreen.spell12Back.setFillColor(sf::Color(120, 120, 120));
+									}
+									allMenus.amSpellScreen.spell12Back.setOutlineThickness(5);
+									allMenus.amSpellScreen.spell12Back.setOutlineColor(sf::Color(20, 20, 20));
+
+									allMenus.amSpellScreen.spell13Back.setSize(sf::Vector2f(200, 200));
+									allMenus.amSpellScreen.spell13Back.setPosition(sf::Vector2f(980, 440));
+									allMenus.amSpellScreen.spell13Sprite.setPosition(sf::Vector2f(980, 440));
+									if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell13Back.getPosition(), allMenus.amSpellScreen.spell13Back.getSize()))
+									{
+										allMenus.amSpellScreen.spell13Back.setFillColor(sf::Color(100, 100, 100));
+									}
+									else
+									{
+										allMenus.amSpellScreen.spell13Back.setFillColor(sf::Color(120, 120, 120));
+									}
+									allMenus.amSpellScreen.spell13Back.setOutlineThickness(5);
+									allMenus.amSpellScreen.spell13Back.setOutlineColor(sf::Color(20, 20, 20));
+
+									{
+										allMenus.amSpellScreen.spell13elem1.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell13elem1.setPosition(allMenus.amSpellScreen.spell13Back.getPosition() + sf::Vector2f(125, 5));
+										allMenus.amSpellScreen.spell13elem1.setFillColor(sf::Color(120, 0, 0));
+										allMenus.amSpellScreen.spell13elem1.setOutlineThickness(5);
+										if (spellElem[13] == 1)
+										{
+											allMenus.amSpellScreen.spell13elem1.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell13elem1.getPosition(), allMenus.amSpellScreen.spell13elem1.getSize()))
+											{
+												allMenus.amSpellScreen.spell13elem1.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell13elem1.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell13elem2.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell13elem2.setPosition(allMenus.amSpellScreen.spell13Back.getPosition() + sf::Vector2f(125, 45));
+										allMenus.amSpellScreen.spell13elem2.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell13elem2.setOutlineThickness(5);
+										if (spellElem[13] == 2)
+										{
+											allMenus.amSpellScreen.spell13elem2.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell13elem2.getPosition(), allMenus.amSpellScreen.spell13elem2.getSize()))
+											{
+												allMenus.amSpellScreen.spell13elem2.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell13elem2.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell13elem3.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell13elem3.setPosition(allMenus.amSpellScreen.spell13Back.getPosition() + sf::Vector2f(125, 85));
+										allMenus.amSpellScreen.spell13elem3.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell13elem3.setOutlineThickness(5);
+										if (spellElem[13] == 3)
+										{
+											allMenus.amSpellScreen.spell13elem3.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell13elem3.getPosition(), allMenus.amSpellScreen.spell13elem3.getSize()))
+											{
+												allMenus.amSpellScreen.spell13elem3.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell13elem3.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell13elem4.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell13elem4.setPosition(allMenus.amSpellScreen.spell13Back.getPosition() + sf::Vector2f(125, 125));
+										allMenus.amSpellScreen.spell13elem4.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell13elem4.setOutlineThickness(5);
+										if (spellElem[13] == 4)
+										{
+											allMenus.amSpellScreen.spell13elem4.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell13elem4.getPosition(), allMenus.amSpellScreen.spell13elem4.getSize()))
+											{
+												allMenus.amSpellScreen.spell13elem4.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell13elem4.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell13elem5.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell13elem5.setPosition(allMenus.amSpellScreen.spell13Back.getPosition() + sf::Vector2f(125, 165));
+										allMenus.amSpellScreen.spell13elem5.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell13elem5.setOutlineThickness(5);
+										if (spellElem[13] == 5)
+										{
+											allMenus.amSpellScreen.spell13elem5.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell13elem5.getPosition(), allMenus.amSpellScreen.spell13elem5.getSize()))
+											{
+												allMenus.amSpellScreen.spell13elem5.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell13elem5.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell13elem6.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell13elem6.setPosition(allMenus.amSpellScreen.spell13Back.getPosition() + sf::Vector2f(165, 5));
+										allMenus.amSpellScreen.spell13elem6.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell13elem6.setOutlineThickness(5);
+										if (spellElem[13] == 6)
+										{
+											allMenus.amSpellScreen.spell13elem6.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell13elem6.getPosition(), allMenus.amSpellScreen.spell13elem6.getSize()))
+											{
+												allMenus.amSpellScreen.spell13elem6.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell13elem6.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell13elem7.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell13elem7.setPosition(allMenus.amSpellScreen.spell13Back.getPosition() + sf::Vector2f(165, 45));
+										allMenus.amSpellScreen.spell13elem7.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell13elem7.setOutlineThickness(5);
+										if (spellElem[13] == 7)
+										{
+											allMenus.amSpellScreen.spell13elem7.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell13elem7.getPosition(), allMenus.amSpellScreen.spell13elem7.getSize()))
+											{
+												allMenus.amSpellScreen.spell13elem7.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell13elem7.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell13elem8.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell13elem8.setPosition(allMenus.amSpellScreen.spell13Back.getPosition() + sf::Vector2f(165, 85));
+										allMenus.amSpellScreen.spell13elem8.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell13elem8.setOutlineThickness(5);
+										if (spellElem[13] == 8)
+										{
+											allMenus.amSpellScreen.spell13elem8.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell13elem8.getPosition(), allMenus.amSpellScreen.spell13elem8.getSize()))
+											{
+												allMenus.amSpellScreen.spell13elem8.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell13elem8.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell13elem9.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell13elem9.setPosition(allMenus.amSpellScreen.spell13Back.getPosition() + sf::Vector2f(165, 125));
+										allMenus.amSpellScreen.spell13elem9.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell13elem9.setOutlineThickness(5);
+										if (spellElem[13] == 9)
+										{
+											allMenus.amSpellScreen.spell13elem9.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell13elem9.getPosition(), allMenus.amSpellScreen.spell13elem9.getSize()))
+											{
+												allMenus.amSpellScreen.spell13elem9.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell13elem9.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+
+										allMenus.amSpellScreen.spell13elem10.setSize(sf::Vector2f(30, 30));
+										allMenus.amSpellScreen.spell13elem10.setPosition(allMenus.amSpellScreen.spell13Back.getPosition() + sf::Vector2f(165, 165));
+										allMenus.amSpellScreen.spell13elem10.setFillColor(sf::Color(20, 20, 20));
+										allMenus.amSpellScreen.spell13elem10.setOutlineThickness(5);
+										if (spellElem[13] == 10)
+										{
+											allMenus.amSpellScreen.spell13elem10.setOutlineColor(sf::Color(60, 60, 60));
+										}
+										else
+										{
+											if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell13elem10.getPosition(), allMenus.amSpellScreen.spell13elem10.getSize()))
+											{
+												allMenus.amSpellScreen.spell13elem10.setOutlineColor(sf::Color(40, 40, 40));
+											}
+											else
+											{
+												allMenus.amSpellScreen.spell13elem10.setOutlineColor(sf::Color(20, 20, 20));
+											}
+										}
+									}
+
+									allMenus.amSpellScreen.spell14Back.setSize(sf::Vector2f(200, 200));
+									allMenus.amSpellScreen.spell14Back.setPosition(sf::Vector2f(1220, 440));
+									allMenus.amSpellScreen.spell14Sprite.setPosition(sf::Vector2f(1220, 440));
+									if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell14Back.getPosition(), allMenus.amSpellScreen.spell14Back.getSize()))
+									{
+										allMenus.amSpellScreen.spell14Back.setFillColor(sf::Color(100, 100, 100));
+									}
+									else
+									{
+										allMenus.amSpellScreen.spell14Back.setFillColor(sf::Color(120, 120, 120));
+									}
+									allMenus.amSpellScreen.spell14Back.setOutlineThickness(5);
+									allMenus.amSpellScreen.spell14Back.setOutlineColor(sf::Color(20, 20, 20));
+
+									allMenus.amSpellScreen.spell15Back.setSize(sf::Vector2f(200, 200));
+									allMenus.amSpellScreen.spell15Back.setPosition(sf::Vector2f(1460, 440));
+									allMenus.amSpellScreen.spell15Sprite.setPosition(sf::Vector2f(1460, 440));
+									if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell15Back.getPosition(), allMenus.amSpellScreen.spell15Back.getSize()))
+									{
+										allMenus.amSpellScreen.spell15Back.setFillColor(sf::Color(100, 100, 100));
+									}
+									else
+									{
+										allMenus.amSpellScreen.spell15Back.setFillColor(sf::Color(120, 120, 120));
+									}
+									allMenus.amSpellScreen.spell15Back.setOutlineThickness(5);
+									allMenus.amSpellScreen.spell15Back.setOutlineColor(sf::Color(20, 20, 20));
+
+
+
+									while (clock.getElapsedTime() < TimePerFrame)
+									{
+										sf::sleep(sf::Time::Zero);
+									}
+								}
 						}
 
 						void Game::AMSpellScreenReadInput()
 						{
+							if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+							{
+								if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.backBody.getPosition(), allMenus.amSpellScreen.backBody.getSize()))
+								{
+									playMenuState = Type::PlayMenuArcadeModeCharacterPrepare;
+									return;
+								}
+								if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell1IsMain.getPosition(), allMenus.amSpellScreen.spell1IsMain.getSize()))
+								{
+									mainSpell = 1;
+									return;
+								}
+								if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell2IsMain.getPosition(), allMenus.amSpellScreen.spell2IsMain.getSize()))
+								{
+									mainSpell = 2;
+									return;
+								}
+								if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell3IsMain.getPosition(), allMenus.amSpellScreen.spell3IsMain.getSize()))
+								{
+									mainSpell = 3;
+									return;
+								}
+								if (isHover(sf::Mouse::getPosition(), allMenus.amSpellScreen.spell4IsMain.getPosition(), allMenus.amSpellScreen.spell4IsMain.getSize()))
+								{
+									mainSpell = 4;
+									return;
+								}
+							}
+							//sf::Event event;
+							//while (window.pollEvent(event))
+							//{
+							//	if (event.type == sf::Event::EventType::MouseWheelScrolled)
+							//	{
+							//		sf::View view = window.getView();
+							//		if (view.getCenter().y <= center.getCenter().y)
+							//		{
+							//			if (event.mouseWheelScroll.delta < 0)
+							//			{
+							//				view.move(sf::Vector2f(0, -10 * event.mouseWheelScroll.delta));
+							//				window.setView(view);
+							//			}
+							//		}
+							//		else
+							//		{
+							//			if (view.getCenter().y <= center.getCenter().y + 1080)
+							//			{
+							//				view.move(sf::Vector2f(0, -10 * event.mouseWheelScroll.delta));
+							//				window.setView(view);
+							//			}
+							//			else
+							//			{
+							//				if (event.mouseWheelScroll.delta > 0)
+							//				{
+							//					view.move(sf::Vector2f(0, -10 * event.mouseWheelScroll.delta));
+							//					window.setView(view);
+							//				}
+							//			}
+							//		}
+							//	}
+							//}
 						}
 
 				void Game::AMRun()
@@ -2590,93 +5356,96 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 
 						void Game::AMRunUpdateEnemy()
 						{
-							//spawn
+							if (true)
 							{
-								if (enemyTimer > 1000 and enemyBuffer.size() < 2000)
+								//spawn
 								{
-									enemyTimer = 0;
-									int x, y, x1, y1;
-									x = (window.getView().getCenter().x + 100000) / 2000;
-									y = (window.getView().getCenter().y + 100000) / 2000;
-									for (int i = -2; i < 3; i++)
+									if (enemyTimer > 1000 and enemyBuffer.size() < 2000)
 									{
-										for (int j = -20; j < 30; j += 10)
+										enemyTimer = 0;
+										int x, y, x1, y1;
+										x = (window.getView().getCenter().x + 100000) / 2000;
+										y = (window.getView().getCenter().y + 100000) / 2000;
+										for (int i = -2; i < 3; i++)
 										{
-											if (i >= -1 and i <= 1 and j > -15 and j < 15)
+											for (int j = -20; j < 30; j += 10)
 											{
-
-											}
-											else
-											{
-												srand(map[(y + j) * 10 + (x + i)].getRand() * time(0));
-												int randNum = rand() % 10;
-												for (int k = 0; k < randNum; k++)
+												if (i >= -1 and i <= 1 and j > -15 and j < 15)
 												{
-													if (enemyBuffer.size() < 2000)
+
+												}
+												else
+												{
+													srand(map[(y + j) * 10 + (x + i)].getRand() * time(0));
+													int randNum = rand() % 10;
+													for (int k = 0; k < randNum; k++)
 													{
-														x1 = rand() % 2001;
-														y1 = rand() % 2001;
-														if (!map[(y + j) * 10 + (x + i)].isBlocked(sf::Vector2f(x1, y1)))
+														if (enemyBuffer.size() < 2000)
 														{
-															int o = 1;
-															while (true)
+															x1 = rand() % 2001;
+															y1 = rand() % 2001;
+															if (!map[(y + j) * 10 + (x + i)].isBlocked(sf::Vector2f(x1, y1)))
 															{
-																if (rand() % o == 0)
+																int o = 1;
+																while (true)
 																{
-																	EnemyType enemyType;
-																	Element element;
-																	int enType = rand() % 4;
-																	enType = 0;
-																	if (enType == 0)
+																	if (rand() % o == 0)
 																	{
-																		enemyType = EnemyType::Standart;
-																	}
-																	if (enType == 1)
-																	{
-																		enemyType = EnemyType::Summoner;
-																	}
-																	if (enType == 2)
-																	{
-																		enemyType = EnemyType::Kamikaze;
-																	}
-																	if (enType == 3)
-																	{
-																		enemyType = EnemyType::Shooter;
-																	}
-																	int elType = rand() % 10;
-																	if (elType < 5)
-																	{
-																		element = Element::Fire;
+																		EnemyType enemyType;
+																		Element element;
+																		int enType = rand() % 4;
+																		//enType = 0;
+																		if (enType == 0)
+																		{
+																			enemyType = EnemyType::Standart;
+																		}
+																		if (enType == 1)
+																		{
+																			enemyType = EnemyType::Summoner;
+																		}
+																		if (enType == 2)
+																		{
+																			enemyType = EnemyType::Kamikaze;
+																		}
+																		if (enType == 3)
+																		{
+																			enemyType = EnemyType::Shooter;
+																		}
+																		int elType = rand() % 10;
+																		if (elType < 5)
+																		{
+																			element = Element::Fire;
+																		}
+																		else
+																		{
+																			if (elType == 5)
+																			{
+																				element = Element::Ice;
+																			}
+																			if (elType == 6)
+																			{
+																				element = Element::Electricity;
+																			}
+																			if (elType == 7)
+																			{
+																				element = Element::Stone;
+																			}
+																			if (elType == 8)
+																			{
+																				element = Element::Water;
+																			}
+																			if (elType == 9)
+																			{
+																				element = Element::Wind;
+																			}
+																		}
+																		AMRunSpawnEnemy(sf::Vector2f((x + i) * 2000 - 100000 + x1 + (rand() % 100 - 50), (y + j / 10) * 2000 - 100000 + y1 + (rand() % 100 - 50)), enemyType, element);
+																		o++;
 																	}
 																	else
 																	{
-																		if (elType == 5)
-																		{
-																			element = Element::Ice;
-																		}
-																		if (elType == 6)
-																		{
-																			element = Element::Electricity;
-																		}
-																		if (elType == 7)
-																		{
-																			element = Element::Stone;
-																		}
-																		if (elType == 8)
-																		{
-																			element = Element::Water;
-																		}
-																		if (elType == 9)
-																		{
-																			element = Element::Wind;
-																		}
+																		break;
 																	}
-																	AMRunSpawnEnemy(sf::Vector2f((x + i) * 2000 - 100000 + x1 + (rand() % 100 - 50), (y + j / 10) * 2000 - 100000 + y1 + (rand() % 100 - 50)), enemyType, element);
-																	o++;
-																}
-																else
-																{
-																	break;
 																}
 															}
 														}
@@ -2685,40 +5454,76 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 											}
 										}
 									}
-								}
-								else
-								{
-									enemyTimer++;
-								}
-							}
-							//movement
-							{
-								for (int i = 0; i < enemyBuffer.size(); i++)
-								{
-									if (enemyBuffer[i].getType() == EnemyType::Standart)
+									else
 									{
-										if (enemyBuffer[i].getState() == EnemyState::Standing)
+										enemyTimer++;
+									}
+								}
+								//movement
+								{
+									for (int i = 0; i < enemyBuffer.size(); i++)
+									{
+										if (enemyBuffer[i].getType() == EnemyType::Standart)
 										{
-											int x, y, x1, y1;
-											x = (enemyBuffer[i].getSprite().getPosition().x);
-											y = (enemyBuffer[i].getSprite().getPosition().y);
-											srand(x * y * time(0));
-											x1 = rand() % 10000 - 5000;
-											y1 = rand() % 10000 - 5000;
-
-											enemyBuffer[i].setDest(sf::Vector2f(x + x1, y + y1));
-
-											enemyBuffer[i].setState(EnemyState::Moving);
-										}
-										if (enemyBuffer[i].getState() == EnemyState::Moving)
-										{
-											enemyBuffer[i].setPos(sf::Vector2f(
-												enemyBuffer[i].getSprite().getPosition().x + enemyBuffer[i].getChar().speed * (1.f / 1000.f) * ((enemyBuffer[i].getDest().x - enemyBuffer[i].getSprite().getPosition().x) / (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getSprite().getPosition().x) + abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getSprite().getPosition().y))),
-												enemyBuffer[i].getSprite().getPosition().y + enemyBuffer[i].getChar().speed * (1.f / 1000.f) * ((enemyBuffer[i].getDest().y - enemyBuffer[i].getSprite().getPosition().y) / (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getSprite().getPosition().x) + abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getSprite().getPosition().y)))
-											));
-											if (abs(enemyBuffer[i].getSprite().getPosition().x - enemyBuffer[i].getDest().x) < 10 and abs(enemyBuffer[i].getSprite().getPosition().y - enemyBuffer[i].getDest().y) < 10)
+											if (enemyBuffer[i].getState() == EnemyState::Standing)
 											{
-												enemyBuffer[i].setState(EnemyState::Standing);
+												int x, y, x1, y1;
+												x = (enemyBuffer[i].getSprite().getPosition().x);
+												y = (enemyBuffer[i].getSprite().getPosition().y);
+												srand(x * y * time(0));
+												x1 = rand() % 10000 - 5000;
+												y1 = rand() % 10000 - 5000;
+
+												enemyBuffer[i].setDest(sf::Vector2f(x + x1, y + y1));
+
+												enemyBuffer[i].setState(EnemyState::Moving);
+											}
+											if (enemyBuffer[i].getState() == EnemyState::Moving)
+											{
+												enemyBuffer[i].setPos(sf::Vector2f(
+													enemyBuffer[i].getSprite().getPosition().x + enemyBuffer[i].getChar().speed * (1.f / 1000.f) * ((enemyBuffer[i].getDest().x - enemyBuffer[i].getSprite().getPosition().x) / (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getSprite().getPosition().x) + abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getSprite().getPosition().y))),
+													enemyBuffer[i].getSprite().getPosition().y + enemyBuffer[i].getChar().speed * (1.f / 1000.f) * ((enemyBuffer[i].getDest().y - enemyBuffer[i].getSprite().getPosition().y) / (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getSprite().getPosition().x) + abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getSprite().getPosition().y)))
+												));
+												if (abs(enemyBuffer[i].getSprite().getPosition().x - enemyBuffer[i].getDest().x) < 10 and abs(enemyBuffer[i].getSprite().getPosition().y - enemyBuffer[i].getDest().y) < 10)
+												{
+													enemyBuffer[i].setState(EnemyState::Standing);
+												}
+											}
+										}
+										if (enemyBuffer[i].getType() == EnemyType::Summoner)
+										{
+											if (enemyBuffer[i].getState() == EnemyState::Standing)
+											{
+												int x, y, x1, y1;
+												x = (enemyBuffer[i].getSprite().getPosition().x);
+												y = (enemyBuffer[i].getSprite().getPosition().y);
+												srand(x * y * time(0));
+												x1 = rand() % 10000 - 5000;
+												y1 = rand() % 10000 - 5000;
+
+												enemyBuffer[i].setDest(sf::Vector2f(x + x1, y + y1));
+
+												enemyBuffer[i].setState(EnemyState::Moving);
+											}
+											if (enemyBuffer[i].getState() == EnemyState::Moving)
+											{
+												enemyBuffer[i].setPos(sf::Vector2f(
+													enemyBuffer[i].getSprite().getPosition().x + enemyBuffer[i].getChar().speed * (1.f / 1000.f) * ((enemyBuffer[i].getDest().x - enemyBuffer[i].getSprite().getPosition().x) / (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getSprite().getPosition().x) + abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getSprite().getPosition().y))),
+													enemyBuffer[i].getSprite().getPosition().y + enemyBuffer[i].getChar().speed * (1.f / 1000.f) * ((enemyBuffer[i].getDest().y - enemyBuffer[i].getSprite().getPosition().y) / (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getSprite().getPosition().x) + abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getSprite().getPosition().y)))
+												));
+												if (abs(enemyBuffer[i].getSprite().getPosition().x - enemyBuffer[i].getDest().x) < 10 and abs(enemyBuffer[i].getSprite().getPosition().y - enemyBuffer[i].getDest().y) < 10)
+												{
+													enemyBuffer[i].setState(EnemyState::Standing);
+												}
+											}
+											if (enemyBuffer[i].getAbilCC() > enemyBuffer[i].getAbilC())
+											{
+												AMRunSpawnEnemy(sf::Vector2f(0, 0), EnemyType::Standart, enemyBuffer[i].getChar().element);
+												enemyBuffer[i].resAbilCC();
+											}
+											else
+											{
+												enemyBuffer[i].ticlAbilCC();
 											}
 										}
 									}

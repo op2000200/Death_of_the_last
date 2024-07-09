@@ -16,12 +16,18 @@ public:
 	void setDest(sf::Vector2f pos);
 	void setPos(sf::Vector2f pos);
 	EnemyType getType();
+	int getAbilC();
+	int getAbilCC();
+	void ticlAbilCC();
+	void resAbilCC();
 private:
 	sf::Sprite sprite;
 	Characteristics characteristics;
 	EnemyState enemyState;
 	EnemyType enemyType;
 	sf::Vector2f dest;
+	int abilityCooldown;
+	int abilityCooldownCounter;
 };
 
 
