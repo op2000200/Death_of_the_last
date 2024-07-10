@@ -10,13 +10,16 @@ enum class PlayerState
 enum class EnemyState
 {
 	Standing,
-	Moving
+	Moving,
+	Following,
+	Chasing
 };
 
 enum class EnemyType
 {
 	Standart,
 	Summoner,
+	Summoned,
 	Kamikaze,
 	Shooter
 };

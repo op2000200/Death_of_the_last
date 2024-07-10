@@ -10,6 +10,7 @@
 #include "Tile.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "EnemyMissle.h"
 
 #include "Structures.h"
 
@@ -71,7 +72,8 @@ public: //methods
 
 							void AMRunSpawn();
 								void AMRunSpawnPlayer();
-								void AMRunSpawnEnemy(sf::Vector2f pos, EnemyType type, Element element);
+								void AMRunSpawnEnemy(sf::Vector2f pos, EnemyType type, Element element, Enemy* en);
+								void AMRunSpawnEnemyMissle(sf::Vector2f pos, Element element, sf::Vector2f tar);
 								void AMRunSpawnProjectiles();
 								void AMRunSpawnEnvironment();
 
@@ -127,16 +129,45 @@ private:
 	std::vector<Commands> playerCommandStream;
 	Player* player;
 	std::vector<Enemy> enemyBuffer;
+	std::vector<Enemy> enemyBuffer2;
+	std::vector<EnemyMissle> enemyMissle;
+	std::vector<EnemyMissle> enemyMissle2;
+	sf::Texture* enemyTextureMissleFire;
+	sf::Texture* enemyTextureMissleIce;
+	sf::Texture* enemyTextureMissleElectricity;
+	sf::Texture* enemyTextureMissleWater;
+	sf::Texture* enemyTextureMissleStone;
+	sf::Texture* enemyTextureMissleWind;
 	sf::Texture* enemyTextureFire;
+	sf::Texture* enemyTextureFireShtr;
+	sf::Texture* enemyTextureFireKami;
 	sf::Texture* enemyTextureIce;
+	sf::Texture* enemyTextureIceShtr;
+	sf::Texture* enemyTextureIceKami;
 	sf::Texture* enemyTextureElectricity;
+	sf::Texture* enemyTextureElectricityShtr;
+	sf::Texture* enemyTextureElectricityKami;
 	sf::Texture* enemyTextureWater;
+	sf::Texture* enemyTextureWaterShtr;
+	sf::Texture* enemyTextureWaterKami;
 	sf::Texture* enemyTextureStone;
+	sf::Texture* enemyTextureStoneShtr;
+	sf::Texture* enemyTextureStoneKami;
 	sf::Texture* enemyTextureWind;
+	sf::Texture* enemyTextureWindShtr;
+	sf::Texture* enemyTextureWindKami;
 	sf::Texture* enemyTextureLight;
+	sf::Texture* enemyTextureLightShtr;
+	sf::Texture* enemyTextureLightKami;
 	sf::Texture* enemyTextureDark;
+	sf::Texture* enemyTextureDarkShtr;
+	sf::Texture* enemyTextureDarkKami;
 	sf::Texture* enemyTextureForce;
+	sf::Texture* enemyTextureForceShtr;
+	sf::Texture* enemyTextureForceKami;
 	sf::Texture* enemyTexturePhys;
+	sf::Texture* enemyTexturePhysShtr;
+	sf::Texture* enemyTexturePhysKami;
 	int enemyTimer;
 	int autoCastCooldown;
 	bool elementClicked;	//for amCharPrepScreen

@@ -1,6 +1,6 @@
 #include "Enemy.h"
 
-Enemy::Enemy(sf::Vector2f pos, sf::Texture* texture, EnemyType type, Element element)
+Enemy::Enemy(sf::Vector2f pos, sf::Texture* texture, EnemyType type, Element element, Enemy *en)
 {
 	if (type == EnemyType::Standart)
 	{
@@ -48,7 +48,7 @@ Enemy::Enemy(sf::Vector2f pos, sf::Texture* texture, EnemyType type, Element ele
 	{
 		sprite.setTexture(*texture);
 		sprite.setScale(sf::Vector2f(5, 5));
-		sprite.setOrigin(sf::Vector2f(texture[0].getSize().x * 5 / 2, texture[0].getSize().y * 5 / 2));
+		sprite.setOrigin(sf::Vector2f(texture[0].getSize().x / 2, texture[0].getSize().y / 2));
 		sprite.setPosition(pos);
 		sprite.setRotation(rand());
 
@@ -62,7 +62,7 @@ Enemy::Enemy(sf::Vector2f pos, sf::Texture* texture, EnemyType type, Element ele
 
 		abilityCooldown = 5000;
 
-		abilityCooldown = 0;
+		abilityCooldownCounter = rand() % 5000;
 
 		if (element == Element::Fire)
 		{
@@ -91,11 +91,130 @@ Enemy::Enemy(sf::Vector2f pos, sf::Texture* texture, EnemyType type, Element ele
 	}
 	if (type == EnemyType::Kamikaze)
 	{
+		sprite.setTexture(*texture);
+		sprite.setOrigin(sf::Vector2f(texture[0].getSize().x / 2, texture[0].getSize().y / 2));
+		sprite.setPosition(pos);
+		sprite.setRotation(rand());
 
+		dest = pos;
+
+		enemyState = EnemyState::Standing;
+
+		enemyType = type;
+
+		characteristics.element = element;
+
+		if (element == Element::Fire)
+		{
+			characteristics.speed = 100;
+		}
+		if (element == Element::Ice)
+		{
+			characteristics.speed = 100;
+		}
+		if (element == Element::Electricity)
+		{
+			characteristics.speed = 150;
+		}
+		if (element == Element::Stone)
+		{
+			characteristics.speed = 50;
+		}
+		if (element == Element::Water)
+		{
+			characteristics.speed = 150;
+		}
+		if (element == Element::Wind)
+		{
+			characteristics.speed = 200;
+		}
 	}
 	if (type == EnemyType::Shooter)
 	{
+		sprite.setTexture(*texture);
+		sprite.setScale(sf::Vector2f(2, 2));
+		sprite.setOrigin(sf::Vector2f(texture[0].getSize().x / 2, texture[0].getSize().y / 2));
+		sprite.setPosition(pos);
+		sprite.setRotation(rand());
 
+		dest = pos;
+
+		enemyState = EnemyState::Standing;
+
+		enemyType = type;
+
+		characteristics.element = element;
+
+		abilityCooldown = 2500;
+
+		abilityCooldownCounter = rand() % 2500;
+
+		if (element == Element::Fire)
+		{
+			characteristics.speed = 75;
+		}
+		if (element == Element::Ice)
+		{
+			characteristics.speed = 75;
+		}
+		if (element == Element::Electricity)
+		{
+			characteristics.speed = 112.5;
+		}
+		if (element == Element::Stone)
+		{
+			characteristics.speed = 37.5;
+		}
+		if (element == Element::Water)
+		{
+			characteristics.speed = 112.5;
+		}
+		if (element == Element::Wind)
+		{
+			characteristics.speed = 150;
+		}
+	}
+	if (type == EnemyType::Summoned)
+	{
+		sprite.setTexture(*texture);
+		sprite.setOrigin(sf::Vector2f(texture[0].getSize().x / 2, texture[0].getSize().y / 2));
+		sprite.setPosition(pos);
+		sprite.setRotation(rand());
+
+		dest = pos;
+
+		enemyState = EnemyState::Standing;
+
+		enemyType = type;
+
+		characteristics.element = element;
+
+		par = en;
+
+		if (element == Element::Fire)
+		{
+			characteristics.speed = 100;
+		}
+		if (element == Element::Ice)
+		{
+			characteristics.speed = 100;
+		}
+		if (element == Element::Electricity)
+		{
+			characteristics.speed = 150;
+		}
+		if (element == Element::Stone)
+		{
+			characteristics.speed = 50;
+		}
+		if (element == Element::Water)
+		{
+			characteristics.speed = 150;
+		}
+		if (element == Element::Wind)
+		{
+			characteristics.speed = 200;
+		}
 	}
 
 }
@@ -136,6 +255,20 @@ EnemyType Enemy::getType()
 {
 	return enemyType;
 }
+void Enemy::setType(EnemyType et)
+{
+	enemyType = et;
+}
+Enemy* Enemy::getPar()
+{
+	return par;
+}
+
+sf::Vector2f Enemy::getParPos()
+{
+	return par->sprite.getPosition();
+}
+
 int Enemy::getAbilC()
 {
 	return abilityCooldown;

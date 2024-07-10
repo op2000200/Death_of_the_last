@@ -148,6 +148,7 @@
     <ClCompile Include="button.cpp" />
     <ClCompile Include="Config.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemyMissle.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Mana.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -162,6 +163,7 @@
     <ClInclude Include="button.h" />
     <ClInclude Include="Config.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyMissle.h" />
     <ClInclude Include="Enums.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Mana.h" />
