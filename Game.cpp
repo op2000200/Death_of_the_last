@@ -78,6 +78,22 @@ Game::Game(Config startConfig)
 	//enemyTextureForce[0].loadFromFile("assets/textures/enemyStandartForce.png");
 	//enemyTexturePhys = new sf::Texture;
 	//enemyTexturePhys[0].loadFromFile("assets/textures/enemyStandartPhys.png");
+	basicFire = new sf::Texture;
+	basicFire[0].loadFromFile("assets/textures/basicMissleFire.png");
+	aimedFire = new sf::Texture;
+	aimedFire[0].loadFromFile("assets/textures/aimedMissleFire.png");
+	explosiveFire = new sf::Texture;
+	explosiveFire[0].loadFromFile("assets/textures/expMissleFire.png");
+	fastFire = new sf::Texture;
+	fastFire[0].loadFromFile("assets/textures/fastMissleFire.png");
+	meteorFire = new sf::Texture;
+	meteorFire[0].loadFromFile("assets/textures/meteorFire.png");
+	manaStrikeFire = new sf::Texture;
+	manaStrikeFire[0].loadFromFile("assets/textures/manaColFire.png");
+	sprayOrbFire = new sf::Texture;
+	sprayOrbFire[0].loadFromFile("assets/textures/manaSatFire.png");
+	AOEFire = new sf::Texture;
+	AOEFire[0].loadFromFile("assets/textures/AOEFire.png");
 	enemyTimer = 0;
 	elementClicked = false;
 	elementChoosen = Element::Fire;
@@ -88,6 +104,15 @@ Game::Game(Config startConfig)
 		spellElem[i] = 1;
 	}
 	enemyBufferReady = false;
+	basicMissleBufferReady = false;
+	aimedMissleBufferReady = false;
+	explosiveMissleBufferReady = false;
+	fastMissleBufferReady = false;
+	meteorBufferReady = false;
+	manaStrikeBufferReady = false;
+	sprayOrbBufferReady = false;
+	sprayOrbSmallBufferReady = false;
+	aoeBufferReady = false;
 }
 
 Game::~Game()
@@ -1865,11 +1890,18 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 							if (enemyBuffer2[i].getSprite().getPosition().x > (x - 1) * 2000 - 100000 and enemyBuffer2[i].getSprite().getPosition().x < (x + 2) * 2000 - 100000 and enemyBuffer2[i].getSprite().getPosition().y > (y - 1) * 2000 - 100000 and enemyBuffer2[i].getSprite().getPosition().y < (y + 2) * 2000 - 100000)
 							{
 								window.draw(enemyBuffer2[i].getSprite());
+								if (enemyBuffer2[i].getType() == EnemyType::Summoner)
+								{
+									for (int j = 0; j < enemyBuffer2[i].getBufSize(); j++)
+									{
+										window.draw(enemyBuffer2[i].getBufSprite(j));
+									}
+								}
 							}
 						}
 						enemyBuffer2.clear();
 						
-						//draw projectiles
+						//draw enemy projectiles
 						for (int i = 0; i < enemyMissle2.size(); i++)
 						{
 							int x = (window.getView().getCenter().x + 100000) / 2000;
@@ -1900,6 +1932,89 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 						enemyBufferReady = false;
 					}
 					
+
+					//draw projectiles
+					if (basicMissleBufferReady)
+					{
+						for (int i = 0; i < basicMissleBuffer2.size(); i++)
+						{
+							window.draw(basicMissleBuffer2[i].getSprite());
+						}
+						basicMissleBuffer2.clear();
+						basicMissleBufferReady = false;
+					}
+					if (aimedMissleBufferReady)
+					{
+						for (int i = 0; i < aimedMissleBuffer2.size(); i++)
+						{
+							window.draw(aimedMissleBuffer2[i].getSprite());
+						}
+						aimedMissleBuffer2.clear();
+						aimedMissleBufferReady = false;
+					}
+					if (explosiveMissleBufferReady)
+					{
+						for (int i = 0; i < explosiveMissleBuffer2.size(); i++)
+						{
+							window.draw(explosiveMissleBuffer2[i].getSprite());
+						}
+						explosiveMissleBuffer2.clear();
+						explosiveMissleBufferReady = false;
+					}
+					if (fastMissleBufferReady)
+					{
+						for (int i = 0; i < fastMissleBuffer2.size(); i++)
+						{
+							window.draw(fastMissleBuffer2[i].getSprite());
+						}
+						fastMissleBuffer2.clear();
+						fastMissleBufferReady = false;
+					}
+					if (meteorBufferReady)
+					{
+						for (int i = 0; i < meteorBuffer2.size(); i++)
+						{
+							window.draw(meteorBuffer2[i].getSprite());
+						}
+						meteorBuffer2.clear();
+						meteorBufferReady = false;
+					}
+					if (manaStrikeBufferReady)
+					{
+						for (int i = 0; i < manaStrikeBuffer2.size(); i++)
+						{
+							window.draw(manaStrikeBuffer2[i].getSprite());
+						}
+						manaStrikeBuffer2.clear();
+						manaStrikeBufferReady = false;
+					}
+					if (sprayOrbBufferReady)
+					{
+						for (int i = 0; i < sprayOrbBuffer2.size(); i++)
+						{
+							window.draw(sprayOrbBuffer2[i].getSprite());
+						}
+						sprayOrbBuffer2.clear();
+						sprayOrbBufferReady = false;
+					}
+					if (sprayOrbSmallBufferReady)
+					{
+						for (int i = 0; i < sprayOrbSmallBuffer2.size(); i++)
+						{
+							window.draw(sprayOrbSmallBuffer2[i].getSprite());
+						}
+						sprayOrbSmallBuffer2.clear();
+						sprayOrbSmallBufferReady = false;
+					}
+					if (aoeBufferReady)
+					{
+						for (int i = 0; i < aoeBuffer2.size(); i++)
+						{
+							window.draw(aoeBuffer2[i].getSprite());
+						}
+						aoeBuffer2.clear();
+						aoeBufferReady = false;
+					}
 
 					//draw player
 					{
@@ -5255,6 +5370,15 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 
 					enemyBuffer.clear();
 					enemyMissle.clear();
+					basicMissleBuffer.clear();
+					aimedMissleBuffer.clear();
+					explosiveMissleBuffer.clear();
+					fastMissleBuffer.clear();
+					meteorBuffer.clear();
+					manaStrikeBuffer.clear();
+					sprayOrbBuffer.clear();
+					sprayOrbSmallBuffer.clear();
+					aoeBuffer.clear();
 
 					while (playMenuState == Type::PlayMenuArcadeModeRun)
 					{
@@ -5363,17 +5487,17 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 						{
 							if (type == EnemyType::Standart or type == EnemyType::Summoned or type == EnemyType::Summoner)
 							{
-								Enemy enemy(pos, enemyTextureFire, type, element, en);
+								Enemy enemy(pos, enemyTextureFire, type, element);
 								enemyBuffer.push_back(enemy);
 							}
 							if (type == EnemyType::Kamikaze)
 							{
-								Enemy enemy(pos, enemyTextureFireKami, type, element, en);
+								Enemy enemy(pos, enemyTextureFireKami, type, element);
 								enemyBuffer.push_back(enemy);
 							}
 							if (type == EnemyType::Shooter)
 							{
-								Enemy enemy(pos, enemyTextureFireShtr, type, element, en);
+								Enemy enemy(pos, enemyTextureFireShtr, type, element);
 								enemyBuffer.push_back(enemy);
 							}
 						}
@@ -5381,17 +5505,17 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 						{
 							if (type == EnemyType::Standart or type == EnemyType::Summoned or type == EnemyType::Summoner)
 							{
-								Enemy enemy(pos, enemyTextureIce, type, element, en);
+								Enemy enemy(pos, enemyTextureIce, type, element);
 								enemyBuffer.push_back(enemy);
 							}
 							if (type == EnemyType::Kamikaze)
 							{
-								Enemy enemy(pos, enemyTextureIceKami, type, element, en);
+								Enemy enemy(pos, enemyTextureIceKami, type, element);
 								enemyBuffer.push_back(enemy);
 							}
 							if (type == EnemyType::Shooter)
 							{
-								Enemy enemy(pos, enemyTextureIceShtr, type, element, en);
+								Enemy enemy(pos, enemyTextureIceShtr, type, element);
 								enemyBuffer.push_back(enemy);
 							}
 						}
@@ -5399,17 +5523,17 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 						{
 							if (type == EnemyType::Standart or type == EnemyType::Summoned or type == EnemyType::Summoner)
 							{
-								Enemy enemy(pos, enemyTextureElectricity, type, element, en);
+								Enemy enemy(pos, enemyTextureElectricity, type, element);
 								enemyBuffer.push_back(enemy);
 							}
 							if (type == EnemyType::Kamikaze)
 							{
-								Enemy enemy(pos, enemyTextureElectricityKami, type, element, en);
+								Enemy enemy(pos, enemyTextureElectricityKami, type, element);
 								enemyBuffer.push_back(enemy);
 							}
 							if (type == EnemyType::Shooter)
 							{
-								Enemy enemy(pos, enemyTextureElectricityShtr, type, element, en);
+								Enemy enemy(pos, enemyTextureElectricityShtr, type, element);
 								enemyBuffer.push_back(enemy);
 							}
 						}
@@ -5417,17 +5541,17 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 						{
 							if (type == EnemyType::Standart or type == EnemyType::Summoned or type == EnemyType::Summoner)
 							{
-								Enemy enemy(pos, enemyTextureStone, type, element, en);
+								Enemy enemy(pos, enemyTextureStone, type, element);
 								enemyBuffer.push_back(enemy);
 							}
 							if (type == EnemyType::Kamikaze)
 							{
-								Enemy enemy(pos, enemyTextureStoneKami, type, element, en);
+								Enemy enemy(pos, enemyTextureStoneKami, type, element);
 								enemyBuffer.push_back(enemy);
 							}
 							if (type == EnemyType::Shooter)
 							{
-								Enemy enemy(pos, enemyTextureStoneShtr, type, element, en);
+								Enemy enemy(pos, enemyTextureStoneShtr, type, element);
 								enemyBuffer.push_back(enemy);
 							}
 						}
@@ -5435,17 +5559,17 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 						{
 							if (type == EnemyType::Standart or type == EnemyType::Summoned or type == EnemyType::Summoner)
 							{
-								Enemy enemy(pos, enemyTextureWater, type, element, en);
+								Enemy enemy(pos, enemyTextureWater, type, element);
 								enemyBuffer.push_back(enemy);
 							}
 							if (type == EnemyType::Kamikaze)
 							{
-								Enemy enemy(pos, enemyTextureWaterKami, type, element, en);
+								Enemy enemy(pos, enemyTextureWaterKami, type, element);
 								enemyBuffer.push_back(enemy);
 							}
 							if (type == EnemyType::Shooter)
 							{
-								Enemy enemy(pos, enemyTextureWaterShtr, type, element, en);
+								Enemy enemy(pos, enemyTextureWaterShtr, type, element);
 								enemyBuffer.push_back(enemy);
 							}
 						}
@@ -5453,17 +5577,17 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 						{
 							if (type == EnemyType::Standart or type == EnemyType::Summoned or type == EnemyType::Summoner)
 							{
-								Enemy enemy(pos, enemyTextureWind, type, element, en);
+								Enemy enemy(pos, enemyTextureWind, type, element);
 								enemyBuffer.push_back(enemy);
 							}
 							if (type == EnemyType::Kamikaze)
 							{
-								Enemy enemy(pos, enemyTextureWindKami, type, element, en);
+								Enemy enemy(pos, enemyTextureWindKami, type, element);
 								enemyBuffer.push_back(enemy);
 							}
 							if (type == EnemyType::Shooter)
 							{
-								Enemy enemy(pos, enemyTextureWindShtr, type, element, en);
+								Enemy enemy(pos, enemyTextureWindShtr, type, element);
 								enemyBuffer.push_back(enemy);
 							}
 						}
@@ -5512,6 +5636,7 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 						AMRunUpdatePlayer();
 						AMRunUpdateCamera();
 						AMRunUpdateEnemy();
+						//AMRunUpdateProjectiles();
 					}
 
 						void Game::AMRunUpdatePlayer()
@@ -5698,15 +5823,100 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 											}
 											if (enemyBuffer[i].getAbilCC() > enemyBuffer[i].getAbilC())
 											{
-												if (enemyBuffer.size() < 2500)
+												if (enemyBuffer[i].getBufSize() < 50)
 												{
-													AMRunSpawnEnemy(enemyBuffer[i].getSprite().getPosition(), EnemyType::Summoned, enemyBuffer[i].getChar().element, &enemyBuffer[i]);
+													//AMRunSpawnEnemy(enemyBuffer[i].getSprite().getPosition(), EnemyType::Summoned, enemyBuffer[i].getChar().element, &enemyBuffer[i]);
+													if (enemyBuffer[i].getChar().element == Element::Fire)
+													{
+														Enemy enemy(enemyBuffer[i].getSprite().getPosition(), enemyTextureFire, EnemyType::Summoned, enemyBuffer[i].getChar().element);
+														int buf = rand() % 2;
+														if (buf == 0)
+															buf = -1;
+														enemy.setDest(sf::Vector2f(
+															enemyBuffer[i].getSprite().getPosition().x + buf * (rand() % 20 + 50),
+															enemyBuffer[i].getSprite().getPosition().y + buf * (rand() % 20 + 50)));
+														enemyBuffer[i].addToBuf(enemy);
+													}
+													if (enemyBuffer[i].getChar().element == Element::Ice)
+													{
+														Enemy enemy(enemyBuffer[i].getSprite().getPosition(), enemyTextureIce, EnemyType::Summoned, enemyBuffer[i].getChar().element);
+														int buf = rand() % 2;
+														if (buf == 0)
+															buf = -1;
+														enemy.setDest(sf::Vector2f(
+															enemyBuffer[i].getSprite().getPosition().x + buf * (rand() % 20 + 50),
+															enemyBuffer[i].getSprite().getPosition().y + buf * (rand() % 20 + 50)));
+														enemyBuffer[i].addToBuf(enemy);
+													}
+													if (enemyBuffer[i].getChar().element == Element::Electricity)
+													{
+														Enemy enemy(enemyBuffer[i].getSprite().getPosition(), enemyTextureElectricity, EnemyType::Summoned, enemyBuffer[i].getChar().element);
+														int buf = rand() % 2;
+														if (buf == 0)
+															buf = -1;
+														enemy.setDest(sf::Vector2f(
+															enemyBuffer[i].getSprite().getPosition().x + buf * (rand() % 20 + 50),
+															enemyBuffer[i].getSprite().getPosition().y + buf * (rand() % 20 + 50)));
+														enemyBuffer[i].addToBuf(enemy);
+													}
+													if (enemyBuffer[i].getChar().element == Element::Stone)
+													{
+														Enemy enemy(enemyBuffer[i].getSprite().getPosition(), enemyTextureStone, EnemyType::Summoned, enemyBuffer[i].getChar().element);
+														int buf = rand() % 2;
+														if (buf == 0)
+															buf = -1;
+														enemy.setDest(sf::Vector2f(
+															enemyBuffer[i].getSprite().getPosition().x + buf * (rand() % 20 + 50),
+															enemyBuffer[i].getSprite().getPosition().y + buf * (rand() % 20 + 50)));
+														enemyBuffer[i].addToBuf(enemy);
+													}
+													if (enemyBuffer[i].getChar().element == Element::Water)
+													{
+														Enemy enemy(enemyBuffer[i].getSprite().getPosition(), enemyTextureWater, EnemyType::Summoned, enemyBuffer[i].getChar().element);
+														int buf = rand() % 2;
+														if (buf == 0)
+															buf = -1;
+														enemy.setDest(sf::Vector2f(
+															enemyBuffer[i].getSprite().getPosition().x + buf * (rand() % 20 + 50),
+															enemyBuffer[i].getSprite().getPosition().y + buf * (rand() % 20 + 50)));
+														enemyBuffer[i].addToBuf(enemy);
+													}
+													if (enemyBuffer[i].getChar().element == Element::Wind)
+													{
+														Enemy enemy(enemyBuffer[i].getSprite().getPosition(), enemyTextureWind, EnemyType::Summoned, enemyBuffer[i].getChar().element);
+														int buf = rand() % 2;
+														if (buf == 0)
+															buf = -1;
+														enemy.setDest(sf::Vector2f(
+															enemyBuffer[i].getSprite().getPosition().x + buf * (rand() % 20 + 50),
+															enemyBuffer[i].getSprite().getPosition().y + buf * (rand() % 20 + 50)));
+														enemyBuffer[i].addToBuf(enemy);
+													}
 												}
 												enemyBuffer[i].resAbilCC();
 											}
 											else
 											{
 												enemyBuffer[i].ticlAbilCC();
+											}
+											for (int j = 0; j < enemyBuffer[i].getBufSize(); j++)
+											{
+												if (abs(enemyBuffer[i].getBufSprite(j).getPosition().x - enemyBuffer[i].getBufDest(j).x) < 10 and abs(enemyBuffer[i].getBufSprite(j).getPosition().y - enemyBuffer[i].getBufDest(j).y) < 10)
+												{
+													int buf = rand() % 2;
+													if (buf == 0)
+														buf = -1;
+													enemyBuffer[i].setBufDest(j, (sf::Vector2f(
+														enemyBuffer[i].getSprite().getPosition().x + buf * (rand() % 20 + 50),
+														enemyBuffer[i].getSprite().getPosition().y + buf * (rand() % 20 + 50))));
+												}
+												else
+												{
+													enemyBuffer[i].setBufPos(j, sf::Vector2f(
+														enemyBuffer[i].getBufSprite(j).getPosition().x + enemyBuffer[i].getBufChar(j).speed * (1.f / 1000.f) * ((enemyBuffer[i].getBufDest(j).x - enemyBuffer[i].getBufSprite(j).getPosition().x) / (abs(enemyBuffer[i].getBufDest(j).x - enemyBuffer[i].getBufSprite(j).getPosition().x) + abs(enemyBuffer[i].getBufDest(j).y - enemyBuffer[i].getBufSprite(j).getPosition().y))),
+														enemyBuffer[i].getBufSprite(j).getPosition().y + enemyBuffer[i].getBufChar(j).speed * (1.f / 1000.f) * ((enemyBuffer[i].getBufDest(j).y - enemyBuffer[i].getBufSprite(j).getPosition().y) / (abs(enemyBuffer[i].getBufDest(j).x - enemyBuffer[i].getBufSprite(j).getPosition().x) + abs(enemyBuffer[i].getBufDest(j).y - enemyBuffer[i].getBufSprite(j).getPosition().y)))
+													));
+												}
 											}
 										}
 										if (enemyBuffer[i].getType() == EnemyType::Kamikaze)
@@ -5747,40 +5957,6 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 													enemyBuffer[i].getSprite().getPosition().x + enemyBuffer[i].getChar().speed * (1.f / 1000.f) * ((enemyBuffer[i].getDest().x - enemyBuffer[i].getSprite().getPosition().x) / (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getSprite().getPosition().x) + abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getSprite().getPosition().y))),
 													enemyBuffer[i].getSprite().getPosition().y + enemyBuffer[i].getChar().speed * (1.f / 1000.f) * ((enemyBuffer[i].getDest().y - enemyBuffer[i].getSprite().getPosition().y) / (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getSprite().getPosition().x) + abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getSprite().getPosition().y)))
 												));
-											}
-										}
-										if (enemyBuffer[i].getType() == EnemyType::Summoned)
-										{
-											if (enemyBuffer[i].getPar() != nullptr)
-											{
-												if (enemyBuffer[i].getState() == EnemyState::Standing)
-												{
-													int x, y, x1, y1;
-													x = (enemyBuffer[i].getSprite().getPosition().x);
-													y = (enemyBuffer[i].getSprite().getPosition().y);
-													srand(x * y * time(0));
-													x1 = rand() % 1000 - 500;
-													y1 = rand() % 1000 - 500;
-
-													enemyBuffer[i].setDest(sf::Vector2f(x + x1, y + y1));
-
-													enemyBuffer[i].setState(EnemyState::Moving);
-												}
-												if (enemyBuffer[i].getState() == EnemyState::Moving)
-												{
-													enemyBuffer[i].setPos(sf::Vector2f(
-														enemyBuffer[i].getSprite().getPosition().x + enemyBuffer[i].getChar().speed * (1.f / 1000.f) * ((enemyBuffer[i].getDest().x - enemyBuffer[i].getSprite().getPosition().x) / (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getSprite().getPosition().x) + abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getSprite().getPosition().y))),
-														enemyBuffer[i].getSprite().getPosition().y + enemyBuffer[i].getChar().speed * (1.f / 1000.f) * ((enemyBuffer[i].getDest().y - enemyBuffer[i].getSprite().getPosition().y) / (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getSprite().getPosition().x) + abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getSprite().getPosition().y)))
-													));
-													if (abs(enemyBuffer[i].getSprite().getPosition().x - enemyBuffer[i].getDest().x) < 10 and abs(enemyBuffer[i].getSprite().getPosition().y - enemyBuffer[i].getDest().y) < 10)
-													{
-														enemyBuffer[i].setState(EnemyState::Standing);
-													}
-												}
-											}
-											else
-											{
-												enemyBuffer[i].setType(EnemyType::Standart);
 											}
 										}
 										if (enemyBuffer[i].getType() == EnemyType::Shooter)
@@ -5849,8 +6025,8 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 												for (int i = 0; i < enemyMissle.size(); i++)
 												{
 													enemyMissle[i].setPos(sf::Vector2f(
-														enemyMissle[i].getSprite().getPosition().x + enemyMissle[i].getChar().speed * (1.f / 1000.f) * enemyMissle[i].getDir().x,
-														enemyMissle[i].getSprite().getPosition().y + enemyMissle[i].getChar().speed * (1.f / 1000.f) * enemyMissle[i].getDir().x
+														enemyMissle[i].getSprite().getPosition().x + 200 * (1.f / 1000.f) * enemyMissle[i].getDir().x,
+														enemyMissle[i].getSprite().getPosition().y + 200 * (1.f / 1000.f) * enemyMissle[i].getDir().y
 													));
 													enemyMissle[i].setHealth(enemyMissle[i].getChar().healthCurrent - 1);
 													if (enemyMissle[i].getChar().healthCurrent < 1)
@@ -5878,13 +6054,127 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 
 						void Game::AMRunUpdateProjectiles()
 						{
-							if (autoCastCooldown > 1000.f * 0.5 * (100.f / static_cast<float>(player[0].getChar().atkSpeed)))
+							for (int i = 1; i < 10; i++)
 							{
-								autoCastCooldown = 0;
+								if (player[0].getSpellLevel()[i] > 0)
+								{
+									if (player[0].getSpellCooldownCounter()[i] > player[0].getSpellCooldown()[i])
+									{
+										player[0].resetSpellCC(i);
+										if (i == 1) //basic
+										{
+											//choose a target or targets
+											// prepare positions for aiming
+											// spawn a proj
+											// add proj to container
+											// move all projes in container
+											// create a copy of container to rendering and allow rendering
+											//
+											BasicMissle missle(player[0].getSprite().getPosition(), basicFire, player[0].getSprite().getPosition());
+											basicMissleBuffer.push_back(missle);
+
+											
+
+										}
+										if (i == 2) //aimed
+										{
+											AimedMissle missle(player[0].getSprite().getPosition(), aimedFire, player[0].getSprite().getPosition());
+											aimedMissleBuffer.push_back(missle);
+
+										}
+										if (i == 3) //explosive
+										{
+											ExplosiveMissle missle(player[0].getSprite().getPosition(), explosiveFire, player[0].getSprite().getPosition());
+											explosiveMissleBuffer.push_back(missle);
+
+										}
+										if (i == 4) //fast
+										{
+											FastMissle missle(player[0].getSprite().getPosition(), fastFire, player[0].getSprite().getPosition());
+											fastMissleBuffer.push_back(missle);
+
+										}
+										if (i == 5) //meteor
+										{
+											Meteor missle(player[0].getSprite().getPosition(), meteorFire, player[0].getSprite().getPosition());
+											meteorBuffer.push_back(missle);
+
+										}
+										if (i == 6) //mana strike
+										{
+											ManaStrike missle(player[0].getSprite().getPosition(), manaStrikeFire, player[0].getSprite().getPosition());
+											manaStrikeBuffer.push_back(missle);
+
+										}
+										if (i == 7) //spray orb
+										{
+											SprayOrb missle(player[0].getSprite().getPosition(), sprayOrbFire, player[0].getSprite().getPosition());
+											sprayOrbBuffer.push_back(missle);
+
+										}
+										if (i == 8) //spray orb small
+										{
+											SprayOrbSmall missle(player[0].getSprite().getPosition(), sprayOrbFire, player[0].getSprite().getPosition());
+											sprayOrbSmallBuffer.push_back(missle);
+
+										}
+										if (i == 9) //aoe
+										{
+											AOE missle(player[0].getSprite().getPosition(), AOEFire, player[0].getSprite().getPosition());
+											aoeBuffer.push_back(missle);
+
+										}
+									}
+									else
+									{
+										player[0].tickSpellCC(i);
+									}
+								}
 							}
-							else
+							if (!basicMissleBufferReady)
 							{
-								autoCastCooldown++;
+								basicMissleBuffer2 = basicMissleBuffer;
+								basicMissleBufferReady = true;
+							}
+							if (!aimedMissleBufferReady)
+							{
+								aimedMissleBuffer2 = aimedMissleBuffer;
+								aimedMissleBufferReady = true;
+							}
+							if (!explosiveMissleBufferReady)
+							{
+								explosiveMissleBuffer2 = explosiveMissleBuffer;
+								explosiveMissleBufferReady = true;
+							}
+							if (!fastMissleBufferReady)
+							{
+								fastMissleBuffer2 = fastMissleBuffer;
+								fastMissleBufferReady = true;
+							}
+							if (!meteorBufferReady)
+							{
+								meteorBuffer2 = meteorBuffer;
+								meteorBufferReady = true;
+							}
+							if (!manaStrikeBufferReady)
+							{
+								manaStrikeBuffer2 = manaStrikeBuffer;
+								manaStrikeBufferReady = true;
+							}
+							if (!sprayOrbBufferReady)
+							{
+								sprayOrbBuffer2 = sprayOrbBuffer;
+								sprayOrbBufferReady = true;
+							}
+							if (!sprayOrbSmallBufferReady)
+							{
+								sprayOrbSmallBuffer2 = sprayOrbSmallBuffer;
+								sprayOrbSmallBufferReady = true;
+							}
+							if (!aoeBufferReady)
+							{
+								aoeBuffer2 = aoeBuffer;
+								aoeBufferReady = true;
 							}
 						}
 

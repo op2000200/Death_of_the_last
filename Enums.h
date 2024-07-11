@@ -1,5 +1,14 @@
 #pragma once
 
+enum class SpellState
+{
+	Alive,
+	Waiting,
+	Dead,
+	Diactivated,
+	Activated
+};
+
 enum class PlayerState
 {
 	NotDefined,

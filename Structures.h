@@ -395,3 +395,20 @@ struct Characteristics
 
 	Element element;
 };
+
+struct SpellChar
+{
+	float damageMP;
+	int level;
+	float speed;
+	float radius;
+	int number;
+	float rotSpeed;
+	float resistBuf;
+	float speedBuf;
+	int length;
+	int lengthCounter;
+	int value;
+	int lifetime;
+	Element element;
+};

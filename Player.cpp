@@ -14,7 +14,7 @@ Player::Player()
 	characteristics.defMul = 0;
 	characteristics.resistAll = 0;
 	characteristics.resistElement = 0;
-	characteristics.speed = 2000;
+	characteristics.speed = 204;
 	characteristics.evasionChance = 0;
 	characteristics.healthMax = 0;
 	characteristics.healthCurrent = 0;
@@ -26,6 +26,40 @@ Player::Player()
 	characteristics.manaUsage = 0;
 	characteristics.manaRegen = 0;
 	characteristics.element = Element::Fire;
+	spellLevel = new int[16];
+	spellLevel[1] = 1;
+	spellLevel[2] = 1;
+	spellLevel[3] = 1;
+	spellLevel[4] = 1;
+	spellLevel[5] = 1;
+	spellLevel[6] = 1;
+	spellLevel[7] = 1;
+	spellLevel[8] = 1;
+	spellLevel[9] = 1;
+	spellLevel[10] = 0;
+	spellLevel[11] = 0;
+	spellLevel[12] = 0;
+	spellLevel[13] = 0;
+	spellLevel[14] = 0;
+	spellLevel[15] = 0;
+	spellCooldown = new int[16];
+	spellCooldown[1] = 3000;
+	spellCooldown[2] = 3000;
+	spellCooldown[3] = 3000;
+	spellCooldown[4] = 3000;
+	spellCooldown[5] = 10000;
+	spellCooldown[6] = 20000;
+	spellCooldown[7] = 500;
+	spellCooldown[8] = 500;
+	spellCooldown[9] = 1000;
+	spellCooldown[14] = 30000;
+	spellCooldown[15] = 30000;
+	spellCooldownCounter = new int[16];
+	srand(time(0));
+	for (int i = 1; i < 16; i++)
+	{
+		spellCooldownCounter[i] = rand() % 2000 + 1000;
+	}
 }
 
 Player::~Player()
@@ -86,6 +120,31 @@ PlayerState Player::getState()
 Characteristics Player::getChar()
 {
 	return characteristics;
+}
+
+int* Player::getSpellLevel()
+{
+	return spellLevel;
+}
+
+int* Player::getSpellCooldown()
+{
+	return spellCooldown;
+}
+
+int* Player::getSpellCooldownCounter()
+{
+	return spellCooldownCounter;
+}
+
+void Player::tickSpellCC(int i)
+{
+	spellCooldownCounter[i]++;
+}
+
+void Player::resetSpellCC(int i)
+{
+	spellCooldownCounter[i] = 0;
 }
 
 

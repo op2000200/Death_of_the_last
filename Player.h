@@ -14,12 +14,21 @@ public:
 	PlayerState getState();
 	Characteristics getChar();
 
+	int* getSpellLevel();
+	int* getSpellCooldown();
+	int* getSpellCooldownCounter();
+	void tickSpellCC(int i);
+	void resetSpellCC(int i);
+
 private:
 	sf::Sprite sprite;
 	sf::Texture* texture;
 	PlayerState playerState;
 	//hitbox
 	Characteristics characteristics;
+	int* spellLevel;
+	int* spellCooldown;
+	int* spellCooldownCounter;
 };
 
 

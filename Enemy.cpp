@@ -1,6 +1,6 @@
 #include "Enemy.h"
 
-Enemy::Enemy(sf::Vector2f pos, sf::Texture* texture, EnemyType type, Element element, Enemy *en)
+Enemy::Enemy(sf::Vector2f pos, sf::Texture* texture, EnemyType type, Element element)
 {
 	if (type == EnemyType::Standart)
 	{
@@ -183,13 +183,11 @@ Enemy::Enemy(sf::Vector2f pos, sf::Texture* texture, EnemyType type, Element ele
 
 		dest = pos;
 
-		enemyState = EnemyState::Standing;
+		enemyState = EnemyState::Following;
 
 		enemyType = type;
 
 		characteristics.element = element;
-
-		par = en;
 
 		if (element == Element::Fire)
 		{
@@ -259,15 +257,6 @@ void Enemy::setType(EnemyType et)
 {
 	enemyType = et;
 }
-Enemy* Enemy::getPar()
-{
-	return par;
-}
-
-sf::Vector2f Enemy::getParPos()
-{
-	return par->sprite.getPosition();
-}
 
 int Enemy::getAbilC()
 {
@@ -284,6 +273,38 @@ void Enemy::ticlAbilCC()
 void Enemy::resAbilCC()
 {
 	abilityCooldownCounter = 0;
+}
+int Enemy::getBufSize()
+{
+	return summonedBuffer.size();
+}
+sf::Sprite Enemy::getBufSprite(int index)
+{
+	return summonedBuffer[index].getSprite();
+}
+void Enemy::setBufDest(int index, sf::Vector2f pos)
+{
+	summonedBuffer[index].dest = pos;
+}
+sf::Vector2f Enemy::getBufDest(int index)
+{
+	return summonedBuffer[index].dest;
+}
+void Enemy::setBufPos(int index, sf::Vector2f pos)
+{
+	summonedBuffer[index].setPos(pos);
+}
+void Enemy::addToBuf(Enemy en)
+{
+	summonedBuffer.push_back(en);
+}
+void Enemy::delFromBuf(int index)
+{
+	summonedBuffer.erase(summonedBuffer.begin() + index);
+}
+Characteristics Enemy::getBufChar(int index)
+{
+	return summonedBuffer[index].characteristics;
 }
 //#include "SFML/Graphics.hpp"
 //

@@ -3,6 +3,7 @@
 EnemyMissle::EnemyMissle(sf::Vector2f pos, sf::Texture* texture, Element element, sf::Vector2f tar)
 {
 	sprite.setTexture(*texture);
+	sprite.setScale(sf::Vector2f(3, 3));
 	sprite.setOrigin(sf::Vector2f(texture[0].getSize().x / 2, texture[0].getSize().y / 2));
 	sprite.setPosition(pos);
 	sprite.setRotation(rand());

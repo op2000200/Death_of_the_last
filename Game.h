@@ -11,6 +11,21 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "EnemyMissle.h"
+#include "BasicMissle.h"
+#include "AimedMissle.h"
+#include "ExplosiveMissle.h"
+#include "FastMissle.h"
+#include "Meteor.h"
+#include "ManaStrike.h"
+#include "SprayOrb.h"
+#include "SprayOrbSmall.h"
+#include "AOE.h"
+#include "ForceField.h"
+#include "StoneSkin.h"
+#include "LiveShield.h"
+#include "ManaShield.h"
+#include "Sprint.h"
+#include "DimensionalTravel.h"
 
 #include "Structures.h"
 
@@ -175,7 +190,49 @@ private:
 	int mainSpell;
 	int* spellElem;
 	bool enemyBufferReady;
+	std::vector<BasicMissle> basicMissleBuffer;
+	std::vector<BasicMissle> basicMissleBuffer2;
+	bool basicMissleBufferReady;
+	sf::Texture* basicFire;
 
+	std::vector<AimedMissle> aimedMissleBuffer;
+	std::vector<AimedMissle> aimedMissleBuffer2;
+	bool aimedMissleBufferReady;
+	sf::Texture* aimedFire;
+
+	std::vector<ExplosiveMissle> explosiveMissleBuffer;
+	std::vector<ExplosiveMissle> explosiveMissleBuffer2;
+	bool explosiveMissleBufferReady;
+	sf::Texture* explosiveFire;
+
+	std::vector<FastMissle> fastMissleBuffer;
+	std::vector<FastMissle> fastMissleBuffer2;
+	bool fastMissleBufferReady;
+	sf::Texture* fastFire;
+
+	std::vector<Meteor> meteorBuffer;
+	std::vector<Meteor> meteorBuffer2;
+	bool meteorBufferReady;
+	sf::Texture* meteorFire;
+
+	std::vector<ManaStrike> manaStrikeBuffer;
+	std::vector<ManaStrike> manaStrikeBuffer2;
+	bool manaStrikeBufferReady;
+	sf::Texture* manaStrikeFire;
+
+	std::vector<SprayOrb> sprayOrbBuffer;
+	std::vector<SprayOrb> sprayOrbBuffer2;
+	bool sprayOrbBufferReady;
+	sf::Texture* sprayOrbFire;
+
+	std::vector<SprayOrbSmall> sprayOrbSmallBuffer;
+	std::vector<SprayOrbSmall> sprayOrbSmallBuffer2;
+	bool sprayOrbSmallBufferReady;
+
+	std::vector<AOE> aoeBuffer;
+	std::vector<AOE> aoeBuffer2;
+	bool aoeBufferReady;
+	sf::Texture* AOEFire;
 
 };
 
