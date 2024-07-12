@@ -14,6 +14,9 @@ BasicMissle::BasicMissle(sf::Vector2f pos, sf::Texture* texture, sf::Vector2f ta
 		pos.y + buf * (rand() % 200 + 500)));
 	target = tar;
 	spellChar.element = Element::Fire;
+	spellChar.lifetime = 10000;
+	spellChar.speed = 150;
+	spellChar.number = 1;
 }
 
 BasicMissle::~BasicMissle()
@@ -28,6 +31,12 @@ sf::Sprite BasicMissle::getSprite()
 void BasicMissle::setPos(sf::Vector2f pos)
 {
 	sprite.setPosition(pos);
+	double rot1 = (std::acos((-1 * target.y) / (std::sqrt(target.x * target.x + target.y * target.y))) * (180.0 / 3.14));
+	if (target.x < 0)
+	{
+		rot1 = 360.f - rot1;
+	}
+	sprite.setRotation(rot1);
 }
 
 void BasicMissle::setTar(sf::Vector2f pos)

@@ -3,20 +3,28 @@
   "WorkspaceRootPath": "C:\\Death_of_the_last\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{53637052-1056-49FA-8AF6-BCF893AE5232}|Death_of_the_last.vcxproj|C:\\Death_of_the_last\\Game.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{53637052-1056-49FA-8AF6-BCF893AE5232}|Death_of_the_last.vcxproj|solutionrelative:Game.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{53637052-1056-49FA-8AF6-BCF893AE5232}|Death_of_the_last.vcxproj|C:\\Death_of_the_last\\BasicMissle.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{53637052-1056-49FA-8AF6-BCF893AE5232}|Death_of_the_last.vcxproj|solutionrelative:BasicMissle.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{53637052-1056-49FA-8AF6-BCF893AE5232}|Death_of_the_last.vcxproj|C:\\Death_of_the_last\\AimedMissle.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{53637052-1056-49FA-8AF6-BCF893AE5232}|Death_of_the_last.vcxproj|solutionrelative:AimedMissle.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{53637052-1056-49FA-8AF6-BCF893AE5232}|Death_of_the_last.vcxproj|C:\\Death_of_the_last\\AOE.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{53637052-1056-49FA-8AF6-BCF893AE5232}|Death_of_the_last.vcxproj|solutionrelative:AOE.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{53637052-1056-49FA-8AF6-BCF893AE5232}|Death_of_the_last.vcxproj|C:\\Death_of_the_last\\Player.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{53637052-1056-49FA-8AF6-BCF893AE5232}|Death_of_the_last.vcxproj|solutionrelative:Player.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{53637052-1056-49FA-8AF6-BCF893AE5232}|Death_of_the_last.vcxproj|C:\\Death_of_the_last\\Game.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{53637052-1056-49FA-8AF6-BCF893AE5232}|Death_of_the_last.vcxproj|solutionrelative:Game.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{53637052-1056-49FA-8AF6-BCF893AE5232}|Death_of_the_last.vcxproj|C:\\Death_of_the_last\\AOE.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{53637052-1056-49FA-8AF6-BCF893AE5232}|Death_of_the_last.vcxproj|solutionrelative:AOE.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{53637052-1056-49FA-8AF6-BCF893AE5232}|Death_of_the_last.vcxproj|C:\\Death_of_the_last\\AimedMissle.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{53637052-1056-49FA-8AF6-BCF893AE5232}|Death_of_the_last.vcxproj|solutionrelative:AimedMissle.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{53637052-1056-49FA-8AF6-BCF893AE5232}|Death_of_the_last.vcxproj|C:\\Death_of_the_last\\SprayOrbSmall.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
@@ -43,10 +51,6 @@
       "RelativeMoniker": "D:0:0:{53637052-1056-49FA-8AF6-BCF893AE5232}|Death_of_the_last.vcxproj|solutionrelative:ExplosiveMissle.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{53637052-1056-49FA-8AF6-BCF893AE5232}|Death_of_the_last.vcxproj|C:\\Death_of_the_last\\BasicMissle.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{53637052-1056-49FA-8AF6-BCF893AE5232}|Death_of_the_last.vcxproj|solutionrelative:BasicMissle.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{53637052-1056-49FA-8AF6-BCF893AE5232}|Death_of_the_last.vcxproj|C:\\Death_of_the_last\\Game.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{53637052-1056-49FA-8AF6-BCF893AE5232}|Death_of_the_last.vcxproj|solutionrelative:Game.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
@@ -58,95 +62,95 @@
       "DocumentGroups": [
         {
           "DockedWidth": 67,
-          "SelectedChildIndex": 8,
+          "SelectedChildIndex": 11,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
               "Title": "SprayOrbSmall.cpp",
               "DocumentMoniker": "C:\\Death_of_the_last\\SprayOrbSmall.cpp",
               "RelativeDocumentMoniker": "SprayOrbSmall.cpp",
               "ToolTip": "C:\\Death_of_the_last\\SprayOrbSmall.cpp",
               "RelativeToolTip": "SprayOrbSmall.cpp",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAAQAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABEAAAAWAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-07-11T13:56:22.208Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 7,
               "Title": "SprayOrb.cpp",
               "DocumentMoniker": "C:\\Death_of_the_last\\SprayOrb.cpp",
               "RelativeDocumentMoniker": "SprayOrb.cpp",
               "ToolTip": "C:\\Death_of_the_last\\SprayOrb.cpp",
               "RelativeToolTip": "SprayOrb.cpp",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAAQAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAAWAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-07-11T13:56:21.609Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 8,
               "Title": "Meteor.cpp",
               "DocumentMoniker": "C:\\Death_of_the_last\\Meteor.cpp",
               "RelativeDocumentMoniker": "Meteor.cpp",
               "ToolTip": "C:\\Death_of_the_last\\Meteor.cpp",
               "RelativeToolTip": "Meteor.cpp",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAAQAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABEAAAAWAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-07-11T13:56:19.538Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 9,
               "Title": "ManaStrike.cpp",
               "DocumentMoniker": "C:\\Death_of_the_last\\ManaStrike.cpp",
               "RelativeDocumentMoniker": "ManaStrike.cpp",
               "ToolTip": "C:\\Death_of_the_last\\ManaStrike.cpp",
               "RelativeToolTip": "ManaStrike.cpp",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAAQAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABEAAAAWAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-07-11T13:56:18.979Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 10,
               "Title": "FastMissle.cpp",
               "DocumentMoniker": "C:\\Death_of_the_last\\FastMissle.cpp",
               "RelativeDocumentMoniker": "FastMissle.cpp",
               "ToolTip": "C:\\Death_of_the_last\\FastMissle.cpp",
               "RelativeToolTip": "FastMissle.cpp",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAAQAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABEAAAAWAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-07-11T13:56:14.743Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 11,
               "Title": "ExplosiveMissle.cpp",
               "DocumentMoniker": "C:\\Death_of_the_last\\ExplosiveMissle.cpp",
               "RelativeDocumentMoniker": "ExplosiveMissle.cpp",
               "ToolTip": "C:\\Death_of_the_last\\ExplosiveMissle.cpp",
               "RelativeToolTip": "ExplosiveMissle.cpp",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAAQAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABEAAAAWAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-07-11T13:56:13.84Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 1,
               "Title": "BasicMissle.cpp",
               "DocumentMoniker": "C:\\Death_of_the_last\\BasicMissle.cpp",
               "RelativeDocumentMoniker": "BasicMissle.cpp",
               "ToolTip": "C:\\Death_of_the_last\\BasicMissle.cpp",
               "RelativeToolTip": "BasicMissle.cpp",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAQAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACIAAAALAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-07-11T13:04:27.925Z",
               "EditorCaption": ""
@@ -159,53 +163,66 @@
               "RelativeDocumentMoniker": "AOE.cpp",
               "ToolTip": "C:\\Death_of_the_last\\AOE.cpp",
               "RelativeToolTip": "AOE.cpp",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAAQAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAAYAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-07-11T13:56:03.94Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "AimedMissle.cpp",
               "DocumentMoniker": "C:\\Death_of_the_last\\AimedMissle.cpp",
               "RelativeDocumentMoniker": "AimedMissle.cpp",
               "ToolTip": "C:\\Death_of_the_last\\AimedMissle.cpp",
               "RelativeToolTip": "AimedMissle.cpp",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAAXAAAA",
+              "ViewState": "AQIAAAkAAAAAAAAAAAAAACIAAAABAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-07-11T13:56:03.181Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 5,
+              "Title": "AimedMissle.h",
+              "DocumentMoniker": "C:\\Death_of_the_last\\AimedMissle.h",
+              "RelativeDocumentMoniker": "AimedMissle.h",
+              "ToolTip": "C:\\Death_of_the_last\\AimedMissle.h",
+              "RelativeToolTip": "AimedMissle.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABYAAAASAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-07-12T05:09:52.123Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "Player.cpp",
               "DocumentMoniker": "C:\\Death_of_the_last\\Player.cpp",
               "RelativeDocumentMoniker": "Player.cpp",
               "ToolTip": "C:\\Death_of_the_last\\Player.cpp",
               "RelativeToolTip": "Player.cpp",
-              "ViewState": "AQIAAEIAAAAAAAAAAAAAADQAAAAYAAAA",
+              "ViewState": "AQIAABUAAAAAAAAAAAAAACUAAAASAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-07-11T12:43:54.686Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "Game.cpp",
               "DocumentMoniker": "C:\\Death_of_the_last\\Game.cpp",
               "RelativeDocumentMoniker": "Game.cpp",
               "ToolTip": "C:\\Death_of_the_last\\Game.cpp",
               "RelativeToolTip": "Game.cpp",
-              "ViewState": "AQIAAHIXAAAAAAAAAAAAAH8XAAAOAAAA",
+              "ViewState": "AQIAACQYAAAAAAAAAAAAAEAYAAAKAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-05-25T12:58:56.392Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "Game.h",
               "DocumentMoniker": "C:\\Death_of_the_last\\Game.h",
               "RelativeDocumentMoniker": "Game.h",
@@ -213,8 +230,7 @@
               "RelativeToolTip": "Game.h",
               "ViewState": "AQIAAMUAAAAAAAAAAAAQwL8AAAAXAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-05-25T12:58:56.661Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-25T12:58:56.661Z"
             }
           ]
         }

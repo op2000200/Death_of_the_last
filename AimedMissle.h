@@ -20,6 +20,6 @@ private:
 	SpellChar spellChar;
 	SpellState spellState;
 	sf::Sprite sprite;
-	sf::Vector2f target;
+	sf::Vector2f dir;
 };
 

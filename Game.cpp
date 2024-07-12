@@ -5636,7 +5636,7 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 						AMRunUpdatePlayer();
 						AMRunUpdateCamera();
 						AMRunUpdateEnemy();
-						//AMRunUpdateProjectiles();
+						AMRunUpdateProjectiles();
 					}
 
 						void Game::AMRunUpdatePlayer()
@@ -6054,6 +6054,7 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 
 						void Game::AMRunUpdateProjectiles()
 						{
+							//spawn
 							for (int i = 1; i < 10; i++)
 							{
 								if (player[0].getSpellLevel()[i] > 0)
@@ -6070,17 +6071,60 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 											// move all projes in container
 											// create a copy of container to rendering and allow rendering
 											//
-											BasicMissle missle(player[0].getSprite().getPosition(), basicFire, player[0].getSprite().getPosition());
-											basicMissleBuffer.push_back(missle);
 
-											
-
+											sf::Vector2f tarPos(123456789, 123456789);
+											for (int j = 0; j < enemyBuffer.size(); j++)
+											{
+												if (enemyBuffer[j].getType() == EnemyType::Summoner)
+												{
+													for (int k = 0; k < enemyBuffer[j].getBufSize(); k++)
+													{
+														if (abs(enemyBuffer[j].getBufSprite(k).getPosition().x - player[0].getSprite().getPosition().x) < abs(tarPos.x - player[0].getSprite().getPosition().x) and abs(enemyBuffer[j].getBufSprite(k).getPosition().y - player[0].getSprite().getPosition().y) < abs(tarPos.y - player[0].getSprite().getPosition().y))
+														{
+															tarPos = enemyBuffer[j].getBufSprite(k).getPosition();
+														}
+													}
+												}
+												if (abs(enemyBuffer[j].getSprite().getPosition().x - player[0].getSprite().getPosition().x) < abs(tarPos.x - player[0].getSprite().getPosition().x) and abs(enemyBuffer[j].getSprite().getPosition().y - player[0].getSprite().getPosition().y) < abs(tarPos.y - player[0].getSprite().getPosition().y))
+												{
+													tarPos = enemyBuffer[j].getSprite().getPosition();
+												}
+											}
+											if (abs(tarPos.x - player[0].getSprite().getPosition().x) < 1000 and abs(tarPos.y - player[0].getSprite().getPosition().y) < 1000)
+											{
+												BasicMissle missle(player[0].getSprite().getPosition(), basicFire, sf::Vector2f(
+													(tarPos.x - player[0].getSprite().getPosition().x) / (abs(tarPos.x - player[0].getSprite().getPosition().x) + abs(tarPos.y - player[0].getSprite().getPosition().y)),
+													(tarPos.y - player[0].getSprite().getPosition().y) / (abs(tarPos.x - player[0].getSprite().getPosition().x) + abs(tarPos.y - player[0].getSprite().getPosition().y))));
+												basicMissleBuffer.push_back(missle);
+											}							
 										}
 										if (i == 2) //aimed
 										{
-											AimedMissle missle(player[0].getSprite().getPosition(), aimedFire, player[0].getSprite().getPosition());
-											aimedMissleBuffer.push_back(missle);
-
+											sf::Vector2f tarPos(123456789,123456789);
+											for (int j = 0; j < enemyBuffer.size(); j++)
+											{
+												if (enemyBuffer[j].getType() == EnemyType::Summoner)
+												{
+													for (int k = 0; k < enemyBuffer[j].getBufSize(); k++)
+													{
+														if (abs(enemyBuffer[j].getBufSprite(k).getPosition().x - player[0].getSprite().getPosition().x) < abs(tarPos.x - player[0].getSprite().getPosition().x) and abs(enemyBuffer[j].getBufSprite(k).getPosition().y - player[0].getSprite().getPosition().y) < abs(tarPos.y - player[0].getSprite().getPosition().y))
+														{
+															tarPos = enemyBuffer[j].getBufSprite(k).getPosition();
+														}
+													}
+												}
+												if (abs(enemyBuffer[j].getSprite().getPosition().x - player[0].getSprite().getPosition().x) < abs(tarPos.x - player[0].getSprite().getPosition().x) and abs(enemyBuffer[j].getSprite().getPosition().y - player[0].getSprite().getPosition().y) < abs(tarPos.y - player[0].getSprite().getPosition().y))
+												{
+													tarPos = enemyBuffer[j].getSprite().getPosition();
+												}
+											}
+											if (abs(tarPos.x - player[0].getSprite().getPosition().x) < 1000 and abs(tarPos.y - player[0].getSprite().getPosition().y) < 1000)
+											{
+												AimedMissle missle(player[0].getSprite().getPosition(), aimedFire, sf::Vector2f(
+													(tarPos.x - player[0].getSprite().getPosition().x) / (abs(tarPos.x - player[0].getSprite().getPosition().x) + abs(tarPos.y - player[0].getSprite().getPosition().y)),
+													(tarPos.y - player[0].getSprite().getPosition().y) / (abs(tarPos.x - player[0].getSprite().getPosition().x) + abs(tarPos.y - player[0].getSprite().getPosition().y))));
+												aimedMissleBuffer.push_back(missle);
+											}
 										}
 										if (i == 3) //explosive
 										{
@@ -6120,8 +6164,11 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 										}
 										if (i == 9) //aoe
 										{
-											AOE missle(player[0].getSprite().getPosition(), AOEFire, player[0].getSprite().getPosition());
-											aoeBuffer.push_back(missle);
+											if (aoeBuffer.size() < 1)
+											{
+												AOE missle(player[0].getSprite().getPosition(), AOEFire, player[0].getSprite().getPosition());
+												aoeBuffer.push_back(missle);
+											}
 
 										}
 									}
@@ -6130,6 +6177,55 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 										player[0].tickSpellCC(i);
 									}
 								}
+							}
+							//movement
+							{
+								for (int i = 0; i < basicMissleBuffer.size(); i++)
+								{
+									basicMissleBuffer[i].setPos(sf::Vector2f(
+										basicMissleBuffer[i].getSprite().getPosition().x + basicMissleBuffer[i].getChar().speed * (1.f / 1000.f) * (basicMissleBuffer[i].getTar().x),
+										basicMissleBuffer[i].getSprite().getPosition().y + basicMissleBuffer[i].getChar().speed * (1.f / 1000.f) * (basicMissleBuffer[i].getTar().y)
+									));
+									basicMissleBuffer[i].tickLifetime();
+									if (basicMissleBuffer[i].getChar().lifetime < 1)
+									{
+										basicMissleBuffer.erase(basicMissleBuffer.begin() + i);
+									}
+								}
+								sf::Vector2f tarPos(123456789, 123456789);
+								for (int j = 0; j < enemyBuffer.size(); j++)
+								{
+									if (enemyBuffer[j].getType() == EnemyType::Summoner)
+									{
+										for (int k = 0; k < enemyBuffer[j].getBufSize(); k++)
+										{
+											if (abs(enemyBuffer[j].getBufSprite(k).getPosition().x - player[0].getSprite().getPosition().x) < abs(tarPos.x - player[0].getSprite().getPosition().x) and abs(enemyBuffer[j].getBufSprite(k).getPosition().y - player[0].getSprite().getPosition().y) < abs(tarPos.y - player[0].getSprite().getPosition().y))
+											{
+												tarPos = enemyBuffer[j].getBufSprite(k).getPosition();
+											}
+										}
+									}
+									if (abs(enemyBuffer[j].getSprite().getPosition().x - player[0].getSprite().getPosition().x) < abs(tarPos.x - player[0].getSprite().getPosition().x) and abs(enemyBuffer[j].getSprite().getPosition().y - player[0].getSprite().getPosition().y) < abs(tarPos.y - player[0].getSprite().getPosition().y))
+									{
+										tarPos = enemyBuffer[j].getSprite().getPosition();
+									}
+								}
+								for (int i = 0; i < aimedMissleBuffer.size(); i++)
+								{
+									aimedMissleBuffer[i].setTar(sf::Vector2f(
+										(tarPos.x - aimedMissleBuffer[i].getSprite().getPosition().x) / (abs(tarPos.x - aimedMissleBuffer[i].getSprite().getPosition().x) + abs(tarPos.y - aimedMissleBuffer[i].getSprite().getPosition().y)),
+										(tarPos.y - aimedMissleBuffer[i].getSprite().getPosition().y) / (abs(tarPos.x - aimedMissleBuffer[i].getSprite().getPosition().x) + abs(tarPos.y - aimedMissleBuffer[i].getSprite().getPosition().y))));
+									aimedMissleBuffer[i].setPos(sf::Vector2f(
+										aimedMissleBuffer[i].getSprite().getPosition().x + aimedMissleBuffer[i].getChar().speed * (1.f / 1000.f) * (aimedMissleBuffer[i].getTar().x),
+										aimedMissleBuffer[i].getSprite().getPosition().y + aimedMissleBuffer[i].getChar().speed * (1.f / 1000.f) * (aimedMissleBuffer[i].getTar().y)
+									));
+									aimedMissleBuffer[i].tickLifetime();
+									if (aimedMissleBuffer[i].getChar().lifetime < 1)
+									{
+										aimedMissleBuffer.erase(aimedMissleBuffer.begin() + i);
+									}
+								}
+								aoeBuffer[0].setPos(player[0].getSprite().getPosition());
 							}
 							if (!basicMissleBufferReady)
 							{

@@ -5,13 +5,15 @@ AimedMissle::AimedMissle(sf::Vector2f pos, sf::Texture* texture, sf::Vector2f ta
 	sprite.setScale(sf::Vector2f(0.7, 0.7));
 	sprite.setOrigin(sf::Vector2f(texture[0].getSize().x / 2, texture[0].getSize().y / 2));
 	srand(time(0));
-	int buf = rand() % 2;
-	if (buf == 0)
-		buf = -1;
-	sprite.setPosition(sf::Vector2f(
-		pos.x + buf * (rand() % 200 + 500),
-		pos.y + buf * (rand() % 200 + 500)));
-	target = tar;
+	//int buf = rand() % 2;
+	//if (buf == 0)
+	//	buf = -1;
+	//sprite.setPosition(sf::Vector2f(
+	//	pos.x + buf * (rand() % 200 + 500),
+	//	pos.y + buf * (rand() % 200 + 500)));
+
+	sprite.setPosition(pos);
+	dir = tar;
 	spellChar.element = Element::Fire;
 	spellChar.lifetime = 10000;
 	spellChar.speed = 150;
@@ -29,17 +31,23 @@ sf::Sprite AimedMissle::getSprite()
 
 void AimedMissle::setPos(sf::Vector2f pos)
 {
-	sprite.setPosition(pos);
+	sprite.setPosition(pos); 
+	double rot1 = (std::acos((-1 * dir.y) / (std::sqrt(dir.x * dir.x + dir.y * dir.y))) * (180.0 / 3.14));
+	if (dir.x < 0)
+	{
+		rot1 = 360.f - rot1;
+	}
+	sprite.setRotation(rot1);
 }
 
 void AimedMissle::setTar(sf::Vector2f pos)
 {
-	target = pos;
+	dir = pos;
 }
 
 sf::Vector2f AimedMissle::getTar()
 {
-	return target;
+	return dir;
 }
 
 SpellChar AimedMissle::getChar()
@@ -59,7 +67,7 @@ void AimedMissle::resetLength()
 
 void AimedMissle::tickLifetime()
 {
-	spellChar.lifetime++;
+	spellChar.lifetime--;
 }
 
 SpellState AimedMissle::getState()
