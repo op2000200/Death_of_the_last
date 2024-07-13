@@ -27,10 +27,10 @@ Player::Player()
 	characteristics.manaRegen = 0;
 	characteristics.element = Element::Fire;
 	spellLevel = new int[16];
-	spellLevel[1] = 0;
+	spellLevel[1] = 1;
 	spellLevel[2] = 1;
-	spellLevel[3] = 0;
-	spellLevel[4] = 0;
+	spellLevel[3] = 1;
+	spellLevel[4] = 1;
 	spellLevel[5] = 0;
 	spellLevel[6] = 0;
 	spellLevel[7] = 0;
