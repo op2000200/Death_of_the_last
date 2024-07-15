@@ -35,7 +35,7 @@ Player::Player()
 	spellLevel[6] = 0;
 	spellLevel[7] = 0;
 	spellLevel[8] = 0;
-	spellLevel[9] = 1;
+	spellLevel[9] = 0;
 	spellLevel[10] = 0;
 	spellLevel[11] = 0;
 	spellLevel[12] = 0;
@@ -43,10 +43,10 @@ Player::Player()
 	spellLevel[14] = 0;
 	spellLevel[15] = 0;
 	spellCooldown = new int[16];
-	spellCooldown[1] = 3000;
-	spellCooldown[2] = 3000;
-	spellCooldown[3] = 3000;
-	spellCooldown[4] = 3000;
+	spellCooldown[1] = 50;
+	spellCooldown[2] = 50;
+	spellCooldown[3] = 50;
+	spellCooldown[4] = 50;
 	spellCooldown[5] = 10000;
 	spellCooldown[6] = 20000;
 	spellCooldown[7] = 500;
@@ -80,20 +80,20 @@ bool Player::processCommand(Commands command)
 	{
 		sprite.setPosition(sf::Vector2f(
 			sprite.getPosition().x,
-			sprite.getPosition().y - characteristics.speed * (1.f/1000.f)
+			sprite.getPosition().y - characteristics.speed * (1.f/100.f)
 		));
 	}
 	if (command.command == CommandType::MovedLeft)
 	{
 		sprite.setPosition(sf::Vector2f(
-			sprite.getPosition().x - characteristics.speed * (1.f / 1000.f),
+			sprite.getPosition().x - characteristics.speed * (1.f / 100.f),
 			sprite.getPosition().y
 		));
 	}
 	if (command.command == CommandType::MovedRight)
 	{
 		sprite.setPosition(sf::Vector2f(
-			sprite.getPosition().x + characteristics.speed * (1.f / 1000.f),
+			sprite.getPosition().x + characteristics.speed * (1.f / 100.f),
 			sprite.getPosition().y
 		));
 	}
@@ -101,7 +101,7 @@ bool Player::processCommand(Commands command)
 	{
 		sprite.setPosition(sf::Vector2f(
 			sprite.getPosition().x,
-			sprite.getPosition().y + characteristics.speed * (1.f / 1000.f)
+			sprite.getPosition().y + characteristics.speed * (1.f / 100.f)
 		));
 	}
 	return true;

@@ -15,7 +15,7 @@ AimedMissle::AimedMissle(sf::Vector2f pos, sf::Texture* texture, sf::Vector2f ta
 	sprite.setPosition(pos);
 	dir = tar;
 	spellChar.element = Element::Fire;
-	spellChar.lifetime = 10000;
+	spellChar.lifetime = 1000;
 	spellChar.speed = 150;
 	spellChar.number = 1;
 }

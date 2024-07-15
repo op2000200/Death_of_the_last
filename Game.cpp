@@ -385,6 +385,7 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 
 		Type Game::mainMenuScreen()
 		{
+			window.setView(center);
 			sf::sleep(sf::seconds(0.1));
 			sf::Time TimePerFrame = sf::seconds(1.f / 1000.f);
 			sf::Clock clock;
@@ -1331,7 +1332,8 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 	Type Game::playMenu()
 	{
 		window.setActive(false);
-		playMenuState = Type::PlayMenuModeSelector;
+		//playMenuState = Type::PlayMenuModeSelector;
+		playMenuState = Type::PlayMenuArcadeModeRun;
 		std::thread rendering([&] {renderPMMenu(); });
 		rendering.detach();
 		std::thread renderingGame([&] {renderPMGame(); });
@@ -1785,7 +1787,7 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 
 		void Game::renderPMGame()
 		{
-			sf::Time TimePerFrame = sf::seconds(1.f / 100.f);
+			sf::Time TimePerFrame = sf::seconds(1.f / 30.f);
 			sf::Clock clock;
 			while (state == Type::PlayMenu)
 			{
@@ -5355,7 +5357,7 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 				void Game::AMRun()
 				{
 					sf::sleep(sf::seconds(0.1));
-					sf::Time TimePerFrame = sf::seconds(1.f / 1000.f);
+					sf::Time TimePerFrame = sf::seconds(1.f / 100.f);
 					sf::Clock clock;
 					std::thread drawing([&] {AMRunDraw(); });
 					drawing.detach();
@@ -5430,7 +5432,10 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 						}
 						if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 						{
-							playMenuState = Type::PlayMenuArcadeModeCharacterPrepare;
+							//playMenuState = Type::PlayMenuArcadeModeCharacterPrepare;
+							playMenuState = Type::Blank;
+							state = Type::MainMenu;
+							mainMenuState = Type::MainMenuGeneral;
 						}
 					}
 
@@ -5665,7 +5670,7 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 							{
 								//spawn
 								{
-									if (enemyTimer > 1000 and enemyBuffer.size() < 2000)
+									if (enemyTimer > 10 and enemyBuffer.size() < 4000)
 									{
 										enemyTimer = 0;
 										int x, y, x1, y1;
@@ -5714,7 +5719,7 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 																		}
 																		if (enType == 3)
 																		{
-																			enemyType = EnemyType::Shooter;
+																			enemyType = EnemyType::Standart;
 																		}
 																		int elType = rand() % 10;
 																		if (elType < 5)
@@ -5786,8 +5791,8 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 											if (enemyBuffer[i].getState() == EnemyState::Moving)
 											{
 												enemyBuffer[i].setPos(sf::Vector2f(
-													enemyBuffer[i].getSprite().getPosition().x + enemyBuffer[i].getChar().speed * (1.f / 1000.f) * ((enemyBuffer[i].getDest().x - enemyBuffer[i].getSprite().getPosition().x) / (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getSprite().getPosition().x) + abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getSprite().getPosition().y))),
-													enemyBuffer[i].getSprite().getPosition().y + enemyBuffer[i].getChar().speed * (1.f / 1000.f) * ((enemyBuffer[i].getDest().y - enemyBuffer[i].getSprite().getPosition().y) / (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getSprite().getPosition().x) + abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getSprite().getPosition().y)))
+													enemyBuffer[i].getSprite().getPosition().x + enemyBuffer[i].getChar().speed * (1.f / 100.f) * ((enemyBuffer[i].getDest().x - enemyBuffer[i].getSprite().getPosition().x) / (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getSprite().getPosition().x) + abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getSprite().getPosition().y))),
+													enemyBuffer[i].getSprite().getPosition().y + enemyBuffer[i].getChar().speed * (1.f / 100.f) * ((enemyBuffer[i].getDest().y - enemyBuffer[i].getSprite().getPosition().y) / (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getSprite().getPosition().x) + abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getSprite().getPosition().y)))
 												));
 												if (abs(enemyBuffer[i].getSprite().getPosition().x - enemyBuffer[i].getDest().x) < 10 and abs(enemyBuffer[i].getSprite().getPosition().y - enemyBuffer[i].getDest().y) < 10)
 												{
@@ -5813,8 +5818,8 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 											if (enemyBuffer[i].getState() == EnemyState::Moving)
 											{
 												enemyBuffer[i].setPos(sf::Vector2f(
-													enemyBuffer[i].getSprite().getPosition().x + enemyBuffer[i].getChar().speed * (1.f / 1000.f) * ((enemyBuffer[i].getDest().x - enemyBuffer[i].getSprite().getPosition().x) / (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getSprite().getPosition().x) + abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getSprite().getPosition().y))),
-													enemyBuffer[i].getSprite().getPosition().y + enemyBuffer[i].getChar().speed * (1.f / 1000.f) * ((enemyBuffer[i].getDest().y - enemyBuffer[i].getSprite().getPosition().y) / (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getSprite().getPosition().x) + abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getSprite().getPosition().y)))
+													enemyBuffer[i].getSprite().getPosition().x + enemyBuffer[i].getChar().speed * (1.f / 100.f) * ((enemyBuffer[i].getDest().x - enemyBuffer[i].getSprite().getPosition().x) / (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getSprite().getPosition().x) + abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getSprite().getPosition().y))),
+													enemyBuffer[i].getSprite().getPosition().y + enemyBuffer[i].getChar().speed * (1.f / 100.f) * ((enemyBuffer[i].getDest().y - enemyBuffer[i].getSprite().getPosition().y) / (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getSprite().getPosition().x) + abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getSprite().getPosition().y)))
 												));
 												if (abs(enemyBuffer[i].getSprite().getPosition().x - enemyBuffer[i].getDest().x) < 10 and abs(enemyBuffer[i].getSprite().getPosition().y - enemyBuffer[i].getDest().y) < 10)
 												{
@@ -5913,8 +5918,8 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 												else
 												{
 													enemyBuffer[i].setBufPos(j, sf::Vector2f(
-														enemyBuffer[i].getBufSprite(j).getPosition().x + enemyBuffer[i].getBufChar(j).speed * (1.f / 1000.f) * ((enemyBuffer[i].getBufDest(j).x - enemyBuffer[i].getBufSprite(j).getPosition().x) / (abs(enemyBuffer[i].getBufDest(j).x - enemyBuffer[i].getBufSprite(j).getPosition().x) + abs(enemyBuffer[i].getBufDest(j).y - enemyBuffer[i].getBufSprite(j).getPosition().y))),
-														enemyBuffer[i].getBufSprite(j).getPosition().y + enemyBuffer[i].getBufChar(j).speed * (1.f / 1000.f) * ((enemyBuffer[i].getBufDest(j).y - enemyBuffer[i].getBufSprite(j).getPosition().y) / (abs(enemyBuffer[i].getBufDest(j).x - enemyBuffer[i].getBufSprite(j).getPosition().x) + abs(enemyBuffer[i].getBufDest(j).y - enemyBuffer[i].getBufSprite(j).getPosition().y)))
+														enemyBuffer[i].getBufSprite(j).getPosition().x + enemyBuffer[i].getBufChar(j).speed * (1.f / 100.f) * ((enemyBuffer[i].getBufDest(j).x - enemyBuffer[i].getBufSprite(j).getPosition().x) / (abs(enemyBuffer[i].getBufDest(j).x - enemyBuffer[i].getBufSprite(j).getPosition().x) + abs(enemyBuffer[i].getBufDest(j).y - enemyBuffer[i].getBufSprite(j).getPosition().y))),
+														enemyBuffer[i].getBufSprite(j).getPosition().y + enemyBuffer[i].getBufChar(j).speed * (1.f / 100.f) * ((enemyBuffer[i].getBufDest(j).y - enemyBuffer[i].getBufSprite(j).getPosition().y) / (abs(enemyBuffer[i].getBufDest(j).x - enemyBuffer[i].getBufSprite(j).getPosition().x) + abs(enemyBuffer[i].getBufDest(j).y - enemyBuffer[i].getBufSprite(j).getPosition().y)))
 													));
 												}
 											}
@@ -5937,8 +5942,8 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 											if (enemyBuffer[i].getState() == EnemyState::Moving)
 											{
 												enemyBuffer[i].setPos(sf::Vector2f(
-													enemyBuffer[i].getSprite().getPosition().x + enemyBuffer[i].getChar().speed * (1.f / 1000.f) * ((enemyBuffer[i].getDest().x - enemyBuffer[i].getSprite().getPosition().x) / (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getSprite().getPosition().x) + abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getSprite().getPosition().y))),
-													enemyBuffer[i].getSprite().getPosition().y + enemyBuffer[i].getChar().speed * (1.f / 1000.f) * ((enemyBuffer[i].getDest().y - enemyBuffer[i].getSprite().getPosition().y) / (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getSprite().getPosition().x) + abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getSprite().getPosition().y)))
+													enemyBuffer[i].getSprite().getPosition().x + enemyBuffer[i].getChar().speed * (1.f / 100.f) * ((enemyBuffer[i].getDest().x - enemyBuffer[i].getSprite().getPosition().x) / (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getSprite().getPosition().x) + abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getSprite().getPosition().y))),
+													enemyBuffer[i].getSprite().getPosition().y + enemyBuffer[i].getChar().speed * (1.f / 100.f) * ((enemyBuffer[i].getDest().y - enemyBuffer[i].getSprite().getPosition().y) / (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getSprite().getPosition().x) + abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getSprite().getPosition().y)))
 												));
 												if (abs(enemyBuffer[i].getSprite().getPosition().x - enemyBuffer[i].getDest().x) < 10 and abs(enemyBuffer[i].getSprite().getPosition().y - enemyBuffer[i].getDest().y) < 10)
 												{
@@ -5954,8 +5959,8 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 											{
 												enemyBuffer[i].setDest(player[0].getSprite().getPosition());
 												enemyBuffer[i].setPos(sf::Vector2f(
-													enemyBuffer[i].getSprite().getPosition().x + enemyBuffer[i].getChar().speed * (1.f / 1000.f) * ((enemyBuffer[i].getDest().x - enemyBuffer[i].getSprite().getPosition().x) / (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getSprite().getPosition().x) + abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getSprite().getPosition().y))),
-													enemyBuffer[i].getSprite().getPosition().y + enemyBuffer[i].getChar().speed * (1.f / 1000.f) * ((enemyBuffer[i].getDest().y - enemyBuffer[i].getSprite().getPosition().y) / (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getSprite().getPosition().x) + abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getSprite().getPosition().y)))
+													enemyBuffer[i].getSprite().getPosition().x + enemyBuffer[i].getChar().speed * (1.f / 100.f) * ((enemyBuffer[i].getDest().x - enemyBuffer[i].getSprite().getPosition().x) / (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getSprite().getPosition().x) + abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getSprite().getPosition().y))),
+													enemyBuffer[i].getSprite().getPosition().y + enemyBuffer[i].getChar().speed * (1.f / 100.f) * ((enemyBuffer[i].getDest().y - enemyBuffer[i].getSprite().getPosition().y) / (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getSprite().getPosition().x) + abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getSprite().getPosition().y)))
 												));
 											}
 										}
@@ -5977,8 +5982,8 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 											if (enemyBuffer[i].getState() == EnemyState::Moving)
 											{
 												enemyBuffer[i].setPos(sf::Vector2f(
-													enemyBuffer[i].getSprite().getPosition().x + enemyBuffer[i].getChar().speed * (1.f / 1000.f) * ((enemyBuffer[i].getDest().x - enemyBuffer[i].getSprite().getPosition().x) / (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getSprite().getPosition().x) + abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getSprite().getPosition().y))),
-													enemyBuffer[i].getSprite().getPosition().y + enemyBuffer[i].getChar().speed * (1.f / 1000.f) * ((enemyBuffer[i].getDest().y - enemyBuffer[i].getSprite().getPosition().y) / (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getSprite().getPosition().x) + abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getSprite().getPosition().y)))
+													enemyBuffer[i].getSprite().getPosition().x + enemyBuffer[i].getChar().speed * (1.f / 100.f) * ((enemyBuffer[i].getDest().x - enemyBuffer[i].getSprite().getPosition().x) / (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getSprite().getPosition().x) + abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getSprite().getPosition().y))),
+													enemyBuffer[i].getSprite().getPosition().y + enemyBuffer[i].getChar().speed * (1.f / 100.f) * ((enemyBuffer[i].getDest().y - enemyBuffer[i].getSprite().getPosition().y) / (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getSprite().getPosition().x) + abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getSprite().getPosition().y)))
 												));
 												if (abs(enemyBuffer[i].getSprite().getPosition().x - enemyBuffer[i].getDest().x) < 10 and abs(enemyBuffer[i].getSprite().getPosition().y - enemyBuffer[i].getDest().y) < 10)
 												{
@@ -5998,8 +6003,8 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 											if (enemyBuffer[i].getState() == EnemyState::Chasing)
 											{
 												enemyBuffer[i].setPos(sf::Vector2f(
-													enemyBuffer[i].getSprite().getPosition().x + enemyBuffer[i].getChar().speed * (1.f / 1000.f) * ((enemyBuffer[i].getDest().x - enemyBuffer[i].getSprite().getPosition().x) / (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getSprite().getPosition().x) + abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getSprite().getPosition().y))),
-													enemyBuffer[i].getSprite().getPosition().y + enemyBuffer[i].getChar().speed * (1.f / 1000.f) * ((enemyBuffer[i].getDest().y - enemyBuffer[i].getSprite().getPosition().y) / (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getSprite().getPosition().x) + abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getSprite().getPosition().y)))
+													enemyBuffer[i].getSprite().getPosition().x + enemyBuffer[i].getChar().speed * (1.f / 100.f) * ((enemyBuffer[i].getDest().x - enemyBuffer[i].getSprite().getPosition().x) / (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getSprite().getPosition().x) + abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getSprite().getPosition().y))),
+													enemyBuffer[i].getSprite().getPosition().y + enemyBuffer[i].getChar().speed * (1.f / 100.f) * ((enemyBuffer[i].getDest().y - enemyBuffer[i].getSprite().getPosition().y) / (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getSprite().getPosition().x) + abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getSprite().getPosition().y)))
 												));
 												if (abs(enemyBuffer[i].getSprite().getPosition().x - enemyBuffer[i].getDest().x) < 10 and abs(enemyBuffer[i].getSprite().getPosition().y - enemyBuffer[i].getDest().y) < 10)
 												{
@@ -6025,7 +6030,7 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 												for (int i = 0; i < enemyMissle.size(); i++)
 												{
 													enemyMissle[i].setPos(sf::Vector2f(
-														enemyMissle[i].getSprite().getPosition().x + 200 * (1.f / 1000.f) * enemyMissle[i].getDir().x,
+														enemyMissle[i].getSprite().getPosition().x + 200 * (1.f / 100.f) * enemyMissle[i].getDir().x,
 														enemyMissle[i].getSprite().getPosition().y + 200 * (1.f / 1000.f) * enemyMissle[i].getDir().y
 													));
 													enemyMissle[i].setHealth(enemyMissle[i].getChar().healthCurrent - 1);
@@ -6096,7 +6101,7 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 													(tarPos.x - player[0].getSprite().getPosition().x) / (abs(tarPos.x - player[0].getSprite().getPosition().x) + abs(tarPos.y - player[0].getSprite().getPosition().y)),
 													(tarPos.y - player[0].getSprite().getPosition().y) / (abs(tarPos.x - player[0].getSprite().getPosition().x) + abs(tarPos.y - player[0].getSprite().getPosition().y))));
 												basicMissleBuffer.push_back(missle);
-											}							
+											}
 										}
 										if (i == 2) //aimed
 										{
@@ -6225,17 +6230,47 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 								}
 							}
 							//movement
+							if (true)
 							{
 								for (int i = 0; i < basicMissleBuffer.size(); i++)
 								{
 									basicMissleBuffer[i].setPos(sf::Vector2f(
-										basicMissleBuffer[i].getSprite().getPosition().x + basicMissleBuffer[i].getChar().speed * (1.f / 1000.f) * (basicMissleBuffer[i].getTar().x),
-										basicMissleBuffer[i].getSprite().getPosition().y + basicMissleBuffer[i].getChar().speed * (1.f / 1000.f) * (basicMissleBuffer[i].getTar().y)
+										basicMissleBuffer[i].getSprite().getPosition().x + basicMissleBuffer[i].getChar().speed * (1.f / 100.f) * (basicMissleBuffer[i].getTar().x),
+										basicMissleBuffer[i].getSprite().getPosition().y + basicMissleBuffer[i].getChar().speed * (1.f / 100.f) * (basicMissleBuffer[i].getTar().y)
 									));
 									basicMissleBuffer[i].tickLifetime();
 									if (basicMissleBuffer[i].getChar().lifetime < 1)
 									{
 										basicMissleBuffer.erase(basicMissleBuffer.begin() + i);
+									}
+									sf::Vector2f tarPos(123456789, 123456789);
+									int ind = -1;
+									for (int j = 0; j < enemyBuffer.size(); j++)
+									{
+										if (enemyBuffer[j].getType() == EnemyType::Summoner)
+										{
+											for (int k = 0; k < enemyBuffer[j].getBufSize(); k++)
+											{
+												if (abs(enemyBuffer[j].getBufSprite(k).getPosition().x - basicMissleBuffer[i].getSprite().getPosition().x) < abs(tarPos.x - basicMissleBuffer[i].getSprite().getPosition().x) and abs(enemyBuffer[j].getBufSprite(k).getPosition().y - basicMissleBuffer[i].getSprite().getPosition().y) < abs(tarPos.y - basicMissleBuffer[i].getSprite().getPosition().y))
+												{
+													tarPos = enemyBuffer[j].getBufSprite(k).getPosition();
+													ind = j;
+												}
+											}
+										}
+										if (abs(enemyBuffer[j].getSprite().getPosition().x - basicMissleBuffer[i].getSprite().getPosition().x) < abs(tarPos.x - basicMissleBuffer[i].getSprite().getPosition().x) and abs(enemyBuffer[j].getSprite().getPosition().y - basicMissleBuffer[i].getSprite().getPosition().y) < abs(tarPos.y - basicMissleBuffer[i].getSprite().getPosition().y))
+										{
+											tarPos = enemyBuffer[j].getSprite().getPosition();
+											ind = j;
+										}
+										if (abs(tarPos.x - basicMissleBuffer[i].getSprite().getPosition().x) < (basicMissleBuffer[i].getSprite().getScale().x * basicMissleBuffer[i].getSprite().getTexture()->getSize().x / 2) and abs(tarPos.y - basicMissleBuffer[i].getSprite().getPosition().y) < (basicMissleBuffer[i].getSprite().getScale().y * basicMissleBuffer[i].getSprite().getTexture()->getSize().y / 2))
+										{
+											enemyBuffer.erase(enemyBuffer.begin() + ind);
+											//while (basicMissleBuffer[i].getChar().lifetime > 1)
+											//{
+											//	basicMissleBuffer[i].tickLifetime();
+											//}
+										}
 									}
 								}
 								sf::Vector2f tarPos(123456789, 123456789);
@@ -6262,40 +6297,127 @@ bool Game::isHover(sf::Vector2i mousePos, sf::Vector2f objectPos, sf::Vector2f o
 										(tarPos.x - aimedMissleBuffer[i].getSprite().getPosition().x) / (abs(tarPos.x - aimedMissleBuffer[i].getSprite().getPosition().x) + abs(tarPos.y - aimedMissleBuffer[i].getSprite().getPosition().y)),
 										(tarPos.y - aimedMissleBuffer[i].getSprite().getPosition().y) / (abs(tarPos.x - aimedMissleBuffer[i].getSprite().getPosition().x) + abs(tarPos.y - aimedMissleBuffer[i].getSprite().getPosition().y))));
 									aimedMissleBuffer[i].setPos(sf::Vector2f(
-										aimedMissleBuffer[i].getSprite().getPosition().x + aimedMissleBuffer[i].getChar().speed * (1.f / 1000.f) * (aimedMissleBuffer[i].getTar().x),
-										aimedMissleBuffer[i].getSprite().getPosition().y + aimedMissleBuffer[i].getChar().speed * (1.f / 1000.f) * (aimedMissleBuffer[i].getTar().y)
+										aimedMissleBuffer[i].getSprite().getPosition().x + aimedMissleBuffer[i].getChar().speed * (1.f / 100.f) * (aimedMissleBuffer[i].getTar().x),
+										aimedMissleBuffer[i].getSprite().getPosition().y + aimedMissleBuffer[i].getChar().speed * (1.f / 100.f) * (aimedMissleBuffer[i].getTar().y)
 									));
 									aimedMissleBuffer[i].tickLifetime();
 									if (aimedMissleBuffer[i].getChar().lifetime < 1)
 									{
 										aimedMissleBuffer.erase(aimedMissleBuffer.begin() + i);
 									}
+									sf::Vector2f tarPos(123456789, 123456789);
+									int ind = -1;
+									for (int j = 0; j < enemyBuffer.size(); j++)
+									{
+										if (enemyBuffer[j].getType() == EnemyType::Summoner)
+										{
+											for (int k = 0; k < enemyBuffer[j].getBufSize(); k++)
+											{
+												if (abs(enemyBuffer[j].getBufSprite(k).getPosition().x - aimedMissleBuffer[i].getSprite().getPosition().x) < abs(tarPos.x - aimedMissleBuffer[i].getSprite().getPosition().x) and abs(enemyBuffer[j].getBufSprite(k).getPosition().y - aimedMissleBuffer[i].getSprite().getPosition().y) < abs(tarPos.y - aimedMissleBuffer[i].getSprite().getPosition().y))
+												{
+													tarPos = enemyBuffer[j].getBufSprite(k).getPosition();
+													ind = j;
+												}
+											}
+										}
+										if (abs(enemyBuffer[j].getSprite().getPosition().x - aimedMissleBuffer[i].getSprite().getPosition().x) < abs(tarPos.x - aimedMissleBuffer[i].getSprite().getPosition().x) and abs(enemyBuffer[j].getSprite().getPosition().y - aimedMissleBuffer[i].getSprite().getPosition().y) < abs(tarPos.y - aimedMissleBuffer[i].getSprite().getPosition().y))
+										{
+											tarPos = enemyBuffer[j].getSprite().getPosition();
+											ind = j;
+										}
+										if (abs(tarPos.x - aimedMissleBuffer[i].getSprite().getPosition().x) < (aimedMissleBuffer[i].getSprite().getScale().x * aimedMissleBuffer[i].getSprite().getTexture()->getSize().x / 2) and abs(tarPos.y - aimedMissleBuffer[i].getSprite().getPosition().y) < (aimedMissleBuffer[i].getSprite().getScale().y * aimedMissleBuffer[i].getSprite().getTexture()->getSize().y / 2))
+										{
+											enemyBuffer.erase(enemyBuffer.begin() + ind);
+											//while (aimedMissleBuffer[i].getChar().lifetime > 1)
+											//{
+											//	aimedMissleBuffer[i].tickLifetime();
+											//}
+										}
+									}
 								}
 								for (int i = 0; i < explosiveMissleBuffer.size(); i++)
 								{
 									explosiveMissleBuffer[i].setPos(sf::Vector2f(
-										explosiveMissleBuffer[i].getSprite().getPosition().x + explosiveMissleBuffer[i].getChar().speed * (1.f / 1000.f) * (explosiveMissleBuffer[i].getTar().x),
-										explosiveMissleBuffer[i].getSprite().getPosition().y + explosiveMissleBuffer[i].getChar().speed * (1.f / 1000.f) * (explosiveMissleBuffer[i].getTar().y)
+										explosiveMissleBuffer[i].getSprite().getPosition().x + explosiveMissleBuffer[i].getChar().speed * (1.f / 100.f) * (explosiveMissleBuffer[i].getTar().x),
+										explosiveMissleBuffer[i].getSprite().getPosition().y + explosiveMissleBuffer[i].getChar().speed * (1.f / 100.f) * (explosiveMissleBuffer[i].getTar().y)
 									));
 									explosiveMissleBuffer[i].tickLifetime();
 									if (explosiveMissleBuffer[i].getChar().lifetime < 1)
 									{
 										explosiveMissleBuffer.erase(explosiveMissleBuffer.begin() + i);
 									}
+									sf::Vector2f tarPos(123456789, 123456789);
+									int ind = -1;
+									for (int j = 0; j < enemyBuffer.size(); j++)
+									{
+										if (enemyBuffer[j].getType() == EnemyType::Summoner)
+										{
+											for (int k = 0; k < enemyBuffer[j].getBufSize(); k++)
+											{
+												if (abs(enemyBuffer[j].getBufSprite(k).getPosition().x - explosiveMissleBuffer[i].getSprite().getPosition().x) < abs(tarPos.x - explosiveMissleBuffer[i].getSprite().getPosition().x) and abs(enemyBuffer[j].getBufSprite(k).getPosition().y - explosiveMissleBuffer[i].getSprite().getPosition().y) < abs(tarPos.y - explosiveMissleBuffer[i].getSprite().getPosition().y))
+												{
+													tarPos = enemyBuffer[j].getBufSprite(k).getPosition();
+													ind = j;
+												}
+											}
+										}
+										if (abs(enemyBuffer[j].getSprite().getPosition().x - explosiveMissleBuffer[i].getSprite().getPosition().x) < abs(tarPos.x - explosiveMissleBuffer[i].getSprite().getPosition().x) and abs(enemyBuffer[j].getSprite().getPosition().y - explosiveMissleBuffer[i].getSprite().getPosition().y) < abs(tarPos.y - explosiveMissleBuffer[i].getSprite().getPosition().y))
+										{
+											tarPos = enemyBuffer[j].getSprite().getPosition();
+											ind = j;
+										}
+										if (abs(tarPos.x - explosiveMissleBuffer[i].getSprite().getPosition().x) < (explosiveMissleBuffer[i].getSprite().getScale().x * explosiveMissleBuffer[i].getSprite().getTexture()->getSize().x / 2) and abs(tarPos.y - explosiveMissleBuffer[i].getSprite().getPosition().y) < (explosiveMissleBuffer[i].getSprite().getScale().y * explosiveMissleBuffer[i].getSprite().getTexture()->getSize().y / 2))
+										{
+											enemyBuffer.erase(enemyBuffer.begin() + ind);
+											//while (explosiveMissleBuffer[i].getChar().lifetime > 1)
+											//{
+											//	explosiveMissleBuffer[i].tickLifetime();
+											//}
+										}
+									}
 								}
 								for (int i = 0; i < fastMissleBuffer.size(); i++)
 								{
 									fastMissleBuffer[i].setPos(sf::Vector2f(
-										fastMissleBuffer[i].getSprite().getPosition().x + fastMissleBuffer[i].getChar().speed * (1.f / 1000.f) * (fastMissleBuffer[i].getTar().x),
-										fastMissleBuffer[i].getSprite().getPosition().y + fastMissleBuffer[i].getChar().speed * (1.f / 1000.f) * (fastMissleBuffer[i].getTar().y)
+										fastMissleBuffer[i].getSprite().getPosition().x + fastMissleBuffer[i].getChar().speed * (1.f / 100.f) * (fastMissleBuffer[i].getTar().x),
+										fastMissleBuffer[i].getSprite().getPosition().y + fastMissleBuffer[i].getChar().speed * (1.f / 100.f) * (fastMissleBuffer[i].getTar().y)
 									));
 									fastMissleBuffer[i].tickLifetime();
 									if (fastMissleBuffer[i].getChar().lifetime < 1)
 									{
 										fastMissleBuffer.erase(fastMissleBuffer.begin() + i);
 									}
+									sf::Vector2f tarPos(123456789, 123456789);
+									int ind = -1;
+									for (int j = 0; j < enemyBuffer.size(); j++)
+									{
+										if (enemyBuffer[j].getType() == EnemyType::Summoner)
+										{
+											for (int k = 0; k < enemyBuffer[j].getBufSize(); k++)
+											{
+												if (abs(enemyBuffer[j].getBufSprite(k).getPosition().x - fastMissleBuffer[i].getSprite().getPosition().x) < abs(tarPos.x - fastMissleBuffer[i].getSprite().getPosition().x) and abs(enemyBuffer[j].getBufSprite(k).getPosition().y - fastMissleBuffer[i].getSprite().getPosition().y) < abs(tarPos.y - fastMissleBuffer[i].getSprite().getPosition().y))
+												{
+													tarPos = enemyBuffer[j].getBufSprite(k).getPosition();
+													ind = j;
+												}
+											}
+										}
+										if (abs(enemyBuffer[j].getSprite().getPosition().x - fastMissleBuffer[i].getSprite().getPosition().x) < abs(tarPos.x - fastMissleBuffer[i].getSprite().getPosition().x) and abs(enemyBuffer[j].getSprite().getPosition().y - fastMissleBuffer[i].getSprite().getPosition().y) < abs(tarPos.y - fastMissleBuffer[i].getSprite().getPosition().y))
+										{
+											tarPos = enemyBuffer[j].getSprite().getPosition();
+											ind = j;
+										}
+										if (abs(tarPos.x - fastMissleBuffer[i].getSprite().getPosition().x) < (fastMissleBuffer[i].getSprite().getScale().x * fastMissleBuffer[i].getSprite().getTexture()->getSize().x / 2) and abs(tarPos.y - fastMissleBuffer[i].getSprite().getPosition().y) < (fastMissleBuffer[i].getSprite().getScale().y * fastMissleBuffer[i].getSprite().getTexture()->getSize().y / 2))
+										{
+											enemyBuffer.erase(enemyBuffer.begin() + ind);
+											//while (fastMissleBuffer[i].getChar().lifetime > 1)
+											//{
+											//	fastMissleBuffer[i].tickLifetime();
+											//}
+										}
+									}
 								}
-								aoeBuffer[0].setPos(player[0].getSprite().getPosition());
+								//aoeBuffer[0].setPos(player[0].getSprite().getPosition());
 							}
 							if (!basicMissleBufferReady)
 							{
