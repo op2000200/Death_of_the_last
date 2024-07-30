@@ -5,6 +5,14 @@
     {
       "AbsoluteMoniker": "D:0:0:{53637052-1056-49FA-8AF6-BCF893AE5232}|Death_of_the_last.vcxproj|C:\\Death_of_the_last\\start.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{53637052-1056-49FA-8AF6-BCF893AE5232}|Death_of_the_last.vcxproj|solutionrelative:start.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Death_of_the_last\\old\\Game.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:old\\Game.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{53637052-1056-49FA-8AF6-BCF893AE5232}|Death_of_the_last.vcxproj|C:\\Death_of_the_last\\Includes.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{53637052-1056-49FA-8AF6-BCF893AE5232}|Death_of_the_last.vcxproj|solutionrelative:Includes.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -14,8 +22,34 @@
       "DocumentGroups": [
         {
           "DockedWidth": 67,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 2,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Game.cpp",
+              "DocumentMoniker": "C:\\Death_of_the_last\\old\\Game.cpp",
+              "RelativeDocumentMoniker": "old\\Game.cpp",
+              "ToolTip": "C:\\Death_of_the_last\\old\\Game.cpp",
+              "RelativeToolTip": "old\\Game.cpp",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-07-24T10:09:12.271Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Includes.h",
+              "DocumentMoniker": "C:\\Death_of_the_last\\Includes.h",
+              "RelativeDocumentMoniker": "Includes.h",
+              "ToolTip": "C:\\Death_of_the_last\\Includes.h",
+              "RelativeToolTip": "Includes.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAAUAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-07-24T09:58:36.337Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
@@ -24,7 +58,7 @@
               "RelativeDocumentMoniker": "start.cpp",
               "ToolTip": "C:\\Death_of_the_last\\start.cpp",
               "RelativeToolTip": "start.cpp",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAAAAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABcAAAABAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-07-24T09:43:37.559Z",
               "EditorCaption": ""

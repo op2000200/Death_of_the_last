@@ -143,65 +143,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="AimedMissle.cpp" />
-    <ClCompile Include="AOE.cpp" />
-    <ClCompile Include="BasicMissle.cpp" />
-    <ClCompile Include="BasicMissleCold.cpp" />
-    <ClCompile Include="Bullet.cpp" />
-    <ClCompile Include="button.cpp" />
-    <ClCompile Include="Config.cpp" />
-    <ClCompile Include="DimensionalTravel.cpp" />
-    <ClCompile Include="Enemy.cpp" />
-    <ClCompile Include="EnemyMissle.cpp" />
-    <ClCompile Include="ExplosiveMissle.cpp" />
-    <ClCompile Include="FastMissle.cpp" />
-    <ClCompile Include="ForceField.cpp" />
-    <ClCompile Include="Game.cpp" />
-    <ClCompile Include="LiveShield.cpp" />
-    <ClCompile Include="Mana.cpp" />
-    <ClCompile Include="ManaShield.cpp" />
-    <ClCompile Include="ManaStrike.cpp" />
-    <ClCompile Include="Meteor.cpp" />
-    <ClCompile Include="Player.cpp" />
-    <ClCompile Include="RenderQueue.cpp" />
-    <ClCompile Include="SprayOrb.cpp" />
-    <ClCompile Include="SprayOrbSmall.cpp" />
-    <ClCompile Include="Sprint.cpp" />
-    <ClCompile Include="StandartEnemy.cpp" />
     <ClCompile Include="start.cpp" />
-    <ClCompile Include="StoneSkin.cpp" />
-    <ClCompile Include="Tile.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AimedMissle.h" />
-    <ClInclude Include="AOE.h" />
-    <ClInclude Include="BasicMissle.h" />
-    <ClInclude Include="BasicMissleCold.h" />
-    <ClInclude Include="Bullet.h" />
-    <ClInclude Include="button.h" />
-    <ClInclude Include="Config.h" />
-    <ClInclude Include="DimensionalTravel.h" />
-    <ClInclude Include="Enemy.h" />
-    <ClInclude Include="EnemyMissle.h" />
-    <ClInclude Include="Enums.h" />
-    <ClInclude Include="ExplosiveMissle.h" />
-    <ClInclude Include="FastMissle.h" />
-    <ClInclude Include="ForceField.h" />
-    <ClInclude Include="Game.h" />
-    <ClInclude Include="LiveShield.h" />
-    <ClInclude Include="Mana.h" />
-    <ClInclude Include="ManaShield.h" />
-    <ClInclude Include="ManaStrike.h" />
-    <ClInclude Include="Meteor.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="RenderQueue.h" />
-    <ClInclude Include="SprayOrb.h" />
-    <ClInclude Include="SprayOrbSmall.h" />
-    <ClInclude Include="Sprint.h" />
-    <ClInclude Include="StandartEnemy.h" />
-    <ClInclude Include="StoneSkin.h" />
-    <ClInclude Include="Structures.h" />
-    <ClInclude Include="Tile.h" />
+    <ClInclude Include="Includes.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
