@@ -8,9 +8,57 @@ Tile::Tile(TileType tileType, int pos_x, int pos_y, int index_x, int index_y, in
 {
     switch (tileType)
     {
-        case TileType::Level:
+        case TileType::LevelRegular:
+        {
+            body.setFillColor(sf::Color::Red);
+            body.setSize(sf::Vector2f(side, side));
+            body.setOrigin(sf::Vector2f(side / 2, side / 2));
+            hitbox.setSize(sf::Vector2f(side - 2, side - 2));
+            hitbox.setOrigin(sf::Vector2f((side - 2) / 2, (side - 2) / 2));
+            spawnEnemies();
+            break;
+        }
+        case TileType::LevelQizz:
         {
             body.setFillColor(sf::Color::Blue);
+            body.setSize(sf::Vector2f(side, side));
+            body.setOrigin(sf::Vector2f(side / 2, side / 2));
+            hitbox.setSize(sf::Vector2f(side - 2, side - 2));
+            hitbox.setOrigin(sf::Vector2f((side - 2) / 2, (side - 2) / 2));
+            spawnChallenge();
+            break;
+        }
+        case TileType::LevelReward:
+        {
+            body.setFillColor(sf::Color::Yellow);
+            body.setSize(sf::Vector2f(side, side));
+            body.setOrigin(sf::Vector2f(side / 2, side / 2));
+            hitbox.setSize(sf::Vector2f(side - 2, side - 2));
+            hitbox.setOrigin(sf::Vector2f((side - 2) / 2, (side - 2) / 2));
+            spawnReward();
+            break;
+        }
+        case TileType::LevelEmpty:
+        {
+            body.setFillColor(sf::Color::Green);
+            body.setSize(sf::Vector2f(side, side));
+            body.setOrigin(sf::Vector2f(side / 2, side / 2));
+            hitbox.setSize(sf::Vector2f(side - 2, side - 2));
+            hitbox.setOrigin(sf::Vector2f((side - 2) / 2, (side - 2) / 2));
+            break;
+        }
+        case TileType::LevelStairs:
+        {
+            body.setFillColor(sf::Color::Cyan);
+            body.setSize(sf::Vector2f(side, side));
+            body.setOrigin(sf::Vector2f(side / 2, side / 2));
+            hitbox.setSize(sf::Vector2f(side - 2, side - 2));
+            hitbox.setOrigin(sf::Vector2f((side - 2) / 2, (side - 2) / 2));
+            break;
+        }
+        case TileType::LevelTeleport:
+        {
+            body.setFillColor(sf::Color::Magenta);
             body.setSize(sf::Vector2f(side, side));
             body.setOrigin(sf::Vector2f(side / 2, side / 2));
             hitbox.setSize(sf::Vector2f(side - 2, side - 2));
@@ -19,7 +67,7 @@ Tile::Tile(TileType tileType, int pos_x, int pos_y, int index_x, int index_y, in
         }
         case TileType::Central:
         {
-            body.setFillColor(sf::Color::Yellow);
+            body.setFillColor(sf::Color::White);
             body.setSize(sf::Vector2f(side, side));
             body.setOrigin(sf::Vector2f(side / 2, side / 2));
             hitbox.setSize(sf::Vector2f(side - 2, side - 2));
@@ -28,7 +76,7 @@ Tile::Tile(TileType tileType, int pos_x, int pos_y, int index_x, int index_y, in
         }
         case TileType::CorridorV:
         {
-            body.setFillColor(sf::Color::Green);
+            body.setFillColor(sf::Color::White);
             body.setSize(sf::Vector2f(side / 3, side));
             body.setOrigin(sf::Vector2f(side / 6, side / 2));
             hitbox.setSize(sf::Vector2f(side / 3 - 2, side - 2));
@@ -37,7 +85,7 @@ Tile::Tile(TileType tileType, int pos_x, int pos_y, int index_x, int index_y, in
         }
         case TileType::CorridorH:
         {
-            body.setFillColor(sf::Color::Green);
+            body.setFillColor(sf::Color::White);
             body.setSize(sf::Vector2f(side, side / 3));
             body.setOrigin(sf::Vector2f(side / 2, side / 6));
             hitbox.setSize(sf::Vector2f(side - 2, side / 3 - 2));
@@ -56,6 +104,7 @@ Tile::Tile(TileType tileType, int pos_x, int pos_y, int index_x, int index_y, in
     hitbox.setOutlineThickness(1.f);
     index.x = index_x;
     index.y = index_y;
+    tileStatus = TileStatus::NotCleared;
 }
 
 Tile::~Tile()
@@ -75,4 +124,32 @@ sf::RectangleShape Tile::getHitbox()
 sf::Vector2i Tile::getIndex()
 {
     return index;
+}
+
+void Tile::clear()
+{
+    tileStatus = TileStatus::Cleared;
+}
+
+LevelGoal Tile::getGoal()
+{
+    return goal;
+}
+
+std::vector<Enemy> Tile::getEnemyBuffer()
+{
+    return enemyBuffer;
+}
+
+void Tile::spawnEnemies()
+{
+
+}
+
+void Tile::spawnChallenge()
+{
+}
+
+void Tile::spawnReward()
+{
 }

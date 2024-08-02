@@ -10,13 +10,34 @@ enum CommandName
 	MoveUp,
 	MoveLeft,
 	MoveDown,
-	MoveRight
+	MoveRight,
+	TickTiles
 };
 
 enum TileType
 {
 	Level,
+	LevelEmpty,
+	LevelQizz,
+	LevelRegular,
+	LevelReward,
+	LevelStairs,
+	LevelTeleport,
 	Central,
 	CorridorV,
 	CorridorH
+};
+
+enum TileStatus
+{
+	NotCleared,
+	Cleared
+};
+
+enum LevelGoal
+{
+	No,
+	Death,
+	Qizz,
+	Reward
 };

@@ -5,11 +5,11 @@ Game::Game()
 {
     if (sf::VideoMode::getDesktopMode().width > sf::VideoMode::getDesktopMode().height)
     {
-        side = sf::VideoMode::getDesktopMode().height / 1;
+        side = sf::VideoMode::getDesktopMode().height / 100;
     }
     else
     {
-        side = sf::VideoMode::getDesktopMode().width / 1;
+        side = sf::VideoMode::getDesktopMode().width / 100;
     }
     tileCreated = new bool* [1001];
     for (int i = 0; i < 1001; i++)
@@ -24,13 +24,14 @@ Game::Game()
     timePerFrame = sf::seconds(1 / 60.f);  //100 frames per second
     window.setVerticalSyncEnabled(true);
     camera = window.getView();
-    map = new Tile* [1001];
+    tileData = new Tile* [1001];
     for (int i = 0; i < 1001; i++)
     {
-        map[i] = new Tile[1001];
+        tileData[i] = new Tile[1001];
     }
     playerSpeed = 500;
     NataSans.loadFromFile("assets/font/Nata_Sans_Typeface/ttf/NataSans-Regular.ttf");
+    tileSetBg.loadFromFile("assets/textures/TileSet.png");
 }
 
 Game::~Game()
@@ -63,7 +64,7 @@ void Game::generateMap()
 {
     Tile tile(TileType::Central, sf::VideoMode::getDesktopMode().width / 2, sf::VideoMode::getDesktopMode().height / 2, 0, 0, side / 2);
     tileCreated[0 + tileNumOffset][0 + tileNumOffset] = true;
-    map[0 + tileNumOffset][0 + tileNumOffset] = tile;
+    tileData[0 + tileNumOffset][0 + tileNumOffset] = tile;
     loadedTiles.push_back(sf::Vector2i(0 + tileNumOffset, 0 + tileNumOffset));
     srand(time(0));
     generateLevel(sf::VideoMode::getDesktopMode().width / 2, sf::VideoMode::getDesktopMode().height / 2, 0, 0, 1, 0);
@@ -82,11 +83,37 @@ void Game::generateLevel(int pos_x, int pos_y, int index_x, int index_y, int dir
             {
                 Tile tile(TileType::CorridorV, pos_x, pos_y - side / 2, index_x, index_y - 1, side / 2);
                 tileCreated[index_x + tileNumOffset][index_y - 1 + tileNumOffset] = true;
-                map[index_x + tileNumOffset][index_y - 1 + tileNumOffset] = tile;
+                tileData[index_x + tileNumOffset][index_y - 1 + tileNumOffset] = tile;
                 loadedTiles.push_back(sf::Vector2i(index_x + tileNumOffset, index_y - 1 + tileNumOffset));
-                Tile tile2(TileType::Level, pos_x, pos_y - side / 2 - side / 2, index_x, index_y - 2, side / 2);
+                int type = rand() % 100; 
+                TileType type2;
+                if (type < 40)
+                {
+                    type2 = TileType::LevelRegular;
+                }
+                if (type > 39 and type < 55)
+                {
+                    type2 = TileType::LevelQizz;
+                }
+                if (type > 54 and type < 65)
+                {
+                    type2 = TileType::LevelReward;
+                }
+                if (type > 64 and type < 90)
+                {
+                    type2 = TileType::LevelEmpty;
+                }
+                if (type > 89 and type < 95)
+                {
+                    type2 = TileType::LevelStairs;
+                }
+                if (type > 94)
+                {
+                    type2 = TileType::LevelTeleport;
+                }
+                Tile tile2(type2, pos_x, pos_y - side / 2 - side / 2, index_x, index_y - 2, side / 2);
                 tileCreated[index_x + tileNumOffset][index_y - 2 + tileNumOffset] = true;
-                map[index_x + tileNumOffset][index_y - 2 + tileNumOffset] = tile2;
+                tileData[index_x + tileNumOffset][index_y - 2 + tileNumOffset] = tile2;
                 loadedTiles.push_back(sf::Vector2i(index_x + tileNumOffset, index_y - 2 + tileNumOffset));
                 int created = 0;
                 int createdMax = rand() % 3 + 1;
@@ -138,11 +165,37 @@ void Game::generateLevel(int pos_x, int pos_y, int index_x, int index_y, int dir
             {
                 Tile tile(TileType::CorridorH, pos_x - side / 2, pos_y, index_x - 1, index_y, side / 2);
                 tileCreated[index_x - 1 + tileNumOffset][index_y + tileNumOffset] = true;
-                map[index_x - 1 + tileNumOffset][index_y + tileNumOffset] = tile;
+                tileData[index_x - 1 + tileNumOffset][index_y + tileNumOffset] = tile;
                 loadedTiles.push_back(sf::Vector2i(index_x - 1 + tileNumOffset, index_y + tileNumOffset));
-                Tile tile2(TileType::Level, pos_x - side / 2 - side / 2, pos_y, index_x - 2, index_y, side / 2);
+                int type = rand() % 6;
+                TileType type2;
+                if (type < 40)
+                {
+                    type2 = TileType::LevelRegular;
+                }
+                if (type > 39 and type < 55)
+                {
+                    type2 = TileType::LevelQizz;
+                }
+                if (type > 54 and type < 65)
+                {
+                    type2 = TileType::LevelReward;
+                }
+                if (type > 64 and type < 90)
+                {
+                    type2 = TileType::LevelEmpty;
+                }
+                if (type > 89 and type < 95)
+                {
+                    type2 = TileType::LevelStairs;
+                }
+                if (type > 94)
+                {
+                    type2 = TileType::LevelTeleport;
+                }
+                Tile tile2(type2, pos_x - side / 2 - side / 2, pos_y, index_x - 2, index_y, side / 2);
                 tileCreated[index_x - 2 + tileNumOffset][index_y + tileNumOffset] = true;
-                map[index_x - 2 + tileNumOffset][index_y + tileNumOffset] = tile2;
+                tileData[index_x - 2 + tileNumOffset][index_y + tileNumOffset] = tile2;
                 loadedTiles.push_back(sf::Vector2i(index_x - 2 + tileNumOffset, index_y + tileNumOffset));
                 int created = 0;
                 int createdMax = rand() % 3 + 1;
@@ -194,11 +247,37 @@ void Game::generateLevel(int pos_x, int pos_y, int index_x, int index_y, int dir
             {
                 Tile tile(TileType::CorridorV, pos_x, pos_y + side / 2, index_x, index_y + 1, side / 2);
                 tileCreated[index_x + tileNumOffset][index_y + 1 + tileNumOffset] = true;
-                map[index_x + tileNumOffset][index_y + 1 + tileNumOffset] = tile;
+                tileData[index_x + tileNumOffset][index_y + 1 + tileNumOffset] = tile;
                 loadedTiles.push_back(sf::Vector2i(index_x + tileNumOffset, index_y + 1 + tileNumOffset));
-                Tile tile2(TileType::Level, pos_x, pos_y + side / 2 + side / 2, index_x, index_y + 2, side / 2);
+                int type = rand() % 6;
+                TileType type2;
+                if (type < 40)
+                {
+                    type2 = TileType::LevelRegular;
+                }
+                if (type > 39 and type < 55)
+                {
+                    type2 = TileType::LevelQizz;
+                }
+                if (type > 54 and type < 65)
+                {
+                    type2 = TileType::LevelReward;
+                }
+                if (type > 64 and type < 90)
+                {
+                    type2 = TileType::LevelEmpty;
+                }
+                if (type > 89 and type < 95)
+                {
+                    type2 = TileType::LevelStairs;
+                }
+                if (type > 94)
+                {
+                    type2 = TileType::LevelTeleport;
+                }
+                Tile tile2(type2, pos_x, pos_y + side / 2 + side / 2, index_x, index_y + 2, side / 2);
                 tileCreated[index_x + tileNumOffset][index_y + 2 + tileNumOffset] = true;
-                map[index_x + tileNumOffset][index_y + 2 + tileNumOffset] = tile2;
+                tileData[index_x + tileNumOffset][index_y + 2 + tileNumOffset] = tile2;
                 loadedTiles.push_back(sf::Vector2i(index_x + tileNumOffset, index_y + 2 + tileNumOffset));
                 int created = 0;
                 int createdMax = rand() % 3 + 1;
@@ -250,11 +329,37 @@ void Game::generateLevel(int pos_x, int pos_y, int index_x, int index_y, int dir
             {
                 Tile tile(TileType::CorridorH, pos_x + side / 2, pos_y, index_x + 1, index_y, side / 2);
                 tileCreated[index_x + 1 + tileNumOffset][index_y + tileNumOffset] = true;
-                map[index_x + 1 + tileNumOffset][index_y + tileNumOffset] = tile;
+                tileData[index_x + 1 + tileNumOffset][index_y + tileNumOffset] = tile;
                 loadedTiles.push_back(sf::Vector2i(index_x + 1 + tileNumOffset, index_y + tileNumOffset));
-                Tile tile2(TileType::Level, pos_x + side / 2 + side / 2, pos_y, index_x + 2, index_y, side / 2);
+                int type = rand() % 6;
+                TileType type2;
+                if (type < 40)
+                {
+                    type2 = TileType::LevelRegular;
+                }
+                if (type > 39 and type < 55)
+                {
+                    type2 = TileType::LevelQizz;
+                }
+                if (type > 54 and type < 65)
+                {
+                    type2 = TileType::LevelReward;
+                }
+                if (type > 64 and type < 90)
+                {
+                    type2 = TileType::LevelEmpty;
+                }
+                if (type > 89 and type < 95)
+                {
+                    type2 = TileType::LevelStairs;
+                }
+                if (type > 94)
+                {
+                    type2 = TileType::LevelTeleport;
+                }
+                Tile tile2(type2, pos_x + side / 2 + side / 2, pos_y, index_x + 2, index_y, side / 2);
                 tileCreated[index_x + 2 + tileNumOffset][index_y + tileNumOffset] = true;
-                map[index_x + 2 + tileNumOffset][index_y + tileNumOffset] = tile2;
+                tileData[index_x + 2 + tileNumOffset][index_y + tileNumOffset] = tile2;
                 loadedTiles.push_back(sf::Vector2i(index_x + 2 + tileNumOffset, index_y + tileNumOffset));
                 int created = 0;
                 int createdMax = rand() % 3 + 1;
@@ -355,6 +460,9 @@ void Game::events()
         commandQueue.push_back(command);
     }
 
+    command.name = CommandName::TickTiles;
+    commandQueue.push_back(command);
+
     //display always at the end
     command.name = CommandName::Display;
     commandQueue.push_back(command);
@@ -382,10 +490,10 @@ void Game::commands()
                         {
                             for (int j = 0; j < loadedTiles.size(); j++)
                             {
-                                if (abs(player->getIndex().x + tileNumOffset - loadedTiles[j].x) < 5 and abs(player->getIndex().y + tileNumOffset - loadedTiles[j].y) < 5)
+                                if (abs(player->getIndex().x + tileNumOffset - loadedTiles[j].x) < 500 and abs(player->getIndex().y + tileNumOffset - loadedTiles[j].y) < 500)
                                 {
-                                    window.draw(map[loadedTiles[j].x][loadedTiles[j].y].getBody());
-                                    //window.draw(map[loadedTiles[j].x][loadedTiles[j].y].getHitbox());
+                                    window.draw(tileData[loadedTiles[j].x][loadedTiles[j].y].getBody());
+                                    //window.draw(tileData[loadedTiles[j].x][loadedTiles[j].y].getHitbox());
                                 }
                             }
                         }
@@ -424,12 +532,15 @@ void Game::commands()
                     player = new Player(commandQueue[i].attribute.int1, commandQueue[i].attribute.int2, commandQueue[i].attribute.int3, commandQueue[i].attribute.int4);
                     break;
                 }
-                case CommandName::CreateTile:
+                case CommandName::TickTiles:
                 {
-                    Tile tile(commandQueue[i].attribute.tileType, commandQueue[i].attribute.int1, commandQueue[i].attribute.int2, commandQueue[i].attribute.int3, commandQueue[i].attribute.int4, side / 2);
-                    tileCreated[commandQueue[i].attribute.int3 + tileNumOffset][commandQueue[i].attribute.int4 + tileNumOffset] = true;
-                    map[commandQueue[i].attribute.int3 + tileNumOffset][commandQueue[i].attribute.int4 + tileNumOffset] = tile;
-                    loadedTiles.push_back(sf::Vector2i(commandQueue[i].attribute.int3 + tileNumOffset, commandQueue[i].attribute.int4 + tileNumOffset));
+                    for (int i = -2; i < 3; i++)
+                    {
+                        for (int j = -2; j < 3; j++)
+                        {
+
+                        }
+                    }
                     break;
                 }
                 case CommandName::MoveUp:
@@ -492,14 +603,14 @@ bool Game::isPlayerWallCollision(int index_x, int index_y, int dir)
     {
         case 1: //up
         {
-            if (player->getHitbox().getPosition().y - player->getHitbox().getSize().y / 2 > map[index_x][index_y].getHitbox().getPosition().y - map[index_x][index_y].getHitbox().getSize().y / 2)
+            if (player->getHitbox().getPosition().y - player->getHitbox().getSize().y / 2 > tileData[index_x][index_y].getHitbox().getPosition().y - tileData[index_x][index_y].getHitbox().getSize().y / 2)
             {
                 return false;
             }
             else
             {
-                if (player->getHitbox().getPosition().x - player->getHitbox().getSize().x / 2 > map[index_x][index_y - 1].getHitbox().getPosition().x - map[index_x][index_y - 1].getHitbox().getSize().x / 2
-                    and player->getHitbox().getPosition().x + player->getHitbox().getSize().x / 2 < map[index_x][index_y - 1].getHitbox().getPosition().x + map[index_x][index_y - 1].getHitbox().getSize().x / 2)
+                if (player->getHitbox().getPosition().x - player->getHitbox().getSize().x / 2 > tileData[index_x][index_y - 1].getHitbox().getPosition().x - tileData[index_x][index_y - 1].getHitbox().getSize().x / 2
+                    and player->getHitbox().getPosition().x + player->getHitbox().getSize().x / 2 < tileData[index_x][index_y - 1].getHitbox().getPosition().x + tileData[index_x][index_y - 1].getHitbox().getSize().x / 2)
                 {
                     return false;
                 }
@@ -512,14 +623,14 @@ bool Game::isPlayerWallCollision(int index_x, int index_y, int dir)
         }
         case 2: //left
         {
-            if (player->getHitbox().getPosition().x - player->getHitbox().getSize().x / 2 > map[index_x][index_y].getHitbox().getPosition().x - map[index_x][index_y].getHitbox().getSize().x / 2)
+            if (player->getHitbox().getPosition().x - player->getHitbox().getSize().x / 2 > tileData[index_x][index_y].getHitbox().getPosition().x - tileData[index_x][index_y].getHitbox().getSize().x / 2)
             {
                 return false;
             }
             else
             {
-                if (player->getHitbox().getPosition().y - player->getHitbox().getSize().y / 2 > map[index_x - 1][index_y].getHitbox().getPosition().y - map[index_x - 1][index_y].getHitbox().getSize().y / 2
-                    and player->getHitbox().getPosition().y + player->getHitbox().getSize().y / 2 < map[index_x - 1][index_y].getHitbox().getPosition().y + map[index_x - 1][index_y].getHitbox().getSize().y / 2)
+                if (player->getHitbox().getPosition().y - player->getHitbox().getSize().y / 2 > tileData[index_x - 1][index_y].getHitbox().getPosition().y - tileData[index_x - 1][index_y].getHitbox().getSize().y / 2
+                    and player->getHitbox().getPosition().y + player->getHitbox().getSize().y / 2 < tileData[index_x - 1][index_y].getHitbox().getPosition().y + tileData[index_x - 1][index_y].getHitbox().getSize().y / 2)
                 {
                     return false;
                 }
@@ -532,14 +643,14 @@ bool Game::isPlayerWallCollision(int index_x, int index_y, int dir)
         }
         case 3: //down
         {
-            if (player->getHitbox().getPosition().y + player->getHitbox().getSize().y / 2 < map[index_x][index_y].getHitbox().getPosition().y + map[index_x][index_y].getHitbox().getSize().y / 2)
+            if (player->getHitbox().getPosition().y + player->getHitbox().getSize().y / 2 < tileData[index_x][index_y].getHitbox().getPosition().y + tileData[index_x][index_y].getHitbox().getSize().y / 2)
             {
                 return false;
             }
             else
             {
-                if (player->getHitbox().getPosition().x - player->getHitbox().getSize().x / 2 > map[index_x][index_y + 1].getHitbox().getPosition().x - map[index_x][index_y + 1].getHitbox().getSize().x / 2
-                    and player->getHitbox().getPosition().x + player->getHitbox().getSize().x / 2 < map[index_x][index_y + 1].getHitbox().getPosition().x + map[index_x][index_y + 1].getHitbox().getSize().x / 2)
+                if (player->getHitbox().getPosition().x - player->getHitbox().getSize().x / 2 > tileData[index_x][index_y + 1].getHitbox().getPosition().x - tileData[index_x][index_y + 1].getHitbox().getSize().x / 2
+                    and player->getHitbox().getPosition().x + player->getHitbox().getSize().x / 2 < tileData[index_x][index_y + 1].getHitbox().getPosition().x + tileData[index_x][index_y + 1].getHitbox().getSize().x / 2)
                 {
                     return false;
                 }
@@ -552,14 +663,14 @@ bool Game::isPlayerWallCollision(int index_x, int index_y, int dir)
         }
         case 4: //right
         {
-            if (player->getHitbox().getPosition().x + player->getHitbox().getSize().x / 2 < map[index_x][index_y].getHitbox().getPosition().x + map[index_x][index_y].getHitbox().getSize().x / 2)
+            if (player->getHitbox().getPosition().x + player->getHitbox().getSize().x / 2 < tileData[index_x][index_y].getHitbox().getPosition().x + tileData[index_x][index_y].getHitbox().getSize().x / 2)
             {
                 return false;
             }
             else
             {
-                if (player->getHitbox().getPosition().y - player->getHitbox().getSize().y / 2 > map[index_x + 1][index_y].getHitbox().getPosition().y - map[index_x + 1][index_y].getHitbox().getSize().y / 2
-                    and player->getHitbox().getPosition().y + player->getHitbox().getSize().y / 2 < map[index_x + 1][index_y].getHitbox().getPosition().y + map[index_x + 1][index_y].getHitbox().getSize().y / 2)
+                if (player->getHitbox().getPosition().y - player->getHitbox().getSize().y / 2 > tileData[index_x + 1][index_y].getHitbox().getPosition().y - tileData[index_x + 1][index_y].getHitbox().getSize().y / 2
+                    and player->getHitbox().getPosition().y + player->getHitbox().getSize().y / 2 < tileData[index_x + 1][index_y].getHitbox().getPosition().y + tileData[index_x + 1][index_y].getHitbox().getSize().y / 2)
                 {
                     return false;
                 }

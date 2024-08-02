@@ -3,7 +3,6 @@
 #include "SFML/Graphics.hpp"
 #include "Structures.h"
 #include "Player.h"
-#include "Enemy.h"
 #include "Tile.h"
 #include "Projectile.h"
 #include <vector>
@@ -26,10 +25,9 @@ private:
 	int side;
 	std::vector<Command> commandQueue;
 	Player* player;
-	std::vector<Enemy> enemyBuffer;
 	std::vector<Projectile> projectileBuffer;
 	std::vector<sf::Vector2i> loadedTiles;
-	Tile** map;
+	Tile** tileData;
 	InterfaceElements hud;
 	bool** tileCreated;
 	int tileNumOffset;
@@ -37,4 +35,5 @@ private:
 	sf::View camera;
 	int playerSpeed;
 	sf::Font NataSans;
+	sf::Texture tileSetBg;
 };

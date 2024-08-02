@@ -1,7 +1,7 @@
 ﻿  Game.cpp
-C:\code\Death_of_the_last\Game.cpp(68,15): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+C:\code\Death_of_the_last\Game.cpp(69,15): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
   Создание кода
-  3 of 303 functions ( 1.0%) were compiled, the rest were copied from previous compilation.
+  1 of 309 functions ( 0.3%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
     3 functions had inline decision re-evaluated but remain unchanged
   Создание кода завершено
