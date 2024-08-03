@@ -1,9 +1,9 @@
 #include "Player.h"
 
-Player::Player(int pos_x, int pos_y, int index_x, int index_y)
+Player::Player(int pos_x, int pos_y, int index_x, int index_y, int side)
 {
-    hitbox.setSize(sf::Vector2f(32 - 2, 32 - 2));
-    hitbox.setOrigin(sf::Vector2f(32 / 2, 32 / 2));
+    hitbox.setRadius(side / 40);
+    hitbox.setOrigin(sf::Vector2f(hitbox.getRadius(), hitbox.getRadius()));
     hitbox.setPosition(sf::Vector2f(pos_x, pos_y));
     hitbox.setFillColor(sf::Color::Transparent);
     hitbox.setOutlineColor(sf::Color::Red);
@@ -16,7 +16,7 @@ Player::~Player()
 {
 }
 
-sf::RectangleShape Player::getHitbox()
+sf::CircleShape Player::getHitbox()
 {
 	return hitbox;
 }

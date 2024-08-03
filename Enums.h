@@ -11,7 +11,8 @@ enum CommandName
 	MoveLeft,
 	MoveDown,
 	MoveRight,
-	TickTiles
+	TickTiles,
+	Dash
 };
 
 enum TileType
@@ -31,7 +32,8 @@ enum TileType
 enum TileStatus
 {
 	NotCleared,
-	Cleared
+	Cleared,
+	Solved
 };
 
 enum LevelGoal
@@ -40,4 +42,17 @@ enum LevelGoal
 	Death,
 	Qizz,
 	Reward
+};
+
+enum EnemyState
+{
+	Standing,
+	Moving
+};
+
+enum EnemyBehavior
+{
+	Stand,
+	Attacking,
+	Backing
 };

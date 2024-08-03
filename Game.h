@@ -36,4 +36,6 @@ private:
 	int playerSpeed;
 	sf::Font NataSans;
 	sf::Texture tileSetBg;
+	float difficulty;
+	sf::Clock dashTimer;
 };

@@ -3,14 +3,14 @@
 class Player
 {
 public:
-	Player(int pos_x, int pos_y, int index_x, int index_y);
+	Player(int pos_x, int pos_y, int index_x, int index_y, int side);
 	~Player();
-	sf::RectangleShape getHitbox();
+	sf::CircleShape getHitbox();
 	sf::Vector2i getIndex();
 	void move(sf::Vector2f delta);
 	void updateIndex(int side);
 
 private:
-	sf::RectangleShape hitbox;
+	sf::CircleShape hitbox;
 	sf::Vector2i tileIndex;
 };
