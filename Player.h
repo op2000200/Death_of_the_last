@@ -1,5 +1,6 @@
 #pragma once
 #include "Structures.h"
+#include "Weapon.h"
 class Player
 {
 public:
@@ -13,4 +14,6 @@ public:
 private:
 	sf::CircleShape hitbox;
 	sf::Vector2i tileIndex;
+	RangedWeapon ranged;
+	MeleeWeapon melee;
 };

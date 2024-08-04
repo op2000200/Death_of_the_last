@@ -17,11 +17,12 @@ public:
 	TileStatus getState();
 	std::vector<Enemy> getEnemyBuffer();
 	void spawnEnemies(float diff, int side, int pos_x, int pos_y);
+	void spawnEnemiesWave(int side);
 	void spawnChallenge(float diff);
 	void spawnReward(float diff);
 	void tickTile(Player* player, Tile tile);
-	bool isEnemyWallHit(Enemy enemy);
-	bool isEnemyEnemyHit(Enemy enemy);
+	bool isEnemyWallHit(Enemy enemy, int speed);
+	bool isEnemyEnemyHit(Enemy enemy, int speed);
 
 private:
 	sf::RectangleShape body;

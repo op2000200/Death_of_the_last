@@ -20,6 +20,7 @@ public:
 	void events();
 	void commands();
 	bool isPlayerWallCollision(int index_x, int index_y, int dir);
+	bool isPlayerWallHit(int index_x, int index_y, int dir, int speed);
 private:
 	sf::RenderWindow window;
 	int side;

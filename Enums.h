@@ -56,3 +56,15 @@ enum EnemyBehavior
 	Attacking,
 	Backing
 };
+
+enum AmmoType
+{
+	No
+};
+
+enum WeaponName
+{
+	Knife,
+	Dagger,
+	Fist
+};

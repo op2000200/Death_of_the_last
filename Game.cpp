@@ -477,8 +477,9 @@ void Game::events()
         command.name = CommandName::MoveRight;
         commandQueue.push_back(command);
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) and dashTimer.getElapsedTime() > sf::seconds(0.5))
     {
+        dashTimer.restart();
         command.name = CommandName::Dash;
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
             command.attribute.int1 = 1;
@@ -559,14 +560,14 @@ void Game::commands()
                     }
                     //draw hud
                     {
-                        sf::Text text;
-                        text.setFont(NataSans);
-                        text.setFillColor(sf::Color::Red);
-                        text.setCharacterSize(20);
-                        text.setPosition(player->getHitbox().getPosition() + sf::Vector2f(0, 50));
-                        std::string str = std::to_string(player->getIndex().x) + " " + std::to_string(player->getIndex().y) + " " + std::to_string(player->getHitbox().getPosition().x - sf::VideoMode::getDesktopMode().width / 2 + side / 4) + " " + std::to_string(player->getHitbox().getPosition().y - side / 2 + side / 4);
-                        text.setString(str);
-                        window.draw(text);
+                        //sf::Text text;
+                        //text.setFont(NataSans);
+                        //text.setFillColor(sf::Color::Red);
+                        //text.setCharacterSize(20);
+                        //text.setPosition(player->getHitbox().getPosition() + sf::Vector2f(0, 50));
+                        //std::string str = std::to_string(player->getIndex().x) + " " + std::to_string(player->getIndex().y) + " " + std::to_string(player->getHitbox().getPosition().x - sf::VideoMode::getDesktopMode().width / 2 + side / 4) + " " + std::to_string(player->getHitbox().getPosition().y - side / 2 + side / 4);
+                        //text.setString(str);
+                        //window.draw(text);
                     }
                     window.display();
                     break;
@@ -604,77 +605,121 @@ void Game::commands()
                 }
                 case CommandName::MoveUp:
                 {
-                    if (!isPlayerWallCollision(player->getIndex().x + tileNumOffset, player->getIndex().y + tileNumOffset, 1))
+                    for (int j = 1; j < 10; j++)
                     {
-                        player->move(sf::Vector2f(0, (-1) * (playerSpeed) * (timePerFrame.asSeconds())));
-                        camera.move(sf::Vector2f(0, (-1) * (playerSpeed) * (timePerFrame.asSeconds())));
-                        window.setView(camera);
-                        player->updateIndex(side / 2);
+                        if (!isPlayerWallHit(player->getIndex().x + tileNumOffset, player->getIndex().y + tileNumOffset, 1, playerSpeed /j))
+                        {
+                            player->move(sf::Vector2f(0, (-1) * (playerSpeed /j) * (timePerFrame.asSeconds())));
+                            camera.move(sf::Vector2f(0, (-1) * (playerSpeed /j) * (timePerFrame.asSeconds())));
+                            window.setView(camera);
+                            player->updateIndex(side / 2);
+                            break;
+                        }
                     }
                     break;
                 }
                 case CommandName::MoveLeft:
                 {
-                    if (!isPlayerWallCollision(player->getIndex().x + tileNumOffset, player->getIndex().y + tileNumOffset, 2))
+                    for (int j = 1; j < 10; j++)
                     {
-                        player->move(sf::Vector2f((-1) * (playerSpeed) * (timePerFrame.asSeconds()), 0));
-                        camera.move(sf::Vector2f((-1) * (playerSpeed) * (timePerFrame.asSeconds()), 0));
-                        window.setView(camera);
-                        player->updateIndex(side / 2);
+                        if (!isPlayerWallHit(player->getIndex().x + tileNumOffset, player->getIndex().y + tileNumOffset, 2, playerSpeed /j))
+                        {
+                            player->move(sf::Vector2f((-1) * (playerSpeed /j) * (timePerFrame.asSeconds()), 0));
+                            camera.move(sf::Vector2f((-1) * (playerSpeed /j) * (timePerFrame.asSeconds()), 0));
+                            window.setView(camera);
+                            player->updateIndex(side / 2);
+                            break;
+                        }
                     }
                     break;
                 }
                 case CommandName::MoveDown:
                 {
-                    if (!isPlayerWallCollision(player->getIndex().x + tileNumOffset, player->getIndex().y + tileNumOffset, 3))
+                    for (int j = 1; j < 10; j++)
                     {
-                        player->move(sf::Vector2f(0, (playerSpeed) * (timePerFrame.asSeconds())));
-                        camera.move(sf::Vector2f(0, (playerSpeed) * (timePerFrame.asSeconds())));
-                        window.setView(camera);
-                        player->updateIndex(side / 2);
+                        if (!isPlayerWallHit(player->getIndex().x + tileNumOffset, player->getIndex().y + tileNumOffset, 3, playerSpeed / j))
+                        {
+                            player->move(sf::Vector2f(0, (1) * (playerSpeed / j) * (timePerFrame.asSeconds())));
+                            camera.move(sf::Vector2f(0, (1) * (playerSpeed / j) * (timePerFrame.asSeconds())));
+                            window.setView(camera);
+                            player->updateIndex(side / 2);
+                            break;
+                        }
                     }
                     break;
                 }
                 case CommandName::MoveRight:
                 {
-                    if (!isPlayerWallCollision(player->getIndex().x + tileNumOffset, player->getIndex().y + tileNumOffset, 4))
+                    for (int j = 1; j < 10; j++)
                     {
-                        player->move(sf::Vector2f((playerSpeed) * (timePerFrame.asSeconds()), 0));
-                        camera.move(sf::Vector2f((playerSpeed) * (timePerFrame.asSeconds()), 0));
-                        window.setView(camera);
-                        player->updateIndex(side / 2);
+                        if (!isPlayerWallHit(player->getIndex().x + tileNumOffset, player->getIndex().y + tileNumOffset, 4, playerSpeed /j))
+                        {
+                            player->move(sf::Vector2f((playerSpeed /j) * (timePerFrame.asSeconds()), 0));
+                            camera.move(sf::Vector2f((playerSpeed /j) * (timePerFrame.asSeconds()), 0));
+                            window.setView(camera);
+                            player->updateIndex(side / 2);
+                            break;
+                        }
                     }
                     break;
                 }
                 case CommandName::Dash:
                 {
-                    if (commandQueue[i].attribute.int1 == 1)
+                   if (commandQueue[i].attribute.int1 == 1)
                     {
-                        player->move(sf::Vector2f(0, (-1) * (playerSpeed * 5) * (timePerFrame.asSeconds())));
-                        camera.move(sf::Vector2f(0, (-1) * (playerSpeed * 5) * (timePerFrame.asSeconds())));
-                        window.setView(camera);
-                        player->updateIndex(side / 2);
+                       for (int j = 1; j < 10; j++)
+                        {
+                           if (!isPlayerWallHit(player->getIndex().x + tileNumOffset, player->getIndex().y + tileNumOffset, 1, playerSpeed * 20 /j))
+                            {
+                                player->move(sf::Vector2f(0, (-1) * (playerSpeed * 20 / j) * (timePerFrame.asSeconds())));
+                                camera.move(sf::Vector2f(0, (-1) * (playerSpeed * 20 / j) * (timePerFrame.asSeconds())));
+                                window.setView(camera);
+                                player->updateIndex(side / 2);
+                                break;
+                            }
+                        }
                     }
-                    if (commandQueue[i].attribute.int2 == 1)
+                   if (commandQueue[i].attribute.int2 == 1)
                     {
-                        player->move(sf::Vector2f((-1) * (playerSpeed * 5) * (timePerFrame.asSeconds()), 0));
-                        camera.move(sf::Vector2f((-1) * (playerSpeed * 5) * (timePerFrame.asSeconds()), 0));
-                        window.setView(camera);
-                        player->updateIndex(side / 2);
+                       for (int j = 1; j < 10; j++)
+                        {
+                           if (!isPlayerWallHit(player->getIndex().x + tileNumOffset, player->getIndex().y + tileNumOffset, 2, playerSpeed * 20 /j))
+                            {
+                                player->move(sf::Vector2f((-1) * (playerSpeed * 20 / j) * (timePerFrame.asSeconds()), 0));
+                                camera.move(sf::Vector2f((-1) * (playerSpeed * 20 / j) * (timePerFrame.asSeconds()), 0));
+                                window.setView(camera);
+                                player->updateIndex(side / 2);
+                                break;
+                            }
+                        }
                     }
-                    if (commandQueue[i].attribute.int3 == 1)
+                   if (commandQueue[i].attribute.int3 == 1)
                     {
-                        player->move(sf::Vector2f(0, (playerSpeed * 5) * (timePerFrame.asSeconds())));
-                        camera.move(sf::Vector2f(0, (playerSpeed * 5) * (timePerFrame.asSeconds())));
-                        window.setView(camera);
-                        player->updateIndex(side / 2);
+                       for (int j = 1; j < 10; j++)
+                        {
+                           if (!isPlayerWallHit(player->getIndex().x + tileNumOffset, player->getIndex().y + tileNumOffset, 3, playerSpeed * 20 /j))
+                            {
+                                player->move(sf::Vector2f(0, (playerSpeed * 20 / j) * (timePerFrame.asSeconds())));
+                                camera.move(sf::Vector2f(0, (playerSpeed * 20 / j) * (timePerFrame.asSeconds())));
+                                window.setView(camera);
+                                player->updateIndex(side / 2);
+                                break;
+                            }
+                        }
                     }
-                    if (commandQueue[i].attribute.int4 == 1)
+                   if (commandQueue[i].attribute.int4 == 1)
                     {
-                        player->move(sf::Vector2f((playerSpeed * 5) * (timePerFrame.asSeconds()), 0));
-                        camera.move(sf::Vector2f((playerSpeed * 5) * (timePerFrame.asSeconds()), 0));
-                        window.setView(camera);
-                        player->updateIndex(side / 2);
+                       for (int j = 1; j < 10; j++)
+                        {
+                           if (!isPlayerWallHit(player->getIndex().x + tileNumOffset, player->getIndex().y + tileNumOffset, 4, playerSpeed * 20 /j))
+                            {
+                                player->move(sf::Vector2f((playerSpeed * 20 / j) * (timePerFrame.asSeconds()), 0));
+                                camera.move(sf::Vector2f((playerSpeed * 20 / j) * (timePerFrame.asSeconds()), 0));
+                                window.setView(camera);
+                                player->updateIndex(side / 2);
+                                break;
+                            }
+                        }
                     }
                     break;
                 }
@@ -758,6 +803,101 @@ bool Game::isPlayerWallCollision(int index_x, int index_y, int dir)
         case 4: //right
         {
             if (player->getHitbox().getPosition().x + player->getHitbox().getRadius() < tileData[index_x][index_y].getHitbox().getPosition().x + tileData[index_x][index_y].getHitbox().getSize().x / 2)
+            {
+                return false;
+            }
+            else
+            {
+                if (player->getHitbox().getPosition().y - player->getHitbox().getRadius() > tileData[index_x + 1][index_y].getHitbox().getPosition().y - tileData[index_x + 1][index_y].getHitbox().getSize().y / 2
+                    and player->getHitbox().getPosition().y + player->getHitbox().getRadius() < tileData[index_x + 1][index_y].getHitbox().getPosition().y + tileData[index_x + 1][index_y].getHitbox().getSize().y / 2
+                    and (tileData[index_x][index_y].getState() == TileStatus::Cleared or tileData[index_x][index_y].getState() == TileStatus::Solved))
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            break;
+        }
+        default:
+        {
+            break;
+        }
+    }
+}
+
+bool Game::isPlayerWallHit(int index_x, int index_y, int dir, int speed)
+{
+    switch (dir)
+    {
+        case 1: //up
+        {
+            if (player->getHitbox().getPosition().y - player->getHitbox().getRadius() - (speed * timePerFrame.asSeconds()) > tileData[index_x][index_y].getHitbox().getPosition().y - tileData[index_x][index_y].getHitbox().getSize().y / 2)
+            {
+                return false;
+            }
+            else
+            {
+                if (player->getHitbox().getPosition().x - player->getHitbox().getRadius() > tileData[index_x][index_y - 1].getHitbox().getPosition().x - tileData[index_x][index_y - 1].getHitbox().getSize().x / 2
+                    and player->getHitbox().getPosition().x + player->getHitbox().getRadius() < tileData[index_x][index_y - 1].getHitbox().getPosition().x + tileData[index_x][index_y - 1].getHitbox().getSize().x / 2
+                    and (tileData[index_x][index_y].getState() == TileStatus::Cleared or tileData[index_x][index_y].getState() == TileStatus::Solved))
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            break;
+        }
+        case 2: //left
+        {
+            if (player->getHitbox().getPosition().x - player->getHitbox().getRadius() - (speed * timePerFrame.asSeconds()) > tileData[index_x][index_y].getHitbox().getPosition().x - tileData[index_x][index_y].getHitbox().getSize().x / 2)
+            {
+                return false;
+            }
+            else
+            {
+                if (player->getHitbox().getPosition().y - player->getHitbox().getRadius() > tileData[index_x - 1][index_y].getHitbox().getPosition().y - tileData[index_x - 1][index_y].getHitbox().getSize().y / 2
+                    and player->getHitbox().getPosition().y + player->getHitbox().getRadius() < tileData[index_x - 1][index_y].getHitbox().getPosition().y + tileData[index_x - 1][index_y].getHitbox().getSize().y / 2
+                    and (tileData[index_x][index_y].getState() == TileStatus::Cleared or tileData[index_x][index_y].getState() == TileStatus::Solved))
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            break;
+        }
+        case 3: //down
+        {
+            if (player->getHitbox().getPosition().y + player->getHitbox().getRadius() + (speed * timePerFrame.asSeconds()) < tileData[index_x][index_y].getHitbox().getPosition().y + tileData[index_x][index_y].getHitbox().getSize().y / 2)
+            {
+                return false;
+            }
+            else
+            {
+                if (player->getHitbox().getPosition().x - player->getHitbox().getRadius() > tileData[index_x][index_y + 1].getHitbox().getPosition().x - tileData[index_x][index_y + 1].getHitbox().getSize().x / 2
+                    and player->getHitbox().getPosition().x + player->getHitbox().getRadius() < tileData[index_x][index_y + 1].getHitbox().getPosition().x + tileData[index_x][index_y + 1].getHitbox().getSize().x / 2
+                    and (tileData[index_x][index_y].getState() == TileStatus::Cleared or tileData[index_x][index_y].getState() == TileStatus::Solved))
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            break;
+        }
+        case 4: //right
+        {
+            if (player->getHitbox().getPosition().x + player->getHitbox().getRadius() + (speed * timePerFrame.asSeconds()) < tileData[index_x][index_y].getHitbox().getPosition().x + tileData[index_x][index_y].getHitbox().getSize().x / 2)
             {
                 return false;
             }

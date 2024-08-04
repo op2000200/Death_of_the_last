@@ -10,7 +10,7 @@ Enemy::Enemy(int pos_x, int pos_y, int side)
 	hitbox.setOutlineThickness(1.f);
 	behav = EnemyBehavior::Stand;
 	state = EnemyState::Standing;
-	health = 100;
+	health = 30;
 }
 
 Enemy::~Enemy()
