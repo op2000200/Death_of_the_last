@@ -2,7 +2,7 @@
 
 Enemy::Enemy(int pos_x, int pos_y, int side)
 {
-	hitbox.setRadius(side / 40);
+	hitbox.setRadius(side / 20);
 	hitbox.setOrigin(sf::Vector2f(hitbox.getRadius(), hitbox.getRadius()));
 	hitbox.setPosition(sf::Vector2f(pos_x, pos_y));
 	hitbox.setFillColor(sf::Color::Transparent);
@@ -65,4 +65,9 @@ sf::Vector2f Enemy::getDest()
 void Enemy::setDest(sf::Vector2f buf)
 {
 	dest = buf;
+}
+
+void Enemy::getDamage(int dmg)
+{
+	health -= dmg;
 }

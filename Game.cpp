@@ -64,7 +64,7 @@ void Game::initial()
 
 void Game::generateMap()
 {
-    Tile tile(TileType::Central, sf::VideoMode::getDesktopMode().width / 2, sf::VideoMode::getDesktopMode().height / 2, 0, 0, side / 2, difficulty);
+    Tile tile(TileType::Central, sf::VideoMode::getDesktopMode().width / 2, sf::VideoMode::getDesktopMode().height / 2, 0, 0, side, difficulty);
     tileCreated[0 + tileNumOffset][0 + tileNumOffset] = true;
     tileData[0 + tileNumOffset][0 + tileNumOffset] = tile;
     loadedTiles.push_back(sf::Vector2i(0 + tileNumOffset, 0 + tileNumOffset));
@@ -89,13 +89,14 @@ void Game::generateMap()
 
 void Game::generateLevel(int pos_x, int pos_y, int index_x, int index_y, int dir, int len)
 {
+    int tileSize = side;
     if (index_x > -46 and index_x < 46 and index_y > -46 and index_y < 46 and len < 1)
     {
         switch (dir)
         {
             case 1: //up
             {
-                Tile tile(TileType::CorridorV, pos_x, pos_y - side / 2, index_x, index_y - 1, side / 2, difficulty);
+                Tile tile(TileType::CorridorV, pos_x, pos_y - tileSize, index_x, index_y - 1, side, difficulty);
                 tileCreated[index_x + tileNumOffset][index_y - 1 + tileNumOffset] = true;
                 tileData[index_x + tileNumOffset][index_y - 1 + tileNumOffset] = tile;
                 loadedTiles.push_back(sf::Vector2i(index_x + tileNumOffset, index_y - 1 + tileNumOffset));
@@ -125,7 +126,7 @@ void Game::generateLevel(int pos_x, int pos_y, int index_x, int index_y, int dir
                 {
                     type2 = TileType::LevelTeleport;
                 }
-                Tile tile2(type2, pos_x, pos_y - side / 2 - side / 2, index_x, index_y - 2, side / 2, difficulty);
+                Tile tile2(type2, pos_x, pos_y - tileSize - tileSize, index_x, index_y - 2, side, difficulty);
                 tileCreated[index_x + tileNumOffset][index_y - 2 + tileNumOffset] = true;
                 tileData[index_x + tileNumOffset][index_y - 2 + tileNumOffset] = tile2;
                 loadedTiles.push_back(sf::Vector2i(index_x + tileNumOffset, index_y - 2 + tileNumOffset));
@@ -142,7 +143,7 @@ void Game::generateLevel(int pos_x, int pos_y, int index_x, int index_y, int dir
                         if (!tileCreated[index_x - 2 + tileNumOffset][index_y - 2 + tileNumOffset])
                         {
                             created++;
-                            generateLevel(pos_x, pos_y - side / 2 - side / 2, index_x, index_y - 2, 2, len + 1);
+                            generateLevel(pos_x, pos_y - tileSize - tileSize, index_x, index_y - 2, 2, len + 1);
                         }
                         counter++;
                         break;
@@ -152,7 +153,7 @@ void Game::generateLevel(int pos_x, int pos_y, int index_x, int index_y, int dir
                         if (!tileCreated[index_x + tileNumOffset][index_y - 4 + tileNumOffset])
                         {
                             created++;
-                            generateLevel(pos_x, pos_y - side / 2 - side / 2, index_x, index_y - 2, 1, len + 1);
+                            generateLevel(pos_x, pos_y - tileSize - tileSize, index_x, index_y - 2, 1, len + 1);
                         }
                         counter++;
                         break;
@@ -162,7 +163,7 @@ void Game::generateLevel(int pos_x, int pos_y, int index_x, int index_y, int dir
                         if (!tileCreated[index_x + 2 + tileNumOffset][index_y - 2 + tileNumOffset])
                         {
                             created++;
-                            generateLevel(pos_x, pos_y - side / 2 - side / 2, index_x, index_y - 2, 4, len + 1);
+                            generateLevel(pos_x, pos_y - tileSize - tileSize, index_x, index_y - 2, 4, len + 1);
                         }
                         counter++;
                         break;
@@ -178,7 +179,7 @@ void Game::generateLevel(int pos_x, int pos_y, int index_x, int index_y, int dir
             }
             case 2: //left
             {
-                Tile tile(TileType::CorridorH, pos_x - side / 2, pos_y, index_x - 1, index_y, side / 2, difficulty);
+                Tile tile(TileType::CorridorH, pos_x - tileSize, pos_y, index_x - 1, index_y, side, difficulty);
                 tileCreated[index_x - 1 + tileNumOffset][index_y + tileNumOffset] = true;
                 tileData[index_x - 1 + tileNumOffset][index_y + tileNumOffset] = tile;
                 loadedTiles.push_back(sf::Vector2i(index_x - 1 + tileNumOffset, index_y + tileNumOffset));
@@ -208,7 +209,7 @@ void Game::generateLevel(int pos_x, int pos_y, int index_x, int index_y, int dir
                 {
                     type2 = TileType::LevelTeleport;
                 }
-                Tile tile2(type2, pos_x - side / 2 - side / 2, pos_y, index_x - 2, index_y, side / 2, difficulty);
+                Tile tile2(type2, pos_x - tileSize - tileSize, pos_y, index_x - 2, index_y, side, difficulty);
                 tileCreated[index_x - 2 + tileNumOffset][index_y + tileNumOffset] = true;
                 tileData[index_x - 2 + tileNumOffset][index_y + tileNumOffset] = tile2;
                 loadedTiles.push_back(sf::Vector2i(index_x - 2 + tileNumOffset, index_y + tileNumOffset));
@@ -225,7 +226,7 @@ void Game::generateLevel(int pos_x, int pos_y, int index_x, int index_y, int dir
                         if (!tileCreated[index_x - 4 + tileNumOffset][index_y + tileNumOffset])
                         {
                             created++;
-                            generateLevel(pos_x - side / 2 - side / 2, pos_y, index_x - 2, index_y, 2, len + 1);
+                            generateLevel(pos_x - tileSize - tileSize, pos_y, index_x - 2, index_y, 2, len + 1);
                         }
                         counter++;
                         break;
@@ -235,7 +236,7 @@ void Game::generateLevel(int pos_x, int pos_y, int index_x, int index_y, int dir
                         if (!tileCreated[index_x - 2 + tileNumOffset][index_y - 2 + tileNumOffset])
                         {
                             created++;
-                            generateLevel(pos_x - side / 2 - side / 2, pos_y, index_x - 2, index_y, 1, len + 1);
+                            generateLevel(pos_x - tileSize - tileSize, pos_y, index_x - 2, index_y, 1, len + 1);
                         }
                         counter++;
                         break;
@@ -245,7 +246,7 @@ void Game::generateLevel(int pos_x, int pos_y, int index_x, int index_y, int dir
                         if (!tileCreated[index_x - 2 + tileNumOffset][index_y + 2 + tileNumOffset])
                         {
                             created++;
-                            generateLevel(pos_x - side / 2 - side / 2, pos_y, index_x - 2, index_y, 3, len + 1);
+                            generateLevel(pos_x - tileSize - tileSize, pos_y, index_x - 2, index_y, 3, len + 1);
                         }
                         counter++;
                         break;
@@ -261,7 +262,7 @@ void Game::generateLevel(int pos_x, int pos_y, int index_x, int index_y, int dir
             }
             case 3: //down
             {
-                Tile tile(TileType::CorridorV, pos_x, pos_y + side / 2, index_x, index_y + 1, side / 2, difficulty);
+                Tile tile(TileType::CorridorV, pos_x, pos_y + tileSize, index_x, index_y + 1, side, difficulty);
                 tileCreated[index_x + tileNumOffset][index_y + 1 + tileNumOffset] = true;
                 tileData[index_x + tileNumOffset][index_y + 1 + tileNumOffset] = tile;
                 loadedTiles.push_back(sf::Vector2i(index_x + tileNumOffset, index_y + 1 + tileNumOffset));
@@ -291,7 +292,7 @@ void Game::generateLevel(int pos_x, int pos_y, int index_x, int index_y, int dir
                 {
                     type2 = TileType::LevelTeleport;
                 }
-                Tile tile2(type2, pos_x, pos_y + side / 2 + side / 2, index_x, index_y + 2, side / 2, difficulty);
+                Tile tile2(type2, pos_x, pos_y + tileSize + tileSize, index_x, index_y + 2, side, difficulty);
                 tileCreated[index_x + tileNumOffset][index_y + 2 + tileNumOffset] = true;
                 tileData[index_x + tileNumOffset][index_y + 2 + tileNumOffset] = tile2;
                 loadedTiles.push_back(sf::Vector2i(index_x + tileNumOffset, index_y + 2 + tileNumOffset));
@@ -308,7 +309,7 @@ void Game::generateLevel(int pos_x, int pos_y, int index_x, int index_y, int dir
                         if (!tileCreated[index_x - 2 + tileNumOffset][index_y + 2 + tileNumOffset])
                         {
                             created++;
-                            generateLevel(pos_x, pos_y + side / 2 + side / 2, index_x, index_y + 2, 2, len + 1);
+                            generateLevel(pos_x, pos_y + tileSize + tileSize, index_x, index_y + 2, 2, len + 1);
                         }
                         counter++;
                         break;
@@ -318,7 +319,7 @@ void Game::generateLevel(int pos_x, int pos_y, int index_x, int index_y, int dir
                         if (!tileCreated[index_x + tileNumOffset][index_y + 4 + tileNumOffset])
                         {
                             created++;
-                            generateLevel(pos_x, pos_y + side / 2 + side / 2, index_x, index_y + 2, 3, len + 1);
+                            generateLevel(pos_x, pos_y + tileSize + tileSize, index_x, index_y + 2, 3, len + 1);
                         }
                         counter++;
                         break;
@@ -328,7 +329,7 @@ void Game::generateLevel(int pos_x, int pos_y, int index_x, int index_y, int dir
                         if (!tileCreated[index_x + 2 + tileNumOffset][index_y + 2 + tileNumOffset])
                         {
                             created++;
-                            generateLevel(pos_x, pos_y + side / 2 + side / 2, index_x, index_y + 2, 4, len + 1);
+                            generateLevel(pos_x, pos_y + tileSize + tileSize, index_x, index_y + 2, 4, len + 1);
                         }
                         counter++;
                         break;
@@ -344,7 +345,7 @@ void Game::generateLevel(int pos_x, int pos_y, int index_x, int index_y, int dir
             }
             case 4: //right
             {
-                Tile tile(TileType::CorridorH, pos_x + side / 2, pos_y, index_x + 1, index_y, side / 2, difficulty);
+                Tile tile(TileType::CorridorH, pos_x + tileSize, pos_y, index_x + 1, index_y, side, difficulty);
                 tileCreated[index_x + 1 + tileNumOffset][index_y + tileNumOffset] = true;
                 tileData[index_x + 1 + tileNumOffset][index_y + tileNumOffset] = tile;
                 loadedTiles.push_back(sf::Vector2i(index_x + 1 + tileNumOffset, index_y + tileNumOffset));
@@ -374,7 +375,7 @@ void Game::generateLevel(int pos_x, int pos_y, int index_x, int index_y, int dir
                 {
                     type2 = TileType::LevelTeleport;
                 }
-                Tile tile2(type2, pos_x + side / 2 + side / 2, pos_y, index_x + 2, index_y, side / 2, difficulty);
+                Tile tile2(type2, pos_x + tileSize + tileSize, pos_y, index_x + 2, index_y, side, difficulty);
                 tileCreated[index_x + 2 + tileNumOffset][index_y + tileNumOffset] = true;
                 tileData[index_x + 2 + tileNumOffset][index_y + tileNumOffset] = tile2;
                 loadedTiles.push_back(sf::Vector2i(index_x + 2 + tileNumOffset, index_y + tileNumOffset));
@@ -391,7 +392,7 @@ void Game::generateLevel(int pos_x, int pos_y, int index_x, int index_y, int dir
                         if (!tileCreated[index_x + 2 + tileNumOffset][index_y + 2 + tileNumOffset])
                         {
                             created++;
-                            generateLevel(pos_x + side / 2 + side / 2, pos_y, index_x + 2, index_y, 3, len + 1);
+                            generateLevel(pos_x + tileSize + tileSize, pos_y, index_x + 2, index_y, 3, len + 1);
                         }
                         counter++;
                         break;
@@ -401,7 +402,7 @@ void Game::generateLevel(int pos_x, int pos_y, int index_x, int index_y, int dir
                         if (!tileCreated[index_x + 2 + tileNumOffset][index_y - 2 + tileNumOffset])
                         {
                             created++;
-                            generateLevel(pos_x + side / 2 + side / 2, pos_y, index_x + 2, index_y, 1, len + 1);
+                            generateLevel(pos_x + tileSize + tileSize, pos_y, index_x + 2, index_y, 1, len + 1);
                         }
                         counter++;
                         break;
@@ -411,7 +412,7 @@ void Game::generateLevel(int pos_x, int pos_y, int index_x, int index_y, int dir
                         if (!tileCreated[index_x + 4 + tileNumOffset][index_y + tileNumOffset])
                         {
                             created++;
-                            generateLevel(pos_x + side / 2 + side / 2, pos_y, index_x + 2, index_y, 4, len + 1);
+                            generateLevel(pos_x + tileSize + tileSize, pos_y, index_x + 2, index_y, 4, len + 1);
                         }
                         counter++;
                         break;
@@ -477,6 +478,11 @@ void Game::events()
         command.name = CommandName::MoveRight;
         commandQueue.push_back(command);
     }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::F))
+    {
+        command.name = CommandName::Interaction;
+        commandQueue.push_back(command);
+    }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) and dashTimer.getElapsedTime() > sf::seconds(0.5))
     {
         dashTimer.restart();
@@ -539,6 +545,10 @@ void Game::commands()
                                     {
                                         window.draw(tileData[loadedTiles[j].x][loadedTiles[j].y].getEnemyBuffer()[k].getHitbox());
                                     }
+                                    for (int k = 0; k < tileData[loadedTiles[j].x][loadedTiles[j].y].getRangedBuffer().size(); k++)
+                                    {
+                                        window.draw(tileData[loadedTiles[j].x][loadedTiles[j].y].getRangedBuffer()[k].getPickUpHitbox());
+                                    }
                                 }
                             }
                         }
@@ -560,14 +570,14 @@ void Game::commands()
                     }
                     //draw hud
                     {
-                        //sf::Text text;
-                        //text.setFont(NataSans);
-                        //text.setFillColor(sf::Color::Red);
-                        //text.setCharacterSize(20);
-                        //text.setPosition(player->getHitbox().getPosition() + sf::Vector2f(0, 50));
-                        //std::string str = std::to_string(player->getIndex().x) + " " + std::to_string(player->getIndex().y) + " " + std::to_string(player->getHitbox().getPosition().x - sf::VideoMode::getDesktopMode().width / 2 + side / 4) + " " + std::to_string(player->getHitbox().getPosition().y - side / 2 + side / 4);
-                        //text.setString(str);
-                        //window.draw(text);
+                        sf::Text text;
+                        text.setFont(NataSans);
+                        text.setFillColor(sf::Color::Red);
+                        text.setCharacterSize(20);
+                        text.setPosition(player->getHitbox().getPosition() + sf::Vector2f(0, 50));
+                        std::string str = std::to_string(player->getIndex().x) + " " + std::to_string(player->getIndex().y) + " " + std::to_string(player->getHitbox().getPosition().x - sf::VideoMode::getDesktopMode().width / 2 + side / 4) + " " + std::to_string(player->getHitbox().getPosition().y - side / 2 + side / 4);
+                        text.setString(str);
+                        window.draw(text);
                     }
                     window.display();
                     break;
@@ -580,10 +590,6 @@ void Game::commands()
                 case CommandName::TickTiles:
                 {
                     if ((tileData[player->getIndex().x + tileNumOffset][player->getIndex().y + tileNumOffset].getGoal() == LevelGoal::No or tileData[player->getIndex().x + tileNumOffset][player->getIndex().y + tileNumOffset].getGoal() == LevelGoal::Reward) and tileData[player->getIndex().x + tileNumOffset][player->getIndex().y + tileNumOffset].getState() == TileStatus::NotCleared)
-                    {
-                        tileData[player->getIndex().x + tileNumOffset][player->getIndex().y + tileNumOffset].clear();
-                    }
-                    if (tileData[player->getIndex().x + tileNumOffset][player->getIndex().y + tileNumOffset].getGoal() == LevelGoal::Death and tileData[player->getIndex().x + tileNumOffset][player->getIndex().y + tileNumOffset].getState() == TileStatus::NotCleared and tileData[player->getIndex().x + tileNumOffset][player->getIndex().y + tileNumOffset].getEnemyBuffer().empty())
                     {
                         tileData[player->getIndex().x + tileNumOffset][player->getIndex().y + tileNumOffset].clear();
                     }
@@ -603,6 +609,18 @@ void Game::commands()
                     }
                     break;
                 }
+                case CommandName::Interaction:
+                {
+                    for (int k = 0; k < tileData[player->getIndex().x + tileNumOffset][player->getIndex().y + tileNumOffset].getRangedBuffer().size(); k++)
+                    {
+                        if (tileData[player->getIndex().x + tileNumOffset][player->getIndex().y + tileNumOffset].isPlayerWeaponHit(player, tileData[player->getIndex().x + tileNumOffset][player->getIndex().y + tileNumOffset].getRangedBuffer()[k]))
+                        {
+                            player->swapWeapon(tileData[player->getIndex().x + tileNumOffset][player->getIndex().y + tileNumOffset].getRangedBuffer()[i]);
+                            tileData[player->getIndex().x + tileNumOffset][player->getIndex().y + tileNumOffset].delRangedBufferElem(k);
+                        }
+                    }
+                    break;
+                }
                 case CommandName::MoveUp:
                 {
                     for (int j = 1; j < 10; j++)
@@ -612,7 +630,7 @@ void Game::commands()
                             player->move(sf::Vector2f(0, (-1) * (playerSpeed /j) * (timePerFrame.asSeconds())));
                             camera.move(sf::Vector2f(0, (-1) * (playerSpeed /j) * (timePerFrame.asSeconds())));
                             window.setView(camera);
-                            player->updateIndex(side / 2);
+                            player->updateIndex(side);
                             break;
                         }
                     }
@@ -627,7 +645,7 @@ void Game::commands()
                             player->move(sf::Vector2f((-1) * (playerSpeed /j) * (timePerFrame.asSeconds()), 0));
                             camera.move(sf::Vector2f((-1) * (playerSpeed /j) * (timePerFrame.asSeconds()), 0));
                             window.setView(camera);
-                            player->updateIndex(side / 2);
+                            player->updateIndex(side);
                             break;
                         }
                     }
@@ -642,7 +660,7 @@ void Game::commands()
                             player->move(sf::Vector2f(0, (1) * (playerSpeed / j) * (timePerFrame.asSeconds())));
                             camera.move(sf::Vector2f(0, (1) * (playerSpeed / j) * (timePerFrame.asSeconds())));
                             window.setView(camera);
-                            player->updateIndex(side / 2);
+                            player->updateIndex(side);
                             break;
                         }
                     }
@@ -657,7 +675,7 @@ void Game::commands()
                             player->move(sf::Vector2f((playerSpeed /j) * (timePerFrame.asSeconds()), 0));
                             camera.move(sf::Vector2f((playerSpeed /j) * (timePerFrame.asSeconds()), 0));
                             window.setView(camera);
-                            player->updateIndex(side / 2);
+                            player->updateIndex(side);
                             break;
                         }
                     }
@@ -674,7 +692,7 @@ void Game::commands()
                                 player->move(sf::Vector2f(0, (-1) * (playerSpeed * 20 / j) * (timePerFrame.asSeconds())));
                                 camera.move(sf::Vector2f(0, (-1) * (playerSpeed * 20 / j) * (timePerFrame.asSeconds())));
                                 window.setView(camera);
-                                player->updateIndex(side / 2);
+                                player->updateIndex(side);
                                 break;
                             }
                         }
@@ -688,7 +706,7 @@ void Game::commands()
                                 player->move(sf::Vector2f((-1) * (playerSpeed * 20 / j) * (timePerFrame.asSeconds()), 0));
                                 camera.move(sf::Vector2f((-1) * (playerSpeed * 20 / j) * (timePerFrame.asSeconds()), 0));
                                 window.setView(camera);
-                                player->updateIndex(side / 2);
+                                player->updateIndex(side);
                                 break;
                             }
                         }
@@ -702,7 +720,7 @@ void Game::commands()
                                 player->move(sf::Vector2f(0, (playerSpeed * 20 / j) * (timePerFrame.asSeconds())));
                                 camera.move(sf::Vector2f(0, (playerSpeed * 20 / j) * (timePerFrame.asSeconds())));
                                 window.setView(camera);
-                                player->updateIndex(side / 2);
+                                player->updateIndex(side);
                                 break;
                             }
                         }
@@ -716,7 +734,7 @@ void Game::commands()
                                 player->move(sf::Vector2f((playerSpeed * 20 / j) * (timePerFrame.asSeconds()), 0));
                                 camera.move(sf::Vector2f((playerSpeed * 20 / j) * (timePerFrame.asSeconds()), 0));
                                 window.setView(camera);
-                                player->updateIndex(side / 2);
+                                player->updateIndex(side);
                                 break;
                             }
                         }

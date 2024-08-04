@@ -5,18 +5,22 @@ class Weapon
 public:
 	Weapon();
 	~Weapon();
-
-private:
+protected:
 	int damage;
 	WeaponName name;
 	sf::Time cooldown;
+	sf::CircleShape pickUpHitbox;
+	AttackPattern pattern;
 };
 
 class RangedWeapon : Weapon
 {
 public:
 	RangedWeapon();
+	RangedWeapon(WeaponName inName, sf::Vector2f inPos, int side);
 	~RangedWeapon();
+	sf::CircleShape getPickUpHitbox();
+	WeaponName getName();
 
 private:
 	sf::CircleShape hitbox;
@@ -27,7 +31,9 @@ class MeleeWeapon : Weapon
 {
 public:
 	MeleeWeapon();
+	MeleeWeapon(WeaponName inName, sf::Vector2f inPos, int side);
 	~MeleeWeapon();
+	sf::CircleShape getPickUpHitbox();
 
 private:
 	sf::RectangleShape hitbox;

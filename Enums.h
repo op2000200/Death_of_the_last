@@ -12,7 +12,8 @@ enum CommandName
 	MoveDown,
 	MoveRight,
 	TickTiles,
-	Dash
+	Dash,
+	Interaction
 };
 
 enum TileType
@@ -59,12 +60,29 @@ enum EnemyBehavior
 
 enum AmmoType
 {
-	No
+	MM9,
+	MM556,
+	MM762,
+	MM12
 };
 
 enum WeaponName
 {
 	Knife,
-	Dagger,
-	Fist
+	Fist,
+	VP70,
+	SWMP,
+	AR10,
+	XM8,
+	G36,
+	Groza,
+	MR133,
+	M88,
+	NoWeapon
+};
+
+enum AttackPattern
+{
+	Auto,
+	SemiAuto
 };

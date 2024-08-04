@@ -15,6 +15,7 @@ public:
 	void setHealth(int buf);
 	sf::Vector2f getDest();
 	void setDest(sf::Vector2f buf);
+	void getDamage(int dmg);
 
 private:
 	sf::CircleShape hitbox;

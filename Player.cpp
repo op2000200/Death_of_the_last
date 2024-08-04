@@ -1,8 +1,10 @@
 #include "Player.h"
 
 Player::Player(int pos_x, int pos_y, int index_x, int index_y, int side)
+    : ranged(WeaponName::NoWeapon, sf::Vector2f(), side)
+    , melee(WeaponName::Fist, sf::Vector2f(), side)
 {
-    hitbox.setRadius(side / 40);
+    hitbox.setRadius(side / 20);
     hitbox.setOrigin(sf::Vector2f(hitbox.getRadius(), hitbox.getRadius()));
     hitbox.setPosition(sf::Vector2f(pos_x, pos_y));
     hitbox.setFillColor(sf::Color::Transparent);
@@ -42,13 +44,29 @@ void Player::updateIndex(int side)
         tileIndex.x = (hitbox.getPosition().x - sf::VideoMode::getDesktopMode().width / 2 + side / 2) / side;
         tileIndex.x--;
     }
-    if (hitbox.getPosition().y - side + side / 2 > 0)
+    if (hitbox.getPosition().y - sf::VideoMode::getDesktopMode().height / 2 + side / 2 > 0)
     {
-        tileIndex.y = (hitbox.getPosition().y - side + side / 2) / side;
+        tileIndex.y = (hitbox.getPosition().y - sf::VideoMode::getDesktopMode().height / 2 + side / 2) / side;
     }
     else
     {
-        tileIndex.y = (hitbox.getPosition().y - side + side / 2) / side;
+        tileIndex.y = (hitbox.getPosition().y - sf::VideoMode::getDesktopMode().height / 2 + side / 2) / side;
         tileIndex.y--;
     }
+}
+
+void Player::swapWeapon(RangedWeapon rng)
+{
+    if (ranged.getName() == WeaponName::NoWeapon)
+    {
+        ranged = rng;
+    }
+    else
+    {
+        //create a weapon in hand and drop it
+    }
+}
+
+void Player::swapWeapon(MeleeWeapon rng)
+{
 }
