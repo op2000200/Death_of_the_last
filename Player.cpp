@@ -12,6 +12,7 @@ Player::Player(int pos_x, int pos_y, int index_x, int index_y, int side)
     hitbox.setOutlineThickness(1.f);
     tileIndex.x = index_x;
     tileIndex.y = index_y;
+    ranged.clear();
 }
 
 Player::~Player()
@@ -67,6 +68,25 @@ void Player::swapWeapon(RangedWeapon rng)
     }
 }
 
+RangedWeapon Player::getRanged()
+{
+    return ranged;
+}
+
+MeleeWeapon Player::getMelee()
+{
+    return melee;
+}
+
 void Player::swapWeapon(MeleeWeapon rng)
+{
+}
+
+void Player::shoot(int side, sf::Vector2f dir)
+{
+    ranged.shoot(hitbox.getPosition(), side, dir);
+}
+
+void Player::hit(int side, sf::Vector2f dir)
 {
 }

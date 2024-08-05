@@ -39,4 +39,6 @@ private:
 	sf::Texture tileSetBg;
 	float difficulty;
 	sf::Clock dashTimer;
+	sf::Clock rangedAttackTimer;
+	sf::Clock meleeAttackTimer;
 };

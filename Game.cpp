@@ -34,6 +34,8 @@ Game::Game()
     tileSetBg.loadFromFile("assets/textures/TileSet.png");
     difficulty = 0.01;
     dashTimer.restart();
+    rangedAttackTimer.restart();
+    meleeAttackTimer.restart();
 }
 
 Game::~Game()
@@ -505,6 +507,28 @@ void Game::events()
             command.attribute.int4 = 0;
         commandQueue.push_back(command);
     }
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+    {
+        if (player->getRanged().getName() != WeaponName::NoWeapon)
+        {
+            if (player->getRanged().getCooldown() < rangedAttackTimer.getElapsedTime())
+            {
+                rangedAttackTimer.restart();
+                command.name = CommandName::RangeAttack;
+                commandQueue.push_back(command);
+            }
+        }
+    }
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
+    {
+        if (player->getMelee().getCooldown() < meleeAttackTimer.getElapsedTime())
+        {
+            meleeAttackTimer.restart();
+            command.name = CommandName::CloseAttack;
+            commandQueue.push_back(command);
+            //attack
+        }
+    }
     
 
     command.name = CommandName::TickTiles;
@@ -557,9 +581,19 @@ void Game::commands()
                     {
                         
                     }
-                    //draw projectiles
+                    //draw attack
                     {
+                        //for enemy
 
+
+                        //for player
+                        if (player->getRanged().getName() != NoWeapon)
+                        {
+                            for (int j = 0; j < player->getRanged().getProjBuffer().size(); j++)
+                            {
+                                window.draw(player->getRanged().getProjBuffer()[j].getHitbox());
+                            }
+                        }
                     }
                     //draw player
                     {
@@ -585,6 +619,19 @@ void Game::commands()
                 case CommandName::SpawnPlayer:
                 {
                     player = new Player(commandQueue[i].attribute.int1, commandQueue[i].attribute.int2, commandQueue[i].attribute.int3, commandQueue[i].attribute.int4, side);
+
+                }
+                case CommandName::RangeAttack:
+                {
+                    sf::Vector2f dir, center;
+                    center = sf::Vector2f(sf::VideoMode::getDesktopMode().width / 2, sf::VideoMode::getDesktopMode().height / 2);
+                    dir.x = (sf::Mouse::getPosition().x - center.x) / (abs(sf::Mouse::getPosition().x - center.x) + abs(sf::Mouse::getPosition().y - center.y));
+                    dir.x = (sf::Mouse::getPosition().y - center.y) / (abs(sf::Mouse::getPosition().x - center.x) + abs(sf::Mouse::getPosition().y - center.y));
+                    player->shoot(side, dir);
+                    break;
+                }
+                case CommandName::CloseAttack:
+                {
                     break;
                 }
                 case CommandName::TickTiles:

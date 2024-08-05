@@ -13,7 +13,9 @@ enum CommandName
 	MoveRight,
 	TickTiles,
 	Dash,
-	Interaction
+	Interaction,
+	RangeAttack,
+	CloseAttack
 };
 
 enum TileType
@@ -63,7 +65,7 @@ enum AmmoType
 	MM9,
 	MM556,
 	MM762,
-	MM12
+	Gauge12
 };
 
 enum WeaponName

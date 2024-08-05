@@ -1,5 +1,6 @@
 #pragma once
 #include "Structures.h"
+#include "Projectile.h"
 class Weapon
 {
 public:
@@ -21,9 +22,16 @@ public:
 	~RangedWeapon();
 	sf::CircleShape getPickUpHitbox();
 	WeaponName getName();
+	AmmoType getAmmo();
+	sf::Time getCooldown();
+	AttackPattern getPattern();
+	std::vector<Projectile> getProjBuffer();
+	void delProjBufElem(int i);
+	void shoot(sf::Vector2f inPos, int side, sf::Vector2f dir);
+	void clear();
 
 private:
-	sf::CircleShape hitbox;
+	std::vector<Projectile> projectileBuffer;
 	AmmoType ammoType;
 };
 
@@ -34,6 +42,9 @@ public:
 	MeleeWeapon(WeaponName inName, sf::Vector2f inPos, int side);
 	~MeleeWeapon();
 	sf::CircleShape getPickUpHitbox();
+	WeaponName getName();
+	sf::Time getCooldown();
+	AttackPattern getPattern();
 
 private:
 	sf::RectangleShape hitbox;

@@ -11,7 +11,11 @@ public:
 	void move(sf::Vector2f delta);
 	void updateIndex(int side);
 	void swapWeapon(RangedWeapon rng);
+	RangedWeapon getRanged();
+	MeleeWeapon getMelee();
 	void swapWeapon(MeleeWeapon rng);
+	void shoot(int side, sf::Vector2f dir);
+	void hit(int side, sf::Vector2f dir);
 
 private:
 	sf::CircleShape hitbox;
