@@ -2,7 +2,7 @@
 
 Enemy::Enemy(int pos_x, int pos_y, int side)
 {
-	hitbox.setRadius(side / 20);
+	hitbox.setRadius(side / 40);
 	hitbox.setOrigin(sf::Vector2f(hitbox.getRadius(), hitbox.getRadius()));
 	hitbox.setPosition(sf::Vector2f(pos_x, pos_y));
 	hitbox.setFillColor(sf::Color::Transparent);
@@ -10,7 +10,17 @@ Enemy::Enemy(int pos_x, int pos_y, int side)
 	hitbox.setOutlineThickness(1.f);
 	behav = EnemyBehavior::Stand;
 	state = EnemyState::Standing;
-	health = 30;
+	health = 100;
+	hpBar.setSize(sf::Vector2f(
+		side / 20,
+		side / 100
+	));
+	hpBar.setOrigin(sf::Vector2f(
+		side / 40,
+		side / 40 + side / 50
+	));
+	hpBar.setPosition(sf::Vector2f(pos_x, pos_y));
+	hpBar.setFillColor(sf::Color::Green);
 }
 
 Enemy::~Enemy()
@@ -25,6 +35,7 @@ sf::CircleShape Enemy::getHitbox()
 void Enemy::move(sf::Vector2f delta)
 {
 	hitbox.move(delta);
+	hpBar.setPosition(hitbox.getPosition());
 }
 
 EnemyState Enemy::getState()
@@ -54,6 +65,10 @@ int Enemy::getHealth()
 
 void Enemy::setHealth(int buf)
 {
+	hpBar.setSize(sf::Vector2f(
+		(hpBar.getSize().x / health) * buf,
+		hpBar.getSize().y
+	));
 	health = buf;
 }
 
@@ -69,5 +84,14 @@ void Enemy::setDest(sf::Vector2f buf)
 
 void Enemy::getDamage(int dmg)
 {
+	hpBar.setSize(sf::Vector2f(
+		(hpBar.getSize().x / health) * (health - dmg),
+		hpBar.getSize().y
+	));
 	health -= dmg;
+}
+
+sf::RectangleShape Enemy::getHpBar()
+{
+	return hpBar;
 }

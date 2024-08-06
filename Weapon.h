@@ -12,6 +12,7 @@ protected:
 	sf::Time cooldown;
 	sf::CircleShape pickUpHitbox;
 	AttackPattern pattern;
+	int speed;
 };
 
 class RangedWeapon : Weapon
@@ -29,10 +30,18 @@ public:
 	void delProjBufElem(int i);
 	void shoot(sf::Vector2f inPos, int side, sf::Vector2f dir);
 	void clear();
+	int getSpeed();
+	void tickProj(int i, int speed);
+	void delProj(int i);
+	int getCapacity();
+	sf::Time getReloadTime();
+	int getDamage();
 
 private:
 	std::vector<Projectile> projectileBuffer;
 	AmmoType ammoType;
+	sf::Time reloadTime;
+	int capacity;
 };
 
 class MeleeWeapon : Weapon
@@ -45,6 +54,10 @@ public:
 	WeaponName getName();
 	sf::Time getCooldown();
 	AttackPattern getPattern();
+	sf::RectangleShape getHitbox();
+	void updateRotation(float deg);
+	void updatePos(sf::Vector2f pos);
+	int getDamage();
 
 private:
 	sf::RectangleShape hitbox;

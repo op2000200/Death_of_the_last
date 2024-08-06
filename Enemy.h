@@ -16,9 +16,11 @@ public:
 	sf::Vector2f getDest();
 	void setDest(sf::Vector2f buf);
 	void getDamage(int dmg);
+	sf::RectangleShape getHpBar();
 
 private:
 	sf::CircleShape hitbox;
+	sf::RectangleShape hpBar;
 	EnemyState state;
 	EnemyBehavior behav;
 	sf::Vector2f dest;

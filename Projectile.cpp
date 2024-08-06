@@ -4,7 +4,7 @@ Projectile::Projectile()
 {
 }
 
-Projectile::Projectile(sf::Vector2f inPos, int side, AmmoType ammo, sf::Vector2f dir)
+Projectile::Projectile(sf::Vector2f inPos, int side, AmmoType ammo, sf::Vector2f dir, int damage)
 {
 	if (ammo == MM9)
 	{
@@ -46,6 +46,7 @@ Projectile::Projectile(sf::Vector2f inPos, int side, AmmoType ammo, sf::Vector2f
 	hitbox.setFillColor(sf::Color::Transparent);
 	hitbox.setOutlineColor(sf::Color::Red);
 	hitbox.setOutlineThickness(1.f);
+	direction = dir;
 }
 
 Projectile::~Projectile()
@@ -60,4 +61,9 @@ sf::CircleShape Projectile::getHitbox()
 sf::Vector2f Projectile::getDir()
 {
 	return direction;
+}
+
+void Projectile::move(sf::Vector2f delta)
+{
+	hitbox.move(delta);
 }

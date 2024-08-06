@@ -17,7 +17,9 @@ public:
 	TileStatus getState();
 	std::vector<Enemy> getEnemyBuffer();
 	std::vector<RangedWeapon> getRangedBuffer();
+	std::vector<MeleeWeapon> getMeleeBuffer();
 	void delRangedBufferElem(int i);
+	void delMeleeBufferElem(int i);
 	void spawnEnemies(float diff, int side, int pos_x, int pos_y);
 	void spawnEnemiesWave(int side);
 	void spawnChallenge(float diff);
@@ -27,6 +29,8 @@ public:
 	bool isEnemyEnemyHit(Enemy enemy, int speed);
 	bool isPlayerWeaponHit(Player* player, RangedWeapon weapon);
 	bool isPlayerWeaponHit(Player* player, MeleeWeapon weapon);
+	bool isProjEnemyHit(Projectile proj, Enemy enemy, int speed);
+	void damageEnemy(int i, int dmg);
 
 private:
 	sf::RectangleShape body;

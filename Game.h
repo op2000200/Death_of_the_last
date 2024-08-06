@@ -21,6 +21,8 @@ public:
 	void commands();
 	bool isPlayerWallCollision(int index_x, int index_y, int dir);
 	bool isPlayerWallHit(int index_x, int index_y, int dir, int speed);
+	bool isProjWallHit(Projectile proj, int index_x, int index_y, sf::Vector2f dir, int speed);
+	bool isMeleeEnemyHit(sf::RectangleShape hitbox, Enemy enemy);
 private:
 	sf::RenderWindow window;
 	int side;
@@ -33,6 +35,7 @@ private:
 	bool** tileCreated;
 	int tileNumOffset;
 	sf::Time timePerFrame;
+	sf::Time timePerFrame2;
 	sf::View camera;
 	int playerSpeed;
 	sf::Font NataSans;
@@ -41,4 +44,12 @@ private:
 	sf::Clock dashTimer;
 	sf::Clock rangedAttackTimer;
 	sf::Clock meleeAttackTimer;
+	sf::Clock reloadTimer;
+	sf::Clock interactionTimer;
+	sf::Clock displayTimer;
+	int bulletsShot;	//to count when to reload
+	Overlay overlay;
+	int roomsCount;
+	int roomsVisited;
+	int floor;
 };

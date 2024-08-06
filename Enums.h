@@ -15,7 +15,9 @@ enum CommandName
 	Dash,
 	Interaction,
 	RangeAttack,
-	CloseAttack
+	CloseAttack,
+	Rotate,
+	UpdateOverlay
 };
 
 enum TileType
