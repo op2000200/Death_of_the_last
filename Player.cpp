@@ -1,8 +1,8 @@
 #include "Player.h"
 
-Player::Player(int pos_x, int pos_y, int index_x, int index_y, int side)
-    : ranged(WeaponName::NoWeapon, sf::Vector2f(), side)
-    , melee(WeaponName::Fist, sf::Vector2f(pos_x, pos_y), side)
+Player::Player(int pos_x, int pos_y, int index_x, int index_y, int side, std::vector<sf::Texture*> textureHolder)
+    : ranged(WeaponName::NoWeapon, sf::Vector2f(), side, textureHolder[0])
+    , melee(WeaponName::Fist, sf::Vector2f(pos_x, pos_y), side, textureHolder[0])
 {
     hitbox.setRadius(side / 40);
     hitbox.setOrigin(sf::Vector2f(hitbox.getRadius(), hitbox.getRadius()));
@@ -13,26 +13,16 @@ Player::Player(int pos_x, int pos_y, int index_x, int index_y, int side)
     tileIndex.x = index_x;
     tileIndex.y = index_y;
     ranged.clear();
-    hpBar.setSize(sf::Vector2f(
-        side / 20,
-        side / 100
-    ));
-    hpBar.setOrigin(sf::Vector2f(
-        side / 40,
-        side / 40 + side / 50
-    ));
-    hpBar.setPosition(sf::Vector2f(pos_x, pos_y));
-    hpBar.setFillColor(sf::Color::Green);
-    armorBar.setSize(sf::Vector2f(
-        side / 20,
-        side / 200
-    ));
-    armorBar.setOrigin(sf::Vector2f(
-        side / 40,
-        side / 40 + side / 75
-    ));
-    armorBar.setPosition(sf::Vector2f(pos_x, pos_y));
-    armorBar.setFillColor(sf::Color::Blue);
+    health = 100;
+    stamina = 100;
+    armour = 0;
+    armourTier = 0;
+    bullet9mmCount = 0;
+    bullet556mmCount = 0;
+    bullet762mmCount = 0;
+    bullet12gaugeCount = 0;
+    repairKitCount = 0;
+    healthKitCount = 0;
 }
 
 Player::~Player()
@@ -53,8 +43,6 @@ void Player::move(sf::Vector2f delta)
 {
     hitbox.move(delta);
     melee.updatePos(hitbox.getPosition());
-    hpBar.setPosition(hitbox.getPosition());
-    armorBar.setPosition(hitbox.getPosition());
 }
 
 void Player::updateIndex(int side)
@@ -140,12 +128,102 @@ void Player::rotate(float deg)
     melee.updateRotation(deg);
 }
 
-sf::RectangleShape Player::getHpBar()
+int Player::getHealth()
 {
-    return hpBar;
+    return health;
 }
 
-sf::RectangleShape Player::getArmorBar()
+int Player::getStamina()
 {
-    return armorBar;
+    return stamina;
+}
+
+int Player::getArmour()
+{
+    return armour;
+}
+
+int Player::getArmourTier()
+{
+    return armourTier;
+}
+
+int Player::get9mm()
+{
+    return bullet9mmCount;
+}
+
+int Player::get556mm()
+{
+    return bullet556mmCount;
+}
+
+int Player::get762mm()
+{
+    return bullet762mmCount;
+}
+
+int Player::get12gauge()
+{
+    return bullet12gaugeCount;
+}
+
+int Player::getRepairKit()
+{
+    return repairKitCount;
+}
+
+int Player::getHealthKit()
+{
+    return healthKitCount;
+}
+
+void Player::setHealth(int buf)
+{
+    health = buf;
+}
+
+void Player::setStamina(int buf)
+{
+    health = buf;
+}
+
+void Player::setArmour(int buf)
+{
+    armour = buf;
+}
+
+void Player::setArmourTier(int buf)
+{
+    armourTier = buf;
+}
+
+void Player::set9mm(int buf)
+{
+    bullet9mmCount = buf;
+}
+
+void Player::set556mm(int buf)
+{
+    bullet556mmCount = buf;
+}
+
+void Player::set762mm(int buf)
+{
+    bullet762mmCount = buf;
+}
+
+void Player::set12gauge(int buf)
+{
+    bullet12gaugeCount = buf;
+}
+
+void Player::setRepairKit(int buf)
+{
+    repairKitCount = buf;
+}
+
+void Player::setHealthKit(int buf)
+{
+    healthKitCount = buf;
 }

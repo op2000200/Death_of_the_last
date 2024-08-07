@@ -4,7 +4,7 @@ Tile::Tile()
 {
 }
 
-Tile::Tile(TileType tileType, int pos_x, int pos_y, int index_x, int index_y, int side, float diff)
+Tile::Tile(TileType tileType, int pos_x, int pos_y, int index_x, int index_y, int side, float diff, std::vector<sf::Texture*> textureHolder)
 {
     int tileSize = side;
     switch (tileType)
@@ -80,16 +80,16 @@ Tile::Tile(TileType tileType, int pos_x, int pos_y, int index_x, int index_y, in
         }
         case TileType::Central:
         {
-            body.setFillColor(sf::Color::Black);
+            body.setFillColor(sf::Color::White);
             body.setSize(sf::Vector2f(tileSize, tileSize));
             body.setOrigin(sf::Vector2f(tileSize / 2, tileSize / 2));
             hitbox.setSize(sf::Vector2f(tileSize - 2, tileSize - 2));
             hitbox.setOrigin(sf::Vector2f((tileSize - 2) / 2, (tileSize - 2) / 2));
             goal = LevelGoal::No;
             type = tileType;
-            RangedWeapon ranged(WeaponName::VP70, sf::Vector2f(pos_x, pos_y), side);
+            RangedWeapon ranged(WeaponName::VP70, sf::Vector2f(pos_x, pos_y), side, textureHolder[2]);
             rangedBuffer.push_back(ranged);
-            MeleeWeapon melee(Knife, sf::Vector2f(pos_x + side / 20, pos_y), side);
+            MeleeWeapon melee(Knife, sf::Vector2f(pos_x + side / 20, pos_y), side, textureHolder[0]);
             meleeBuffer.push_back(melee);
             break;
         }
@@ -251,12 +251,8 @@ void Tile::spawnReward(float diff)
 {
 }
 
-void Tile::tickTile(Player* player, Tile tile)
+bool Tile::tickTile(Player* player, Tile tile)
 {
-    if (goal == LevelGoal::No)
-    {
-
-    }
     if (type == TileType::LevelRegular)
     {
         if (!enemyBuffer.empty())
@@ -313,8 +309,8 @@ void Tile::tickTile(Player* player, Tile tile)
                 //                            if (!isEnemyEnemyHit(enemyBuffer[i], 100 / j))
                 //                            {
                 //                                enemyBuffer[i].move(sf::Vector2f(
-                //                                    ((enemyBuffer[i].getDest().x - enemyBuffer[i].getHitbox().getPosition().x) / (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getHitbox().getPosition().x) + abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getHitbox().getPosition().y))) * (250 / j) * (1 / 300.f),
-                //                                    ((enemyBuffer[i].getDest().y - enemyBuffer[i].getHitbox().getPosition().y) / (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getHitbox().getPosition().x) + abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getHitbox().getPosition().y))) * (250 / j) * (1 / 300.f)
+                //                                    ((enemyBuffer[i].getDest().x - enemyBuffer[i].getHitbox().getPosition().x) / (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getHitbox().getPosition().x) + abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getHitbox().getPosition().y))) * (250 / j) * (1 / 100.f),
+                //                                    ((enemyBuffer[i].getDest().y - enemyBuffer[i].getHitbox().getPosition().y) / (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getHitbox().getPosition().x) + abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getHitbox().getPosition().y))) * (250 / j) * (1 / 100.f)
                 //                                ));
                 //                                break;
                 //                            }
@@ -328,8 +324,8 @@ void Tile::tickTile(Player* player, Tile tile)
                 //                    if (isEnemyEnemyHit(enemyBuffer[i], (450 / 10)))
                 //                    {
                 //                        enemyBuffer[i].move(sf::Vector2f(
-                //                            ((enemyBuffer[i].getDest().x - enemyBuffer[i].getHitbox().getPosition().x) / (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getHitbox().getPosition().x) + abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getHitbox().getPosition().y))) * (450 / 10) * (1 / 300.f),
-                //                            ((enemyBuffer[i].getDest().y - enemyBuffer[i].getHitbox().getPosition().y) / (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getHitbox().getPosition().x) + abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getHitbox().getPosition().y))) * (450 / 10) * (1 / 300.f)
+                //                            ((enemyBuffer[i].getDest().x - enemyBuffer[i].getHitbox().getPosition().x) / (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getHitbox().getPosition().x) + abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getHitbox().getPosition().y))) * (450 / 10) * (1 / 100.f),
+                //                            ((enemyBuffer[i].getDest().y - enemyBuffer[i].getHitbox().getPosition().y) / (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getHitbox().getPosition().x) + abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getHitbox().getPosition().y))) * (450 / 10) * (1 / 100.f)
                 //                        ));
                 //                    }
                 //                }
@@ -355,8 +351,8 @@ void Tile::tickTile(Player* player, Tile tile)
                 //                y = y + (rand() % int(enemyBuffer[i].getHitbox().getRadius()) - enemyBuffer[i].getHitbox().getRadius() / 2);
                 //                enemyBuffer[i].setDest(sf::Vector2f(x, y));
                 //                enemyBuffer[i].move(sf::Vector2f(
-                //                    ((enemyBuffer[i].getDest().x - enemyBuffer[i].getHitbox().getPosition().x) / (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getHitbox().getPosition().x) + abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getHitbox().getPosition().y))) * (100) * (1 / 300.f),
-                //                    ((enemyBuffer[i].getDest().y - enemyBuffer[i].getHitbox().getPosition().y) / (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getHitbox().getPosition().x) + abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getHitbox().getPosition().y))) * (100) * (1 / 300.f)
+                //                    ((enemyBuffer[i].getDest().x - enemyBuffer[i].getHitbox().getPosition().x) / (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getHitbox().getPosition().x) + abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getHitbox().getPosition().y))) * (100) * (1 / 100.f),
+                //                    ((enemyBuffer[i].getDest().y - enemyBuffer[i].getHitbox().getPosition().y) / (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getHitbox().getPosition().x) + abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getHitbox().getPosition().y))) * (100) * (1 / 100.f)
                 //                ));
                 //            }
                 //            else
@@ -380,8 +376,8 @@ void Tile::tickTile(Player* player, Tile tile)
                 //                                if (!isEnemyEnemyHit(enemyBuffer[i], 100 / j))
                 //                                {
                 //                                    enemyBuffer[i].move(sf::Vector2f(
-                //                                        ((enemyBuffer[i].getDest().x - enemyBuffer[i].getHitbox().getPosition().x) / (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getHitbox().getPosition().x) + abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getHitbox().getPosition().y))) * (450 / j) * (1 / 300.f),
-                //                                        ((enemyBuffer[i].getDest().y - enemyBuffer[i].getHitbox().getPosition().y) / (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getHitbox().getPosition().x) + abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getHitbox().getPosition().y))) * (450 / j) * (1 / 300.f)
+                //                                        ((enemyBuffer[i].getDest().x - enemyBuffer[i].getHitbox().getPosition().x) / (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getHitbox().getPosition().x) + abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getHitbox().getPosition().y))) * (450 / j) * (1 / 100.f),
+                //                                        ((enemyBuffer[i].getDest().y - enemyBuffer[i].getHitbox().getPosition().y) / (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getHitbox().getPosition().x) + abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getHitbox().getPosition().y))) * (450 / j) * (1 / 100.f)
                 //                                    ));
                 //                                    break;
                 //                                }
@@ -395,8 +391,8 @@ void Tile::tickTile(Player* player, Tile tile)
                 //                        if (isEnemyEnemyHit(enemyBuffer[i], (450 / 10)))
                 //                        {
                 //                            enemyBuffer[i].move(sf::Vector2f(
-                //                                ((enemyBuffer[i].getDest().x - enemyBuffer[i].getHitbox().getPosition().x) / (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getHitbox().getPosition().x) + abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getHitbox().getPosition().y))) * (450 / 10)* (1 / 300.f),
-                //                                ((enemyBuffer[i].getDest().y - enemyBuffer[i].getHitbox().getPosition().y) / (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getHitbox().getPosition().x) + abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getHitbox().getPosition().y))) * (450 / 10)* (1 / 300.f)
+                //                                ((enemyBuffer[i].getDest().x - enemyBuffer[i].getHitbox().getPosition().x) / (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getHitbox().getPosition().x) + abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getHitbox().getPosition().y))) * (450 / 10)* (1 / 100.f),
+                //                                ((enemyBuffer[i].getDest().y - enemyBuffer[i].getHitbox().getPosition().y) / (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getHitbox().getPosition().x) + abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getHitbox().getPosition().y))) * (450 / 10)* (1 / 100.f)
                 //                            ));
                 //                        }
                 //                    }
@@ -444,35 +440,120 @@ void Tile::tickTile(Player* player, Tile tile)
             }
             else
             {
-                clear();
+                if (tileStatus != Marked)
+                {
+                    clear();
+                }
             }
         }
+        if (tileStatus == Cleared)
+        {
+            tileStatus = Marked;
+            return true;
+        }
     }
-    if (goal == LevelGoal::Qizz)
+    if (type == TileType::LevelQizz)
     {
-
+        if (player->getIndex().x == index.x and player->getIndex().y == index.y and tileStatus != Marked)
+        {
+            clear();
+        }
+        if (tileStatus == Cleared)
+        {
+            tileStatus = Marked;
+            return true;
+        }
     }
-    if (goal == LevelGoal::Reward)
+    if (type == TileType::LevelEmpty)
     {
-
+        if (player->getIndex().x == index.x and player->getIndex().y == index.y and tileStatus != Marked)
+        {
+            clear();
+        }
+        if (tileStatus == Cleared)
+        {
+            tileStatus = Marked;
+            return true;
+        }
     }
+    if (type == TileType::LevelReward)
+    {
+        if (player->getIndex().x == index.x and player->getIndex().y == index.y and tileStatus != Marked)
+        {
+            clear();
+        }
+        if (tileStatus == Cleared)
+        {
+            tileStatus = Marked;
+            return true;
+        }
+    }
+    if (type == TileType::LevelStairs)
+    {
+        if (player->getIndex().x == index.x and player->getIndex().y == index.y and tileStatus != Marked)
+        {
+            clear();
+        }
+        if (tileStatus == Cleared)
+        {
+            tileStatus = Marked;
+            return true;
+        }
+    }
+    if (type == TileType::LevelTeleport)
+    {
+        if (player->getIndex().x == index.x and player->getIndex().y == index.y and tileStatus != Marked)
+        {
+            clear();
+        }
+        if (tileStatus == Cleared)
+        {
+            tileStatus = Marked;
+            return true;
+        }
+    }
+    if (type == TileType::Central)
+    {
+        if (player->getIndex().x == index.x and player->getIndex().y == index.y and tileStatus != Marked)
+        {
+            clear();
+        }
+        if (tileStatus == Cleared)
+        {
+            tileStatus = Marked;
+            return true;
+        }
+    }
+    if (type == TileType::CorridorH or type == TileType::CorridorV)
+    {
+        if (player->getIndex().x == index.x and player->getIndex().y == index.y and tileStatus != Marked)
+        {
+            clear();
+        }
+        if (tileStatus == Cleared)
+        {
+            tileStatus = Marked;
+            return false;
+        }
+    }
+    return false;
 }
 
 bool Tile::isEnemyWallHit(Enemy enemy, int speed)
 {
-    if (enemy.getHitbox().getPosition().y - enemy.getHitbox().getRadius() - (speed * 1 / 300.f) < hitbox.getPosition().y - hitbox.getSize().y / 2)
+    if (enemy.getHitbox().getPosition().y - enemy.getHitbox().getRadius() - (speed * 1 / 100.f) < hitbox.getPosition().y - hitbox.getSize().y / 2)
     {
         return true;
     }
-    if (enemy.getHitbox().getPosition().x - enemy.getHitbox().getRadius() - (speed * 1 / 300.f) < hitbox.getPosition().x - hitbox.getSize().x / 2)
+    if (enemy.getHitbox().getPosition().x - enemy.getHitbox().getRadius() - (speed * 1 / 100.f) < hitbox.getPosition().x - hitbox.getSize().x / 2)
     {
         return true;
     }
-    if (enemy.getHitbox().getPosition().y + enemy.getHitbox().getRadius() + (speed * 1 / 300.f) > hitbox.getPosition().y + hitbox.getSize().y / 2)
+    if (enemy.getHitbox().getPosition().y + enemy.getHitbox().getRadius() + (speed * 1 / 100.f) > hitbox.getPosition().y + hitbox.getSize().y / 2)
     {
         return true;
     }
-    if (enemy.getHitbox().getPosition().x + enemy.getHitbox().getRadius() + (speed * 1 / 300.f) > hitbox.getPosition().x + hitbox.getSize().x / 2)
+    if (enemy.getHitbox().getPosition().x + enemy.getHitbox().getRadius() + (speed * 1 / 100.f) > hitbox.getPosition().x + hitbox.getSize().x / 2)
     {
         return true;
     }
@@ -487,7 +568,7 @@ bool Tile::isEnemyEnemyHit(Enemy enemy, int speed)
             return false;
         else
         {
-            if (enemy.getHitbox().getRadius() * 2 + (speed * 1 / 300.f) > sqrt(pow((enemyBuffer[i].getHitbox().getPosition().x - enemy.getHitbox().getPosition().x), 2) + pow((enemyBuffer[i].getHitbox().getPosition().y - enemy.getHitbox().getPosition().y), 2)))
+            if (enemy.getHitbox().getRadius() * 2 + (speed * 1 / 100.f) > sqrt(pow((enemyBuffer[i].getHitbox().getPosition().x - enemy.getHitbox().getPosition().x), 2) + pow((enemyBuffer[i].getHitbox().getPosition().y - enemy.getHitbox().getPosition().y), 2)))
             {
                 return true;
             }
@@ -516,7 +597,7 @@ bool Tile::isPlayerWeaponHit(Player* player, MeleeWeapon weapon)
 
 bool Tile::isProjEnemyHit(Projectile proj, Enemy enemy, int speed)
 {
-    if (enemy.getHitbox().getRadius() > sqrt(pow((enemy.getHitbox().getPosition().x - proj.getHitbox().getPosition().x + speed * (1/300.f) * proj.getDir().x), 2) + pow((enemy.getHitbox().getPosition().y - proj.getHitbox().getPosition().y + speed * (1 / 300.f) * proj.getDir().y), 2)))
+    if (enemy.getHitbox().getRadius() > sqrt(pow((enemy.getHitbox().getPosition().x - proj.getHitbox().getPosition().x + speed * (1/300.f) * proj.getDir().x), 2) + pow((enemy.getHitbox().getPosition().y - proj.getHitbox().getPosition().y + speed * (1 / 100.f) * proj.getDir().y), 2)))
     {
         return true;
     }

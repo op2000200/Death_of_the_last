@@ -13,13 +13,14 @@ protected:
 	sf::CircleShape pickUpHitbox;
 	AttackPattern pattern;
 	int speed;
+	sf::Sprite sprite;
 };
 
 class RangedWeapon : Weapon
 {
 public:
 	RangedWeapon();
-	RangedWeapon(WeaponName inName, sf::Vector2f inPos, int side);
+	RangedWeapon(WeaponName inName, sf::Vector2f inPos, int side, sf::Texture* texture);
 	~RangedWeapon();
 	sf::CircleShape getPickUpHitbox();
 	WeaponName getName();
@@ -36,6 +37,7 @@ public:
 	int getCapacity();
 	sf::Time getReloadTime();
 	int getDamage();
+	sf::Sprite getSprite();
 
 private:
 	std::vector<Projectile> projectileBuffer;
@@ -48,7 +50,7 @@ class MeleeWeapon : Weapon
 {
 public:
 	MeleeWeapon();
-	MeleeWeapon(WeaponName inName, sf::Vector2f inPos, int side);
+	MeleeWeapon(WeaponName inName, sf::Vector2f inPos, int side, sf::Texture* texture);
 	~MeleeWeapon();
 	sf::CircleShape getPickUpHitbox();
 	WeaponName getName();

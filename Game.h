@@ -40,6 +40,15 @@ private:
 	int playerSpeed;
 	sf::Font NataSans;
 	sf::Texture tileSetBg;
+	sf::Texture* ar10texture;
+	sf::Texture* swmptexture;
+	sf::Texture* vp70texture;
+	sf::Texture* m88texture;
+	sf::Texture* mr133texture;
+	sf::Texture* grozatexture;
+	sf::Texture* xm8texture;
+	sf::Texture* ar15texture;
+	std::vector<sf::Texture*> textureHolder;
 	float difficulty;
 	sf::Clock dashTimer;
 	sf::Clock rangedAttackTimer;

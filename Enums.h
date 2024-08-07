@@ -38,7 +38,8 @@ enum TileStatus
 {
 	NotCleared,
 	Cleared,
-	Solved
+	Solved,
+	Marked
 };
 
 enum LevelGoal

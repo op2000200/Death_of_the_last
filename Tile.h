@@ -6,7 +6,7 @@ class Tile
 {
 public:
 	Tile();
-	Tile(TileType tileType, int pos_x, int pos_y, int index_x, int index_y, int side, float diff);
+	Tile(TileType tileType, int pos_x, int pos_y, int index_x, int index_y, int side, float diff, std::vector<sf::Texture*> textureHolder);
 	~Tile();
 	sf::RectangleShape getBody();
 	sf::RectangleShape getHitbox();
@@ -24,7 +24,7 @@ public:
 	void spawnEnemiesWave(int side);
 	void spawnChallenge(float diff);
 	void spawnReward(float diff);
-	void tickTile(Player* player, Tile tile);
+	bool tickTile(Player* player, Tile tile);
 	bool isEnemyWallHit(Enemy enemy, int speed);
 	bool isEnemyEnemyHit(Enemy enemy, int speed);
 	bool isPlayerWeaponHit(Player* player, RangedWeapon weapon);

@@ -91,11 +91,16 @@ int RangedWeapon::getDamage()
 	return damage;
 }
 
+sf::Sprite RangedWeapon::getSprite()
+{
+	return sprite;
+}
+
 RangedWeapon::RangedWeapon()
 {
 }
 
-RangedWeapon::RangedWeapon(WeaponName inName, sf::Vector2f inPos, int side)
+RangedWeapon::RangedWeapon(WeaponName inName, sf::Vector2f inPos, int side, sf::Texture* texture)
 {
 	pickUpHitbox.setRadius(side / 40);
 	pickUpHitbox.setOrigin(sf::Vector2f(pickUpHitbox.getRadius(), pickUpHitbox.getRadius()));
@@ -104,6 +109,9 @@ RangedWeapon::RangedWeapon(WeaponName inName, sf::Vector2f inPos, int side)
 	pickUpHitbox.setOutlineColor(sf::Color::Red);
 	pickUpHitbox.setOutlineThickness(1.f);
 	name = inName;
+	sprite.setTexture(*texture);
+	sprite.setOrigin(sf::Vector2f(sprite.getTexture()->getSize().x / 2, sprite.getTexture()->getSize().y / 2));
+	sprite.setPosition(inPos);
 	switch (name)
 	{
 		case VP70:
@@ -189,7 +197,7 @@ MeleeWeapon::MeleeWeapon()
 {
 }
 
-MeleeWeapon::MeleeWeapon(WeaponName inName, sf::Vector2f inPos, int side)
+MeleeWeapon::MeleeWeapon(WeaponName inName, sf::Vector2f inPos, int side, sf::Texture* texture)
 {
 	pickUpHitbox.setRadius(side / 40);
 	pickUpHitbox.setOrigin(sf::Vector2f(pickUpHitbox.getRadius(), pickUpHitbox.getRadius()));
@@ -204,7 +212,7 @@ MeleeWeapon::MeleeWeapon(WeaponName inName, sf::Vector2f inPos, int side)
 		{
 			pattern = SemiAuto;
 			damage = 30;
-			cooldown = sf::seconds(2);
+			cooldown = sf::seconds(0.5);
 			speed = (side / 10) * 7;
 			hitbox.setSize(sf::Vector2f(
 				side / 200,
@@ -218,9 +226,9 @@ MeleeWeapon::MeleeWeapon(WeaponName inName, sf::Vector2f inPos, int side)
 		}
 		case Fist:
 		{
-			pattern = SemiAuto;
+			pattern = Auto;
 			damage = 5;
-			cooldown = sf::seconds(2);
+			cooldown = sf::seconds(0.3);
 			speed = (side / 10) * 7;
 			hitbox.setSize(sf::Vector2f(
 				side / 20,

@@ -21,7 +21,7 @@ Game::Game()
         }
     }
     tileNumOffset = 50;
-    timePerFrame = sf::seconds(1 / 300.f);  //update rate
+    timePerFrame = sf::seconds(1 / 100.f);  //update rate
     //timePerFrame2 = sf::seconds(1 / 75.f);  //display rate
     camera = window.getView();
     tileData = new Tile* [101];
@@ -32,6 +32,30 @@ Game::Game()
     playerSpeed = 500;
     NataSans.loadFromFile("assets/font/Nata_Sans_Typeface/ttf/NataSans-Regular.ttf");
     tileSetBg.loadFromFile("assets/textures/TileSet.png");
+    ar10texture = new sf::Texture;
+    ar10texture->loadFromFile("assets/textures/ar10.png");
+    textureHolder.push_back(ar10texture);
+    swmptexture = new sf::Texture;
+    swmptexture->loadFromFile("assets/textures/swmp.png");
+    textureHolder.push_back(swmptexture);
+    vp70texture = new sf::Texture;
+    vp70texture->loadFromFile("assets/textures/vp70.png");
+    textureHolder.push_back(vp70texture);
+    m88texture = new sf::Texture;
+    m88texture->loadFromFile("assets/textures/m88.png");
+    textureHolder.push_back(m88texture);
+    mr133texture = new sf::Texture;
+    mr133texture->loadFromFile("assets/textures/mr133.png");
+    textureHolder.push_back(mr133texture);
+    grozatexture = new sf::Texture;
+    grozatexture->loadFromFile("assets/textures/groza.png");
+    textureHolder.push_back(grozatexture);
+    xm8texture = new sf::Texture;
+    xm8texture->loadFromFile("assets/textures/xm-8.png");
+    textureHolder.push_back(xm8texture);
+    ar15texture = new sf::Texture;
+    ar15texture->loadFromFile("assets/textures/ar15.png");
+    textureHolder.push_back(ar15texture);
     difficulty = 0.01;
     dashTimer.restart();
     rangedAttackTimer.restart();
@@ -40,6 +64,8 @@ Game::Game()
     reloadTimer.restart();
     interactionTimer.restart();
     displayTimer.restart();
+    roomsCount = 0;
+    roomsVisited = 0;
 }
 
 Game::~Game()
@@ -67,181 +93,222 @@ void Game::initial()
     generateMap();
     spawnPlayer();
     //ui
-    overlay.floorProgress.setSize(sf::Vector2f(
-        side / 10,
-        side / 20
-    ));
-    overlay.floorProgress.setOrigin(sf::Vector2f(
-        overlay.floorProgress.getSize().x / 2,
-        overlay.floorProgress.getSize().y / 2
-    ));
-    overlay.floorProgress.setFillColor(sf::Color(100, 100, 100));
-    overlay.floorProgress.setOutlineColor(sf::Color(60,60,60));
-    overlay.floorProgress.setOutlineThickness(side / 400);
+    {
+        overlay.floorProgress.setSize(sf::Vector2f(
+            side / 10,
+            side / 20
+        ));
+        overlay.floorProgress.setOrigin(sf::Vector2f(
+            overlay.floorProgress.getSize().x / 2,
+            overlay.floorProgress.getSize().y / 2
+        ));
+        overlay.floorProgress.setFillColor(sf::Color(100, 100, 100));
+        overlay.floorProgress.setOutlineColor(sf::Color(60, 60, 60));
+        overlay.floorProgress.setOutlineThickness(side / 400);
 
-    overlay.floorNum.setSize(sf::Vector2f(
-        side / 10,
-        side / 20
-    ));
-    overlay.floorNum.setOrigin(sf::Vector2f(
-        overlay.floorNum.getSize().x / 2,
-        overlay.floorNum.getSize().y / 2
-    ));
-    overlay.floorNum.setFillColor(sf::Color(100, 100, 100));
-    overlay.floorNum.setOutlineColor(sf::Color(60,60,60));
-    overlay.floorNum.setOutlineThickness(side / 400);
+        overlay.floorProgressLabel.setFont(NataSans);
+        overlay.floorProgressLabel.setFillColor(sf::Color::Black);
+        overlay.floorProgressLabel.setCharacterSize(side / 40);
+        overlay.floorProgressLabel.setOrigin(sf::Vector2f(
+            overlay.floorProgress.getSize().x / 2 - side / 200,
+            overlay.floorProgress.getSize().y / 2 - side / 100
+        ));
 
-    overlay.armourSpriteEdge.setSize(sf::Vector2f(
-        side / 20,
-        side / 20
-    ));
-    overlay.armourSpriteEdge.setOrigin(sf::Vector2f(
-        overlay.armourSpriteEdge.getSize().x / 2,
-        overlay.armourSpriteEdge.getSize().y / 2
-    ));
-    overlay.armourSpriteEdge.setFillColor(sf::Color(100, 100, 100));
-    overlay.armourSpriteEdge.setOutlineColor(sf::Color(60,60,60));
-    overlay.armourSpriteEdge.setOutlineThickness(side / 400);
+        overlay.floorNum.setSize(sf::Vector2f(
+            side / 10,
+            side / 20
+        ));
+        overlay.floorNum.setOrigin(sf::Vector2f(
+            overlay.floorNum.getSize().x / 2,
+            overlay.floorNum.getSize().y / 2
+        ));
+        overlay.floorNum.setFillColor(sf::Color(100, 100, 100));
+        overlay.floorNum.setOutlineColor(sf::Color(60, 60, 60));
+        overlay.floorNum.setOutlineThickness(side / 400);
 
-    overlay.bullet9mmEdge.setSize(sf::Vector2f(
-        side / 20,
-        side / 20
-    ));
-    overlay.bullet9mmEdge.setOrigin(sf::Vector2f(
-        overlay.bullet9mmEdge.getSize().x / 2,
-        overlay.bullet9mmEdge.getSize().y / 2
-    ));
-    overlay.bullet9mmEdge.setFillColor(sf::Color(100, 100, 100));
-    overlay.bullet9mmEdge.setOutlineColor(sf::Color(60,60,60));
-    overlay.bullet9mmEdge.setOutlineThickness(side / 400);
+        overlay.armourSpriteEdge.setSize(sf::Vector2f(
+            side / 20,
+            side / 20
+        ));
+        overlay.armourSpriteEdge.setOrigin(sf::Vector2f(
+            overlay.armourSpriteEdge.getSize().x / 2,
+            overlay.armourSpriteEdge.getSize().y / 2
+        ));
+        overlay.armourSpriteEdge.setFillColor(sf::Color(100, 100, 100));
+        overlay.armourSpriteEdge.setOutlineColor(sf::Color(60, 60, 60));
+        overlay.armourSpriteEdge.setOutlineThickness(side / 400);
 
-    overlay.bullet556mmEdge.setSize(sf::Vector2f(
-        side / 20,
-        side / 20
-    ));
-    overlay.bullet556mmEdge.setOrigin(sf::Vector2f(
-        overlay.bullet556mmEdge.getSize().x / 2,
-        overlay.bullet556mmEdge.getSize().y / 2
-    ));
-    overlay.bullet556mmEdge.setFillColor(sf::Color(100, 100, 100));
-    overlay.bullet556mmEdge.setOutlineColor(sf::Color(60,60,60));
-    overlay.bullet556mmEdge.setOutlineThickness(side / 400);
+        overlay.bullet9mmEdge.setSize(sf::Vector2f(
+            side / 20,
+            side / 20
+        ));
+        overlay.bullet9mmEdge.setOrigin(sf::Vector2f(
+            overlay.bullet9mmEdge.getSize().x / 2,
+            overlay.bullet9mmEdge.getSize().y / 2
+        ));
+        overlay.bullet9mmEdge.setFillColor(sf::Color(100, 100, 100));
+        overlay.bullet9mmEdge.setOutlineColor(sf::Color(60, 60, 60));
+        overlay.bullet9mmEdge.setOutlineThickness(side / 400);
 
-    overlay.bullet762mmEdge.setSize(sf::Vector2f(
-        side / 20,
-        side / 20
-    ));
-    overlay.bullet762mmEdge.setOrigin(sf::Vector2f(
-        overlay.bullet762mmEdge.getSize().x / 2,
-        overlay.bullet762mmEdge.getSize().y / 2
-    ));
-    overlay.bullet762mmEdge.setFillColor(sf::Color(100, 100, 100));
-    overlay.bullet762mmEdge.setOutlineColor(sf::Color(60,60,60));
-    overlay.bullet762mmEdge.setOutlineThickness(side / 400);
+        overlay.bullet556mmEdge.setSize(sf::Vector2f(
+            side / 20,
+            side / 20
+        ));
+        overlay.bullet556mmEdge.setOrigin(sf::Vector2f(
+            overlay.bullet556mmEdge.getSize().x / 2,
+            overlay.bullet556mmEdge.getSize().y / 2
+        ));
+        overlay.bullet556mmEdge.setFillColor(sf::Color(100, 100, 100));
+        overlay.bullet556mmEdge.setOutlineColor(sf::Color(60, 60, 60));
+        overlay.bullet556mmEdge.setOutlineThickness(side / 400);
 
-    overlay.bullet12gaugeEdge.setSize(sf::Vector2f(
-        side / 20,
-        side / 20
-    ));
-    overlay.bullet12gaugeEdge.setOrigin(sf::Vector2f(
-        overlay.bullet12gaugeEdge.getSize().x / 2,
-        overlay.bullet12gaugeEdge.getSize().y / 2
-    ));
-    overlay.bullet12gaugeEdge.setFillColor(sf::Color(100, 100, 100));
-    overlay.bullet12gaugeEdge.setOutlineColor(sf::Color(60,60,60));
-    overlay.bullet12gaugeEdge.setOutlineThickness(side / 400);
+        overlay.bullet762mmEdge.setSize(sf::Vector2f(
+            side / 20,
+            side / 20
+        ));
+        overlay.bullet762mmEdge.setOrigin(sf::Vector2f(
+            overlay.bullet762mmEdge.getSize().x / 2,
+            overlay.bullet762mmEdge.getSize().y / 2
+        ));
+        overlay.bullet762mmEdge.setFillColor(sf::Color(100, 100, 100));
+        overlay.bullet762mmEdge.setOutlineColor(sf::Color(60, 60, 60));
+        overlay.bullet762mmEdge.setOutlineThickness(side / 400);
 
-    overlay.mainWeaponEdge.setSize(sf::Vector2f(
-        side / 20,
-        side / 20
-    ));
-    overlay.mainWeaponEdge.setOrigin(sf::Vector2f(
-        overlay.mainWeaponEdge.getSize().x / 2,
-        overlay.mainWeaponEdge.getSize().y / 2
-    ));
-    overlay.mainWeaponEdge.setFillColor(sf::Color(100, 100, 100));
-    overlay.mainWeaponEdge.setOutlineColor(sf::Color(60,60,60));
-    overlay.mainWeaponEdge.setOutlineThickness(side / 400);
+        overlay.bullet12gaugeEdge.setSize(sf::Vector2f(
+            side / 20,
+            side / 20
+        ));
+        overlay.bullet12gaugeEdge.setOrigin(sf::Vector2f(
+            overlay.bullet12gaugeEdge.getSize().x / 2,
+            overlay.bullet12gaugeEdge.getSize().y / 2
+        ));
+        overlay.bullet12gaugeEdge.setFillColor(sf::Color(100, 100, 100));
+        overlay.bullet12gaugeEdge.setOutlineColor(sf::Color(60, 60, 60));
+        overlay.bullet12gaugeEdge.setOutlineThickness(side / 400);
 
-    overlay.secondaryWeaponEdge.setSize(sf::Vector2f(
-        side / 20,
-        side / 20
-    ));
-    overlay.secondaryWeaponEdge.setOrigin(sf::Vector2f(
-        overlay.secondaryWeaponEdge.getSize().x / 2,
-        overlay.secondaryWeaponEdge.getSize().y / 2
-    ));
-    overlay.secondaryWeaponEdge.setFillColor(sf::Color(100, 100, 100));
-    overlay.secondaryWeaponEdge.setOutlineColor(sf::Color(60,60,60));
-    overlay.secondaryWeaponEdge.setOutlineThickness(side / 400);
+        overlay.mainWeaponEdge.setSize(sf::Vector2f(
+            side / 20,
+            side / 20
+        ));
+        overlay.mainWeaponEdge.setOrigin(sf::Vector2f(
+            overlay.mainWeaponEdge.getSize().x / 2,
+            overlay.mainWeaponEdge.getSize().y / 2
+        ));
+        overlay.mainWeaponEdge.setFillColor(sf::Color(100, 100, 100));
+        overlay.mainWeaponEdge.setOutlineColor(sf::Color(60, 60, 60));
+        overlay.mainWeaponEdge.setOutlineThickness(side / 400);
 
-    overlay.repairKitEdge.setSize(sf::Vector2f(
-        side / 20,
-        side / 20
-    ));
-    overlay.repairKitEdge.setOrigin(sf::Vector2f(
-        overlay.repairKitEdge.getSize().x / 2,
-        overlay.repairKitEdge.getSize().y / 2
-    ));
-    overlay.repairKitEdge.setFillColor(sf::Color(100, 100, 100));
-    overlay.repairKitEdge.setOutlineColor(sf::Color(60,60,60));
-    overlay.repairKitEdge.setOutlineThickness(side / 400);
+        overlay.secondaryWeaponEdge.setSize(sf::Vector2f(
+            side / 20,
+            side / 20
+        ));
+        overlay.secondaryWeaponEdge.setOrigin(sf::Vector2f(
+            overlay.secondaryWeaponEdge.getSize().x / 2,
+            overlay.secondaryWeaponEdge.getSize().y / 2
+        ));
+        overlay.secondaryWeaponEdge.setFillColor(sf::Color(100, 100, 100));
+        overlay.secondaryWeaponEdge.setOutlineColor(sf::Color(60, 60, 60));
+        overlay.secondaryWeaponEdge.setOutlineThickness(side / 400);
 
-    overlay.healthKitEdge.setSize(sf::Vector2f(
-        side / 20,
-        side / 20
-    ));
-    overlay.healthKitEdge.setOrigin(sf::Vector2f(
-        overlay.healthKitEdge.getSize().x / 2,
-        overlay.healthKitEdge.getSize().y / 2
-    ));
-    overlay.healthKitEdge.setFillColor(sf::Color(100, 100, 100));
-    overlay.healthKitEdge.setOutlineColor(sf::Color(60,60,60));
-    overlay.healthKitEdge.setOutlineThickness(side / 400);
+        overlay.repairKitEdge.setSize(sf::Vector2f(
+            side / 20,
+            side / 20
+        ));
+        overlay.repairKitEdge.setOrigin(sf::Vector2f(
+            overlay.repairKitEdge.getSize().x / 2,
+            overlay.repairKitEdge.getSize().y / 2
+        ));
+        overlay.repairKitEdge.setFillColor(sf::Color(100, 100, 100));
+        overlay.repairKitEdge.setOutlineColor(sf::Color(60, 60, 60));
+        overlay.repairKitEdge.setOutlineThickness(side / 400);
 
-    overlay.armourBarEdge.setSize(sf::Vector2f(
-        side / 20 * 3 + (side / 15 - side / 20) * 2,
-        side / 20
-    ));
-    overlay.armourBarEdge.setOrigin(sf::Vector2f(
-        overlay.armourBarEdge.getSize().x / 2,
-        overlay.armourBarEdge.getSize().y / 2
-    ));
-    overlay.armourBarEdge.setFillColor(sf::Color(100, 100, 100));
-    overlay.armourBarEdge.setOutlineColor(sf::Color(60,60,60));
-    overlay.armourBarEdge.setOutlineThickness(side / 400);
+        overlay.healthKitEdge.setSize(sf::Vector2f(
+            side / 20,
+            side / 20
+        ));
+        overlay.healthKitEdge.setOrigin(sf::Vector2f(
+            overlay.healthKitEdge.getSize().x / 2,
+            overlay.healthKitEdge.getSize().y / 2
+        ));
+        overlay.healthKitEdge.setFillColor(sf::Color(100, 100, 100));
+        overlay.healthKitEdge.setOutlineColor(sf::Color(60, 60, 60));
+        overlay.healthKitEdge.setOutlineThickness(side / 400);
 
-    overlay.hpBarEdge.setSize(sf::Vector2f(
-        side / 16 * 4,
-        side / 40
-    ));
-    overlay.hpBarEdge.setOrigin(sf::Vector2f(
-        overlay.hpBarEdge.getSize().x / 2,
-        overlay.hpBarEdge.getSize().y / 2
-    ));
-    overlay.hpBarEdge.setFillColor(sf::Color(100, 100, 100));
-    overlay.hpBarEdge.setOutlineColor(sf::Color(60,60,60));
-    overlay.hpBarEdge.setOutlineThickness(side / 400);
+        overlay.armourBarEdge.setSize(sf::Vector2f(
+            side / 20 * 3 + (side / 15 - side / 20) * 2,
+            side / 60
+        ));
+        overlay.armourBarEdge.setOrigin(sf::Vector2f(
+            overlay.armourBarEdge.getSize().x / 2,
+            overlay.armourBarEdge.getSize().y / 2
+        ));
+        overlay.armourBarEdge.setFillColor(sf::Color(100, 100, 100));
+        overlay.armourBarEdge.setOutlineColor(sf::Color(20, 20, 20));
+        overlay.armourBarEdge.setOutlineThickness(side / 400);
 
-    overlay.staminaBarEdge.setSize(sf::Vector2f(
-        side / 16 * 4,
-        side / 40
-    ));
-    overlay.staminaBarEdge.setOrigin(sf::Vector2f(
-        overlay.staminaBarEdge.getSize().x / 2,
-        overlay.staminaBarEdge.getSize().y / 2
-    ));
-    overlay.staminaBarEdge.setFillColor(sf::Color(100, 100, 100));
-    overlay.staminaBarEdge.setOutlineColor(sf::Color(60,60,60));
-    overlay.staminaBarEdge.setOutlineThickness(side / 400);
+        overlay.armourBarFill.setSize(sf::Vector2f(
+            side / 20 * 3 + (side / 15 - side / 20) * 2,
+            side / 60
+        ));
+        overlay.armourBarFill.setOrigin(sf::Vector2f(
+            overlay.armourBarFill.getSize().x / 2,
+            overlay.armourBarFill.getSize().y / 2
+        ));
+        overlay.armourBarFill.setFillColor(sf::Color(30, 43, 230));
+
+        overlay.hpBarEdge.setSize(sf::Vector2f(
+            side / 20 * 3 + (side / 15 - side / 20) * 2,
+            side / 60
+        ));
+        overlay.hpBarEdge.setOrigin(sf::Vector2f(
+            overlay.hpBarEdge.getSize().x / 2,
+            overlay.hpBarEdge.getSize().y / 2
+        ));
+        overlay.hpBarEdge.setFillColor(sf::Color(100, 100, 100));
+        overlay.hpBarEdge.setOutlineColor(sf::Color(20, 20, 20));
+        overlay.hpBarEdge.setOutlineThickness(side / 400);
+
+        overlay.hpBarFill.setSize(sf::Vector2f(
+            side / 20 * 3 + (side / 15 - side / 20) * 2,
+            side / 60
+        ));
+        overlay.hpBarFill.setOrigin(sf::Vector2f(
+            overlay.hpBarFill.getSize().x / 2,
+            overlay.hpBarFill.getSize().y / 2
+        ));
+        overlay.hpBarFill.setFillColor(sf::Color(50, 230, 30));
+
+        overlay.staminaBarEdge.setSize(sf::Vector2f(
+            side / 20 * 3 + (side / 15 - side / 20) * 2,
+            side / 60
+        ));
+        overlay.staminaBarEdge.setOrigin(sf::Vector2f(
+            overlay.staminaBarEdge.getSize().x / 2,
+            overlay.staminaBarEdge.getSize().y / 2
+        ));
+        overlay.staminaBarEdge.setFillColor(sf::Color(100, 100, 100));
+        overlay.staminaBarEdge.setOutlineColor(sf::Color(20, 20, 20));
+        overlay.staminaBarEdge.setOutlineThickness(side / 400);
+
+        overlay.staminaBarFill.setSize(sf::Vector2f(
+            side / 20 * 3 + (side / 15 - side / 20) * 2,
+            side / 60
+        ));
+        overlay.staminaBarFill.setOrigin(sf::Vector2f(
+            overlay.staminaBarFill.getSize().x / 2,
+            overlay.staminaBarFill.getSize().y / 2
+        ));
+        overlay.staminaBarFill.setFillColor(sf::Color(30, 230, 230));
+    }
 }
 
 void Game::generateMap()
 {
-    Tile tile(TileType::Central, sf::VideoMode::getDesktopMode().width / 2, sf::VideoMode::getDesktopMode().height / 2, 0, 0, side, difficulty);
+    Tile tile(TileType::Central, sf::VideoMode::getDesktopMode().width / 2, sf::VideoMode::getDesktopMode().height / 2, 0, 0, side, difficulty, textureHolder);
     tileCreated[0 + tileNumOffset][0 + tileNumOffset] = true;
     tileData[0 + tileNumOffset][0 + tileNumOffset] = tile;
     loadedTiles.push_back(sf::Vector2i(0 + tileNumOffset, 0 + tileNumOffset));
+    roomsCount++;
     srand(time(0));
     if (!tileCreated[0 + tileNumOffset][-2 + tileNumOffset])
     {
@@ -264,13 +331,13 @@ void Game::generateMap()
 void Game::generateLevel(int pos_x, int pos_y, int index_x, int index_y, int dir, int len)
 {
     int tileSize = side;
-    if (index_x > -46 and index_x < 46 and index_y > -46 and index_y < 46 and len < 1)
+    if (index_x > -46 and index_x < 46 and index_y > -46 and index_y < 46 and len < 300)
     {
         switch (dir)
         {
             case 1: //up
             {
-                Tile tile(TileType::CorridorV, pos_x, pos_y - tileSize, index_x, index_y - 1, side, difficulty);
+                Tile tile(TileType::CorridorV, pos_x, pos_y - tileSize, index_x, index_y - 1, side, difficulty, textureHolder);
                 tileCreated[index_x + tileNumOffset][index_y - 1 + tileNumOffset] = true;
                 tileData[index_x + tileNumOffset][index_y - 1 + tileNumOffset] = tile;
                 loadedTiles.push_back(sf::Vector2i(index_x + tileNumOffset, index_y - 1 + tileNumOffset));
@@ -300,10 +367,11 @@ void Game::generateLevel(int pos_x, int pos_y, int index_x, int index_y, int dir
                 {
                     type2 = TileType::LevelTeleport;
                 }
-                Tile tile2(type2, pos_x, pos_y - tileSize - tileSize, index_x, index_y - 2, side, difficulty);
+                Tile tile2(type2, pos_x, pos_y - tileSize - tileSize, index_x, index_y - 2, side, difficulty, textureHolder);
                 tileCreated[index_x + tileNumOffset][index_y - 2 + tileNumOffset] = true;
                 tileData[index_x + tileNumOffset][index_y - 2 + tileNumOffset] = tile2;
                 loadedTiles.push_back(sf::Vector2i(index_x + tileNumOffset, index_y - 2 + tileNumOffset));
+                roomsCount++;
                 int created = 0;
                 int createdMax = rand() % 3 + 1;
                 int counter = 0;
@@ -353,7 +421,7 @@ void Game::generateLevel(int pos_x, int pos_y, int index_x, int index_y, int dir
             }
             case 2: //left
             {
-                Tile tile(TileType::CorridorH, pos_x - tileSize, pos_y, index_x - 1, index_y, side, difficulty);
+                Tile tile(TileType::CorridorH, pos_x - tileSize, pos_y, index_x - 1, index_y, side, difficulty, textureHolder);
                 tileCreated[index_x - 1 + tileNumOffset][index_y + tileNumOffset] = true;
                 tileData[index_x - 1 + tileNumOffset][index_y + tileNumOffset] = tile;
                 loadedTiles.push_back(sf::Vector2i(index_x - 1 + tileNumOffset, index_y + tileNumOffset));
@@ -383,10 +451,11 @@ void Game::generateLevel(int pos_x, int pos_y, int index_x, int index_y, int dir
                 {
                     type2 = TileType::LevelTeleport;
                 }
-                Tile tile2(type2, pos_x - tileSize - tileSize, pos_y, index_x - 2, index_y, side, difficulty);
+                Tile tile2(type2, pos_x - tileSize - tileSize, pos_y, index_x - 2, index_y, side, difficulty, textureHolder);
                 tileCreated[index_x - 2 + tileNumOffset][index_y + tileNumOffset] = true;
                 tileData[index_x - 2 + tileNumOffset][index_y + tileNumOffset] = tile2;
                 loadedTiles.push_back(sf::Vector2i(index_x - 2 + tileNumOffset, index_y + tileNumOffset));
+                roomsCount++;
                 int created = 0;
                 int createdMax = rand() % 3 + 1;
                 int counter = 0;
@@ -436,7 +505,7 @@ void Game::generateLevel(int pos_x, int pos_y, int index_x, int index_y, int dir
             }
             case 3: //down
             {
-                Tile tile(TileType::CorridorV, pos_x, pos_y + tileSize, index_x, index_y + 1, side, difficulty);
+                Tile tile(TileType::CorridorV, pos_x, pos_y + tileSize, index_x, index_y + 1, side, difficulty, textureHolder);
                 tileCreated[index_x + tileNumOffset][index_y + 1 + tileNumOffset] = true;
                 tileData[index_x + tileNumOffset][index_y + 1 + tileNumOffset] = tile;
                 loadedTiles.push_back(sf::Vector2i(index_x + tileNumOffset, index_y + 1 + tileNumOffset));
@@ -466,10 +535,11 @@ void Game::generateLevel(int pos_x, int pos_y, int index_x, int index_y, int dir
                 {
                     type2 = TileType::LevelTeleport;
                 }
-                Tile tile2(type2, pos_x, pos_y + tileSize + tileSize, index_x, index_y + 2, side, difficulty);
+                Tile tile2(type2, pos_x, pos_y + tileSize + tileSize, index_x, index_y + 2, side, difficulty, textureHolder);
                 tileCreated[index_x + tileNumOffset][index_y + 2 + tileNumOffset] = true;
                 tileData[index_x + tileNumOffset][index_y + 2 + tileNumOffset] = tile2;
                 loadedTiles.push_back(sf::Vector2i(index_x + tileNumOffset, index_y + 2 + tileNumOffset));
+                roomsCount++;
                 int created = 0;
                 int createdMax = rand() % 3 + 1;
                 int counter = 0;
@@ -519,7 +589,7 @@ void Game::generateLevel(int pos_x, int pos_y, int index_x, int index_y, int dir
             }
             case 4: //right
             {
-                Tile tile(TileType::CorridorH, pos_x + tileSize, pos_y, index_x + 1, index_y, side, difficulty);
+                Tile tile(TileType::CorridorH, pos_x + tileSize, pos_y, index_x + 1, index_y, side, difficulty, textureHolder);
                 tileCreated[index_x + 1 + tileNumOffset][index_y + tileNumOffset] = true;
                 tileData[index_x + 1 + tileNumOffset][index_y + tileNumOffset] = tile;
                 loadedTiles.push_back(sf::Vector2i(index_x + 1 + tileNumOffset, index_y + tileNumOffset));
@@ -549,10 +619,11 @@ void Game::generateLevel(int pos_x, int pos_y, int index_x, int index_y, int dir
                 {
                     type2 = TileType::LevelTeleport;
                 }
-                Tile tile2(type2, pos_x + tileSize + tileSize, pos_y, index_x + 2, index_y, side, difficulty);
+                Tile tile2(type2, pos_x + tileSize + tileSize, pos_y, index_x + 2, index_y, side, difficulty, textureHolder);
                 tileCreated[index_x + 2 + tileNumOffset][index_y + tileNumOffset] = true;
                 tileData[index_x + 2 + tileNumOffset][index_y + tileNumOffset] = tile2;
                 loadedTiles.push_back(sf::Vector2i(index_x + 2 + tileNumOffset, index_y + tileNumOffset));
+                roomsCount++;
                 int created = 0;
                 int createdMax = rand() % 3 + 1;
                 int counter = 0;
@@ -766,6 +837,7 @@ void Game::commands()
                                     for (int k = 0; k < tileData[loadedTiles[j].x][loadedTiles[j].y].getRangedBuffer().size(); k++)
                                     {
                                         window.draw(tileData[loadedTiles[j].x][loadedTiles[j].y].getRangedBuffer()[k].getPickUpHitbox());
+                                        window.draw(tileData[loadedTiles[j].x][loadedTiles[j].y].getRangedBuffer()[k].getSprite());
                                     }
                                     for (int k = 0; k < tileData[loadedTiles[j].x][loadedTiles[j].y].getMeleeBuffer().size(); k++)
                                     {
@@ -795,8 +867,6 @@ void Game::commands()
                         if (player != nullptr)
                         {
                             window.draw(player->getHitbox());
-                            window.draw(player->getHpBar());
-                            window.draw(player->getArmorBar());
                         }
                     }
                     //draw hud
@@ -813,12 +883,12 @@ void Game::commands()
                         window.draw(overlay.floorProgressLabel);
                         window.draw(overlay.floorNum);
                         window.draw(overlay.floorNumLabel);
-                        window.draw(overlay.hpBarFill);
                         window.draw(overlay.hpBarEdge);
-                        window.draw(overlay.staminaBarFill);
+                        window.draw(overlay.hpBarFill);
                         window.draw(overlay.staminaBarEdge);
-                        window.draw(overlay.armourBarFill);
+                        window.draw(overlay.staminaBarFill);
                         window.draw(overlay.armourBarEdge);
+                        window.draw(overlay.armourBarFill);
                         window.draw(overlay.armourSpriteEdge);
                         window.draw(overlay.bullet9mmEdge);
                         window.draw(overlay.bullet9mmLabel);
@@ -828,21 +898,21 @@ void Game::commands()
                         window.draw(overlay.bullet762mmLabel);
                         window.draw(overlay.bullet12gaugeEdge);
                         window.draw(overlay.bullet12gaugeLabel);
-                        window.draw(overlay.mainWeaponFill);
                         window.draw(overlay.mainWeaponEdge);
-                        window.draw(overlay.secondaryWeaponFill);
+                        window.draw(overlay.mainWeaponFill);
                         window.draw(overlay.secondaryWeaponEdge);
-                        window.draw(overlay.repairKitFill);
+                        window.draw(overlay.secondaryWeaponFill);
                         window.draw(overlay.repairKitEdge);
-                        window.draw(overlay.healthKitFill);
+                        window.draw(overlay.repairKitFill);
                         window.draw(overlay.healthKitEdge);
+                        window.draw(overlay.healthKitFill);
                     }
                     window.display();
                     break;
                 }
                 case CommandName::SpawnPlayer:
                 {
-                    player = new Player(commandQueue[i].attribute.int1, commandQueue[i].attribute.int2, commandQueue[i].attribute.int3, commandQueue[i].attribute.int4, side);
+                    player = new Player(commandQueue[i].attribute.int1, commandQueue[i].attribute.int2, commandQueue[i].attribute.int3, commandQueue[i].attribute.int4, side, textureHolder);
                     break;
                 }
                 case CommandName::Rotate:
@@ -860,6 +930,12 @@ void Game::commands()
                         player->getHitbox().getPosition().x - side / 2 + side / 15,
                         player->getHitbox().getPosition().y - side / 2 + side / 20
                     ));
+                    overlay.floorProgressLabel.setPosition(sf::Vector2f(
+                        player->getHitbox().getPosition().x - side / 2 + side / 15,
+                        player->getHitbox().getPosition().y - side / 2 + side / 20
+                    ));
+                    std::string str = std::to_string(roomsVisited) + " / " + std::to_string(roomsCount);
+                    overlay.floorProgressLabel.setString(str);
                     overlay.floorNum.setPosition(sf::Vector2f(
                         player->getHitbox().getPosition().x + side / 2 - side / 15,
                         player->getHitbox().getPosition().y - side / 2 + side / 20
@@ -902,15 +978,27 @@ void Game::commands()
                     ));
                     overlay.armourBarEdge.setPosition(sf::Vector2f(
                         player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15 - side / 15,
-                        player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15 - side / 15
+                        player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15 - side / 15 + side / 60
+                    ));
+                    overlay.armourBarFill.setPosition(sf::Vector2f(
+                        player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15 - side / 15,
+                        player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15 - side / 15 + side / 60
                     ));
                     overlay.hpBarEdge.setPosition(sf::Vector2f(
-                        player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 10,
-                        player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15 - side / 15 - side / 15 - side / 40
+                        player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15 - side / 15,
+                        player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15 - side / 15 - side / 60 
+                    ));
+                    overlay.hpBarFill.setPosition(sf::Vector2f(
+                        player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15 - side / 15,
+                        player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15 - side / 15 - side / 60 
                     ));
                     overlay.staminaBarEdge.setPosition(sf::Vector2f(
-                        player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 10,
-                        player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15 - side / 15 - side / 15 + side / 80
+                        player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15 - side / 15,
+                        player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15 - side / 15
+                    ));
+                    overlay.staminaBarFill.setPosition(sf::Vector2f(
+                        player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15 - side / 15,
+                        player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15 - side / 15
                     ));
                     break;
                 }
@@ -937,21 +1025,16 @@ void Game::commands()
                 case CommandName::TickTiles:
                 {
                     //tile
-                    if ((tileData[player->getIndex().x + tileNumOffset][player->getIndex().y + tileNumOffset].getGoal() == LevelGoal::No or tileData[player->getIndex().x + tileNumOffset][player->getIndex().y + tileNumOffset].getGoal() == LevelGoal::Reward) and tileData[player->getIndex().x + tileNumOffset][player->getIndex().y + tileNumOffset].getState() == TileStatus::NotCleared)
-                    {
-                        tileData[player->getIndex().x + tileNumOffset][player->getIndex().y + tileNumOffset].clear();
-                    }
-                    if (tileData[player->getIndex().x + tileNumOffset][player->getIndex().y + tileNumOffset].getGoal() == LevelGoal::Qizz and tileData[player->getIndex().x + tileNumOffset][player->getIndex().y + tileNumOffset].getState() == TileStatus::Solved)
-                    {
-                        tileData[player->getIndex().x + tileNumOffset][player->getIndex().y + tileNumOffset].clear();
-                    }
                     if (!loadedTiles.empty())
                     {
                         for (int j = 0; j < loadedTiles.size(); j++)
                         {
-                            if (abs(player->getIndex().x + tileNumOffset - loadedTiles[j].x) < 5 and abs(player->getIndex().y + tileNumOffset - loadedTiles[j].y) < 5)
+                            if (abs(player->getIndex().x + tileNumOffset - loadedTiles[j].x) < 1 and abs(player->getIndex().y + tileNumOffset - loadedTiles[j].y) < 1)
                             {
-                                tileData[loadedTiles[j].x][loadedTiles[j].y].tickTile(player, tileData[loadedTiles[j].x][loadedTiles[j].y]);
+                                if (tileData[loadedTiles[j].x][loadedTiles[j].y].tickTile(player, tileData[loadedTiles[j].x][loadedTiles[j].y]))
+                                {
+                                    roomsVisited++;
+                                }
                             }
                         }
                     }
@@ -1094,8 +1177,8 @@ void Game::commands()
                         {
                            if (!isPlayerWallHit(player->getIndex().x + tileNumOffset, player->getIndex().y + tileNumOffset, 1, (playerSpeed * 100) /j))
                             {
-                               player->move(sf::Vector2f(0, (-1)* ((playerSpeed * 100) / j)* (timePerFrame.asSeconds())));
-                                camera.move(sf::Vector2f(0, (-1) * ((playerSpeed * 100) / j) * (timePerFrame.asSeconds())));
+                               player->move(sf::Vector2f(0, (-1) * ((playerSpeed * 10) / j)* (timePerFrame.asSeconds())));
+                                camera.move(sf::Vector2f(0, (-1) * ((playerSpeed * 10) / j) * (timePerFrame.asSeconds())));
                                 window.setView(camera);
                                 player->updateIndex(side);
                                 break;
@@ -1108,8 +1191,8 @@ void Game::commands()
                         {
                            if (!isPlayerWallHit(player->getIndex().x + tileNumOffset, player->getIndex().y + tileNumOffset, 2, (playerSpeed * 100) /j))
                             {
-                                player->move(sf::Vector2f((-1) * ((playerSpeed * 100) / j) * (timePerFrame.asSeconds()), 0));
-                                camera.move(sf::Vector2f((-1) * ((playerSpeed * 100) / j) * (timePerFrame.asSeconds()), 0));
+                                player->move(sf::Vector2f((-1) * ((playerSpeed * 10) / j) * (timePerFrame.asSeconds()), 0));
+                                camera.move(sf::Vector2f((-1) * ((playerSpeed * 10) / j) * (timePerFrame.asSeconds()), 0));
                                 window.setView(camera);
                                 player->updateIndex(side);
                                 break;
@@ -1122,8 +1205,8 @@ void Game::commands()
                         {
                            if (!isPlayerWallHit(player->getIndex().x + tileNumOffset, player->getIndex().y + tileNumOffset, 3, (playerSpeed * 100) /j))
                             {
-                                player->move(sf::Vector2f(0, ((playerSpeed * 100) / j) * (timePerFrame.asSeconds())));
-                                camera.move(sf::Vector2f(0, ((playerSpeed * 100) / j) * (timePerFrame.asSeconds())));
+                                player->move(sf::Vector2f(0, ((playerSpeed * 10) / j) * (timePerFrame.asSeconds())));
+                                camera.move(sf::Vector2f(0, ((playerSpeed * 10) / j) * (timePerFrame.asSeconds())));
                                 window.setView(camera);
                                 player->updateIndex(side);
                                 break;
@@ -1136,8 +1219,8 @@ void Game::commands()
                         {
                            if (!isPlayerWallHit(player->getIndex().x + tileNumOffset, player->getIndex().y + tileNumOffset, 4, (playerSpeed * 100) /j))
                             {
-                                player->move(sf::Vector2f(((playerSpeed * 100) / j) * (timePerFrame.asSeconds()), 0));
-                                camera.move(sf::Vector2f(((playerSpeed * 100) / j) * (timePerFrame.asSeconds()), 0));
+                                player->move(sf::Vector2f(((playerSpeed * 10) / j) * (timePerFrame.asSeconds()), 0));
+                                camera.move(sf::Vector2f(((playerSpeed * 10) / j) * (timePerFrame.asSeconds()), 0));
                                 window.setView(camera);
                                 player->updateIndex(side);
                                 break;
@@ -1265,7 +1348,7 @@ bool Game::isPlayerWallHit(int index_x, int index_y, int dir, int speed)
             {
                 if (player->getHitbox().getPosition().x - player->getHitbox().getRadius() > tileData[index_x][index_y - 1].getHitbox().getPosition().x - tileData[index_x][index_y - 1].getHitbox().getSize().x / 2
                     and player->getHitbox().getPosition().x + player->getHitbox().getRadius() < tileData[index_x][index_y - 1].getHitbox().getPosition().x + tileData[index_x][index_y - 1].getHitbox().getSize().x / 2
-                    and (tileData[index_x][index_y].getState() == TileStatus::Cleared or tileData[index_x][index_y].getState() == TileStatus::Solved))
+                    and (tileData[index_x][index_y].getState() == TileStatus::Cleared or tileData[index_x][index_y].getState() == TileStatus::Marked))
                 {
                     return false;
                 }
@@ -1286,7 +1369,7 @@ bool Game::isPlayerWallHit(int index_x, int index_y, int dir, int speed)
             {
                 if (player->getHitbox().getPosition().y - player->getHitbox().getRadius() > tileData[index_x - 1][index_y].getHitbox().getPosition().y - tileData[index_x - 1][index_y].getHitbox().getSize().y / 2
                     and player->getHitbox().getPosition().y + player->getHitbox().getRadius() < tileData[index_x - 1][index_y].getHitbox().getPosition().y + tileData[index_x - 1][index_y].getHitbox().getSize().y / 2
-                    and (tileData[index_x][index_y].getState() == TileStatus::Cleared or tileData[index_x][index_y].getState() == TileStatus::Solved))
+                    and (tileData[index_x][index_y].getState() == TileStatus::Cleared or tileData[index_x][index_y].getState() == TileStatus::Marked))
                 {
                     return false;
                 }
@@ -1307,7 +1390,7 @@ bool Game::isPlayerWallHit(int index_x, int index_y, int dir, int speed)
             {
                 if (player->getHitbox().getPosition().x - player->getHitbox().getRadius() > tileData[index_x][index_y + 1].getHitbox().getPosition().x - tileData[index_x][index_y + 1].getHitbox().getSize().x / 2
                     and player->getHitbox().getPosition().x + player->getHitbox().getRadius() < tileData[index_x][index_y + 1].getHitbox().getPosition().x + tileData[index_x][index_y + 1].getHitbox().getSize().x / 2
-                    and (tileData[index_x][index_y].getState() == TileStatus::Cleared or tileData[index_x][index_y].getState() == TileStatus::Solved))
+                    and (tileData[index_x][index_y].getState() == TileStatus::Cleared or tileData[index_x][index_y].getState() == TileStatus::Marked))
                 {
                     return false;
                 }
@@ -1328,7 +1411,7 @@ bool Game::isPlayerWallHit(int index_x, int index_y, int dir, int speed)
             {
                 if (player->getHitbox().getPosition().y - player->getHitbox().getRadius() > tileData[index_x + 1][index_y].getHitbox().getPosition().y - tileData[index_x + 1][index_y].getHitbox().getSize().y / 2
                     and player->getHitbox().getPosition().y + player->getHitbox().getRadius() < tileData[index_x + 1][index_y].getHitbox().getPosition().y + tileData[index_x + 1][index_y].getHitbox().getSize().y / 2
-                    and (tileData[index_x][index_y].getState() == TileStatus::Cleared or tileData[index_x][index_y].getState() == TileStatus::Solved))
+                    and (tileData[index_x][index_y].getState() == TileStatus::Cleared or tileData[index_x][index_y].getState() == TileStatus::Marked))
                 {
                     return false;
                 }
@@ -1348,19 +1431,19 @@ bool Game::isPlayerWallHit(int index_x, int index_y, int dir, int speed)
 
 bool Game::isProjWallHit(Projectile proj, int index_x, int index_y, sf::Vector2f dir, int speed)
 {
-    if (proj.getHitbox().getPosition().y - proj.getHitbox().getRadius() + (speed * 1 / 300.f * dir.y) < tileData[index_x][index_y].getHitbox().getPosition().y - tileData[index_x][index_y].getHitbox().getSize().y / 2)
+    if (proj.getHitbox().getPosition().y - proj.getHitbox().getRadius() + (speed * 1 / 100.f * dir.y) < tileData[index_x][index_y].getHitbox().getPosition().y - tileData[index_x][index_y].getHitbox().getSize().y / 2)
     {
         return true;
     }
-    if (proj.getHitbox().getPosition().x - proj.getHitbox().getRadius() + (speed * 1 / 300.f * dir.x) < tileData[index_x][index_y].getHitbox().getPosition().x - tileData[index_x][index_y].getHitbox().getSize().x / 2)
+    if (proj.getHitbox().getPosition().x - proj.getHitbox().getRadius() + (speed * 1 / 100.f * dir.x) < tileData[index_x][index_y].getHitbox().getPosition().x - tileData[index_x][index_y].getHitbox().getSize().x / 2)
     {
         return true;
     }
-    if (proj.getHitbox().getPosition().y + proj.getHitbox().getRadius() + (speed * 1 / 300.f * dir.y) > tileData[index_x][index_y].getHitbox().getPosition().y + tileData[index_x][index_y].getHitbox().getSize().y / 2)
+    if (proj.getHitbox().getPosition().y + proj.getHitbox().getRadius() + (speed * 1 / 100.f * dir.y) > tileData[index_x][index_y].getHitbox().getPosition().y + tileData[index_x][index_y].getHitbox().getSize().y / 2)
     {
         return true;
     }
-    if (proj.getHitbox().getPosition().x + proj.getHitbox().getRadius() + (speed * 1 / 300.f * dir.x) > tileData[index_x][index_y].getHitbox().getPosition().x + tileData[index_x][index_y].getHitbox().getSize().x / 2)
+    if (proj.getHitbox().getPosition().x + proj.getHitbox().getRadius() + (speed * 1 / 100.f * dir.x) > tileData[index_x][index_y].getHitbox().getPosition().x + tileData[index_x][index_y].getHitbox().getSize().x / 2)
     {
         return true;
     }

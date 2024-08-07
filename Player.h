@@ -4,7 +4,7 @@
 class Player
 {
 public:
-	Player(int pos_x, int pos_y, int index_x, int index_y, int side);
+	Player(int pos_x, int pos_y, int index_x, int index_y, int side, std::vector<sf::Texture*> textureHolder);
 	~Player();
 	sf::CircleShape getHitbox();
 	sf::Vector2i getIndex();
@@ -19,16 +19,32 @@ public:
 	void delProj(int i);
 	void hit(int side, sf::Vector2f dir);
 	void rotate(float deg);
-	sf::RectangleShape getHpBar();
-	sf::RectangleShape getArmorBar();
+	int getHealth();
+	int getStamina();
+	int getArmour();
+	int getArmourTier();
+	int get9mm();
+	int get556mm();
+	int get762mm();
+	int get12gauge();
+	int getRepairKit();
+	int getHealthKit();
+	void setHealth(int buf);
+	void setStamina(int buf);
+	void setArmour(int buf);
+	void setArmourTier(int buf);
+	void set9mm(int buf);
+	void set556mm(int buf);
+	void set762mm(int buf);
+	void set12gauge(int buf);
+	void setRepairKit(int buf);
+	void setHealthKit(int buf);
 
 private:
 	sf::CircleShape hitbox;
 	sf::Vector2i tileIndex;
 	RangedWeapon ranged;
 	MeleeWeapon melee;
-	sf::RectangleShape hpBar;
-	sf::RectangleShape armorBar;
 	int health;
 	int stamina;
 	int armour;
