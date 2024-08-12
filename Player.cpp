@@ -4,7 +4,7 @@ Player::Player(int pos_x, int pos_y, int index_x, int index_y, int side, std::ve
     : ranged(WeaponName::NoWeapon, sf::Vector2f(), side, textureHolder[0])
     , melee(WeaponName::Fist, sf::Vector2f(pos_x, pos_y), side, textureHolder[0])
 {
-    hitbox.setRadius(side / 40);
+    hitbox.setRadius(side / 50);
     hitbox.setOrigin(sf::Vector2f(hitbox.getRadius(), hitbox.getRadius()));
     hitbox.setPosition(sf::Vector2f(pos_x, pos_y));
     hitbox.setFillColor(sf::Color::Transparent);

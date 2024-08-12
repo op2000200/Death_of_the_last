@@ -2,7 +2,7 @@
 
 Enemy::Enemy(int pos_x, int pos_y, int side)
 {
-	hitbox.setRadius(side / 40);
+	hitbox.setRadius(side / 50);
 	hitbox.setOrigin(sf::Vector2f(hitbox.getRadius(), hitbox.getRadius()));
 	hitbox.setPosition(sf::Vector2f(pos_x, pos_y));
 	hitbox.setFillColor(sf::Color::Transparent);
@@ -16,8 +16,8 @@ Enemy::Enemy(int pos_x, int pos_y, int side)
 		side / 100
 	));
 	hpBar.setOrigin(sf::Vector2f(
-		side / 40,
-		side / 40 + side / 50
+		side / 50,
+		side / 50 + side / 50
 	));
 	hpBar.setPosition(sf::Vector2f(pos_x, pos_y));
 	hpBar.setFillColor(sf::Color::Green);
