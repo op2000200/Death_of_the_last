@@ -15,6 +15,7 @@ public:
 	void solve();
 	LevelGoal getGoal();
 	TileStatus getState();
+	TileType getType();
 	std::vector<Enemy> getEnemyBuffer();
 	std::vector<RangedWeapon> getRangedBuffer();
 	std::vector<MeleeWeapon> getMeleeBuffer();
@@ -24,6 +25,9 @@ public:
 	void spawnEnemiesWave(int side);
 	void spawnChallenge(float diff);
 	void spawnReward(float diff);
+	void spawnWalls(int up, int left, int down, int right);
+	void createWallRow(int dir, sf::Vector2i index, int chance);
+	sf::RectangleShape getWallById(sf::Vector2i ind);
 	bool tickTile(Player* player, Tile tile);
 	bool isEnemyWallHit(Enemy enemy, int speed);
 	bool isEnemyEnemyHit(Enemy enemy, int speed);
@@ -31,6 +35,7 @@ public:
 	bool isPlayerWeaponHit(Player* player, MeleeWeapon weapon);
 	bool isProjEnemyHit(Projectile proj, Enemy enemy, int speed);
 	void damageEnemy(int i, int dmg);
+	std::vector<sf::Vector2i> getWallsToDraw();
 
 private:
 	sf::RectangleShape body;
@@ -44,4 +49,7 @@ private:
 	sf::Clock waveTimer;
 	std::vector<RangedWeapon> rangedBuffer;
 	std::vector<MeleeWeapon> meleeBuffer;
+	sf::RectangleShape** walls;
+	std::vector<sf::Vector2i> nonEmptyWalls;
+	std::vector<sf::Vector2i> wallsToDraw;
 };

@@ -29,7 +29,7 @@ Game::Game()
     {
         tileData[i] = new Tile[101];
     }
-    playerSpeed = 500;
+    playerSpeed = 1000;
     NataSans.loadFromFile("assets/font/Nata_Sans_Typeface/ttf/NataSans-Regular.ttf");
     tileSetBg.loadFromFile("assets/textures/TileSet.png");
     ar10texture = new sf::Texture;
@@ -326,12 +326,55 @@ void Game::generateMap()
     {
         generateLevel(sf::VideoMode::getDesktopMode().width / 2, sf::VideoMode::getDesktopMode().height / 2, 0, 0, 4, 0);
     }
+    for (int i = 0; i < loadedTiles.size(); i++)
+    {
+        if (tileData[loadedTiles[i].x][loadedTiles[i].y].getType() == LevelRegular)
+        {
+            int u = 0, l = 0, d = 0, r = 0;
+            if (loadedTiles[i].x >= 1 and loadedTiles[i].x <= 98 and loadedTiles[i].y >= 1 and loadedTiles[i].y <= 98)
+            {
+                //up
+                if (tileCreated[loadedTiles[i].x][loadedTiles[i].y - 1])
+                {
+                    if (tileData[loadedTiles[i].x][loadedTiles[i].y - 1].getType() == CorridorV)
+                    {
+                        u = 1;
+                    }
+                }
+                //left
+                if (tileCreated[loadedTiles[i].x - 1][loadedTiles[i].y])
+                {
+                    if (tileData[loadedTiles[i].x - 1][loadedTiles[i].y].getType() == CorridorH)
+                    {
+                        l = 1;
+                    }
+                }
+                //down
+                if (tileCreated[loadedTiles[i].x][loadedTiles[i].y + 1])
+                {
+                    if (tileData[loadedTiles[i].x][loadedTiles[i].y + 1].getType() == CorridorV)
+                    {
+                        d = 1;
+                    }
+                }
+                //right
+                if (tileCreated[loadedTiles[i].x + 1][loadedTiles[i].y])
+                {
+                    if (tileData[loadedTiles[i].x + 1][loadedTiles[i].y].getType() == CorridorH)
+                    {
+                        r = 1;
+                    }
+                }
+            }
+            tileData[loadedTiles[i].x][loadedTiles[i].y].spawnWalls(u, l, d, r);
+        }
+    }
 }
 
 void Game::generateLevel(int pos_x, int pos_y, int index_x, int index_y, int dir, int len)
 {
     int tileSize = side;
-    if (index_x > -46 and index_x < 46 and index_y > -46 and index_y < 46 and len < 300)
+    if (index_x > -46 and index_x < 46 and index_y > -46 and index_y < 46 and len < 15)
     {
         switch (dir)
         {
@@ -829,6 +872,13 @@ void Game::commands()
                                 {
                                     window.draw(tileData[loadedTiles[j].x][loadedTiles[j].y].getBody());
                                     window.draw(tileData[loadedTiles[j].x][loadedTiles[j].y].getHitbox());
+                                    if (tileData[loadedTiles[j].x][loadedTiles[j].y].getType() == LevelRegular)
+                                    {
+                                        for (int k = 0; k < tileData[loadedTiles[j].x][loadedTiles[j].y].getWallsToDraw().size(); k++)
+                                        {
+                                            window.draw(tileData[loadedTiles[j].x][loadedTiles[j].y].getWallById(tileData[loadedTiles[j].x][loadedTiles[j].y].getWallsToDraw()[k]));
+                                        }
+                                    }
                                     for (int k = 0; k < tileData[loadedTiles[j].x][loadedTiles[j].y].getEnemyBuffer().size(); k++)
                                     {
                                         window.draw(tileData[loadedTiles[j].x][loadedTiles[j].y].getEnemyBuffer()[k].getHitbox());

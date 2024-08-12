@@ -16,7 +16,7 @@ Tile::Tile(TileType tileType, int pos_x, int pos_y, int index_x, int index_y, in
             body.setOrigin(sf::Vector2f(tileSize / 2, tileSize / 2));
             hitbox.setSize(sf::Vector2f(tileSize - 2, tileSize - 2));
             hitbox.setOrigin(sf::Vector2f((tileSize - 2) / 2, (tileSize - 2) / 2));
-            spawnEnemies(diff, side, pos_x, pos_y);
+            //spawnEnemies(diff, side, pos_x, pos_y);
             goal = LevelGoal::Death;
             type = tileType;
             break;
@@ -170,6 +170,11 @@ TileStatus Tile::getState()
     return tileStatus;
 }
 
+TileType Tile::getType()
+{
+    return type;
+}
+
 std::vector<Enemy> Tile::getEnemyBuffer()
 {
     return enemyBuffer;
@@ -249,6 +254,265 @@ void Tile::spawnChallenge(float diff)
 
 void Tile::spawnReward(float diff)
 {
+}
+
+void Tile::spawnWalls(int up, int left, int down, int right)
+{
+    walls = new sf::RectangleShape*[20];
+    for (int i = 0; i < 20; i++)
+    {
+        walls[i] = new sf::RectangleShape[20];
+    }
+    if (up == 1)
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            for (int j = 7; j < 13; j++)
+            {
+                nonEmptyWalls.push_back(sf::Vector2i(i, j));
+            }
+        }
+    }
+    if (left == 1)
+    {
+        for (int i = 7; i < 13; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                nonEmptyWalls.push_back(sf::Vector2i(i, j));
+            }
+        }
+    }
+    if (down == 1)
+    {
+        for (int i = 16; i < 20; i++)
+        {
+            for (int j = 7; j < 13; j++)
+            {
+                nonEmptyWalls.push_back(sf::Vector2i(i, j));
+            }
+        }
+    }
+    if (right == 1)
+    {
+        for (int i = 7; i < 13; i++)
+        {
+            for (int j = 16; j < 20; j++)
+            {
+                nonEmptyWalls.push_back(sf::Vector2i(i, j));
+            }
+        }
+    }
+    int wallPoints = rand() % 16 + 8;
+    int created = 0;
+    while (created < wallPoints)
+    {
+        int x = rand() % 20;
+        int y = rand() % 20;
+        for (int i = 0; i < nonEmptyWalls.size(); i++)
+        {
+            if (x == nonEmptyWalls[i].x and y == nonEmptyWalls[i].y)
+            {
+                break;
+            }
+            if (i == nonEmptyWalls.size() - 1)
+            {
+                created++;
+                sf::RectangleShape wall;
+                wall.setSize(sf::Vector2f(hitbox.getSize().x / 20, hitbox.getSize().x / 20));
+                wall.setOrigin(sf::Vector2f(hitbox.getSize().x / 40, hitbox.getSize().x / 40));
+                wall.setFillColor(sf::Color(200, 100, 100));
+                wall.setOutlineColor(sf::Color::Red);
+                wall.setOutlineThickness(1.f);
+                wall.setPosition(sf::Vector2f(
+                    hitbox.getPosition().x - hitbox.getSize().x / 2 + hitbox.getSize().x / 40 + hitbox.getSize().x / 20 * (x),
+                    hitbox.getPosition().y - hitbox.getSize().y / 2 + hitbox.getSize().x / 40 + hitbox.getSize().y / 20 * (y)
+                ));
+                walls[x][y] = wall;
+                wallsToDraw.push_back(sf::Vector2i(x, y));
+                createWallRow(rand() % 4, sf::Vector2i(x, y), 100);
+            }
+        }
+    }
+
+}
+
+void Tile::createWallRow(int dir, sf::Vector2i index, int chance)
+{
+    switch (dir)
+    {
+    case 0:
+    {
+        if (index.x != 0 and index.x != 19 and index.y != 0 and index.y != 19)
+        {
+            sf::RectangleShape wall;
+            wall.setSize(sf::Vector2f(hitbox.getSize().x / 20, hitbox.getSize().x / 20));
+            wall.setOrigin(sf::Vector2f(hitbox.getSize().x / 40, hitbox.getSize().x / 40));
+            wall.setFillColor(sf::Color(200, 100, 100));
+            wall.setOutlineColor(sf::Color::Red);
+            wall.setOutlineThickness(1.f);
+            wall.setPosition(sf::Vector2f(
+                hitbox.getPosition().x - hitbox.getSize().x / 2 + hitbox.getSize().x / 40 + hitbox.getSize().x / 20 * (index.x),
+                hitbox.getPosition().y - hitbox.getSize().y / 2 + hitbox.getSize().x / 40 + hitbox.getSize().y / 20 * (index.y - 1)
+            ));
+            walls[index.x][index.y - 1] = wall;
+            wallsToDraw.push_back(sf::Vector2i(index.x, index.y - 1));
+            int roll = rand() % 100;
+            int direction;
+            if (roll < 50)
+            {
+                direction = 0;
+            }
+            else
+            {
+                if (roll < 76)
+                {
+                    direction = 1;
+                }
+                else
+                {
+                    direction = 3;
+                }
+            }
+            roll = rand() % 100;
+            if (roll < chance)
+            {
+                createWallRow(direction, sf::Vector2i(index.x, index.y - 1), chance - 5);
+            }
+        }
+        break;
+    }
+    case 1:
+    {
+        if (index.x != 0 and index.x != 19 and index.y != 0 and index.y != 19)
+        {
+            sf::RectangleShape wall;
+            wall.setSize(sf::Vector2f(hitbox.getSize().x / 20, hitbox.getSize().x / 20));
+            wall.setOrigin(sf::Vector2f(hitbox.getSize().x / 40, hitbox.getSize().x / 40));
+            wall.setFillColor(sf::Color(200, 100, 100));
+            wall.setOutlineColor(sf::Color::Red);
+            wall.setOutlineThickness(1.f);
+            wall.setPosition(sf::Vector2f(
+                hitbox.getPosition().x - hitbox.getSize().x / 2 + hitbox.getSize().x / 40 + hitbox.getSize().x / 20 * (index.x - 1),
+                hitbox.getPosition().y - hitbox.getSize().y / 2 + hitbox.getSize().x / 40 + hitbox.getSize().y / 20 * (index.y)
+            ));
+            walls[index.x - 1][index.y] = wall;
+            wallsToDraw.push_back(sf::Vector2i(index.x - 1, index.y));
+            int roll = rand() % 100;
+            int direction;
+            if (roll < 50)
+            {
+                direction = 1;
+            }
+            else
+            {
+                if (roll < 76)
+                {
+                    direction = 0;
+                }
+                else
+                {
+                    direction = 2;
+                }
+            }
+            roll = rand() % 100;
+            if (roll < chance)
+            {
+                createWallRow(direction, sf::Vector2i(index.x - 1, index.y), chance - 5);
+            }
+        }
+        break;
+    }
+    case 2:
+    {
+        if (index.x != 0 and index.x != 19 and index.y != 0 and index.y != 19)
+        {
+            sf::RectangleShape wall;
+            wall.setSize(sf::Vector2f(hitbox.getSize().x / 20, hitbox.getSize().x / 20));
+            wall.setOrigin(sf::Vector2f(hitbox.getSize().x / 40, hitbox.getSize().x / 40));
+            wall.setFillColor(sf::Color(200, 100, 100));
+            wall.setOutlineColor(sf::Color::Red);
+            wall.setOutlineThickness(1.f);
+            wall.setPosition(sf::Vector2f(
+                hitbox.getPosition().x - hitbox.getSize().x / 2 + hitbox.getSize().x / 40 + hitbox.getSize().x / 20 * (index.x),
+                hitbox.getPosition().y - hitbox.getSize().y / 2 + hitbox.getSize().x / 40 + hitbox.getSize().y / 20 * (index.y + 1)
+            ));
+            walls[index.x][index.y + 1] = wall;
+            wallsToDraw.push_back(sf::Vector2i(index.x, index.y + 1));
+            int roll = rand() % 100;
+            int direction;
+            if (roll < 50)
+            {
+                direction = 2;
+            }
+            else
+            {
+                if (roll < 76)
+                {
+                    direction = 1;
+                }
+                else
+                {
+                    direction = 3;
+                }
+            }
+            roll = rand() % 100;
+            if (roll < chance)
+            {
+                createWallRow(direction, sf::Vector2i(index.x, index.y + 1), chance - 5);
+            }
+        }
+        break;
+    }
+    case 3:
+    {
+        if (index.x != 0 and index.x != 19 and index.y != 0 and index.y != 19)
+        {
+            sf::RectangleShape wall;
+            wall.setSize(sf::Vector2f(hitbox.getSize().x / 20, hitbox.getSize().x / 20));
+            wall.setOrigin(sf::Vector2f(hitbox.getSize().x / 40, hitbox.getSize().x / 40));
+            wall.setFillColor(sf::Color(200, 100, 100));
+            wall.setOutlineColor(sf::Color::Red);
+            wall.setOutlineThickness(1.f);
+            wall.setPosition(sf::Vector2f(
+                hitbox.getPosition().x - hitbox.getSize().x / 2 + hitbox.getSize().x / 40 + hitbox.getSize().x / 20 * (index.x + 1),
+                hitbox.getPosition().y - hitbox.getSize().y / 2 + hitbox.getSize().x / 40 + hitbox.getSize().y / 20 * (index.y)
+            ));
+            walls[index.x + 1][index.y] = wall;
+            wallsToDraw.push_back(sf::Vector2i(index.x + 1, index.y));
+            int roll = rand() % 100;
+            int direction;
+            if (roll < 50)
+            {
+                direction = 3;
+            }
+            else
+            {
+                if (roll < 76)
+                {
+                    direction = 0;
+                }
+                else
+                {
+                    direction = 2;
+                }
+            }
+            roll = rand() % 100;
+            if (roll < chance)
+            {
+                createWallRow(direction, sf::Vector2i(index.x + 1, index.y), chance - 5);
+            }
+        }
+        break;
+    }
+    default:
+        break;
+    }
+}
+
+sf::RectangleShape Tile::getWallById(sf::Vector2i ind)
+{
+    return walls[ind.x][ind.y];
 }
 
 bool Tile::tickTile(Player* player, Tile tile)
@@ -615,4 +879,9 @@ void Tile::damageEnemy(int i, int dmg)
             waveTimer.restart();
         }
     }
+}
+
+std::vector<sf::Vector2i> Tile::getWallsToDraw()
+{
+    return wallsToDraw;
 }
