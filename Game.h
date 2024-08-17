@@ -22,6 +22,7 @@ public:
 	bool isPlayerWallCollision(int index_x, int index_y, int dir);
 	bool isPlayerWallHit(int index_x, int index_y, int dir, int speed);
 	bool isProjWallHit(Projectile proj, int index_x, int index_y, sf::Vector2f dir, int speed);
+	bool isPlayerInnerWallHit(int index_x, int index_y, int dir, int speed);
 	bool isMeleeEnemyHit(sf::RectangleShape hitbox, Enemy enemy);
 private:
 	sf::RenderWindow window;

@@ -777,6 +777,11 @@ void Game::events()
         command.name = CommandName::Interaction;
         commandQueue.push_back(command);
     }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+    {
+        command.name = CommandName::Close;
+        commandQueue.push_back(command);
+    }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) and dashTimer.getElapsedTime() > sf::seconds(0.5))
     {
         dashTimer.restart();
@@ -876,7 +881,7 @@ void Game::commands()
                                     {
                                         for (int k = 0; k < tileData[loadedTiles[j].x][loadedTiles[j].y].getWallsToDraw().size(); k++)
                                         {
-                                            window.draw(tileData[loadedTiles[j].x][loadedTiles[j].y].getWallById(tileData[loadedTiles[j].x][loadedTiles[j].y].getWallsToDraw()[k]));
+                                            window.draw(tileData[loadedTiles[j].x][loadedTiles[j].y].getWallById(tileData[loadedTiles[j].x][loadedTiles[j].y].getWallsToDraw()[k]).getHitbox());
                                         }
                                     }
                                     for (int k = 0; k < tileData[loadedTiles[j].x][loadedTiles[j].y].getEnemyBuffer().size(); k++)
@@ -921,14 +926,14 @@ void Game::commands()
                     }
                     //draw hud
                     {
-                        sf::Text text;
-                        text.setFont(NataSans);
-                        text.setFillColor(sf::Color::Red);
-                        text.setCharacterSize(20);
-                        text.setPosition(player->getHitbox().getPosition() + sf::Vector2f(0, 50));
-                        std::string str = std::to_string(player->getIndex().x) + " " + std::to_string(player->getIndex().y) + " " + std::to_string(player->getHitbox().getPosition().x - sf::VideoMode::getDesktopMode().width / 2 + side / 4) + " " + std::to_string(player->getHitbox().getPosition().y - side / 2 + side / 4) + " " + std::to_string(player->getMelee().getHitbox().getRotation());
-                        text.setString(str);
-                        window.draw(text);
+                        //sf::Text text;
+                        //text.setFont(NataSans);
+                        //text.setFillColor(sf::Color::Red);
+                        //text.setCharacterSize(20);
+                        //text.setPosition(player->getHitbox().getPosition() + sf::Vector2f(0, 50));
+                        //std::string str = std::to_string(player->getIndex().x) + " " + std::to_string(player->getIndex().y) + " " + std::to_string(player->getHitbox().getPosition().x - sf::VideoMode::getDesktopMode().width / 2 + side / 4) + " " + std::to_string(player->getHitbox().getPosition().y - side / 2 + side / 4) + " " + std::to_string(player->getMelee().getHitbox().getRotation());
+                        //text.setString(str);
+                        //window.draw(text);
                         window.draw(overlay.floorProgress);
                         window.draw(overlay.floorProgressLabel);
                         window.draw(overlay.floorNum);
@@ -1163,7 +1168,7 @@ void Game::commands()
                 {
                     for (int j = 1; j < 10; j++)
                     {
-                        if (!isPlayerWallHit(player->getIndex().x + tileNumOffset, player->getIndex().y + tileNumOffset, 1, playerSpeed /j))
+                        if (!isPlayerWallHit(player->getIndex().x + tileNumOffset, player->getIndex().y + tileNumOffset, 1, playerSpeed /j) and !isPlayerInnerWallHit(player->getIndex().x + tileNumOffset, player->getIndex().y + tileNumOffset, 1, playerSpeed / j))
                         {
                             player->move(sf::Vector2f(0, (-1) * (playerSpeed /j) * (timePerFrame.asSeconds())));
                             camera.move(sf::Vector2f(0, (-1) * (playerSpeed /j) * (timePerFrame.asSeconds())));
@@ -1178,7 +1183,7 @@ void Game::commands()
                 {
                     for (int j = 1; j < 10; j++)
                     {
-                        if (!isPlayerWallHit(player->getIndex().x + tileNumOffset, player->getIndex().y + tileNumOffset, 2, playerSpeed /j))
+                        if (!isPlayerWallHit(player->getIndex().x + tileNumOffset, player->getIndex().y + tileNumOffset, 2, playerSpeed /j) and !isPlayerInnerWallHit(player->getIndex().x + tileNumOffset, player->getIndex().y + tileNumOffset, 2, playerSpeed / j))
                         {
                             player->move(sf::Vector2f((-1) * (playerSpeed /j) * (timePerFrame.asSeconds()), 0));
                             camera.move(sf::Vector2f((-1) * (playerSpeed /j) * (timePerFrame.asSeconds()), 0));
@@ -1193,7 +1198,7 @@ void Game::commands()
                 {
                     for (int j = 1; j < 10; j++)
                     {
-                        if (!isPlayerWallHit(player->getIndex().x + tileNumOffset, player->getIndex().y + tileNumOffset, 3, playerSpeed / j))
+                        if (!isPlayerWallHit(player->getIndex().x + tileNumOffset, player->getIndex().y + tileNumOffset, 3, playerSpeed / j) and !isPlayerInnerWallHit(player->getIndex().x + tileNumOffset, player->getIndex().y + tileNumOffset, 3, playerSpeed / j))
                         {
                             player->move(sf::Vector2f(0, (1) * (playerSpeed / j) * (timePerFrame.asSeconds())));
                             camera.move(sf::Vector2f(0, (1) * (playerSpeed / j) * (timePerFrame.asSeconds())));
@@ -1208,7 +1213,7 @@ void Game::commands()
                 {
                     for (int j = 1; j < 10; j++)
                     {
-                        if (!isPlayerWallHit(player->getIndex().x + tileNumOffset, player->getIndex().y + tileNumOffset, 4, playerSpeed /j))
+                        if (!isPlayerWallHit(player->getIndex().x + tileNumOffset, player->getIndex().y + tileNumOffset, 4, playerSpeed /j) and !isPlayerInnerWallHit(player->getIndex().x + tileNumOffset, player->getIndex().y + tileNumOffset, 4, playerSpeed / j))
                         {
                             player->move(sf::Vector2f((playerSpeed /j) * (timePerFrame.asSeconds()), 0));
                             camera.move(sf::Vector2f((playerSpeed /j) * (timePerFrame.asSeconds()), 0));
@@ -1496,6 +1501,99 @@ bool Game::isProjWallHit(Projectile proj, int index_x, int index_y, sf::Vector2f
     if (proj.getHitbox().getPosition().x + proj.getHitbox().getRadius() + (speed * 1 / 100.f * dir.x) > tileData[index_x][index_y].getHitbox().getPosition().x + tileData[index_x][index_y].getHitbox().getSize().x / 2)
     {
         return true;
+    }
+    return false;
+}
+
+bool Game::isPlayerInnerWallHit(int index_x, int index_y, int dir, int speed)
+{
+    int indx, indy;
+    for (int i = 0; i < 20; i++)
+    {
+        if (tileData[index_x][index_y].getHitbox().getPosition().x - tileData[index_x][index_y].getHitbox().getSize().x / 2 + (tileData[index_x][index_y].getHitbox().getSize().x / 20) * (i + 1) > player->getHitbox().getPosition().x)
+        {
+            indx = i;
+            break;
+        }
+        if (i == 19)
+        {
+            indx = 19;
+        }
+    }
+    for (int i = 0; i < 20; i++)
+    {
+        if (tileData[index_x][index_y].getHitbox().getPosition().y - tileData[index_x][index_y].getHitbox().getSize().y / 2 + (tileData[index_x][index_y].getHitbox().getSize().y / 20) * (i + 1) > player->getHitbox().getPosition().y)
+        {
+            indy = i;
+            break;
+        }
+        if (i == 19)
+        {
+            indy = 19;
+        }
+    }
+    switch (dir)
+    {
+    case 1: //up
+    {
+        for (int i = 0; i < tileData[index_x][index_y].getWallsToDraw().size(); i++)
+        {
+            if (indx == tileData[index_x][index_y].getWallsToDraw()[i].x and indy - 1 == tileData[index_x][index_y].getWallsToDraw()[i].y)
+            {
+                if (tileData[index_x][index_y].getHitbox().getPosition().y - tileData[index_x][index_y].getHitbox().getSize().y / 2 + (tileData[index_x][index_y].getHitbox().getSize().y / 20) * (indy - 1 + 1) > player->getHitbox().getPosition().y - player->getHitbox().getRadius() - (speed * timePerFrame.asSeconds()))
+                {
+                    return true;
+                }
+            }
+        }
+        break;
+    }
+    case 2: //left
+    {
+        for (int i = 0; i < tileData[index_x][index_y].getWallsToDraw().size(); i++)
+        {
+            if (indx - 1 == tileData[index_x][index_y].getWallsToDraw()[i].x and indy == tileData[index_x][index_y].getWallsToDraw()[i].y)
+            {
+                if (tileData[index_x][index_y].getHitbox().getPosition().x - tileData[index_x][index_y].getHitbox().getSize().x / 2 + (tileData[index_x][index_y].getHitbox().getSize().x / 20) * (indx - 1 + 1) > player->getHitbox().getPosition().x - player->getHitbox().getRadius() - (speed * timePerFrame.asSeconds()))
+                {
+                    return true;
+                }
+            }
+        }
+        break;
+    }
+    case 3: //down
+    {
+        for (int i = 0; i < tileData[index_x][index_y].getWallsToDraw().size(); i++)
+        {
+            if (indx == tileData[index_x][index_y].getWallsToDraw()[i].x and indy + 1 == tileData[index_x][index_y].getWallsToDraw()[i].y)
+            {
+                if (tileData[index_x][index_y].getHitbox().getPosition().y - tileData[index_x][index_y].getHitbox().getSize().y / 2 + (tileData[index_x][index_y].getHitbox().getSize().y / 20) * (indy + 1) < player->getHitbox().getPosition().y + player->getHitbox().getRadius() + (speed * timePerFrame.asSeconds()))
+                {
+                    return true;
+                }
+            }
+        }
+        break;
+    }
+    case 4: //right
+    {
+        for (int i = 0; i < tileData[index_x][index_y].getWallsToDraw().size(); i++)
+        {
+            if (indx + 1 == tileData[index_x][index_y].getWallsToDraw()[i].x and indy == tileData[index_x][index_y].getWallsToDraw()[i].y)
+            {
+                if (tileData[index_x][index_y].getHitbox().getPosition().x - tileData[index_x][index_y].getHitbox().getSize().x / 2 + (tileData[index_x][index_y].getHitbox().getSize().x / 20) * (indx + 1) < player->getHitbox().getPosition().x + player->getHitbox().getRadius() + (speed * timePerFrame.asSeconds()))
+                {
+                    return true;
+                }
+            }
+        }
+        break;
+    }
+    default:
+    {
+        break;
+    }
     }
     return false;
 }

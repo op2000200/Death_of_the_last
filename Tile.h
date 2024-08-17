@@ -2,6 +2,7 @@
 #include "Structures.h"
 #include "Enemy.h"
 #include "Player.h"
+#include "Wall.h"
 class Tile
 {
 public:
@@ -27,7 +28,7 @@ public:
 	void spawnReward(float diff);
 	void spawnWalls(int up, int left, int down, int right);
 	void createWallRow(int dir, sf::Vector2i index, int chance);
-	sf::RectangleShape getWallById(sf::Vector2i ind);
+	Wall getWallById(sf::Vector2i ind);
 	bool tickTile(Player* player, Tile tile);
 	bool isEnemyWallHit(Enemy enemy, int speed);
 	bool isEnemyEnemyHit(Enemy enemy, int speed);
@@ -49,7 +50,7 @@ private:
 	sf::Clock waveTimer;
 	std::vector<RangedWeapon> rangedBuffer;
 	std::vector<MeleeWeapon> meleeBuffer;
-	sf::RectangleShape** walls;
+	Wall** walls;
 	std::vector<sf::Vector2i> nonEmptyWalls;
 	std::vector<sf::Vector2i> wallsToDraw;
 };
