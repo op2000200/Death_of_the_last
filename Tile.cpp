@@ -525,6 +525,155 @@ bool Tile::tickTile(Player* player, Tile tile)
                 }
 
 
+                //if (enemyBuffer[i].getBehav() == EnemyBehavior::Stand)
+                //{
+                //    if (index.x == player->getIndex().x and index.y == player->getIndex().y)
+                //    {
+                //        int buf = rand() % 100;
+                //        if (buf > enemyBuffer[i].getHealth())
+                //        {
+                //            enemyBuffer[i].setBehav(EnemyBehavior::Backing);
+                //        }
+                //        else
+                //        {
+                //            enemyBuffer[i].setBehav(EnemyBehavior::Attacking);
+                //        }
+                //    }
+                //}
+                //else
+                //{
+                //    if (enemyBuffer[i].getBehav() == EnemyBehavior::Backing)
+                //    {
+                //        if (enemyBuffer[i].getState() == EnemyState::Standing)
+                //        {
+                //            enemyBuffer[i].setState(EnemyState::Moving);
+                //            int x, y;
+                //            if (player->getHitbox().getPosition().x > enemyBuffer[i].getHitbox().getPosition().x)
+                //                x = rand() % int(hitbox.getSize().x / 3 + hitbox.getSize().x / 6) - hitbox.getSize().x / 6;
+                //            else
+                //                x = rand() % int(hitbox.getSize().x / 3) + hitbox.getSize().x / 6;
+                //            if (player->getHitbox().getPosition().y > enemyBuffer[i].getHitbox().getPosition().y)
+                //                y = rand() % int(hitbox.getSize().x / 3 + hitbox.getSize().x / 6) - hitbox.getSize().x / 6;
+                //            else
+                //                y = rand() % int(hitbox.getSize().x / 3) + hitbox.getSize().x / 6;
+                //            enemyBuffer[i].setDest(sf::Vector2f(enemyBuffer[i].getHitbox().getPosition().x + x, enemyBuffer[i].getHitbox().getPosition().y + y));
+                //        }
+                //        else
+                //        {
+                //            if (enemyBuffer[i].getState() == EnemyState::Moving)
+                //            {
+                //                int x, y;
+                //                x = abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getHitbox().getPosition().x);
+                //                y = abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getHitbox().getPosition().y);
+                //                if (x > enemyBuffer[i].getHitbox().getRadius() and y > enemyBuffer[i].getHitbox().getRadius())
+                //                {
+                //                    //check collision and move
+                //                    for (int j = 1; j < 10; j++)
+                //                    {
+                //                        if (!isEnemyWallHit(enemyBuffer[i], 100 / j))
+                //                        {
+                //                            if (!isEnemyEnemyHit(enemyBuffer[i], 100 / j))
+                //                            {
+                //                                enemyBuffer[i].move(sf::Vector2f(
+                //                                    ((enemyBuffer[i].getDest().x - enemyBuffer[i].getHitbox().getPosition().x) / (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getHitbox().getPosition().x) + abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getHitbox().getPosition().y))) * (250 / j) * (1 / 100.f),
+                //                                    ((enemyBuffer[i].getDest().y - enemyBuffer[i].getHitbox().getPosition().y) / (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getHitbox().getPosition().x) + abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getHitbox().getPosition().y))) * (250 / j) * (1 / 100.f)
+                //                                ));
+                //                                break;
+                //                            }
+                //                        }
+                //                        if (j == 9)
+                //                        {
+                //                            enemyBuffer[i].setState(EnemyState::Standing);
+                //                            enemyBuffer[i].setBehav(EnemyBehavior::Stand);
+                //                        }
+                //                    }
+                //                    if (isEnemyEnemyHit(enemyBuffer[i], (450 / 10)))
+                //                    {
+                //                        enemyBuffer[i].move(sf::Vector2f(
+                //                            ((enemyBuffer[i].getDest().x - enemyBuffer[i].getHitbox().getPosition().x) / (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getHitbox().getPosition().x) + abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getHitbox().getPosition().y))) * (450 / 10) * (1 / 100.f),
+                //                            ((enemyBuffer[i].getDest().y - enemyBuffer[i].getHitbox().getPosition().y) / (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getHitbox().getPosition().x) + abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getHitbox().getPosition().y))) * (450 / 10) * (1 / 100.f)
+                //                        ));
+                //                    }
+                //                }
+                //                else
+                //                {
+                //                    enemyBuffer[i].setState(EnemyState::Standing);
+                //                    enemyBuffer[i].setBehav(EnemyBehavior::Stand);
+                //                }
+                //            }
+                //        }
+                //    }
+                //    else
+                //    {
+                //        if (enemyBuffer[i].getBehav() == EnemyBehavior::Attacking)
+                //        {
+                //            if (enemyBuffer[i].getState() == EnemyState::Standing)
+                //            {
+                //                enemyBuffer[i].setState(EnemyState::Moving);
+                //                int x, y;
+                //                x = player->getHitbox().getPosition().x;
+                //                y = player->getHitbox().getPosition().y;
+                //                x = x + (rand() % int(enemyBuffer[i].getHitbox().getRadius()) - enemyBuffer[i].getHitbox().getRadius() / 2);
+                //                y = y + (rand() % int(enemyBuffer[i].getHitbox().getRadius()) - enemyBuffer[i].getHitbox().getRadius() / 2);
+                //                enemyBuffer[i].setDest(sf::Vector2f(x, y));
+                //                enemyBuffer[i].move(sf::Vector2f(
+                //                    ((enemyBuffer[i].getDest().x - enemyBuffer[i].getHitbox().getPosition().x) / (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getHitbox().getPosition().x) + abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getHitbox().getPosition().y))) * (100) * (1 / 100.f),
+                //                    ((enemyBuffer[i].getDest().y - enemyBuffer[i].getHitbox().getPosition().y) / (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getHitbox().getPosition().x) + abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getHitbox().getPosition().y))) * (100) * (1 / 100.f)
+                //                ));
+                //            }
+                //            else
+                //            {
+                //                if (enemyBuffer[i].getState() == EnemyState::Moving)
+                //                {
+                //                    int x, y;
+                //                    x = player->getHitbox().getPosition().x;
+                //                    y = player->getHitbox().getPosition().y;
+                //                    x = x + (rand() % int(enemyBuffer[i].getHitbox().getRadius()) - enemyBuffer[i].getHitbox().getRadius() / 2);
+                //                    y = y + (rand() % int(enemyBuffer[i].getHitbox().getRadius()) - enemyBuffer[i].getHitbox().getRadius() / 2);
+                //                    enemyBuffer[i].setDest(sf::Vector2f(x, y));
+                //                    x = abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getHitbox().getPosition().x);
+                //                    y = abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getHitbox().getPosition().y);
+                //                    if (x > enemyBuffer[i].getHitbox().getRadius() and y > enemyBuffer[i].getHitbox().getRadius())
+                //                    {
+                //                        for (int j = 1; j < 10; j++)
+                //                        {
+                //                            if (!isEnemyWallHit(enemyBuffer[i], 100 / j))
+                //                            {
+                //                                if (!isEnemyEnemyHit(enemyBuffer[i], 100 / j))
+                //                                {
+                //                                    enemyBuffer[i].move(sf::Vector2f(
+                //                                        ((enemyBuffer[i].getDest().x - enemyBuffer[i].getHitbox().getPosition().x) / (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getHitbox().getPosition().x) + abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getHitbox().getPosition().y))) * (450 / j) * (1 / 100.f),
+                //                                        ((enemyBuffer[i].getDest().y - enemyBuffer[i].getHitbox().getPosition().y) / (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getHitbox().getPosition().x) + abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getHitbox().getPosition().y))) * (450 / j) * (1 / 100.f)
+                //                                    ));
+                //                                    break;
+                //                                }
+                //                            }
+                //                            if (j == 9)
+                //                            {
+                //                                enemyBuffer[i].setState(EnemyState::Standing);
+                //                                enemyBuffer[i].setBehav(EnemyBehavior::Stand);
+                //                            }
+                //                        }
+                //                        if (isEnemyEnemyHit(enemyBuffer[i], (450 / 10)))
+                //                        {
+                //                            enemyBuffer[i].move(sf::Vector2f(
+                //                                ((enemyBuffer[i].getDest().x - enemyBuffer[i].getHitbox().getPosition().x) / (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getHitbox().getPosition().x) + abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getHitbox().getPosition().y))) * (450 / 10)* (1 / 100.f),
+                //                                ((enemyBuffer[i].getDest().y - enemyBuffer[i].getHitbox().getPosition().y) / (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getHitbox().getPosition().x) + abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getHitbox().getPosition().y))) * (450 / 10)* (1 / 100.f)
+                //                            ));
+                //                        }
+                //                    }
+                //                    else
+                //                    {
+                //                        enemyBuffer[i].setState(EnemyState::Standing);
+                //                        enemyBuffer[i].setBehav(EnemyBehavior::Backing);
+                //                    }
+                //                }
+                //            }
+                //        }
+                //    }
+                //}
+                //check player hitboxes for attack and recieve damage and check for death
+
                 //patrol
                 if (enemyBuffer[i].getBehav() == Regular)
                 {
