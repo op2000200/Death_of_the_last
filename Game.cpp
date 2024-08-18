@@ -367,6 +367,7 @@ void Game::generateMap()
                 }
             }
             tileData[loadedTiles[i].x][loadedTiles[i].y].spawnWalls(u, l, d, r);
+            tileData[loadedTiles[i].x][loadedTiles[i].y].spawnEnemies(difficulty, side, tileData[loadedTiles[i].x][loadedTiles[i].y].getHitbox().getPosition().x, tileData[loadedTiles[i].x][loadedTiles[i].y].getHitbox().getPosition().y);
         }
     }
 }
@@ -392,7 +393,7 @@ void Game::generateLevel(int pos_x, int pos_y, int index_x, int index_y, int dir
                 }
                 if (type > 39 and type < 55)
                 {
-                    type2 = TileType::LevelQizz;
+                    type2 = TileType::LevelRegular;
                 }
                 if (type > 54 and type < 65)
                 {
@@ -400,21 +401,25 @@ void Game::generateLevel(int pos_x, int pos_y, int index_x, int index_y, int dir
                 }
                 if (type > 64 and type < 90)
                 {
-                    type2 = TileType::LevelEmpty;
+                    type2 = TileType::LevelRegular;
                 }
                 if (type > 89 and type < 95)
                 {
-                    type2 = TileType::LevelStairs;
+                    type2 = TileType::LevelRegular;
                 }
                 if (type > 94)
                 {
-                    type2 = TileType::LevelTeleport;
+                    type2 = TileType::LevelRegular;
                 }
                 Tile tile2(type2, pos_x, pos_y - tileSize - tileSize, index_x, index_y - 2, side, difficulty, textureHolder);
                 tileCreated[index_x + tileNumOffset][index_y - 2 + tileNumOffset] = true;
                 tileData[index_x + tileNumOffset][index_y - 2 + tileNumOffset] = tile2;
                 loadedTiles.push_back(sf::Vector2i(index_x + tileNumOffset, index_y - 2 + tileNumOffset));
                 roomsCount++;
+                //if (type2 == LevelRegular)
+                //{
+                //    tileData[index_x + tileNumOffset][index_y - 2 + tileNumOffset].spawnEnemies(difficulty, side, tileData[index_x + tileNumOffset][index_y - 2 + tileNumOffset].getHitbox().getPosition().x, tileData[index_x + tileNumOffset][index_y - 2 + tileNumOffset].getHitbox().getPosition().y);
+                //}
                 int created = 0;
                 int createdMax = rand() % 3 + 1;
                 int counter = 0;
@@ -499,6 +504,10 @@ void Game::generateLevel(int pos_x, int pos_y, int index_x, int index_y, int dir
                 tileData[index_x - 2 + tileNumOffset][index_y + tileNumOffset] = tile2;
                 loadedTiles.push_back(sf::Vector2i(index_x - 2 + tileNumOffset, index_y + tileNumOffset));
                 roomsCount++;
+                //if (type2 == LevelRegular)
+                //{
+                //    tileData[index_x - 2 + tileNumOffset][index_y + tileNumOffset].spawnEnemies(difficulty, side, tileData[index_x - 2 + tileNumOffset][index_y + tileNumOffset].getHitbox().getPosition().x, tileData[index_x - 2 + tileNumOffset][index_y + tileNumOffset].getHitbox().getPosition().y);
+                //}
                 int created = 0;
                 int createdMax = rand() % 3 + 1;
                 int counter = 0;
@@ -583,6 +592,10 @@ void Game::generateLevel(int pos_x, int pos_y, int index_x, int index_y, int dir
                 tileData[index_x + tileNumOffset][index_y + 2 + tileNumOffset] = tile2;
                 loadedTiles.push_back(sf::Vector2i(index_x + tileNumOffset, index_y + 2 + tileNumOffset));
                 roomsCount++;
+                //if (type2 == LevelRegular)
+                //{
+                //    tileData[index_x + tileNumOffset][index_y + 2 + tileNumOffset].spawnEnemies(difficulty, side, tileData[index_x + tileNumOffset][index_y + 2 + tileNumOffset].getHitbox().getPosition().x, tileData[index_x + tileNumOffset][index_y + 2 + tileNumOffset].getHitbox().getPosition().y);
+                //}
                 int created = 0;
                 int createdMax = rand() % 3 + 1;
                 int counter = 0;
@@ -667,6 +680,10 @@ void Game::generateLevel(int pos_x, int pos_y, int index_x, int index_y, int dir
                 tileData[index_x + 2 + tileNumOffset][index_y + tileNumOffset] = tile2;
                 loadedTiles.push_back(sf::Vector2i(index_x + 2 + tileNumOffset, index_y + tileNumOffset));
                 roomsCount++;
+                //if (type2 == LevelRegular)
+                //{
+                //    tileData[index_x + 2 + tileNumOffset][index_y + tileNumOffset].spawnEnemies(difficulty, side, tileData[index_x + 2 + tileNumOffset][index_y + tileNumOffset].getHitbox().getPosition().x, tileData[index_x + 2 + tileNumOffset][index_y + tileNumOffset].getHitbox().getPosition().y);
+                //}
                 int created = 0;
                 int createdMax = rand() % 3 + 1;
                 int counter = 0;

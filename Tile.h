@@ -37,6 +37,7 @@ public:
 	bool isProjEnemyHit(Projectile proj, Enemy enemy, int speed);
 	void damageEnemy(int i, int dmg);
 	std::vector<sf::Vector2i> getWallsToDraw();
+	bool isReachable(int startx, int starty, int finx, int finy, int len);
 
 private:
 	sf::RectangleShape body;

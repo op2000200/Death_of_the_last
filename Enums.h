@@ -58,9 +58,9 @@ enum EnemyState
 
 enum EnemyBehavior
 {
-	Stand,
-	Attacking,
-	Backing
+	Regular,
+	Fight,
+	Check
 };
 
 enum AmmoType
@@ -90,4 +90,11 @@ enum AttackPattern
 {
 	Auto,
 	SemiAuto
+};
+
+enum WallState
+{
+	Empty,
+	Walled,
+	Enemied
 };

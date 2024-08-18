@@ -2,6 +2,7 @@
 
 Wall::Wall()
 {
+    ws = Empty;
 }
 
 Wall::Wall(int pos_x, int pos_y, int side)
@@ -13,6 +14,7 @@ Wall::Wall(int pos_x, int pos_y, int side)
     hitbox.setOutlineThickness(1.f);
     hitbox.setPosition(sf::Vector2f(pos_x, pos_y));
     health = 100;
+    ws = Walled;
 }
 
 Wall::~Wall()
@@ -32,4 +34,14 @@ sf::RectangleShape Wall::getHitbox()
 int Wall::getHealth()
 {
 	return health;
+}
+
+void Wall::spawn()
+{
+    ws = Enemied;
+}
+
+WallState Wall::getWS()
+{
+    return ws;
 }
