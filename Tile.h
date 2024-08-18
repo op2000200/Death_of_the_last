@@ -38,6 +38,7 @@ public:
 	void damageEnemy(int i, int dmg);
 	std::vector<sf::Vector2i> getWallsToDraw();
 	bool isReachable(int startx, int starty, int finx, int finy, int len);
+	void alert(int id, sf::Vector2i d);
 
 private:
 	sf::RectangleShape body;

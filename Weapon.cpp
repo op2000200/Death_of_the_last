@@ -227,7 +227,7 @@ MeleeWeapon::MeleeWeapon(WeaponName inName, sf::Vector2f inPos, int side, sf::Te
 		case Fist:
 		{
 			pattern = Auto;
-			damage = 5;
+			damage = 100; //default = 5
 			cooldown = sf::seconds(0.3);
 			speed = (side / 10) * 7;
 			hitbox.setSize(sf::Vector2f(

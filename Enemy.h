@@ -21,6 +21,9 @@ public:
 	void setPoint(sf::Vector2i buf);
 	void getDamage(int dmg);
 	sf::RectangleShape getHpBar();
+	void restart();
+	sf::Time getTime();
+	void alert(sf::Vector2i d);
 
 private:
 	sf::CircleShape hitbox;
@@ -30,6 +33,7 @@ private:
 	sf::Vector2i dest;
 	sf::Vector2i ind;
 	sf::Vector2i point;
+	sf::Clock timer;
 
 	int health;
 };

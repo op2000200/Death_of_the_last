@@ -799,28 +799,28 @@ void Game::events()
         command.name = CommandName::Close;
         commandQueue.push_back(command);
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) and dashTimer.getElapsedTime() > sf::seconds(0.5))
-    {
-        dashTimer.restart();
-        command.name = CommandName::Dash;
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-            command.attribute.int1 = 1;
-        else
-            command.attribute.int1 = 0;
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-            command.attribute.int2 = 1;
-        else
-            command.attribute.int2 = 0;
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-            command.attribute.int3 = 1;
-        else
-            command.attribute.int3 = 0;
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-            command.attribute.int4 = 1;
-        else
-            command.attribute.int4 = 0;
-        commandQueue.push_back(command);
-    }
+    //if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) and dashTimer.getElapsedTime() > sf::seconds(0.5))
+    //{
+    //    dashTimer.restart();
+    //    command.name = CommandName::Dash;
+    //    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+    //        command.attribute.int1 = 1;
+    //    else
+    //        command.attribute.int1 = 0;
+    //    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+    //        command.attribute.int2 = 1;
+    //    else
+    //        command.attribute.int2 = 0;
+    //    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+    //        command.attribute.int3 = 1;
+    //    else
+    //        command.attribute.int3 = 0;
+    //    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+    //        command.attribute.int4 = 1;
+    //    else
+    //        command.attribute.int4 = 0;
+    //    commandQueue.push_back(command);
+    //}
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
     {
         if (player->getRanged().getName() != WeaponName::NoWeapon)
@@ -939,6 +939,8 @@ void Game::commands()
                         if (player != nullptr)
                         {
                             window.draw(player->getHitbox());
+                            window.draw(player->getSound());
+                            
                         }
                     }
                     //draw hud
@@ -998,80 +1000,88 @@ void Game::commands()
                 }
                 case CommandName::UpdateOverlay:
                 {
-                    overlay.floorProgress.setPosition(sf::Vector2f(
-                        player->getHitbox().getPosition().x - side / 2 + side / 15,
-                        player->getHitbox().getPosition().y - side / 2 + side / 20
-                    ));
-                    overlay.floorProgressLabel.setPosition(sf::Vector2f(
-                        player->getHitbox().getPosition().x - side / 2 + side / 15,
-                        player->getHitbox().getPosition().y - side / 2 + side / 20
-                    ));
-                    std::string str = std::to_string(roomsVisited) + " / " + std::to_string(roomsCount);
-                    overlay.floorProgressLabel.setString(str);
-                    overlay.floorNum.setPosition(sf::Vector2f(
-                        player->getHitbox().getPosition().x + side / 2 - side / 15,
-                        player->getHitbox().getPosition().y - side / 2 + side / 20
-                    ));
-                    overlay.armourSpriteEdge.setPosition(sf::Vector2f(
-                        player->getHitbox().getPosition().x + side / 2 - side / 20,
-                        player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15 - side / 15
-                    ));
-                    overlay.bullet9mmEdge.setPosition(sf::Vector2f(
-                        player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15 - side / 15 - side / 15,
-                        player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15
-                    ));
-                    overlay.bullet556mmEdge.setPosition(sf::Vector2f(
-                        player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15 - side / 15,
-                        player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15
-                    ));
-                    overlay.bullet762mmEdge.setPosition(sf::Vector2f(
-                        player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15,
-                        player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15
-                    ));
-                    overlay.bullet12gaugeEdge.setPosition(sf::Vector2f(
-                        player->getHitbox().getPosition().x + side / 2 - side / 20,
-                        player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15
-                    ));
-                    overlay.mainWeaponEdge.setPosition(sf::Vector2f(
-                        player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15 - side / 15 - side / 15,
-                        player->getHitbox().getPosition().y + side / 2 - side / 20
-                    ));
-                    overlay.secondaryWeaponEdge.setPosition(sf::Vector2f(
-                        player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15 - side / 15,
-                        player->getHitbox().getPosition().y + side / 2 - side / 20
-                    ));
-                    overlay.repairKitEdge.setPosition(sf::Vector2f(
-                        player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15,
-                        player->getHitbox().getPosition().y + side / 2 - side / 20
-                    ));
-                    overlay.healthKitEdge.setPosition(sf::Vector2f(
-                        player->getHitbox().getPosition().x + side / 2 - side / 20,
-                        player->getHitbox().getPosition().y + side / 2 - side / 20
-                    ));
-                    overlay.armourBarEdge.setPosition(sf::Vector2f(
-                        player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15 - side / 15,
-                        player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15 - side / 15 + side / 60
-                    ));
-                    overlay.armourBarFill.setPosition(sf::Vector2f(
-                        player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15 - side / 15,
-                        player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15 - side / 15 + side / 60
-                    ));
-                    overlay.hpBarEdge.setPosition(sf::Vector2f(
-                        player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15 - side / 15,
-                        player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15 - side / 15 - side / 60 
-                    ));
-                    overlay.hpBarFill.setPosition(sf::Vector2f(
-                        player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15 - side / 15,
-                        player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15 - side / 15 - side / 60 
-                    ));
-                    overlay.staminaBarEdge.setPosition(sf::Vector2f(
-                        player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15 - side / 15,
-                        player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15 - side / 15
-                    ));
-                    overlay.staminaBarFill.setPosition(sf::Vector2f(
-                        player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15 - side / 15,
-                        player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15 - side / 15
-                    ));
+                    {
+                        overlay.floorProgress.setPosition(sf::Vector2f(
+                            player->getHitbox().getPosition().x - side / 2 + side / 15,
+                            player->getHitbox().getPosition().y - side / 2 + side / 20
+                        ));
+                        overlay.floorProgressLabel.setPosition(sf::Vector2f(
+                            player->getHitbox().getPosition().x - side / 2 + side / 15,
+                            player->getHitbox().getPosition().y - side / 2 + side / 20
+                        ));
+                        std::string str = std::to_string(roomsVisited) + " / " + std::to_string(roomsCount);
+                        overlay.floorProgressLabel.setString(str);
+                        overlay.floorNum.setPosition(sf::Vector2f(
+                            player->getHitbox().getPosition().x + side / 2 - side / 15,
+                            player->getHitbox().getPosition().y - side / 2 + side / 20
+                        ));
+                        overlay.armourSpriteEdge.setPosition(sf::Vector2f(
+                            player->getHitbox().getPosition().x + side / 2 - side / 20,
+                            player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15 - side / 15
+                        ));
+                        overlay.bullet9mmEdge.setPosition(sf::Vector2f(
+                            player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15 - side / 15 - side / 15,
+                            player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15
+                        ));
+                        overlay.bullet556mmEdge.setPosition(sf::Vector2f(
+                            player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15 - side / 15,
+                            player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15
+                        ));
+                        overlay.bullet762mmEdge.setPosition(sf::Vector2f(
+                            player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15,
+                            player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15
+                        ));
+                        overlay.bullet12gaugeEdge.setPosition(sf::Vector2f(
+                            player->getHitbox().getPosition().x + side / 2 - side / 20,
+                            player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15
+                        ));
+                        overlay.mainWeaponEdge.setPosition(sf::Vector2f(
+                            player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15 - side / 15 - side / 15,
+                            player->getHitbox().getPosition().y + side / 2 - side / 20
+                        ));
+                        overlay.secondaryWeaponEdge.setPosition(sf::Vector2f(
+                            player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15 - side / 15,
+                            player->getHitbox().getPosition().y + side / 2 - side / 20
+                        ));
+                        overlay.repairKitEdge.setPosition(sf::Vector2f(
+                            player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15,
+                            player->getHitbox().getPosition().y + side / 2 - side / 20
+                        ));
+                        overlay.healthKitEdge.setPosition(sf::Vector2f(
+                            player->getHitbox().getPosition().x + side / 2 - side / 20,
+                            player->getHitbox().getPosition().y + side / 2 - side / 20
+                        ));
+                        overlay.armourBarEdge.setPosition(sf::Vector2f(
+                            player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15 - side / 15,
+                            player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15 - side / 15 + side / 60
+                        ));
+                        overlay.armourBarFill.setPosition(sf::Vector2f(
+                            player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15 - side / 15,
+                            player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15 - side / 15 + side / 60
+                        ));
+                        overlay.hpBarEdge.setPosition(sf::Vector2f(
+                            player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15 - side / 15,
+                            player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15 - side / 15 - side / 60
+                        ));
+                        overlay.hpBarFill.setPosition(sf::Vector2f(
+                            player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15 - side / 15,
+                            player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15 - side / 15 - side / 60
+                        ));
+                        overlay.staminaBarEdge.setPosition(sf::Vector2f(
+                            player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15 - side / 15,
+                            player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15 - side / 15
+                        ));
+                        overlay.staminaBarFill.setPosition(sf::Vector2f(
+                            player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15 - side / 15,
+                            player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15 - side / 15
+                        ));
+                    }
+
+                    if (player->getSound().getRadius() != 0)
+                    {
+                        player->setRad(player->getSound().getRadius() - 5);
+                    }
+
                     break;
                 }
                 case CommandName::RangeAttack:
@@ -1101,11 +1111,18 @@ void Game::commands()
                     {
                         for (int j = 0; j < loadedTiles.size(); j++)
                         {
-                            if (abs(player->getIndex().x + tileNumOffset - loadedTiles[j].x) < 1 and abs(player->getIndex().y + tileNumOffset - loadedTiles[j].y) < 1)
+                            if (abs(player->getIndex().x + tileNumOffset - loadedTiles[j].x) < 2 and abs(player->getIndex().y + tileNumOffset - loadedTiles[j].y) < 2)
                             {
                                 if (tileData[loadedTiles[j].x][loadedTiles[j].y].tickTile(player, tileData[loadedTiles[j].x][loadedTiles[j].y]))
                                 {
                                     roomsVisited++;
+                                }
+                                for (int k = 0; k < tileData[loadedTiles[j].x][loadedTiles[j].y].getEnemyBuffer().size(); k++)
+                                {
+                                    if (player->getSound().getRadius() > 0)
+                                    {
+                                        tileData[loadedTiles[j].x][loadedTiles[j].y].alert(k, sf::Vector2i(10, 10));
+                                    }
                                 }
                             }
                         }
@@ -1130,7 +1147,7 @@ void Game::commands()
                         }
                     }
 
-                    //evertTickThings
+                    //everyTickThings
                     
 
                     break;
@@ -1191,6 +1208,7 @@ void Game::commands()
                             camera.move(sf::Vector2f(0, (-1) * (playerSpeed /j) * (timePerFrame.asSeconds())));
                             window.setView(camera);
                             player->updateIndex(side);
+                            player->setRad(side / 4);
                             break;
                         }
                     }
@@ -1206,6 +1224,7 @@ void Game::commands()
                             camera.move(sf::Vector2f((-1) * (playerSpeed /j) * (timePerFrame.asSeconds()), 0));
                             window.setView(camera);
                             player->updateIndex(side);
+                            player->setRad(side / 4);
                             break;
                         }
                     }
@@ -1221,6 +1240,7 @@ void Game::commands()
                             camera.move(sf::Vector2f(0, (1) * (playerSpeed / j) * (timePerFrame.asSeconds())));
                             window.setView(camera);
                             player->updateIndex(side);
+                            player->setRad(side / 4);
                             break;
                         }
                     }
@@ -1236,6 +1256,7 @@ void Game::commands()
                             camera.move(sf::Vector2f((playerSpeed /j) * (timePerFrame.asSeconds()), 0));
                             window.setView(camera);
                             player->updateIndex(side);
+                            player->setRad(side / 4);
                             break;
                         }
                     }

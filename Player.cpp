@@ -10,6 +10,13 @@ Player::Player(int pos_x, int pos_y, int index_x, int index_y, int side, std::ve
     hitbox.setFillColor(sf::Color::Transparent);
     hitbox.setOutlineColor(sf::Color::Red);
     hitbox.setOutlineThickness(1.f);
+    sound.setRadius(0);
+    sound.setOrigin(sf::Vector2f(sound.getRadius(), sound.getRadius()));
+    sound.setPosition(sf::Vector2f(pos_x, pos_y));
+    sound.setFillColor(sf::Color::Transparent);
+    sound.setOutlineColor(sf::Color::Green);
+    sound.setOutlineThickness(1.f);
+    
     tileIndex.x = index_x;
     tileIndex.y = index_y;
     ranged.clear();
@@ -34,6 +41,17 @@ sf::CircleShape Player::getHitbox()
 	return hitbox;
 }
 
+sf::CircleShape Player::getSound()
+{
+    return sound;
+}
+
+void Player::setRad(int r)
+{
+    sound.setRadius(r);
+    sound.setOrigin(sf::Vector2f(sound.getRadius(), sound.getRadius()));
+}
+
 sf::Vector2i Player::getIndex()
 {
 	return tileIndex;
@@ -43,6 +61,7 @@ void Player::move(sf::Vector2f delta)
 {
     hitbox.move(delta);
     melee.updatePos(hitbox.getPosition());
+    sound.move(delta);
 }
 
 void Player::updateIndex(int side)

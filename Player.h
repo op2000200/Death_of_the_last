@@ -7,6 +7,8 @@ public:
 	Player(int pos_x, int pos_y, int index_x, int index_y, int side, std::vector<sf::Texture*> textureHolder);
 	~Player();
 	sf::CircleShape getHitbox();
+	sf::CircleShape getSound();
+	void setRad(int r);
 	sf::Vector2i getIndex();
 	void move(sf::Vector2f delta);
 	void updateIndex(int side);
@@ -42,6 +44,7 @@ public:
 
 private:
 	sf::CircleShape hitbox;
+	sf::CircleShape sound;
 	sf::Vector2i tileIndex;
 	RangedWeapon ranged;
 	MeleeWeapon melee;

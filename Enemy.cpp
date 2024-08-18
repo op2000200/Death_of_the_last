@@ -119,3 +119,13 @@ sf::RectangleShape Enemy::getHpBar()
 {
 	return hpBar;
 }
+
+void Enemy::restart()
+{
+	timer.restart();
+}
+
+sf::Time Enemy::getTime()
+{
+	return timer.getElapsedTime();
+}
