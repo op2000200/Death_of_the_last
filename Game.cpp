@@ -29,7 +29,12 @@ Game::Game()
     {
         tileData[i] = new Tile[101];
     }
-    playerSpeed = 1000;
+    tileDataMini = new Tile* [101];
+    for (int i = 0; i < 101; i++)
+    {
+        tileDataMini[i] = new Tile[101];
+    }
+    playerSpeed = 300;
     NataSans.loadFromFile("assets/font/Nata_Sans_Typeface/ttf/NataSans-Regular.ttf");
     tileSetBg.loadFromFile("assets/textures/TileSet.png");
     ar10texture = new sf::Texture;
@@ -66,6 +71,9 @@ Game::Game()
     displayTimer.restart();
     roomsCount = 0;
     roomsVisited = 0;
+    mapShow = false;
+    sneak = false;
+    sprint = false;
 }
 
 Game::~Game()
@@ -295,7 +303,7 @@ void Game::initial()
             side / 60
         ));
         overlay.staminaBarFill.setOrigin(sf::Vector2f(
-            overlay.staminaBarFill.getSize().x / 2,
+            0,
             overlay.staminaBarFill.getSize().y / 2
         ));
         overlay.staminaBarFill.setFillColor(sf::Color(30, 230, 230));
@@ -307,6 +315,8 @@ void Game::generateMap()
     Tile tile(TileType::Central, sf::VideoMode::getDesktopMode().width / 2, sf::VideoMode::getDesktopMode().height / 2, 0, 0, side, difficulty, textureHolder);
     tileCreated[0 + tileNumOffset][0 + tileNumOffset] = true;
     tileData[0 + tileNumOffset][0 + tileNumOffset] = tile;
+    Tile tile2(TileType::Central, sf::VideoMode::getDesktopMode().width / 2, sf::VideoMode::getDesktopMode().height / 2, 0, 0, side / 100, difficulty, textureHolder);
+    tileDataMini[0 + tileNumOffset][0 + tileNumOffset] = tile2;
     loadedTiles.push_back(sf::Vector2i(0 + tileNumOffset, 0 + tileNumOffset));
     roomsCount++;
     srand(time(0));
@@ -375,7 +385,7 @@ void Game::generateMap()
 void Game::generateLevel(int pos_x, int pos_y, int index_x, int index_y, int dir, int len)
 {
     int tileSize = side;
-    if (index_x > -46 and index_x < 46 and index_y > -46 and index_y < 46 and len < 15)
+    if (index_x > -46 and index_x < 46 and index_y > -46 and index_y < 46 and len < 150)
     {
         switch (dir)
         {
@@ -384,6 +394,8 @@ void Game::generateLevel(int pos_x, int pos_y, int index_x, int index_y, int dir
                 Tile tile(TileType::CorridorV, pos_x, pos_y - tileSize, index_x, index_y - 1, side, difficulty, textureHolder);
                 tileCreated[index_x + tileNumOffset][index_y - 1 + tileNumOffset] = true;
                 tileData[index_x + tileNumOffset][index_y - 1 + tileNumOffset] = tile;
+                Tile tile3(TileType::CorridorV, sf::VideoMode::getDesktopMode().width / 2 + (side / 100) * (index_x), sf::VideoMode::getDesktopMode().height / 2 + (side / 100) * (index_y - 1), index_x, index_y - 1, side / 100, difficulty, textureHolder);
+                tileDataMini[index_x + tileNumOffset][index_y - 1 + tileNumOffset] = tile3;
                 loadedTiles.push_back(sf::Vector2i(index_x + tileNumOffset, index_y - 1 + tileNumOffset));
                 int type = rand() % 100; 
                 TileType type2;
@@ -414,6 +426,8 @@ void Game::generateLevel(int pos_x, int pos_y, int index_x, int index_y, int dir
                 Tile tile2(type2, pos_x, pos_y - tileSize - tileSize, index_x, index_y - 2, side, difficulty, textureHolder);
                 tileCreated[index_x + tileNumOffset][index_y - 2 + tileNumOffset] = true;
                 tileData[index_x + tileNumOffset][index_y - 2 + tileNumOffset] = tile2;
+                Tile tile4(type2, sf::VideoMode::getDesktopMode().width / 2 + (side / 100) * (index_x), sf::VideoMode::getDesktopMode().height / 2 + (side / 100) * (index_y - 2), index_x, index_y - 2, side / 100, difficulty, textureHolder);
+                tileDataMini[index_x + tileNumOffset][index_y - 2 + tileNumOffset] = tile4;
                 loadedTiles.push_back(sf::Vector2i(index_x + tileNumOffset, index_y - 2 + tileNumOffset));
                 roomsCount++;
                 //if (type2 == LevelRegular)
@@ -472,6 +486,8 @@ void Game::generateLevel(int pos_x, int pos_y, int index_x, int index_y, int dir
                 Tile tile(TileType::CorridorH, pos_x - tileSize, pos_y, index_x - 1, index_y, side, difficulty, textureHolder);
                 tileCreated[index_x - 1 + tileNumOffset][index_y + tileNumOffset] = true;
                 tileData[index_x - 1 + tileNumOffset][index_y + tileNumOffset] = tile;
+                Tile tile3(TileType::CorridorH, sf::VideoMode::getDesktopMode().width / 2 + (side / 100) * (index_x - 1), sf::VideoMode::getDesktopMode().height / 2 + (side / 100) * (index_y), index_x - 1, index_y, side / 100, difficulty, textureHolder);
+                tileDataMini[index_x - 1 + tileNumOffset][index_y + tileNumOffset] = tile3;
                 loadedTiles.push_back(sf::Vector2i(index_x - 1 + tileNumOffset, index_y + tileNumOffset));
                 int type = rand() % 6;
                 TileType type2;
@@ -502,6 +518,8 @@ void Game::generateLevel(int pos_x, int pos_y, int index_x, int index_y, int dir
                 Tile tile2(type2, pos_x - tileSize - tileSize, pos_y, index_x - 2, index_y, side, difficulty, textureHolder);
                 tileCreated[index_x - 2 + tileNumOffset][index_y + tileNumOffset] = true;
                 tileData[index_x - 2 + tileNumOffset][index_y + tileNumOffset] = tile2;
+                Tile tile4(type2, sf::VideoMode::getDesktopMode().width / 2 + (side / 100) * (index_x - 2), sf::VideoMode::getDesktopMode().height / 2 + (side / 100) * (index_y), index_x - 2, index_y, side / 100, difficulty, textureHolder);
+                tileDataMini[index_x - 2 + tileNumOffset][index_y + tileNumOffset] = tile4;
                 loadedTiles.push_back(sf::Vector2i(index_x - 2 + tileNumOffset, index_y + tileNumOffset));
                 roomsCount++;
                 //if (type2 == LevelRegular)
@@ -560,6 +578,8 @@ void Game::generateLevel(int pos_x, int pos_y, int index_x, int index_y, int dir
                 Tile tile(TileType::CorridorV, pos_x, pos_y + tileSize, index_x, index_y + 1, side, difficulty, textureHolder);
                 tileCreated[index_x + tileNumOffset][index_y + 1 + tileNumOffset] = true;
                 tileData[index_x + tileNumOffset][index_y + 1 + tileNumOffset] = tile;
+                Tile tile3(TileType::CorridorV, sf::VideoMode::getDesktopMode().width / 2 + (side / 100) * (index_x), sf::VideoMode::getDesktopMode().height / 2 + (side / 100) * (index_y + 1), index_x, index_y + 1, side / 100, difficulty, textureHolder);
+                tileDataMini[index_x + tileNumOffset][index_y + 1 + tileNumOffset] = tile3;
                 loadedTiles.push_back(sf::Vector2i(index_x + tileNumOffset, index_y + 1 + tileNumOffset));
                 int type = rand() % 6;
                 TileType type2;
@@ -590,6 +610,8 @@ void Game::generateLevel(int pos_x, int pos_y, int index_x, int index_y, int dir
                 Tile tile2(type2, pos_x, pos_y + tileSize + tileSize, index_x, index_y + 2, side, difficulty, textureHolder);
                 tileCreated[index_x + tileNumOffset][index_y + 2 + tileNumOffset] = true;
                 tileData[index_x + tileNumOffset][index_y + 2 + tileNumOffset] = tile2;
+                Tile tile4(type2, sf::VideoMode::getDesktopMode().width / 2 + (side / 100) * (index_x), sf::VideoMode::getDesktopMode().height / 2 + (side / 100) * (index_y + 2), index_x, index_y + 2, side / 100, difficulty, textureHolder);
+                tileDataMini[index_x + tileNumOffset][index_y + 2 + tileNumOffset] = tile4;
                 loadedTiles.push_back(sf::Vector2i(index_x + tileNumOffset, index_y + 2 + tileNumOffset));
                 roomsCount++;
                 //if (type2 == LevelRegular)
@@ -648,6 +670,8 @@ void Game::generateLevel(int pos_x, int pos_y, int index_x, int index_y, int dir
                 Tile tile(TileType::CorridorH, pos_x + tileSize, pos_y, index_x + 1, index_y, side, difficulty, textureHolder);
                 tileCreated[index_x + 1 + tileNumOffset][index_y + tileNumOffset] = true;
                 tileData[index_x + 1 + tileNumOffset][index_y + tileNumOffset] = tile;
+                Tile tile3(TileType::CorridorH, sf::VideoMode::getDesktopMode().width / 2 + (side / 100) * (index_x + 1), sf::VideoMode::getDesktopMode().height / 2 + (side / 100) * (index_y), index_x + 1, index_y, side / 100, difficulty, textureHolder);
+                tileDataMini[index_x + 1 + tileNumOffset][index_y + tileNumOffset] = tile3;
                 loadedTiles.push_back(sf::Vector2i(index_x + 1 + tileNumOffset, index_y + tileNumOffset));
                 int type = rand() % 6;
                 TileType type2;
@@ -678,6 +702,8 @@ void Game::generateLevel(int pos_x, int pos_y, int index_x, int index_y, int dir
                 Tile tile2(type2, pos_x + tileSize + tileSize, pos_y, index_x + 2, index_y, side, difficulty, textureHolder);
                 tileCreated[index_x + 2 + tileNumOffset][index_y + tileNumOffset] = true;
                 tileData[index_x + 2 + tileNumOffset][index_y + tileNumOffset] = tile2;
+                Tile tile4(type2, sf::VideoMode::getDesktopMode().width / 2 + (side / 100) * (index_x + 2), sf::VideoMode::getDesktopMode().height / 2 + (side / 100) * (index_y), index_x + 2, index_y, side / 100, difficulty, textureHolder);
+                tileDataMini[index_x + 2 + tileNumOffset][index_y + tileNumOffset] = tile4;
                 loadedTiles.push_back(sf::Vector2i(index_x + 2 + tileNumOffset, index_y + tileNumOffset));
                 roomsCount++;
                 //if (type2 == LevelRegular)
@@ -752,120 +778,135 @@ void Game::spawnPlayer()
 
 void Game::events()
 {
-    Command command;
-    sf::Event event;
-    while (window.pollEvent(event))
+    if (window.hasFocus())
     {
-        // "close requested" event: we close the window
-        if (event.type == sf::Event::Closed)
+        Command command;
+        sf::Event event;
+        while (window.pollEvent(event))
+        {
+            // "close requested" event: we close the window
+            if (event.type == sf::Event::Closed)
+            {
+                command.name = CommandName::Close;
+                commandQueue.push_back(command);
+            }
+            if (event.type == sf::Event::MouseMoved)
+            {
+                command.name = Rotate;
+                commandQueue.push_back(command);
+            }
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+        {
+            command.name = CommandName::MoveUp;
+            commandQueue.push_back(command);
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+        {
+            command.name = CommandName::MoveLeft;
+            commandQueue.push_back(command);
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+        {
+            command.name = CommandName::MoveDown;
+            commandQueue.push_back(command);
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+        {
+            command.name = CommandName::MoveRight;
+            commandQueue.push_back(command);
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Tab))
+        {
+            mapShow = true;
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl))
+        {
+            sneak = true;
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
+        {
+            sprint = true;
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::F) and interactionTimer.getElapsedTime() > sf::seconds(0.5))
+        {
+            interactionTimer.restart();
+            command.name = CommandName::Interaction;
+            commandQueue.push_back(command);
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
         {
             command.name = CommandName::Close;
             commandQueue.push_back(command);
         }
-        if (event.type == sf::Event::MouseMoved)
+        //if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) and dashTimer.getElapsedTime() > sf::seconds(0.5))
+        //{
+        //    dashTimer.restart();
+        //    command.name = CommandName::Dash;
+        //    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+        //        command.attribute.int1 = 1;
+        //    else
+        //        command.attribute.int1 = 0;
+        //    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+        //        command.attribute.int2 = 1;
+        //    else
+        //        command.attribute.int2 = 0;
+        //    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+        //        command.attribute.int3 = 1;
+        //    else
+        //        command.attribute.int3 = 0;
+        //    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+        //        command.attribute.int4 = 1;
+        //    else
+        //        command.attribute.int4 = 0;
+        //    commandQueue.push_back(command);
+        //}
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
         {
-            command.name = Rotate;
-            commandQueue.push_back(command);
-        }
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-    {
-        command.name = CommandName::MoveUp;
-        commandQueue.push_back(command);
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-    {
-        command.name = CommandName::MoveLeft;
-        commandQueue.push_back(command);
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-    {
-        command.name = CommandName::MoveDown;
-        commandQueue.push_back(command);
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-    {
-        command.name = CommandName::MoveRight;
-        commandQueue.push_back(command);
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::F) and interactionTimer.getElapsedTime() > sf::seconds(0.5))
-    {
-        interactionTimer.restart();
-        command.name = CommandName::Interaction;
-        commandQueue.push_back(command);
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-    {
-        command.name = CommandName::Close;
-        commandQueue.push_back(command);
-    }
-    //if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) and dashTimer.getElapsedTime() > sf::seconds(0.5))
-    //{
-    //    dashTimer.restart();
-    //    command.name = CommandName::Dash;
-    //    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-    //        command.attribute.int1 = 1;
-    //    else
-    //        command.attribute.int1 = 0;
-    //    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-    //        command.attribute.int2 = 1;
-    //    else
-    //        command.attribute.int2 = 0;
-    //    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-    //        command.attribute.int3 = 1;
-    //    else
-    //        command.attribute.int3 = 0;
-    //    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-    //        command.attribute.int4 = 1;
-    //    else
-    //        command.attribute.int4 = 0;
-    //    commandQueue.push_back(command);
-    //}
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-    {
-        if (player->getRanged().getName() != WeaponName::NoWeapon)
-        {
-            if (reloadTimer.getElapsedTime() > player->getRanged().getReloadTime())
+            if (player->getRanged().getName() != WeaponName::NoWeapon)
             {
-                if (player->getRanged().getCooldown() < rangedAttackTimer.getElapsedTime())
+                if (reloadTimer.getElapsedTime() > player->getRanged().getReloadTime())
                 {
-                    rangedAttackTimer.restart();
-                    command.name = CommandName::RangeAttack;
-                    commandQueue.push_back(command);
-                    bulletsShot++;
-                    if (bulletsShot == player->getRanged().getCapacity())
+                    if (player->getRanged().getCooldown() < rangedAttackTimer.getElapsedTime())
                     {
-                        bulletsShot = 0;
-                        reloadTimer.restart();
+                        rangedAttackTimer.restart();
+                        command.name = CommandName::RangeAttack;
+                        commandQueue.push_back(command);
+                        bulletsShot++;
+                        if (bulletsShot == player->getRanged().getCapacity())
+                        {
+                            bulletsShot = 0;
+                            reloadTimer.restart();
+                        }
                     }
                 }
             }
         }
-    }
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
-    {
-        if (player->getMelee().getCooldown() < meleeAttackTimer.getElapsedTime())
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
         {
-            meleeAttackTimer.restart();
-            command.name = CommandName::CloseAttack;
-            commandQueue.push_back(command);
-            //attack
+            if (player->getMelee().getCooldown() < meleeAttackTimer.getElapsedTime())
+            {
+                meleeAttackTimer.restart();
+                command.name = CommandName::CloseAttack;
+                commandQueue.push_back(command);
+                //attack
+            }
         }
-    }
-    
 
-    command.name = CommandName::TickTiles;
-    commandQueue.push_back(command);
 
-    //display always at the end
-    //if (displayTimer.getElapsedTime() > timePerFrame2)
-    //{
-    //    displayTimer.restart();
+        command.name = CommandName::TickTiles;
+        commandQueue.push_back(command);
+
+        //display always at the end
+        //if (displayTimer.getElapsedTime() > timePerFrame2)
+        //{
+        //    displayTimer.restart();
         command.name = CommandName::UpdateOverlay;
         commandQueue.push_back(command);
         command.name = CommandName::Display;
         commandQueue.push_back(command);
-    //}
+        //}
+    }
 }
 
 void Game::commands()
@@ -876,456 +917,758 @@ void Game::commands()
         {
             switch (commandQueue[i].name)
             {
-                case CommandName::Close:
+            case CommandName::Close:
+            {
+                window.close();
+                break;
+            }
+            case CommandName::Display:
+            {
+                window.clear();
+                //draw world
                 {
-                    window.close();
-                    break;
+                    if (!loadedTiles.empty())
+                    {
+                        for (int j = 0; j < loadedTiles.size(); j++)
+                        {
+                            if (abs(player->getIndex().x + tileNumOffset - loadedTiles[j].x) < 5 and abs(player->getIndex().y + tileNumOffset - loadedTiles[j].y) < 5)
+                            {
+                                window.draw(tileData[loadedTiles[j].x][loadedTiles[j].y].getBody());
+                                window.draw(tileData[loadedTiles[j].x][loadedTiles[j].y].getHitbox());
+                                if (tileData[loadedTiles[j].x][loadedTiles[j].y].getType() == LevelRegular)
+                                {
+                                    for (int k = 0; k < tileData[loadedTiles[j].x][loadedTiles[j].y].getWallsToDraw().size(); k++)
+                                    {
+                                        window.draw(tileData[loadedTiles[j].x][loadedTiles[j].y].getWallById(tileData[loadedTiles[j].x][loadedTiles[j].y].getWallsToDraw()[k]).getHitbox());
+                                    }
+                                }
+                                for (int k = 0; k < tileData[loadedTiles[j].x][loadedTiles[j].y].getEnemyBuffer().size(); k++)
+                                {
+                                    window.draw(tileData[loadedTiles[j].x][loadedTiles[j].y].getEnemyBuffer()[k].getHitbox());
+                                    window.draw(tileData[loadedTiles[j].x][loadedTiles[j].y].getEnemyBuffer()[k].getHpBar());
+                                }
+                                for (int k = 0; k < tileData[loadedTiles[j].x][loadedTiles[j].y].getRangedBuffer().size(); k++)
+                                {
+                                    window.draw(tileData[loadedTiles[j].x][loadedTiles[j].y].getRangedBuffer()[k].getPickUpHitbox());
+                                    window.draw(tileData[loadedTiles[j].x][loadedTiles[j].y].getRangedBuffer()[k].getSprite());
+                                }
+                                for (int k = 0; k < tileData[loadedTiles[j].x][loadedTiles[j].y].getMeleeBuffer().size(); k++)
+                                {
+                                    window.draw(tileData[loadedTiles[j].x][loadedTiles[j].y].getMeleeBuffer()[k].getPickUpHitbox());
+                                }
+                            }
+                        }
+                    }
                 }
-                case CommandName::Display:
+                //draw attack
                 {
-                    window.clear();
-                    //draw world
+                    //for enemy
+
+
+                    //for player
+                    if (player->getRanged().getName() != NoWeapon)
+                    {
+                        for (int j = 0; j < player->getRanged().getProjBuffer().size(); j++)
+                        {
+                            window.draw(player->getRanged().getProjBuffer()[j].getHitbox());
+                        }
+                    }
+                    window.draw(player->getMelee().getHitbox());
+                }
+                //draw player
+                {
+                    if (player != nullptr)
+                    {
+                        window.draw(player->getHitbox());
+                        window.draw(player->getSound());
+
+                    }
+                }
+                //draw hud
+                {
+                    //sf::Text text;
+                    //text.setFont(NataSans);
+                    //text.setFillColor(sf::Color::Red);
+                    //text.setCharacterSize(20);
+                    //text.setPosition(player->getHitbox().getPosition() + sf::Vector2f(0, 50));
+                    //std::string str = std::to_string(player->getIndex().x) + " " + std::to_string(player->getIndex().y) + " " + std::to_string(player->getHitbox().getPosition().x - sf::VideoMode::getDesktopMode().width / 2 + side / 4) + " " + std::to_string(player->getHitbox().getPosition().y - side / 2 + side / 4) + " " + std::to_string(player->getMelee().getHitbox().getRotation());
+                    //text.setString(str);
+                    //window.draw(text);
+                    window.draw(overlay.floorProgress);
+                    window.draw(overlay.floorProgressLabel);
+                    window.draw(overlay.floorNum);
+                    window.draw(overlay.floorNumLabel);
+                    window.draw(overlay.hpBarEdge);
+                    window.draw(overlay.hpBarFill);
+                    window.draw(overlay.staminaBarEdge);
+                    window.draw(overlay.staminaBarFill);
+                    window.draw(overlay.armourBarEdge);
+                    window.draw(overlay.armourBarFill);
+                    window.draw(overlay.armourSpriteEdge);
+                    window.draw(overlay.bullet9mmEdge);
+                    window.draw(overlay.bullet9mmLabel);
+                    window.draw(overlay.bullet556mmEdge);
+                    window.draw(overlay.bullet556mmLabel);
+                    window.draw(overlay.bullet762mmEdge);
+                    window.draw(overlay.bullet762mmLabel);
+                    window.draw(overlay.bullet12gaugeEdge);
+                    window.draw(overlay.bullet12gaugeLabel);
+                    window.draw(overlay.mainWeaponEdge);
+                    window.draw(overlay.mainWeaponFill);
+                    window.draw(overlay.secondaryWeaponEdge);
+                    window.draw(overlay.secondaryWeaponFill);
+                    window.draw(overlay.repairKitEdge);
+                    window.draw(overlay.repairKitFill);
+                    window.draw(overlay.healthKitEdge);
+                    window.draw(overlay.healthKitFill);
+                }
+                //draw map
+                {
+                    if (mapShow)
                     {
                         if (!loadedTiles.empty())
                         {
                             for (int j = 0; j < loadedTiles.size(); j++)
                             {
-                                if (abs(player->getIndex().x + tileNumOffset - loadedTiles[j].x) < 5 and abs(player->getIndex().y + tileNumOffset - loadedTiles[j].y) < 5)
+                                if (tileData[loadedTiles[j].x][loadedTiles[j].y].getState() == Marked)
                                 {
-                                    window.draw(tileData[loadedTiles[j].x][loadedTiles[j].y].getBody());
-                                    window.draw(tileData[loadedTiles[j].x][loadedTiles[j].y].getHitbox());
-                                    if (tileData[loadedTiles[j].x][loadedTiles[j].y].getType() == LevelRegular)
+                                    tileDataMini[loadedTiles[j].x][loadedTiles[j].y].setGreen();
+                                }
+                                else
+                                {
+                                    tileDataMini[loadedTiles[j].x][loadedTiles[j].y].setRed();
+                                }
+                                if (loadedTiles[j].x - tileNumOffset == player->getIndex().x and loadedTiles[j].y - tileNumOffset == player->getIndex().y)
+                                {
+                                    tileDataMini[loadedTiles[j].x][loadedTiles[j].y].setYellow();
+                                }
+                                window.draw(tileDataMini[loadedTiles[j].x][loadedTiles[j].y].getBody());
+                            }
+                        }
+                        mapShow = false;
+                    }
+                }
+                window.display();
+
+
+                sneak = false;
+                sprint = false;
+                break;
+            }
+            case CommandName::SpawnPlayer:
+            {
+                player = new Player(commandQueue[i].attribute.int1, commandQueue[i].attribute.int2, commandQueue[i].attribute.int3, commandQueue[i].attribute.int4, side, textureHolder);
+                break;
+            }
+            case CommandName::Rotate:
+            {
+                sf::Vector2f dir, center;
+                center = sf::Vector2f(sf::VideoMode::getDesktopMode().width / 2, sf::VideoMode::getDesktopMode().height / 2);
+                dir.x = (sf::Mouse::getPosition().x - center.x) / (abs(sf::Mouse::getPosition().x - center.x) + abs(sf::Mouse::getPosition().y - center.y));
+                dir.y = (sf::Mouse::getPosition().y - center.y) / (abs(sf::Mouse::getPosition().x - center.x) + abs(sf::Mouse::getPosition().y - center.y));
+                player->rotate(((atan2(dir.y, dir.x)) / 3.14) * 180.f + 90.f);
+                break;
+            }
+            case CommandName::UpdateOverlay:
+            {
+                {
+                    overlay.floorProgress.setPosition(sf::Vector2f(
+                        player->getHitbox().getPosition().x - side / 2 + side / 15,
+                        player->getHitbox().getPosition().y - side / 2 + side / 20
+                    ));
+                    overlay.floorProgressLabel.setPosition(sf::Vector2f(
+                        player->getHitbox().getPosition().x - side / 2 + side / 15,
+                        player->getHitbox().getPosition().y - side / 2 + side / 20
+                    ));
+                    std::string str = std::to_string(roomsVisited) + " / " + std::to_string(roomsCount);
+                    overlay.floorProgressLabel.setString(str);
+                    overlay.floorNum.setPosition(sf::Vector2f(
+                        player->getHitbox().getPosition().x + side / 2 - side / 15,
+                        player->getHitbox().getPosition().y - side / 2 + side / 20
+                    ));
+                    overlay.armourSpriteEdge.setPosition(sf::Vector2f(
+                        player->getHitbox().getPosition().x + side / 2 - side / 20,
+                        player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15 - side / 15
+                    ));
+                    overlay.bullet9mmEdge.setPosition(sf::Vector2f(
+                        player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15 - side / 15 - side / 15,
+                        player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15
+                    ));
+                    overlay.bullet556mmEdge.setPosition(sf::Vector2f(
+                        player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15 - side / 15,
+                        player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15
+                    ));
+                    overlay.bullet762mmEdge.setPosition(sf::Vector2f(
+                        player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15,
+                        player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15
+                    ));
+                    overlay.bullet12gaugeEdge.setPosition(sf::Vector2f(
+                        player->getHitbox().getPosition().x + side / 2 - side / 20,
+                        player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15
+                    ));
+                    overlay.mainWeaponEdge.setPosition(sf::Vector2f(
+                        player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15 - side / 15 - side / 15,
+                        player->getHitbox().getPosition().y + side / 2 - side / 20
+                    ));
+                    overlay.secondaryWeaponEdge.setPosition(sf::Vector2f(
+                        player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15 - side / 15,
+                        player->getHitbox().getPosition().y + side / 2 - side / 20
+                    ));
+                    overlay.repairKitEdge.setPosition(sf::Vector2f(
+                        player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15,
+                        player->getHitbox().getPosition().y + side / 2 - side / 20
+                    ));
+                    overlay.healthKitEdge.setPosition(sf::Vector2f(
+                        player->getHitbox().getPosition().x + side / 2 - side / 20,
+                        player->getHitbox().getPosition().y + side / 2 - side / 20
+                    ));
+                    overlay.armourBarEdge.setPosition(sf::Vector2f(
+                        player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15 - side / 15,
+                        player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15 - side / 15 + side / 60
+                    ));
+                    overlay.armourBarFill.setPosition(sf::Vector2f(
+                        player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15 - side / 15,
+                        player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15 - side / 15 + side / 60
+                    ));
+                    overlay.hpBarEdge.setPosition(sf::Vector2f(
+                        player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15 - side / 15,
+                        player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15 - side / 15 - side / 60
+                    ));
+                    overlay.hpBarFill.setPosition(sf::Vector2f(
+                        player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15 - side / 15,
+                        player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15 - side / 15 - side / 60
+                    ));
+                    overlay.staminaBarEdge.setPosition(sf::Vector2f(
+                        player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15 - side / 15,
+                        player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15 - side / 15
+                    ));
+                    overlay.staminaBarFill.setPosition(sf::Vector2f(
+                        player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15 - side / 15 - overlay.staminaBarEdge.getOrigin().x,
+                        player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15 - side / 15
+                    ));
+                    overlay.staminaBarFill.setScale(sf::Vector2f(player->getStamina() / 100.f, 1));
+                }
+
+                if (player->getSound().getRadius() != 0)
+                {
+                    player->setRad(player->getSound().getRadius() - 5);
+                }
+
+                if (player->getStamina() < 100)
+                {
+                    player->setStamina(player->getStamina() + 0.1);
+                }
+
+                break;
+            }
+            case CommandName::RangeAttack:
+            {
+                sf::Vector2f dir, center;
+                center = sf::Vector2f(sf::VideoMode::getDesktopMode().width / 2, sf::VideoMode::getDesktopMode().height / 2);
+                dir.x = (sf::Mouse::getPosition().x - center.x) / (abs(sf::Mouse::getPosition().x - center.x) + abs(sf::Mouse::getPosition().y - center.y));
+                dir.y = (sf::Mouse::getPosition().y - center.y) / (abs(sf::Mouse::getPosition().x - center.x) + abs(sf::Mouse::getPosition().y - center.y));
+                player->shoot(side, dir);
+                break;
+            }
+            case CommandName::CloseAttack:
+            {
+                for (int j = 0; j < tileData[player->getIndex().x + tileNumOffset][player->getIndex().y + tileNumOffset].getEnemyBuffer().size(); j++)
+                {
+                    if (isMeleeEnemyHit(player->getMelee().getHitbox(), tileData[player->getIndex().x + tileNumOffset][player->getIndex().y + tileNumOffset].getEnemyBuffer()[j]))
+                    {
+                        tileData[player->getIndex().x + tileNumOffset][player->getIndex().y + tileNumOffset].damageEnemy(j, player->getMelee().getDamage());
+                    }
+                }
+
+                for (int j = 0; j < tileData[player->getIndex().x + tileNumOffset][player->getIndex().y + tileNumOffset].getWallsToDraw().size(); j++)
+                {
+                    if (isMeleeWallHit(player->getMelee().getHitbox(), tileData[player->getIndex().x + tileNumOffset][player->getIndex().y + tileNumOffset].getWallById(sf::Vector2i(tileData[player->getIndex().x + tileNumOffset][player->getIndex().y + tileNumOffset].getWallsToDraw()[j].x, tileData[player->getIndex().x + tileNumOffset][player->getIndex().y + tileNumOffset].getWallsToDraw()[j].y))))
+                    {
+                        tileData[player->getIndex().x + tileNumOffset][player->getIndex().y + tileNumOffset].dmgWall(sf::Vector2i(tileData[player->getIndex().x + tileNumOffset][player->getIndex().y + tileNumOffset].getWallsToDraw()[j].x, tileData[player->getIndex().x + tileNumOffset][player->getIndex().y + tileNumOffset].getWallsToDraw()[j].y), player->getMelee().getDamage());
+                    }
+                    if (tileData[player->getIndex().x + tileNumOffset][player->getIndex().y + tileNumOffset].getWallById(sf::Vector2i(tileData[player->getIndex().x + tileNumOffset][player->getIndex().y + tileNumOffset].getWallsToDraw()[j].x, tileData[player->getIndex().x + tileNumOffset][player->getIndex().y + tileNumOffset].getWallsToDraw()[j].y)).getHealth() < 0)
+                    {
+                        tileData[player->getIndex().x + tileNumOffset][player->getIndex().y + tileNumOffset].delWallById(j);
+                    }
+                }
+                break;
+            }
+            case CommandName::TickTiles:
+            {
+                //tile
+                if (!loadedTiles.empty())
+                {
+                    for (int j = 0; j < loadedTiles.size(); j++)
+                    {
+                        if (abs(player->getIndex().x + tileNumOffset - loadedTiles[j].x) < 2 and abs(player->getIndex().y + tileNumOffset - loadedTiles[j].y) < 2)
+                        {
+                            if (tileData[loadedTiles[j].x][loadedTiles[j].y].tickTile(player, tileData[loadedTiles[j].x][loadedTiles[j].y]))
+                            {
+                                roomsVisited++;
+                            }
+                            for (int k = 0; k < tileData[loadedTiles[j].x][loadedTiles[j].y].getEnemyBuffer().size(); k++)
+                            {
+                                if (player->getSound().getRadius() > 0)
+                                {
+                                    if (player->getIndex().x + tileNumOffset == loadedTiles[j].x and player->getIndex().y + tileNumOffset == loadedTiles[j].y)
                                     {
-                                        for (int k = 0; k < tileData[loadedTiles[j].x][loadedTiles[j].y].getWallsToDraw().size(); k++)
+                                        int dist = sqrt(pow((player->getHitbox().getPosition().x - tileData[loadedTiles[j].x][loadedTiles[j].y].getEnemyBuffer()[k].getHitbox().getPosition().x), 2) + pow((player->getHitbox().getPosition().y - tileData[loadedTiles[j].x][loadedTiles[j].y].getEnemyBuffer()[k].getHitbox().getPosition().y), 2));
+                                        if (dist < player->getSound().getRadius())
                                         {
-                                            window.draw(tileData[loadedTiles[j].x][loadedTiles[j].y].getWallById(tileData[loadedTiles[j].x][loadedTiles[j].y].getWallsToDraw()[k]).getHitbox());
+                                            int indx, indy;
+                                            indx = (player->getHitbox().getPosition().x - (tileData[loadedTiles[j].x][loadedTiles[j].y].getHitbox().getPosition().x - tileData[loadedTiles[j].x][loadedTiles[j].y].getHitbox().getSize().x / 2)) / (tileData[loadedTiles[j].x][loadedTiles[j].y].getHitbox().getSize().x / 20);
+                                            indy = (player->getHitbox().getPosition().y - (tileData[loadedTiles[j].x][loadedTiles[j].y].getHitbox().getPosition().y - tileData[loadedTiles[j].x][loadedTiles[j].y].getHitbox().getSize().y / 2)) / (tileData[loadedTiles[j].x][loadedTiles[j].y].getHitbox().getSize().y / 20);
+                                            tileData[loadedTiles[j].x][loadedTiles[j].y].alert(k, sf::Vector2i(indx, indy));
                                         }
                                     }
-                                    for (int k = 0; k < tileData[loadedTiles[j].x][loadedTiles[j].y].getEnemyBuffer().size(); k++)
+                                    else
                                     {
-                                        window.draw(tileData[loadedTiles[j].x][loadedTiles[j].y].getEnemyBuffer()[k].getHitbox());
-                                        window.draw(tileData[loadedTiles[j].x][loadedTiles[j].y].getEnemyBuffer()[k].getHpBar());
-                                    }
-                                    for (int k = 0; k < tileData[loadedTiles[j].x][loadedTiles[j].y].getRangedBuffer().size(); k++)
-                                    {
-                                        window.draw(tileData[loadedTiles[j].x][loadedTiles[j].y].getRangedBuffer()[k].getPickUpHitbox());
-                                        window.draw(tileData[loadedTiles[j].x][loadedTiles[j].y].getRangedBuffer()[k].getSprite());
-                                    }
-                                    for (int k = 0; k < tileData[loadedTiles[j].x][loadedTiles[j].y].getMeleeBuffer().size(); k++)
-                                    {
-                                        window.draw(tileData[loadedTiles[j].x][loadedTiles[j].y].getMeleeBuffer()[k].getPickUpHitbox());
+                                        int dist = sqrt(pow((player->getHitbox().getPosition().x - tileData[loadedTiles[j].x][loadedTiles[j].y].getEnemyBuffer()[k].getHitbox().getPosition().x), 2) + pow((player->getHitbox().getPosition().y - tileData[loadedTiles[j].x][loadedTiles[j].y].getEnemyBuffer()[k].getHitbox().getPosition().y), 2));
+                                        if (dist < player->getSound().getRadius())
+                                        {
+                                            int indx, indy;
+                                            indx = (player->getHitbox().getPosition().x - (tileData[loadedTiles[j].x][loadedTiles[j].y].getHitbox().getPosition().x - tileData[loadedTiles[j].x][loadedTiles[j].y].getHitbox().getSize().x / 2)) / (tileData[loadedTiles[j].x][loadedTiles[j].y].getHitbox().getSize().x / 20);
+                                            indy = (player->getHitbox().getPosition().y - (tileData[loadedTiles[j].x][loadedTiles[j].y].getHitbox().getPosition().y - tileData[loadedTiles[j].x][loadedTiles[j].y].getHitbox().getSize().y / 2)) / (tileData[loadedTiles[j].x][loadedTiles[j].y].getHitbox().getSize().y / 20);
+                                            tileData[loadedTiles[j].x][loadedTiles[j].y].alert(k, sf::Vector2i(indx, indy));
+                                        }
                                     }
                                 }
                             }
                         }
                     }
-                    //draw attack
+                }
+                //player
+                if (player->getRanged().getName() != NoWeapon)
+                {
+                    for (int j = 0; j < player->getRanged().getProjBuffer().size(); j++)
                     {
-                        //for enemy
-
-
-                        //for player
-                        if (player->getRanged().getName() != NoWeapon)
+                        for (int k = 0; k < 100; k++)
                         {
-                            for (int j = 0; j < player->getRanged().getProjBuffer().size(); j++)
+                            if (!isProjWallHit(player->getRanged().getProjBuffer()[j], player->getIndex().x + tileNumOffset, player->getIndex().y + tileNumOffset, player->getRanged().getProjBuffer()[j].getDir(), player->getRanged().getSpeed() - (player->getRanged().getSpeed() / 100) * k))
                             {
-                                window.draw(player->getRanged().getProjBuffer()[j].getHitbox());
+                                player->tickProj(j, player->getRanged().getSpeed() - (player->getRanged().getSpeed() / 100) * k);
+                                break;
+                            }
+                            if (k == 99)
+                            {
+                                player->delProj(j);
                             }
                         }
-                        window.draw(player->getMelee().getHitbox());
                     }
-                    //draw player
+                }
+
+                //everyTickThings
+
+
+                break;
+            }
+            case CommandName::Interaction:
+            {
+                bool interacted = false;
+                //interactables
+
+                //ranged weapons              
+                if (!tileData[player->getIndex().x + tileNumOffset][player->getIndex().y + tileNumOffset].getRangedBuffer().empty())
+                {
+                    for (int k = 0; k < tileData[player->getIndex().x + tileNumOffset][player->getIndex().y + tileNumOffset].getRangedBuffer().size(); k++)
                     {
-                        if (player != nullptr)
+                        if (tileData[player->getIndex().x + tileNumOffset][player->getIndex().y + tileNumOffset].isPlayerWeaponHit(player, tileData[player->getIndex().x + tileNumOffset][player->getIndex().y + tileNumOffset].getRangedBuffer()[k]))
                         {
-                            window.draw(player->getHitbox());
-                            window.draw(player->getSound());
-                            
+                            player->swapWeapon(tileData[player->getIndex().x + tileNumOffset][player->getIndex().y + tileNumOffset].getRangedBuffer()[i]);
+                            reloadTimer.restart();
+                            tileData[player->getIndex().x + tileNumOffset][player->getIndex().y + tileNumOffset].delRangedBufferElem(k);
+                            interacted = true;
+                            break;
                         }
                     }
-                    //draw hud
+                }
+                if (interacted)
+                {
+                    break;
+                }
+                //melee weapons             
+                if (!tileData[player->getIndex().x + tileNumOffset][player->getIndex().y + tileNumOffset].getMeleeBuffer().empty())
+                {
+                    for (int k = 0; k < tileData[player->getIndex().x + tileNumOffset][player->getIndex().y + tileNumOffset].getMeleeBuffer().size(); k++)
                     {
-                        //sf::Text text;
-                        //text.setFont(NataSans);
-                        //text.setFillColor(sf::Color::Red);
-                        //text.setCharacterSize(20);
-                        //text.setPosition(player->getHitbox().getPosition() + sf::Vector2f(0, 50));
-                        //std::string str = std::to_string(player->getIndex().x) + " " + std::to_string(player->getIndex().y) + " " + std::to_string(player->getHitbox().getPosition().x - sf::VideoMode::getDesktopMode().width / 2 + side / 4) + " " + std::to_string(player->getHitbox().getPosition().y - side / 2 + side / 4) + " " + std::to_string(player->getMelee().getHitbox().getRotation());
-                        //text.setString(str);
-                        //window.draw(text);
-                        window.draw(overlay.floorProgress);
-                        window.draw(overlay.floorProgressLabel);
-                        window.draw(overlay.floorNum);
-                        window.draw(overlay.floorNumLabel);
-                        window.draw(overlay.hpBarEdge);
-                        window.draw(overlay.hpBarFill);
-                        window.draw(overlay.staminaBarEdge);
-                        window.draw(overlay.staminaBarFill);
-                        window.draw(overlay.armourBarEdge);
-                        window.draw(overlay.armourBarFill);
-                        window.draw(overlay.armourSpriteEdge);
-                        window.draw(overlay.bullet9mmEdge);
-                        window.draw(overlay.bullet9mmLabel);
-                        window.draw(overlay.bullet556mmEdge);
-                        window.draw(overlay.bullet556mmLabel);
-                        window.draw(overlay.bullet762mmEdge);
-                        window.draw(overlay.bullet762mmLabel);
-                        window.draw(overlay.bullet12gaugeEdge);
-                        window.draw(overlay.bullet12gaugeLabel);
-                        window.draw(overlay.mainWeaponEdge);
-                        window.draw(overlay.mainWeaponFill);
-                        window.draw(overlay.secondaryWeaponEdge);
-                        window.draw(overlay.secondaryWeaponFill);
-                        window.draw(overlay.repairKitEdge);
-                        window.draw(overlay.repairKitFill);
-                        window.draw(overlay.healthKitEdge);
-                        window.draw(overlay.healthKitFill);
-                    }
-                    window.display();
-                    break;
-                }
-                case CommandName::SpawnPlayer:
-                {
-                    player = new Player(commandQueue[i].attribute.int1, commandQueue[i].attribute.int2, commandQueue[i].attribute.int3, commandQueue[i].attribute.int4, side, textureHolder);
-                    break;
-                }
-                case CommandName::Rotate:
-                {
-                    sf::Vector2f dir, center;
-                    center = sf::Vector2f(sf::VideoMode::getDesktopMode().width / 2, sf::VideoMode::getDesktopMode().height / 2);
-                    dir.x = (sf::Mouse::getPosition().x - center.x) / (abs(sf::Mouse::getPosition().x - center.x) + abs(sf::Mouse::getPosition().y - center.y));
-                    dir.y = (sf::Mouse::getPosition().y - center.y) / (abs(sf::Mouse::getPosition().x - center.x) + abs(sf::Mouse::getPosition().y - center.y));
-                    player->rotate(((atan2(dir.y, dir.x)) / 3.14) * 180.f + 90.f);
-                    break;
-                }
-                case CommandName::UpdateOverlay:
-                {
-                    {
-                        overlay.floorProgress.setPosition(sf::Vector2f(
-                            player->getHitbox().getPosition().x - side / 2 + side / 15,
-                            player->getHitbox().getPosition().y - side / 2 + side / 20
-                        ));
-                        overlay.floorProgressLabel.setPosition(sf::Vector2f(
-                            player->getHitbox().getPosition().x - side / 2 + side / 15,
-                            player->getHitbox().getPosition().y - side / 2 + side / 20
-                        ));
-                        std::string str = std::to_string(roomsVisited) + " / " + std::to_string(roomsCount);
-                        overlay.floorProgressLabel.setString(str);
-                        overlay.floorNum.setPosition(sf::Vector2f(
-                            player->getHitbox().getPosition().x + side / 2 - side / 15,
-                            player->getHitbox().getPosition().y - side / 2 + side / 20
-                        ));
-                        overlay.armourSpriteEdge.setPosition(sf::Vector2f(
-                            player->getHitbox().getPosition().x + side / 2 - side / 20,
-                            player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15 - side / 15
-                        ));
-                        overlay.bullet9mmEdge.setPosition(sf::Vector2f(
-                            player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15 - side / 15 - side / 15,
-                            player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15
-                        ));
-                        overlay.bullet556mmEdge.setPosition(sf::Vector2f(
-                            player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15 - side / 15,
-                            player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15
-                        ));
-                        overlay.bullet762mmEdge.setPosition(sf::Vector2f(
-                            player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15,
-                            player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15
-                        ));
-                        overlay.bullet12gaugeEdge.setPosition(sf::Vector2f(
-                            player->getHitbox().getPosition().x + side / 2 - side / 20,
-                            player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15
-                        ));
-                        overlay.mainWeaponEdge.setPosition(sf::Vector2f(
-                            player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15 - side / 15 - side / 15,
-                            player->getHitbox().getPosition().y + side / 2 - side / 20
-                        ));
-                        overlay.secondaryWeaponEdge.setPosition(sf::Vector2f(
-                            player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15 - side / 15,
-                            player->getHitbox().getPosition().y + side / 2 - side / 20
-                        ));
-                        overlay.repairKitEdge.setPosition(sf::Vector2f(
-                            player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15,
-                            player->getHitbox().getPosition().y + side / 2 - side / 20
-                        ));
-                        overlay.healthKitEdge.setPosition(sf::Vector2f(
-                            player->getHitbox().getPosition().x + side / 2 - side / 20,
-                            player->getHitbox().getPosition().y + side / 2 - side / 20
-                        ));
-                        overlay.armourBarEdge.setPosition(sf::Vector2f(
-                            player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15 - side / 15,
-                            player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15 - side / 15 + side / 60
-                        ));
-                        overlay.armourBarFill.setPosition(sf::Vector2f(
-                            player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15 - side / 15,
-                            player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15 - side / 15 + side / 60
-                        ));
-                        overlay.hpBarEdge.setPosition(sf::Vector2f(
-                            player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15 - side / 15,
-                            player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15 - side / 15 - side / 60
-                        ));
-                        overlay.hpBarFill.setPosition(sf::Vector2f(
-                            player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15 - side / 15,
-                            player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15 - side / 15 - side / 60
-                        ));
-                        overlay.staminaBarEdge.setPosition(sf::Vector2f(
-                            player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15 - side / 15,
-                            player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15 - side / 15
-                        ));
-                        overlay.staminaBarFill.setPosition(sf::Vector2f(
-                            player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15 - side / 15,
-                            player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15 - side / 15
-                        ));
-                    }
-
-                    if (player->getSound().getRadius() != 0)
-                    {
-                        player->setRad(player->getSound().getRadius() - 5);
-                    }
-
-                    break;
-                }
-                case CommandName::RangeAttack:
-                {
-                    sf::Vector2f dir, center;
-                    center = sf::Vector2f(sf::VideoMode::getDesktopMode().width / 2, sf::VideoMode::getDesktopMode().height / 2);
-                    dir.x = (sf::Mouse::getPosition().x - center.x) / (abs(sf::Mouse::getPosition().x - center.x) + abs(sf::Mouse::getPosition().y - center.y));
-                    dir.y = (sf::Mouse::getPosition().y - center.y) / (abs(sf::Mouse::getPosition().x - center.x) + abs(sf::Mouse::getPosition().y - center.y));
-                    player->shoot(side, dir);
-                    break;
-                }
-                case CommandName::CloseAttack:
-                {
-                    for (int j = 0; j < tileData[player->getIndex().x + tileNumOffset][player->getIndex().y + tileNumOffset].getEnemyBuffer().size(); j++)
-                    {
-                        if (isMeleeEnemyHit(player->getMelee().getHitbox(), tileData[player->getIndex().x + tileNumOffset][player->getIndex().y + tileNumOffset].getEnemyBuffer()[j]))
+                        if (tileData[player->getIndex().x + tileNumOffset][player->getIndex().y + tileNumOffset].isPlayerWeaponHit(player, tileData[player->getIndex().x + tileNumOffset][player->getIndex().y + tileNumOffset].getMeleeBuffer()[k]))
                         {
-                            tileData[player->getIndex().x + tileNumOffset][player->getIndex().y + tileNumOffset].damageEnemy(j, player->getMelee().getDamage());
+                            player->swapWeapon(tileData[player->getIndex().x + tileNumOffset][player->getIndex().y + tileNumOffset].getMeleeBuffer()[i]);
+                            reloadTimer.restart();
+                            tileData[player->getIndex().x + tileNumOffset][player->getIndex().y + tileNumOffset].delMeleeBufferElem(k);
+                            interacted = true;
+                            break;
                         }
                     }
+                }
+                if (interacted)
+                {
                     break;
                 }
-                case CommandName::TickTiles:
+
+                break;
+            }
+            case CommandName::MoveUp:
+            {
+                for (int j = 1; j < 10; j++)
                 {
-                    //tile
-                    if (!loadedTiles.empty())
+                    if (sprint and player->getStamina() > 0)
                     {
-                        for (int j = 0; j < loadedTiles.size(); j++)
+                        player->setStamina(player->getStamina() - 0.2);
+                        if (!isPlayerWallHit(player->getIndex().x + tileNumOffset, player->getIndex().y + tileNumOffset, 1, (playerSpeed * 2) / j) and !isPlayerInnerWallHit(player->getIndex().x + tileNumOffset, player->getIndex().y + tileNumOffset, 1, (playerSpeed * 2) / j))
                         {
-                            if (abs(player->getIndex().x + tileNumOffset - loadedTiles[j].x) < 2 and abs(player->getIndex().y + tileNumOffset - loadedTiles[j].y) < 2)
+                            player->move(sf::Vector2f(0, (-1) * ((playerSpeed * 2) / j) * (timePerFrame.asSeconds())));
+                            camera.move(sf::Vector2f(0, (-1) * ((playerSpeed * 2) / j) * (timePerFrame.asSeconds())));
+                            window.setView(camera);
+                            player->updateIndex(side);
+                            if (player->getSound().getRadius() < side / 2)
                             {
-                                if (tileData[loadedTiles[j].x][loadedTiles[j].y].tickTile(player, tileData[loadedTiles[j].x][loadedTiles[j].y]))
+                                player->setRad(side / 2);
+                            }
+                            if (!loadedTiles.empty())
+                            {
+                                for (int k = 0; k < loadedTiles.size(); k++)
                                 {
-                                    roomsVisited++;
+                                    tileDataMini[loadedTiles[k].x][loadedTiles[k].y].move(sf::Vector2f(0, (-1) * ((playerSpeed * 2) / j) * (timePerFrame.asSeconds())));
                                 }
-                                for (int k = 0; k < tileData[loadedTiles[j].x][loadedTiles[j].y].getEnemyBuffer().size(); k++)
+                            }
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        if (!isPlayerWallHit(player->getIndex().x + tileNumOffset, player->getIndex().y + tileNumOffset, 1, playerSpeed / j) and !isPlayerInnerWallHit(player->getIndex().x + tileNumOffset, player->getIndex().y + tileNumOffset, 1, playerSpeed / j))
+                        {
+                            if (sneak)
+                            {
+                                player->move(sf::Vector2f(0, (-1) * ((playerSpeed / 2) / j) * (timePerFrame.asSeconds())));
+                                camera.move(sf::Vector2f(0, (-1) * ((playerSpeed / 2) / j) * (timePerFrame.asSeconds())));
+                                window.setView(camera);
+                                player->updateIndex(side);
+                                if (player->getSound().getRadius() < side / 8)
                                 {
-                                    if (player->getSound().getRadius() > 0)
+                                    player->setRad(side / 8);
+                                }
+                                if (!loadedTiles.empty())
+                                {
+                                    for (int k = 0; k < loadedTiles.size(); k++)
                                     {
-                                        tileData[loadedTiles[j].x][loadedTiles[j].y].alert(k, sf::Vector2i(10, 10));
+                                        tileDataMini[loadedTiles[k].x][loadedTiles[k].y].move(sf::Vector2f(0, (-1) * ((playerSpeed / 2) / j) * (timePerFrame.asSeconds())));
                                     }
                                 }
+                                break;
                             }
-                        }
-                    }
-                    //player
-                    if (player->getRanged().getName() != NoWeapon)
-                    {
-                        for (int j = 0; j < player->getRanged().getProjBuffer().size(); j++)
-                        {
-                            for (int k = 0; k < 100; k++)
+                            else
                             {
-                                if (!isProjWallHit(player->getRanged().getProjBuffer()[j], player->getIndex().x + tileNumOffset, player->getIndex().y + tileNumOffset, player->getRanged().getProjBuffer()[j].getDir(), player->getRanged().getSpeed() - (player->getRanged().getSpeed() / 100) * k))
+                                player->move(sf::Vector2f(0, (-1) * (playerSpeed / j) * (timePerFrame.asSeconds())));
+                                camera.move(sf::Vector2f(0, (-1) * (playerSpeed / j) * (timePerFrame.asSeconds())));
+                                window.setView(camera);
+                                player->updateIndex(side);
+                                if (player->getSound().getRadius() < side / 4)
                                 {
-                                    player->tickProj(j, player->getRanged().getSpeed() - (player->getRanged().getSpeed() / 100) * k);
-                                    break;
+                                    player->setRad(side / 4);
                                 }
-                                if (k == 99)
+                                if (!loadedTiles.empty())
                                 {
-                                    player->delProj(j);
+                                    for (int k = 0; k < loadedTiles.size(); k++)
+                                    {
+                                        tileDataMini[loadedTiles[k].x][loadedTiles[k].y].move(sf::Vector2f(0, (-1) * (playerSpeed / j) * (timePerFrame.asSeconds())));
+                                    }
                                 }
-                            }
-                        }
-                    }
-
-                    //everyTickThings
-                    
-
-                    break;
-                }
-                case CommandName::Interaction:
-                {
-                    bool interacted = false;
-                    //interactables
-
-                    //ranged weapons              
-                    if (!tileData[player->getIndex().x + tileNumOffset][player->getIndex().y + tileNumOffset].getRangedBuffer().empty())
-                    {
-                        for (int k = 0; k < tileData[player->getIndex().x + tileNumOffset][player->getIndex().y + tileNumOffset].getRangedBuffer().size(); k++)
-                        {
-                            if (tileData[player->getIndex().x + tileNumOffset][player->getIndex().y + tileNumOffset].isPlayerWeaponHit(player, tileData[player->getIndex().x + tileNumOffset][player->getIndex().y + tileNumOffset].getRangedBuffer()[k]))
-                            {
-                                player->swapWeapon(tileData[player->getIndex().x + tileNumOffset][player->getIndex().y + tileNumOffset].getRangedBuffer()[i]);
-                                reloadTimer.restart();
-                                tileData[player->getIndex().x + tileNumOffset][player->getIndex().y + tileNumOffset].delRangedBufferElem(k);
-                                interacted = true;
                                 break;
                             }
                         }
                     }
-                    if (interacted)
+                }
+                break;
+            }
+            case CommandName::MoveLeft:
+            {
+                for (int j = 1; j < 10; j++)
+                {
+                    if (sprint and player->getStamina() > 0)
                     {
-                        break;
-                    }
-                    //melee weapons             
-                    if (!tileData[player->getIndex().x + tileNumOffset][player->getIndex().y + tileNumOffset].getMeleeBuffer().empty())
-                    {
-                        for (int k = 0; k < tileData[player->getIndex().x + tileNumOffset][player->getIndex().y + tileNumOffset].getMeleeBuffer().size(); k++)
+                        player->setStamina(player->getStamina() - 0.2);
+                        if (!isPlayerWallHit(player->getIndex().x + tileNumOffset, player->getIndex().y + tileNumOffset, 2, (playerSpeed * 2) / j) and !isPlayerInnerWallHit(player->getIndex().x + tileNumOffset, player->getIndex().y + tileNumOffset, 2, (playerSpeed * 2) / j))
                         {
-                            if (tileData[player->getIndex().x + tileNumOffset][player->getIndex().y + tileNumOffset].isPlayerWeaponHit(player, tileData[player->getIndex().x + tileNumOffset][player->getIndex().y + tileNumOffset].getMeleeBuffer()[k]))
+                            player->move(sf::Vector2f((-1) * ((playerSpeed * 2) / j) * (timePerFrame.asSeconds()), 0));
+                            camera.move(sf::Vector2f((-1) * ((playerSpeed * 2) / j) * (timePerFrame.asSeconds()), 0));
+                            window.setView(camera);
+                            player->updateIndex(side);
+                            if (player->getSound().getRadius() < side / 2)
                             {
-                                player->swapWeapon(tileData[player->getIndex().x + tileNumOffset][player->getIndex().y + tileNumOffset].getMeleeBuffer()[i]);
-                                reloadTimer.restart();
-                                tileData[player->getIndex().x + tileNumOffset][player->getIndex().y + tileNumOffset].delMeleeBufferElem(k);
-                                interacted = true;
+                                player->setRad(side / 2);
+                            }
+                            if (!loadedTiles.empty())
+                            {
+                                for (int k = 0; k < loadedTiles.size(); k++)
+                                {
+                                    tileDataMini[loadedTiles[k].x][loadedTiles[k].y].move(sf::Vector2f((-1) * ((playerSpeed * 2) / j) * (timePerFrame.asSeconds()), 0));
+                                }
+                            }
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        if (!isPlayerWallHit(player->getIndex().x + tileNumOffset, player->getIndex().y + tileNumOffset, 2, playerSpeed / j) and !isPlayerInnerWallHit(player->getIndex().x + tileNumOffset, player->getIndex().y + tileNumOffset, 2, playerSpeed / j))
+                        {
+
+                            if (sneak)
+                            {
+                                player->move(sf::Vector2f((-1) * ((playerSpeed / 2) / j) * (timePerFrame.asSeconds()), 0));
+                                camera.move(sf::Vector2f((-1) * ((playerSpeed / 2) / j) * (timePerFrame.asSeconds()), 0));
+                                window.setView(camera);
+                                player->updateIndex(side);
+                                if (player->getSound().getRadius() < side / 8)
+                                {
+                                    player->setRad(side / 8);
+                                }
+                                if (!loadedTiles.empty())
+                                {
+                                    for (int k = 0; k < loadedTiles.size(); k++)
+                                    {
+                                        tileDataMini[loadedTiles[k].x][loadedTiles[k].y].move(sf::Vector2f((-1) * ((playerSpeed / 2) / j) * (timePerFrame.asSeconds()), 0));
+                                    }
+                                }
+                                break;
+                            }
+                            else
+                            {
+                                player->move(sf::Vector2f((-1) * (playerSpeed / j) * (timePerFrame.asSeconds()), 0));
+                                camera.move(sf::Vector2f((-1) * (playerSpeed / j) * (timePerFrame.asSeconds()), 0));
+                                window.setView(camera);
+                                player->updateIndex(side);
+                                if (player->getSound().getRadius() < side / 4)
+                                {
+                                    player->setRad(side / 4);
+                                }
+                                if (!loadedTiles.empty())
+                                {
+                                    for (int k = 0; k < loadedTiles.size(); k++)
+                                    {
+                                        tileDataMini[loadedTiles[k].x][loadedTiles[k].y].move(sf::Vector2f((-1) * (playerSpeed / j) * (timePerFrame.asSeconds()), 0));
+                                    }
+                                }
                                 break;
                             }
                         }
                     }
-                    if (interacted)
-                    {
-                        break;
-                    }
-
-                    break;
                 }
-                case CommandName::MoveUp:
+                break;
+            }
+            case CommandName::MoveDown:
+            {
+                for (int j = 1; j < 10; j++)
                 {
-                    for (int j = 1; j < 10; j++)
+                    if (sprint and player->getStamina() > 0)
                     {
-                        if (!isPlayerWallHit(player->getIndex().x + tileNumOffset, player->getIndex().y + tileNumOffset, 1, playerSpeed /j) and !isPlayerInnerWallHit(player->getIndex().x + tileNumOffset, player->getIndex().y + tileNumOffset, 1, playerSpeed / j))
+                        player->setStamina(player->getStamina() - 0.2);
+                        if (!isPlayerWallHit(player->getIndex().x + tileNumOffset, player->getIndex().y + tileNumOffset, 3, (playerSpeed * 2) / j) and !isPlayerInnerWallHit(player->getIndex().x + tileNumOffset, player->getIndex().y + tileNumOffset, 3, (playerSpeed * 2) / j))
                         {
-                            player->move(sf::Vector2f(0, (-1) * (playerSpeed /j) * (timePerFrame.asSeconds())));
-                            camera.move(sf::Vector2f(0, (-1) * (playerSpeed /j) * (timePerFrame.asSeconds())));
+                            player->move(sf::Vector2f(0, (1)* ((playerSpeed * 2) / j)* (timePerFrame.asSeconds())));
+                            camera.move(sf::Vector2f(0, (1)* ((playerSpeed * 2) / j)* (timePerFrame.asSeconds())));
                             window.setView(camera);
                             player->updateIndex(side);
-                            player->setRad(side / 4);
+                            if (player->getSound().getRadius() < side / 2)
+                            {
+                                player->setRad(side / 2);
+                            }
+                            if (!loadedTiles.empty())
+                            {
+                                for (int k = 0; k < loadedTiles.size(); k++)
+                                {
+                                    tileDataMini[loadedTiles[k].x][loadedTiles[k].y].move(sf::Vector2f(0, (1) * ((playerSpeed * 2) / j) * (timePerFrame.asSeconds())));
+                                }
+                            }
                             break;
                         }
                     }
-                    break;
-                }
-                case CommandName::MoveLeft:
-                {
-                    for (int j = 1; j < 10; j++)
-                    {
-                        if (!isPlayerWallHit(player->getIndex().x + tileNumOffset, player->getIndex().y + tileNumOffset, 2, playerSpeed /j) and !isPlayerInnerWallHit(player->getIndex().x + tileNumOffset, player->getIndex().y + tileNumOffset, 2, playerSpeed / j))
-                        {
-                            player->move(sf::Vector2f((-1) * (playerSpeed /j) * (timePerFrame.asSeconds()), 0));
-                            camera.move(sf::Vector2f((-1) * (playerSpeed /j) * (timePerFrame.asSeconds()), 0));
-                            window.setView(camera);
-                            player->updateIndex(side);
-                            player->setRad(side / 4);
-                            break;
-                        }
-                    }
-                    break;
-                }
-                case CommandName::MoveDown:
-                {
-                    for (int j = 1; j < 10; j++)
+                    else
                     {
                         if (!isPlayerWallHit(player->getIndex().x + tileNumOffset, player->getIndex().y + tileNumOffset, 3, playerSpeed / j) and !isPlayerInnerWallHit(player->getIndex().x + tileNumOffset, player->getIndex().y + tileNumOffset, 3, playerSpeed / j))
                         {
-                            player->move(sf::Vector2f(0, (1) * (playerSpeed / j) * (timePerFrame.asSeconds())));
-                            camera.move(sf::Vector2f(0, (1) * (playerSpeed / j) * (timePerFrame.asSeconds())));
+                            if (sneak)
+                            {
+                                player->move(sf::Vector2f(0, (1) * ((playerSpeed / 2) / j) * (timePerFrame.asSeconds())));
+                                camera.move(sf::Vector2f(0, (1) * ((playerSpeed / 2) / j) * (timePerFrame.asSeconds())));
+                                window.setView(camera);
+                                player->updateIndex(side);
+                                if (player->getSound().getRadius() < side / 8)
+                                {
+                                    player->setRad(side / 8);
+                                }
+                                if (!loadedTiles.empty())
+                                {
+                                    for (int k = 0; k < loadedTiles.size(); k++)
+                                    {
+                                        tileDataMini[loadedTiles[k].x][loadedTiles[k].y].move(sf::Vector2f(0, (1) * ((playerSpeed / 2) / j) * (timePerFrame.asSeconds())));
+                                    }
+                                }
+                                break;
+                            }
+                            else
+                            {
+                                player->move(sf::Vector2f(0, (1) * (playerSpeed / j) * (timePerFrame.asSeconds())));
+                                camera.move(sf::Vector2f(0, (1) * (playerSpeed / j) * (timePerFrame.asSeconds())));
+                                window.setView(camera);
+                                player->updateIndex(side);
+                                if (player->getSound().getRadius() < side / 4)
+                                {
+                                    player->setRad(side / 4);
+                                }
+                                if (!loadedTiles.empty())
+                                {
+                                    for (int k = 0; k < loadedTiles.size(); k++)
+                                    {
+                                        tileDataMini[loadedTiles[k].x][loadedTiles[k].y].move(sf::Vector2f(0, (1) * (playerSpeed / j) * (timePerFrame.asSeconds())));
+                                    }
+                                }
+                                break;
+                            }
+                        }
+                    }
+                }
+                break;
+            }
+            case CommandName::MoveRight:
+            {
+                for (int j = 1; j < 10; j++)
+                {
+                    if (sprint and player->getStamina() > 0)
+                    {
+                        player->setStamina(player->getStamina() - 0.2);
+                        if (!isPlayerWallHit(player->getIndex().x + tileNumOffset, player->getIndex().y + tileNumOffset, 4, (playerSpeed * 2) / j) and !isPlayerInnerWallHit(player->getIndex().x + tileNumOffset, player->getIndex().y + tileNumOffset, 4, (playerSpeed * 2) / j))
+                        {
+                            player->move(sf::Vector2f(((playerSpeed * 2) / j) * (timePerFrame.asSeconds()), 0));
+                            camera.move(sf::Vector2f(((playerSpeed * 2) / j) * (timePerFrame.asSeconds()), 0));
                             window.setView(camera);
                             player->updateIndex(side);
-                            player->setRad(side / 4);
+                            if (player->getSound().getRadius() < side / 2)
+                            {
+                                player->setRad(side / 2);
+                            }
+                            if (!loadedTiles.empty())
+                            {
+                                for (int k = 0; k < loadedTiles.size(); k++)
+                                {
+                                    tileDataMini[loadedTiles[k].x][loadedTiles[k].y].move(sf::Vector2f(((playerSpeed * 2) / j) * (timePerFrame.asSeconds()), 0));
+                                }
+                            }
                             break;
                         }
                     }
-                    break;
+                    else
+                    {
+                        if (!isPlayerWallHit(player->getIndex().x + tileNumOffset, player->getIndex().y + tileNumOffset, 4, playerSpeed / j) and !isPlayerInnerWallHit(player->getIndex().x + tileNumOffset, player->getIndex().y + tileNumOffset, 4, playerSpeed / j))
+                        {
+                            if (sneak)
+                            {
+                                player->move(sf::Vector2f(((playerSpeed / 2) / j) * (timePerFrame.asSeconds()), 0));
+                                camera.move(sf::Vector2f(((playerSpeed / 2) / j) * (timePerFrame.asSeconds()), 0));
+                                window.setView(camera);
+                                player->updateIndex(side);
+                                if (player->getSound().getRadius() < side / 8)
+                                {
+                                    player->setRad(side / 8);
+                                }
+                                if (!loadedTiles.empty())
+                                {
+                                    for (int k = 0; k < loadedTiles.size(); k++)
+                                    {
+                                        tileDataMini[loadedTiles[k].x][loadedTiles[k].y].move(sf::Vector2f(((playerSpeed / 2) / j) * (timePerFrame.asSeconds()), 0));
+                                    }
+                                }
+                                break;
+                            }
+                            else
+                            {
+                                player->move(sf::Vector2f((playerSpeed / j) * (timePerFrame.asSeconds()), 0));
+                                camera.move(sf::Vector2f((playerSpeed / j) * (timePerFrame.asSeconds()), 0));
+                                window.setView(camera);
+                                player->updateIndex(side);
+                                if (player->getSound().getRadius() < side / 4)
+                                {
+                                    player->setRad(side / 4);
+                                }
+                                if (!loadedTiles.empty())
+                                {
+                                    for (int k = 0; k < loadedTiles.size(); k++)
+                                    {
+                                        tileDataMini[loadedTiles[k].x][loadedTiles[k].y].move(sf::Vector2f((playerSpeed / j) * (timePerFrame.asSeconds()), 0));
+                                    }
+                                }
+                                break;
+                            }
+                        }
+                    }
                 }
-                case CommandName::MoveRight:
+                break;
+            }
+            case CommandName::Dash:
+            {
+                if (commandQueue[i].attribute.int1 == 1)
                 {
                     for (int j = 1; j < 10; j++)
                     {
-                        if (!isPlayerWallHit(player->getIndex().x + tileNumOffset, player->getIndex().y + tileNumOffset, 4, playerSpeed /j) and !isPlayerInnerWallHit(player->getIndex().x + tileNumOffset, player->getIndex().y + tileNumOffset, 4, playerSpeed / j))
+                        if (!isPlayerWallHit(player->getIndex().x + tileNumOffset, player->getIndex().y + tileNumOffset, 1, (playerSpeed * 100) / j))
                         {
-                            player->move(sf::Vector2f((playerSpeed /j) * (timePerFrame.asSeconds()), 0));
-                            camera.move(sf::Vector2f((playerSpeed /j) * (timePerFrame.asSeconds()), 0));
+                            player->move(sf::Vector2f(0, (-1) * ((playerSpeed * 10) / j) * (timePerFrame.asSeconds())));
+                            camera.move(sf::Vector2f(0, (-1) * ((playerSpeed * 10) / j) * (timePerFrame.asSeconds())));
                             window.setView(camera);
                             player->updateIndex(side);
-                            player->setRad(side / 4);
                             break;
                         }
                     }
-                    break;
                 }
-                case CommandName::Dash:
+                if (commandQueue[i].attribute.int2 == 1)
                 {
-                   if (commandQueue[i].attribute.int1 == 1)
+                    for (int j = 1; j < 10; j++)
                     {
-                       for (int j = 1; j < 10; j++)
+                        if (!isPlayerWallHit(player->getIndex().x + tileNumOffset, player->getIndex().y + tileNumOffset, 2, (playerSpeed * 100) / j))
                         {
-                           if (!isPlayerWallHit(player->getIndex().x + tileNumOffset, player->getIndex().y + tileNumOffset, 1, (playerSpeed * 100) /j))
-                            {
-                               player->move(sf::Vector2f(0, (-1) * ((playerSpeed * 10) / j)* (timePerFrame.asSeconds())));
-                                camera.move(sf::Vector2f(0, (-1) * ((playerSpeed * 10) / j) * (timePerFrame.asSeconds())));
-                                window.setView(camera);
-                                player->updateIndex(side);
-                                break;
-                            }
+                            player->move(sf::Vector2f((-1) * ((playerSpeed * 10) / j) * (timePerFrame.asSeconds()), 0));
+                            camera.move(sf::Vector2f((-1) * ((playerSpeed * 10) / j) * (timePerFrame.asSeconds()), 0));
+                            window.setView(camera);
+                            player->updateIndex(side);
+                            break;
                         }
                     }
-                   if (commandQueue[i].attribute.int2 == 1)
-                    {
-                       for (int j = 1; j < 10; j++)
-                        {
-                           if (!isPlayerWallHit(player->getIndex().x + tileNumOffset, player->getIndex().y + tileNumOffset, 2, (playerSpeed * 100) /j))
-                            {
-                                player->move(sf::Vector2f((-1) * ((playerSpeed * 10) / j) * (timePerFrame.asSeconds()), 0));
-                                camera.move(sf::Vector2f((-1) * ((playerSpeed * 10) / j) * (timePerFrame.asSeconds()), 0));
-                                window.setView(camera);
-                                player->updateIndex(side);
-                                break;
-                            }
-                        }
-                    }
-                   if (commandQueue[i].attribute.int3 == 1)
-                    {
-                       for (int j = 1; j < 10; j++)
-                        {
-                           if (!isPlayerWallHit(player->getIndex().x + tileNumOffset, player->getIndex().y + tileNumOffset, 3, (playerSpeed * 100) /j))
-                            {
-                                player->move(sf::Vector2f(0, ((playerSpeed * 10) / j) * (timePerFrame.asSeconds())));
-                                camera.move(sf::Vector2f(0, ((playerSpeed * 10) / j) * (timePerFrame.asSeconds())));
-                                window.setView(camera);
-                                player->updateIndex(side);
-                                break;
-                            }
-                        }
-                    }
-                   if (commandQueue[i].attribute.int4 == 1)
-                    {
-                       for (int j = 1; j < 10; j++)
-                        {
-                           if (!isPlayerWallHit(player->getIndex().x + tileNumOffset, player->getIndex().y + tileNumOffset, 4, (playerSpeed * 100) /j))
-                            {
-                                player->move(sf::Vector2f(((playerSpeed * 10) / j) * (timePerFrame.asSeconds()), 0));
-                                camera.move(sf::Vector2f(((playerSpeed * 10) / j) * (timePerFrame.asSeconds()), 0));
-                                window.setView(camera);
-                                player->updateIndex(side);
-                                break;
-                            }
-                        }
-                    }
-                    break;
                 }
-                default:
+                if (commandQueue[i].attribute.int3 == 1)
                 {
-                    break;
+                    for (int j = 1; j < 10; j++)
+                    {
+                        if (!isPlayerWallHit(player->getIndex().x + tileNumOffset, player->getIndex().y + tileNumOffset, 3, (playerSpeed * 100) / j))
+                        {
+                            player->move(sf::Vector2f(0, ((playerSpeed * 10) / j) * (timePerFrame.asSeconds())));
+                            camera.move(sf::Vector2f(0, ((playerSpeed * 10) / j) * (timePerFrame.asSeconds())));
+                            window.setView(camera);
+                            player->updateIndex(side);
+                            break;
+                        }
+                    }
                 }
+                if (commandQueue[i].attribute.int4 == 1)
+                {
+                    for (int j = 1; j < 10; j++)
+                    {
+                        if (!isPlayerWallHit(player->getIndex().x + tileNumOffset, player->getIndex().y + tileNumOffset, 4, (playerSpeed * 100) / j))
+                        {
+                            player->move(sf::Vector2f(((playerSpeed * 10) / j) * (timePerFrame.asSeconds()), 0));
+                            camera.move(sf::Vector2f(((playerSpeed * 10) / j) * (timePerFrame.asSeconds()), 0));
+                            window.setView(camera);
+                            player->updateIndex(side);
+                            break;
+                        }
+                    }
+                }
+                break;
+            }
+            default:
+            {
+                break;
+            }
             }
         }
         commandQueue.clear();
@@ -1651,6 +1994,29 @@ bool Game::isMeleeEnemyHit(sf::RectangleShape hitbox, Enemy enemy)
     if (abs(hitbox.getRotation() - deg) < 60)
     {
         float dest = sqrt(pow((player->getHitbox().getPosition().x - enemy.getHitbox().getPosition().x), 2) + pow((player->getHitbox().getPosition().y - enemy.getHitbox().getPosition().y), 2));
+        if (dest > 1 and dest < player->getHitbox().getRadius() * 3)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool Game::isMeleeWallHit(sf::RectangleShape hitbox, Wall wall)
+{
+    sf::Vector2f dir, center;
+    float deg, ctr;
+    center = sf::Vector2f(player->getHitbox().getPosition().x, player->getHitbox().getPosition().y);
+    dir.x = (wall.getHitbox().getPosition().x - center.x) / (abs(wall.getHitbox().getPosition().x - center.x) + abs(wall.getHitbox().getPosition().y - center.y));
+    dir.y = (wall.getHitbox().getPosition().y - center.y) / (abs(wall.getHitbox().getPosition().x - center.x) + abs(wall.getHitbox().getPosition().y - center.y));
+    deg = (atan2(dir.y, dir.x) / 3.14) * 180.f + 90;
+    if (deg < 0)
+    {
+        deg = 360 + deg;
+    }
+    if (abs(hitbox.getRotation() - deg) < 60)
+    {
+        float dest = sqrt(pow((player->getHitbox().getPosition().x - wall.getHitbox().getPosition().x), 2) + pow((player->getHitbox().getPosition().y - wall.getHitbox().getPosition().y), 2));
         if (dest > 1 and dest < player->getHitbox().getRadius() * 3)
         {
             return true;

@@ -23,12 +23,13 @@ public:
 	void delRangedBufferElem(int i);
 	void delMeleeBufferElem(int i);
 	void spawnEnemies(float diff, int side, int pos_x, int pos_y);
-	void spawnEnemiesWave(int side);
 	void spawnChallenge(float diff);
 	void spawnReward(float diff);
 	void spawnWalls(int up, int left, int down, int right);
 	void createWallRow(int dir, sf::Vector2i index, int chance);
 	Wall getWallById(sf::Vector2i ind);
+	void delWallById(int id);
+	void dmgWall(sf::Vector2i ind, int dmg);
 	bool tickTile(Player* player, Tile tile);
 	bool isEnemyWallHit(Enemy enemy, int speed);
 	bool isEnemyEnemyHit(Enemy enemy, int speed);
@@ -39,6 +40,10 @@ public:
 	std::vector<sf::Vector2i> getWallsToDraw();
 	bool isReachable(int startx, int starty, int finx, int finy, int len);
 	void alert(int id, sf::Vector2i d);
+	void move(sf::Vector2f delta);
+	void setGreen();
+	void setRed();
+	void setYellow();
 
 private:
 	sf::RectangleShape body;

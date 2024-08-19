@@ -152,7 +152,7 @@ int Player::getHealth()
     return health;
 }
 
-int Player::getStamina()
+float Player::getStamina()
 {
     return stamina;
 }
@@ -202,9 +202,9 @@ void Player::setHealth(int buf)
     health = buf;
 }
 
-void Player::setStamina(int buf)
+void Player::setStamina(float buf)
 {
-    health = buf;
+    stamina = buf;
 }
 
 void Player::setArmour(int buf)

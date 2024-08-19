@@ -495,6 +495,17 @@ Wall Tile::getWallById(sf::Vector2i ind)
     return walls[ind.x][ind.y];
 }
 
+void Tile::delWallById(int id)
+{
+    walls[wallsToDraw[id].x][wallsToDraw[id].y].setWS(Empty);
+    wallsToDraw.erase(wallsToDraw.begin() + id);
+}
+
+void Tile::dmgWall(sf::Vector2i ind, int dmg)
+{
+    walls[ind.x][ind.y].damaged(dmg);
+}
+
 bool Tile::tickTile(Player* player, Tile tile)
 {
     if (type == TileType::LevelRegular)
@@ -527,13 +538,15 @@ bool Tile::tickTile(Player* player, Tile tile)
                 //patrol
                 if (enemyBuffer[i].getBehav() == Regular)
                 {
+                    enemyBuffer[i].setColor(sf::Color::Green);
                     //if in dest
-                    if (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getInd().x) < 2 and abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getInd().y) < 2 or enemyBuffer[i].getTime() > sf::seconds(15))
+                    if (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getInd().x) < 2 and abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getInd().y) < 2 or enemyBuffer[i].getTime() > sf::seconds(5))
                     {
                         //choose a new dest and point
 
                         //roll for new dest
-                        while (true)
+                        int tries = 10;
+                        while (tries > 0)
                         {
                             int x, y;
                             x = rand() % 18 + 1;
@@ -541,23 +554,29 @@ bool Tile::tickTile(Player* player, Tile tile)
 
                             if (walls[x][y].getWS() != Walled)
                             {
-                                if (walls[x - 1][y].getWS() != Walled and walls[x + 1][y].getWS() != Walled and walls[x][y - 1].getWS() != Walled and walls[x][y + 1].getWS() != Walled)
+                                if (walls[x - 1][y].getWS() == Walled and walls[x + 1][y].getWS() == Walled and walls[x][y - 1].getWS() == Walled and walls[x][y + 1].getWS() == Walled)
+                                {
+                                }
+                                else
                                 {
                                     if (isReachable(enemyBuffer[i].getInd().x, enemyBuffer[i].getInd().y, x, y, 0))
                                     {
-                                        enemyBuffer[i].setDest(sf::Vector2i(x, y)); 
+                                        enemyBuffer[i].setDest(sf::Vector2i(x, y));
                                         enemyBuffer[i].restart();
+                                        tries = 0;
                                         break;
                                     }
                                 }
                             }
+                            tries--;
                         }
                     }
                     else
                     {
                         //if in point
-                        if (abs((enemyBuffer[i].getPoint().x * hitbox.getSize().x / 20 + hitbox.getSize().x / 40) + hitbox.getPosition().x - hitbox.getSize().x / 2 - enemyBuffer[i].getHitbox().getPosition().x) < enemyBuffer[i].getHitbox().getRadius() * 1 and abs((enemyBuffer[i].getPoint().y * hitbox.getSize().x / 20 + hitbox.getSize().x / 40) + hitbox.getPosition().y - hitbox.getSize().x / 2 - enemyBuffer[i].getHitbox().getPosition().y) < enemyBuffer[i].getHitbox().getRadius() * 1)
+                        if (enemyBuffer[i].getPoint() == enemyBuffer[i].getInd())
                         {
+                            //enemyBuffer[i].restart();
                             //choose new point
                             int* distance = new int[4];
                             for (int j = 0; j < 4; j++)
@@ -592,7 +611,7 @@ bool Tile::tickTile(Player* player, Tile tile)
                                     distance[3] = sqrt(pow((enemyBuffer[i].getInd().x + 1 - enemyBuffer[i].getDest().x), 2) + pow((enemyBuffer[i].getInd().y - enemyBuffer[i].getDest().y), 2));
                                 }
                             }
-                            if (distance[0] == distance[1]) //up left
+                            if (distance[0] == distance[1] and distance[0] != 100) //up left
                             {
                                 if (enemyBuffer[i].getInd().x - 1 > -1 and enemyBuffer[i].getInd().y - 1 > -1)
                                 {
@@ -617,7 +636,7 @@ bool Tile::tickTile(Player* player, Tile tile)
                                     }
                                 }
                             }
-                            if (distance[2] == distance[1]) //down left
+                            if (distance[2] == distance[1] and distance[2] != 100) //down left
                             {
                                 if (enemyBuffer[i].getInd().x - 1 > -1 and enemyBuffer[i].getInd().y + 1 < 20)
                                 {
@@ -641,7 +660,7 @@ bool Tile::tickTile(Player* player, Tile tile)
                                     }
                                 }
                             }
-                            if (distance[2] == distance[3]) //down right
+                            if (distance[2] == distance[3] and distance[2] != 100) //down right
                             {
                                 if (enemyBuffer[i].getInd().x + 1 < 20 and enemyBuffer[i].getInd().y + 1 < 20)
                                 {
@@ -665,7 +684,7 @@ bool Tile::tickTile(Player* player, Tile tile)
                                     }
                                 }
                             }
-                            if (distance[0] == distance[3]) //up right
+                            if (distance[0] == distance[3] and distance[0] != 100) //up right
                             {
                                 if (enemyBuffer[i].getInd().x + 1 < 20 and enemyBuffer[i].getInd().y - 1 > -1)
                                 {
@@ -711,11 +730,43 @@ bool Tile::tickTile(Player* player, Tile tile)
                             //moving to point
 
                             //check hitboxes and distance to point, then move and update index
+                            if (enemyBuffer[i].getInd().y > enemyBuffer[i].getPoint().y)
+                            {
+                                enemyBuffer[i].move(sf::Vector2f(
+                                    0,
+                                    -1 * (100) * (1 / 100.f)
+                                ));
+                            }
+                            if (enemyBuffer[i].getInd().x > enemyBuffer[i].getPoint().x)
+                            {
+                                enemyBuffer[i].move(sf::Vector2f(
+                                    -1 * (100) * (1 / 100.f),
+                                    0
+                                ));
+                            }
+                            if (enemyBuffer[i].getInd().y < enemyBuffer[i].getPoint().y)
+                            {
+                                enemyBuffer[i].move(sf::Vector2f(
+                                    0,
+                                    1 * (100) * (1 / 100.f)
+                                ));
+                            }
+                            if (enemyBuffer[i].getInd().x < enemyBuffer[i].getPoint().x)
+                            {
+                                enemyBuffer[i].move(sf::Vector2f(
+                                    1 * (100) * (1 / 100.f),
+                                    0
+                                ));
+                            }
+                            if (enemyBuffer[i].getInd().x == enemyBuffer[i].getPoint().x)
+                            {
+                                enemyBuffer[i].setInd(sf::Vector2i(enemyBuffer[i].getPoint().x, enemyBuffer[i].getInd().y));
+                            }
+                            if (enemyBuffer[i].getInd().y == enemyBuffer[i].getPoint().y)
+                            {
+                                enemyBuffer[i].setInd(sf::Vector2i(enemyBuffer[i].getInd().x, enemyBuffer[i].getPoint().y));
+                            }
 
-                            enemyBuffer[i].move(sf::Vector2f(
-                                (((enemyBuffer[i].getPoint().x* hitbox.getSize().x / 20 + hitbox.getSize().x / 40) + hitbox.getPosition().x - hitbox.getSize().x / 2 - enemyBuffer[i].getHitbox().getPosition().x) / (abs((enemyBuffer[i].getPoint().x * hitbox.getSize().x / 20 + hitbox.getSize().x / 40) - enemyBuffer[i].getHitbox().getPosition().x) + abs((enemyBuffer[i].getPoint().y * hitbox.getSize().x / 20 + hitbox.getSize().x / 40) - enemyBuffer[i].getHitbox().getPosition().y)))* (2500)* (1 / 100.f),
-                                (((enemyBuffer[i].getPoint().y* hitbox.getSize().x / 20 + hitbox.getSize().x / 40) + hitbox.getPosition().y - hitbox.getSize().x / 2 - enemyBuffer[i].getHitbox().getPosition().y) / (abs((enemyBuffer[i].getPoint().x * hitbox.getSize().x / 20 + hitbox.getSize().x / 40) - enemyBuffer[i].getHitbox().getPosition().x) + abs((enemyBuffer[i].getPoint().y * hitbox.getSize().x / 20 + hitbox.getSize().x / 40) - enemyBuffer[i].getHitbox().getPosition().y)))* (2500)* (1 / 100.f)
-                            ));
 
                             int indx, indy;
                             indx = (enemyBuffer[i].getHitbox().getPosition().x - (hitbox.getPosition().x - hitbox.getSize().x / 2)) / (hitbox.getSize().x / 20);
@@ -729,21 +780,215 @@ bool Tile::tickTile(Player* player, Tile tile)
                 //has been alerted and checks the dest
                 if (enemyBuffer[i].getBehav() == Check)
                 {
+                    enemyBuffer[i].setColor(sf::Color::Yellow);
                     //if in dest
-                    if (enemyBuffer[i].getInd() == enemyBuffer[i].getPoint() and enemyBuffer[i].getPoint() == enemyBuffer[i].getDest())
+                    if (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getInd().x) < 2 and abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getInd().y) < 2 or enemyBuffer[i].getTime() > sf::seconds(10))
                     {
-                        //choose a new dest and point
+                        //set behav to reg
+                        enemyBuffer[i].setBehav(Regular);
                     }
                     else
                     {
                         //if in point
-                        if (true)
+                        if (enemyBuffer[i].getPoint() == enemyBuffer[i].getInd())
                         {
+                            //enemyBuffer[i].restart();
                             //choose new point
+                            int* distance = new int[4];
+                            for (int j = 0; j < 4; j++)
+                            {
+                                distance[j] = 100;
+                            }
+                            if (enemyBuffer[i].getInd().y - 1 > -1)
+                            {
+                                if (walls[enemyBuffer[i].getInd().x][enemyBuffer[i].getInd().y - 1].getWS() != Walled)
+                                {
+                                    distance[0] = sqrt(pow((enemyBuffer[i].getInd().x - enemyBuffer[i].getDest().x), 2) + pow((enemyBuffer[i].getInd().y - 1 - enemyBuffer[i].getDest().y), 2));
+                                }
+                            }
+                            if (enemyBuffer[i].getInd().x - 1 > -1)
+                            {
+                                if (walls[enemyBuffer[i].getInd().x - 1][enemyBuffer[i].getInd().y].getWS() != Walled)
+                                {
+                                    distance[1] = sqrt(pow((enemyBuffer[i].getInd().x - 1 - enemyBuffer[i].getDest().x), 2) + pow((enemyBuffer[i].getInd().y - enemyBuffer[i].getDest().y), 2));
+                                }
+                            }
+                            if (enemyBuffer[i].getInd().y + 1 < 20)
+                            {
+                                if (walls[enemyBuffer[i].getInd().x][enemyBuffer[i].getInd().y + 1].getWS() != Walled)
+                                {
+                                    distance[2] = sqrt(pow((enemyBuffer[i].getInd().x - enemyBuffer[i].getDest().x), 2) + pow((enemyBuffer[i].getInd().y + 1 - enemyBuffer[i].getDest().y), 2));
+                                }
+                            }
+                            if (enemyBuffer[i].getInd().x + 1 < 20)
+                            {
+                                if (walls[enemyBuffer[i].getInd().x + 1][enemyBuffer[i].getInd().y].getWS() != Walled)
+                                {
+                                    distance[3] = sqrt(pow((enemyBuffer[i].getInd().x + 1 - enemyBuffer[i].getDest().x), 2) + pow((enemyBuffer[i].getInd().y - enemyBuffer[i].getDest().y), 2));
+                                }
+                            }
+                            if (distance[0] == distance[1] and distance[0] != 100) //up left
+                            {
+                                if (enemyBuffer[i].getInd().x - 1 > -1 and enemyBuffer[i].getInd().y - 1 > -1)
+                                {
+                                    if (walls[enemyBuffer[i].getInd().x - 1][enemyBuffer[i].getInd().y - 1].getWS() != Walled)
+                                    {
+                                        //set point
+                                        enemyBuffer[i].setPoint(sf::Vector2i(enemyBuffer[i].getInd().x - 1, enemyBuffer[i].getInd().y - 1));
+                                    }
+                                    else
+                                    {
+                                        int rnd = rand() % 2;
+                                        if (rnd == 0)
+                                        {
+                                            //set first
+                                            enemyBuffer[i].setPoint(sf::Vector2i(enemyBuffer[i].getInd().x, enemyBuffer[i].getInd().y - 1));
+                                        }
+                                        else
+                                        {
+                                            //set last
+                                            enemyBuffer[i].setPoint(sf::Vector2i(enemyBuffer[i].getInd().x - 1, enemyBuffer[i].getInd().y));
+                                        }
+                                    }
+                                }
+                            }
+                            if (distance[2] == distance[1] and distance[2] != 100) //down left
+                            {
+                                if (enemyBuffer[i].getInd().x - 1 > -1 and enemyBuffer[i].getInd().y + 1 < 20)
+                                {
+                                    if (walls[enemyBuffer[i].getInd().x - 1][enemyBuffer[i].getInd().y + 1].getWS() != Walled)
+                                    {
+                                        enemyBuffer[i].setPoint(sf::Vector2i(enemyBuffer[i].getInd().x - 1, enemyBuffer[i].getInd().y + 1));
+                                    }
+                                    else
+                                    {
+                                        int rnd = rand() % 2;
+                                        if (rnd == 0)
+                                        {
+                                            //set first
+                                            enemyBuffer[i].setPoint(sf::Vector2i(enemyBuffer[i].getInd().x, enemyBuffer[i].getInd().y + 1));
+                                        }
+                                        else
+                                        {
+                                            //set last
+                                            enemyBuffer[i].setPoint(sf::Vector2i(enemyBuffer[i].getInd().x - 1, enemyBuffer[i].getInd().y));
+                                        }
+                                    }
+                                }
+                            }
+                            if (distance[2] == distance[3] and distance[2] != 100) //down right
+                            {
+                                if (enemyBuffer[i].getInd().x + 1 < 20 and enemyBuffer[i].getInd().y + 1 < 20)
+                                {
+                                    if (walls[enemyBuffer[i].getInd().x + 1][enemyBuffer[i].getInd().y + 1].getWS() != Walled)
+                                    {
+                                        enemyBuffer[i].setPoint(sf::Vector2i(enemyBuffer[i].getInd().x + 1, enemyBuffer[i].getInd().y + 1));
+                                    }
+                                    else
+                                    {
+                                        int rnd = rand() % 2;
+                                        if (rnd == 0)
+                                        {
+                                            //set first
+                                            enemyBuffer[i].setPoint(sf::Vector2i(enemyBuffer[i].getInd().x, enemyBuffer[i].getInd().y + 1));
+                                        }
+                                        else
+                                        {
+                                            //set last
+                                            enemyBuffer[i].setPoint(sf::Vector2i(enemyBuffer[i].getInd().x + 1, enemyBuffer[i].getInd().y));
+                                        }
+                                    }
+                                }
+                            }
+                            if (distance[0] == distance[3] and distance[0] != 100) //up right
+                            {
+                                if (enemyBuffer[i].getInd().x + 1 < 20 and enemyBuffer[i].getInd().y - 1 > -1)
+                                {
+                                    if (walls[enemyBuffer[i].getInd().x + 1][enemyBuffer[i].getInd().y - 1].getWS() != Walled)
+                                    {
+                                        enemyBuffer[i].setPoint(sf::Vector2i(enemyBuffer[i].getInd().x + 1, enemyBuffer[i].getInd().y - 1));
+                                    }
+                                    else
+                                    {
+                                        int rnd = rand() % 2;
+                                        if (rnd == 0)
+                                        {
+                                            //set first
+                                            enemyBuffer[i].setPoint(sf::Vector2i(enemyBuffer[i].getInd().x, enemyBuffer[i].getInd().y - 1));
+                                        }
+                                        else
+                                        {
+                                            //set last
+                                            enemyBuffer[i].setPoint(sf::Vector2i(enemyBuffer[i].getInd().x + 1, enemyBuffer[i].getInd().y));
+                                        }
+                                    }
+                                }
+                            }
+                            if (distance[0] < distance[1] and distance[0] < distance[2] and distance[0] < distance[3])
+                            {
+                                enemyBuffer[i].setPoint(sf::Vector2i(enemyBuffer[i].getInd().x, enemyBuffer[i].getInd().y - 1));
+                            }
+                            if (distance[1] < distance[0] and distance[1] < distance[2] and distance[1] < distance[3])
+                            {
+                                enemyBuffer[i].setPoint(sf::Vector2i(enemyBuffer[i].getInd().x - 1, enemyBuffer[i].getInd().y));
+                            }
+                            if (distance[2] < distance[1] and distance[2] < distance[0] and distance[2] < distance[3])
+                            {
+                                enemyBuffer[i].setPoint(sf::Vector2i(enemyBuffer[i].getInd().x, enemyBuffer[i].getInd().y + 1));
+                            }
+                            if (distance[3] < distance[1] and distance[3] < distance[2] and distance[3] < distance[0])
+                            {
+                                enemyBuffer[i].setPoint(sf::Vector2i(enemyBuffer[i].getInd().x + 1, enemyBuffer[i].getInd().y));
+                            }
                         }
                         else
                         {
                             //moving to point
+
+                            //check hitboxes and distance to point, then move and update index
+                            if (enemyBuffer[i].getInd().y > enemyBuffer[i].getPoint().y)
+                            {
+                                enemyBuffer[i].move(sf::Vector2f(
+                                    0,
+                                    -1 * (100) * (1 / 100.f)
+                                ));
+                            }
+                            if (enemyBuffer[i].getInd().x > enemyBuffer[i].getPoint().x)
+                            {
+                                enemyBuffer[i].move(sf::Vector2f(
+                                    -1 * (100) * (1 / 100.f),
+                                    0
+                                ));
+                            }
+                            if (enemyBuffer[i].getInd().y < enemyBuffer[i].getPoint().y)
+                            {
+                                enemyBuffer[i].move(sf::Vector2f(
+                                    0,
+                                    1 * (100) * (1 / 100.f)
+                                ));
+                            }
+                            if (enemyBuffer[i].getInd().x < enemyBuffer[i].getPoint().x)
+                            {
+                                enemyBuffer[i].move(sf::Vector2f(
+                                    1 * (100) * (1 / 100.f),
+                                    0
+                                ));
+                            }
+                            if (enemyBuffer[i].getInd().x == enemyBuffer[i].getPoint().x)
+                            {
+                                enemyBuffer[i].setInd(sf::Vector2i(enemyBuffer[i].getPoint().x, enemyBuffer[i].getInd().y));
+                            }
+                            if (enemyBuffer[i].getInd().y == enemyBuffer[i].getPoint().y)
+                            {
+                                enemyBuffer[i].setInd(sf::Vector2i(enemyBuffer[i].getInd().x, enemyBuffer[i].getPoint().y));
+                            }
+
+
+                            int indx, indy;
+                            indx = (enemyBuffer[i].getHitbox().getPosition().x - (hitbox.getPosition().x - hitbox.getSize().x / 2)) / (hitbox.getSize().x / 20);
+                            indy = (enemyBuffer[i].getHitbox().getPosition().y - (hitbox.getPosition().y - hitbox.getSize().y / 2)) / (hitbox.getSize().y / 20);
+
+                            enemyBuffer[i].setInd(sf::Vector2i(indx, indy));
                         }
                     }
                 }
@@ -751,7 +996,7 @@ bool Tile::tickTile(Player* player, Tile tile)
                 //fighting
                 if (enemyBuffer[i].getBehav() == Fight)
                 {
-
+                    enemyBuffer[i].setColor(sf::Color::Red);
                 }
             }
         }
@@ -1002,10 +1247,31 @@ bool Tile::isReachable(int startx, int starty, int finx, int finy, int len)
     default:
         break;
     }
-    return isReachable(startx, starty, finx, finy, len + 1);
+    return isReachable(startx, starty, finx, finy, len + 10);
 }
 
 void Tile::alert(int id, sf::Vector2i d)
 {
     enemyBuffer[id].alert(d);
+}
+
+void Tile::move(sf::Vector2f delta)
+{
+    hitbox.move(delta);
+    body.move(delta);
+}
+
+void Tile::setGreen()
+{
+    body.setFillColor(sf::Color::Green);
+}
+
+void Tile::setRed()
+{
+    body.setFillColor(sf::Color::Red);
+}
+
+void Tile::setYellow()
+{
+    body.setFillColor(sf::Color::Yellow);
 }

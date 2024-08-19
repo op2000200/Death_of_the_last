@@ -9,14 +9,17 @@ public:
 	void damaged(int dmg);
 	sf::RectangleShape getHitbox();
 	int getHealth();
+	int getHeight();
 	void spawn();
 	WallState getWS();
+	void setWS(WallState st);
 
 private:
 	sf::RectangleShape hitbox;
 	int connections;
 	int health;
 	WallState ws;
+	int height;
 };
 
 

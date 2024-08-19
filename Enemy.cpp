@@ -36,6 +36,11 @@ sf::CircleShape Enemy::getHitbox()
 	return hitbox;
 }
 
+void Enemy::setColor(sf::Color clr)
+{
+	hitbox.setFillColor(clr);
+}
+
 void Enemy::move(sf::Vector2f delta)
 {
 	hitbox.move(delta);
@@ -128,4 +133,10 @@ void Enemy::restart()
 sf::Time Enemy::getTime()
 {
 	return timer.getElapsedTime();
+}
+
+void Enemy::alert(sf::Vector2i d)
+{
+	behav = Check;
+	setDest(d);
 }

@@ -22,7 +22,7 @@ public:
 	void hit(int side, sf::Vector2f dir);
 	void rotate(float deg);
 	int getHealth();
-	int getStamina();
+	float getStamina();
 	int getArmour();
 	int getArmourTier();
 	int get9mm();
@@ -32,7 +32,7 @@ public:
 	int getRepairKit();
 	int getHealthKit();
 	void setHealth(int buf);
-	void setStamina(int buf);
+	void setStamina(float buf);
 	void setArmour(int buf);
 	void setArmourTier(int buf);
 	void set9mm(int buf);
@@ -49,7 +49,7 @@ private:
 	RangedWeapon ranged;
 	MeleeWeapon melee;
 	int health;
-	int stamina;
+	float stamina;
 	int armour;
 	int armourTier; //0-5
 	int bullet9mmCount;

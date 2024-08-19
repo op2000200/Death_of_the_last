@@ -6,6 +6,7 @@ public:
 	Enemy(int pos_x, int pos_y, int side, int x, int y);
 	~Enemy();
 	sf::CircleShape getHitbox();
+	void setColor(sf::Color clr);
 	void move(sf::Vector2f delta);
 	EnemyState getState();
 	void setState(EnemyState st);

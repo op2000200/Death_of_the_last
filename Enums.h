@@ -60,7 +60,8 @@ enum EnemyBehavior
 {
 	Regular,
 	Fight,
-	Check
+	Check,
+	Hide
 };
 
 enum AmmoType

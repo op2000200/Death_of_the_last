@@ -24,6 +24,7 @@ public:
 	bool isProjWallHit(Projectile proj, int index_x, int index_y, sf::Vector2f dir, int speed);
 	bool isPlayerInnerWallHit(int index_x, int index_y, int dir, int speed);
 	bool isMeleeEnemyHit(sf::RectangleShape hitbox, Enemy enemy);
+	bool isMeleeWallHit(sf::RectangleShape hitbox, Wall wall);
 private:
 	sf::RenderWindow window;
 	int side;
@@ -32,6 +33,7 @@ private:
 	std::vector<Projectile> projectileBuffer;
 	std::vector<sf::Vector2i> loadedTiles;
 	Tile** tileData;
+	Tile** tileDataMini;
 	InterfaceElements hud;
 	bool** tileCreated;
 	int tileNumOffset;
@@ -62,4 +64,7 @@ private:
 	int roomsCount;
 	int roomsVisited;
 	int floor;
+	bool mapShow;
+	bool sneak;
+	bool sprint;
 };
