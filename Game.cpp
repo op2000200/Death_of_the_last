@@ -61,6 +61,14 @@ Game::Game()
     ar15texture = new sf::Texture;
     ar15texture->loadFromFile("assets/textures/ar15.png");
     textureHolder.push_back(ar15texture);
+    mm9 = new sf::Texture;
+    mm9->loadFromFile("assets/textures/9mm.png");
+    mm556 = new sf::Texture;
+    mm556->loadFromFile("assets/textures/556.png");
+    mm762 = new sf::Texture;
+    mm762->loadFromFile("assets/textures/762.png");
+    g12 = new sf::Texture;
+    g12->loadFromFile("assets/textures/12g.png");
     difficulty = 0.01;
     dashTimer.restart();
     rangedAttackTimer.restart();
@@ -74,6 +82,7 @@ Game::Game()
     mapShow = false;
     sneak = false;
     sprint = false;
+    sprinted = false;
 }
 
 Game::~Game()
@@ -158,6 +167,20 @@ void Game::initial()
         overlay.bullet9mmEdge.setOutlineColor(sf::Color(60, 60, 60));
         overlay.bullet9mmEdge.setOutlineThickness(side / 400);
 
+        overlay.bullet9mmSprite.setTexture(*mm9);
+        overlay.bullet9mmSprite.setOrigin(sf::Vector2f(
+            overlay.bullet9mmSprite.getTexture()->getSize().x / 2,
+            overlay.bullet9mmSprite.getTexture()->getSize().y / 2
+        ));
+        overlay.bullet9mmSprite.setScale(sf::Vector2f(
+            0.1,
+            0.1
+        ));
+
+        overlay.bullet9mmLabel.setFont(NataSans);
+        overlay.bullet9mmLabel.setCharacterSize(side / 50);
+        overlay.bullet9mmLabel.setFillColor(sf::Color::Black);
+
         overlay.bullet556mmEdge.setSize(sf::Vector2f(
             side / 20,
             side / 20
@@ -169,6 +192,20 @@ void Game::initial()
         overlay.bullet556mmEdge.setFillColor(sf::Color(100, 100, 100));
         overlay.bullet556mmEdge.setOutlineColor(sf::Color(60, 60, 60));
         overlay.bullet556mmEdge.setOutlineThickness(side / 400);
+
+        overlay.bullet556mmSprite.setTexture(*mm556);
+        overlay.bullet556mmSprite.setOrigin(sf::Vector2f(
+            overlay.bullet556mmSprite.getTexture()->getSize().x / 2,
+            overlay.bullet556mmSprite.getTexture()->getSize().y / 2
+        ));
+        overlay.bullet556mmSprite.setScale(sf::Vector2f(
+            0.1,
+            0.1
+        ));
+
+        overlay.bullet556mmLabel.setFont(NataSans);
+        overlay.bullet556mmLabel.setCharacterSize(side / 50);
+        overlay.bullet556mmLabel.setFillColor(sf::Color::Black);
 
         overlay.bullet762mmEdge.setSize(sf::Vector2f(
             side / 20,
@@ -182,6 +219,20 @@ void Game::initial()
         overlay.bullet762mmEdge.setOutlineColor(sf::Color(60, 60, 60));
         overlay.bullet762mmEdge.setOutlineThickness(side / 400);
 
+        overlay.bullet762mmSprite.setTexture(*mm762);
+        overlay.bullet762mmSprite.setOrigin(sf::Vector2f(
+            overlay.bullet762mmSprite.getTexture()->getSize().x / 2,
+            overlay.bullet762mmSprite.getTexture()->getSize().y / 2
+        ));
+        overlay.bullet762mmSprite.setScale(sf::Vector2f(
+            0.1,
+            0.1
+        ));
+
+        overlay.bullet762mmLabel.setFont(NataSans);
+        overlay.bullet762mmLabel.setCharacterSize(side / 50);
+        overlay.bullet762mmLabel.setFillColor(sf::Color::Black);
+
         overlay.bullet12gaugeEdge.setSize(sf::Vector2f(
             side / 20,
             side / 20
@@ -193,6 +244,20 @@ void Game::initial()
         overlay.bullet12gaugeEdge.setFillColor(sf::Color(100, 100, 100));
         overlay.bullet12gaugeEdge.setOutlineColor(sf::Color(60, 60, 60));
         overlay.bullet12gaugeEdge.setOutlineThickness(side / 400);
+
+        overlay.bullet12gaugeSprite.setTexture(*g12);
+        overlay.bullet12gaugeSprite.setOrigin(sf::Vector2f(
+            overlay.bullet12gaugeSprite.getTexture()->getSize().x / 2,
+            overlay.bullet12gaugeSprite.getTexture()->getSize().y / 2
+        ));
+        overlay.bullet12gaugeSprite.setScale(sf::Vector2f(
+            0.1,
+            0.1
+        ));
+
+        overlay.bullet12gaugeLabel.setFont(NataSans);
+        overlay.bullet12gaugeLabel.setCharacterSize(side / 50);
+        overlay.bullet12gaugeLabel.setFillColor(sf::Color::Black);
 
         overlay.mainWeaponEdge.setSize(sf::Vector2f(
             side / 20,
@@ -255,7 +320,7 @@ void Game::initial()
         overlay.armourBarEdge.setOutlineThickness(side / 400);
 
         overlay.armourBarFill.setSize(sf::Vector2f(
-            side / 20 * 3 + (side / 15 - side / 20) * 2,
+            0,
             side / 60
         ));
         overlay.armourBarFill.setOrigin(sf::Vector2f(
@@ -281,7 +346,7 @@ void Game::initial()
             side / 60
         ));
         overlay.hpBarFill.setOrigin(sf::Vector2f(
-            overlay.hpBarFill.getSize().x / 2,
+            0,
             overlay.hpBarFill.getSize().y / 2
         ));
         overlay.hpBarFill.setFillColor(sf::Color(50, 230, 30));
@@ -385,7 +450,7 @@ void Game::generateMap()
 void Game::generateLevel(int pos_x, int pos_y, int index_x, int index_y, int dir, int len)
 {
     int tileSize = side;
-    if (index_x > -46 and index_x < 46 and index_y > -46 and index_y < 46 and len < 150)
+    if (index_x > -46 and index_x < 46 and index_y > -46 and index_y < 46 and len < 5)
     {
         switch (dir)
         {
@@ -1006,12 +1071,16 @@ void Game::commands()
                     window.draw(overlay.armourBarFill);
                     window.draw(overlay.armourSpriteEdge);
                     window.draw(overlay.bullet9mmEdge);
+                    window.draw(overlay.bullet9mmSprite);
                     window.draw(overlay.bullet9mmLabel);
                     window.draw(overlay.bullet556mmEdge);
+                    window.draw(overlay.bullet556mmSprite);
                     window.draw(overlay.bullet556mmLabel);
                     window.draw(overlay.bullet762mmEdge);
+                    window.draw(overlay.bullet762mmSprite);
                     window.draw(overlay.bullet762mmLabel);
                     window.draw(overlay.bullet12gaugeEdge);
+                    window.draw(overlay.bullet12gaugeSprite);
                     window.draw(overlay.bullet12gaugeLabel);
                     window.draw(overlay.mainWeaponEdge);
                     window.draw(overlay.mainWeaponFill);
@@ -1049,10 +1118,6 @@ void Game::commands()
                     }
                 }
                 window.display();
-
-
-                sneak = false;
-                sprint = false;
                 break;
             }
             case CommandName::SpawnPlayer:
@@ -1094,18 +1159,58 @@ void Game::commands()
                         player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15 - side / 15 - side / 15,
                         player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15
                     ));
+                    overlay.bullet9mmSprite.setPosition(sf::Vector2f(
+                        player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15 - side / 15 - side / 15,
+                        player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15
+                    ));
+                    overlay.bullet9mmLabel.setPosition(sf::Vector2f(
+                        player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15 - side / 15 - side / 15 - side / 40,
+                        player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15
+                    ));
+                    str = std::to_string(player->get9mm());
+                    overlay.bullet9mmLabel.setString(str);
                     overlay.bullet556mmEdge.setPosition(sf::Vector2f(
                         player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15 - side / 15,
                         player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15
                     ));
+                    overlay.bullet556mmSprite.setPosition(sf::Vector2f(
+                        player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15 - side / 15,
+                        player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15
+                    ));
+                    overlay.bullet556mmLabel.setPosition(sf::Vector2f(
+                        player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15 - side / 15 - side / 40,
+                        player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15
+                    ));
+                    str = std::to_string(player->get556mm());
+                    overlay.bullet556mmLabel.setString(str);
                     overlay.bullet762mmEdge.setPosition(sf::Vector2f(
                         player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15,
                         player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15
                     ));
+                    overlay.bullet762mmSprite.setPosition(sf::Vector2f(
+                        player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15,
+                        player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15
+                    ));
+                    overlay.bullet762mmLabel.setPosition(sf::Vector2f(
+                        player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15 - side / 40,
+                        player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15
+                    ));
+                    str = std::to_string(player->get762mm());
+                    overlay.bullet762mmLabel.setString(str);
                     overlay.bullet12gaugeEdge.setPosition(sf::Vector2f(
                         player->getHitbox().getPosition().x + side / 2 - side / 20,
                         player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15
                     ));
+                    overlay.bullet12gaugeSprite.setPosition(sf::Vector2f(
+                        player->getHitbox().getPosition().x + side / 2 - side / 20,
+                        player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15
+                    ));
+                    overlay.bullet12gaugeLabel.setPosition(sf::Vector2f(
+                        player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 40,
+                        player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15
+                    ));
+                    str = std::to_string(player->get12gauge());
+                    overlay.bullet12gaugeLabel.setString(str);
                     overlay.mainWeaponEdge.setPosition(sf::Vector2f(
                         player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15 - side / 15 - side / 15,
                         player->getHitbox().getPosition().y + side / 2 - side / 20
@@ -1127,7 +1232,7 @@ void Game::commands()
                         player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15 - side / 15 + side / 60
                     ));
                     overlay.armourBarFill.setPosition(sf::Vector2f(
-                        player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15 - side / 15,
+                        player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15 - side / 15 - overlay.armourBarEdge.getOrigin().x,
                         player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15 - side / 15 + side / 60
                     ));
                     overlay.hpBarEdge.setPosition(sf::Vector2f(
@@ -1135,7 +1240,7 @@ void Game::commands()
                         player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15 - side / 15 - side / 60
                     ));
                     overlay.hpBarFill.setPosition(sf::Vector2f(
-                        player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15 - side / 15,
+                        player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15 - side / 15 - overlay.hpBarEdge.getOrigin().x,
                         player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15 - side / 15 - side / 60
                     ));
                     overlay.staminaBarEdge.setPosition(sf::Vector2f(
@@ -1147,6 +1252,8 @@ void Game::commands()
                         player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15 - side / 15
                     ));
                     overlay.staminaBarFill.setScale(sf::Vector2f(player->getStamina() / 100.f, 1));
+                    overlay.hpBarFill.setScale(sf::Vector2f(player->getHealth() / 100.f, 1));
+                    overlay.armourBarFill.setScale(sf::Vector2f(player->getArmour() / 100.f, 1));
                 }
 
                 if (player->getSound().getRadius() != 0)
@@ -1154,10 +1261,13 @@ void Game::commands()
                     player->setRad(player->getSound().getRadius() - 5);
                 }
 
-                if (player->getStamina() < 100)
+                if (player->getStamina() < 100 and staminaTimer.getElapsedTime() > sf::seconds(3))
                 {
-                    player->setStamina(player->getStamina() + 0.1);
+                    player->setStamina(player->getStamina() + 0.5);
                 }
+                sneak = false;
+                sprint = false;
+                sprinted = false;
 
                 break;
             }
@@ -1314,7 +1424,12 @@ void Game::commands()
                 {
                     if (sprint and player->getStamina() > 0)
                     {
-                        player->setStamina(player->getStamina() - 0.2);
+                        staminaTimer.restart();
+                        if (!sprinted)
+                        {
+                            player->setStamina(player->getStamina() - 0.2);
+                            sprinted = true;
+                        }
                         if (!isPlayerWallHit(player->getIndex().x + tileNumOffset, player->getIndex().y + tileNumOffset, 1, (playerSpeed * 2) / j) and !isPlayerInnerWallHit(player->getIndex().x + tileNumOffset, player->getIndex().y + tileNumOffset, 1, (playerSpeed * 2) / j))
                         {
                             player->move(sf::Vector2f(0, (-1) * ((playerSpeed * 2) / j) * (timePerFrame.asSeconds())));
@@ -1388,7 +1503,12 @@ void Game::commands()
                 {
                     if (sprint and player->getStamina() > 0)
                     {
-                        player->setStamina(player->getStamina() - 0.2);
+                        staminaTimer.restart();
+                        if (!sprinted)
+                        {
+                            player->setStamina(player->getStamina() - 0.2);
+                            sprinted = true;
+                        }
                         if (!isPlayerWallHit(player->getIndex().x + tileNumOffset, player->getIndex().y + tileNumOffset, 2, (playerSpeed * 2) / j) and !isPlayerInnerWallHit(player->getIndex().x + tileNumOffset, player->getIndex().y + tileNumOffset, 2, (playerSpeed * 2) / j))
                         {
                             player->move(sf::Vector2f((-1) * ((playerSpeed * 2) / j) * (timePerFrame.asSeconds()), 0));
@@ -1463,6 +1583,7 @@ void Game::commands()
                 {
                     if (sprint and player->getStamina() > 0)
                     {
+                        staminaTimer.restart();
                         player->setStamina(player->getStamina() - 0.2);
                         if (!isPlayerWallHit(player->getIndex().x + tileNumOffset, player->getIndex().y + tileNumOffset, 3, (playerSpeed * 2) / j) and !isPlayerInnerWallHit(player->getIndex().x + tileNumOffset, player->getIndex().y + tileNumOffset, 3, (playerSpeed * 2) / j))
                         {
@@ -1537,7 +1658,12 @@ void Game::commands()
                 {
                     if (sprint and player->getStamina() > 0)
                     {
-                        player->setStamina(player->getStamina() - 0.2);
+                        staminaTimer.restart();
+                        if (!sprinted)
+                        {
+                            player->setStamina(player->getStamina() - 0.2);
+                            sprinted = true;
+                        }
                         if (!isPlayerWallHit(player->getIndex().x + tileNumOffset, player->getIndex().y + tileNumOffset, 4, (playerSpeed * 2) / j) and !isPlayerInnerWallHit(player->getIndex().x + tileNumOffset, player->getIndex().y + tileNumOffset, 4, (playerSpeed * 2) / j))
                         {
                             player->move(sf::Vector2f(((playerSpeed * 2) / j) * (timePerFrame.asSeconds()), 0));

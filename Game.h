@@ -51,6 +51,10 @@ private:
 	sf::Texture* grozatexture;
 	sf::Texture* xm8texture;
 	sf::Texture* ar15texture;
+	sf::Texture* mm9;
+	sf::Texture* mm556;
+	sf::Texture* mm762;
+	sf::Texture* g12;
 	std::vector<sf::Texture*> textureHolder;
 	float difficulty;
 	sf::Clock dashTimer;
@@ -67,4 +71,6 @@ private:
 	bool mapShow;
 	bool sneak;
 	bool sprint;
+	bool sprinted;
+	sf::Clock staminaTimer;
 };
