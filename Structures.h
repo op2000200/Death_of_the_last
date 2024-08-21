@@ -25,6 +25,10 @@ struct InterfaceElements
 
 struct Overlay
 {
+	sf::RectangleShape viewBlocker1;
+	sf::Sprite viewBlocker12;
+	sf::RectangleShape viewBlocker2;
+	sf::Sprite viewBlocker22;
 	sf::RectangleShape floorProgress;
 	sf::Text floorProgressLabel;
 	sf::RectangleShape floorNum;

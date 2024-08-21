@@ -69,6 +69,8 @@ Game::Game()
     mm762->loadFromFile("assets/textures/762.png");
     g12 = new sf::Texture;
     g12->loadFromFile("assets/textures/12g.png");
+    grad = new sf::Texture;
+    grad->loadFromFile("assets/textures/grad.png");
     difficulty = 0.01;
     dashTimer.restart();
     rangedAttackTimer.restart();
@@ -111,6 +113,36 @@ void Game::initial()
     spawnPlayer();
     //ui
     {
+        overlay.viewBlocker12.setTexture(*grad);
+        overlay.viewBlocker12.setOrigin(
+            sf::Vector2f(
+                overlay.viewBlocker12.getTexture()->getSize().x / 2,
+                -side / 500
+            )
+        );
+        overlay.viewBlocker12.setScale(
+            sf::Vector2f(
+                20,
+                (side * 1.f) / overlay.viewBlocker12.getTexture()->getSize().y
+            )
+        );
+        overlay.viewBlocker12.setRotation(-45);
+
+        overlay.viewBlocker22.setTexture(*grad);
+        overlay.viewBlocker22.setOrigin(
+            sf::Vector2f(
+                overlay.viewBlocker12.getTexture()->getSize().x / 2,
+                -side / 500
+            )
+        );
+        overlay.viewBlocker22.setScale(
+            sf::Vector2f(
+                20,
+                (side * 1.f) / overlay.viewBlocker12.getTexture()->getSize().y
+            )
+        );
+        overlay.viewBlocker22.setRotation(45);
+
         overlay.floorProgress.setSize(sf::Vector2f(
             side / 10,
             side / 20
@@ -179,7 +211,7 @@ void Game::initial()
 
         overlay.bullet9mmLabel.setFont(NataSans);
         overlay.bullet9mmLabel.setCharacterSize(side / 50);
-        overlay.bullet9mmLabel.setFillColor(sf::Color::Black);
+        overlay.bullet9mmLabel.setFillColor(sf::Color::White);
 
         overlay.bullet556mmEdge.setSize(sf::Vector2f(
             side / 20,
@@ -205,7 +237,7 @@ void Game::initial()
 
         overlay.bullet556mmLabel.setFont(NataSans);
         overlay.bullet556mmLabel.setCharacterSize(side / 50);
-        overlay.bullet556mmLabel.setFillColor(sf::Color::Black);
+        overlay.bullet556mmLabel.setFillColor(sf::Color::White);
 
         overlay.bullet762mmEdge.setSize(sf::Vector2f(
             side / 20,
@@ -231,7 +263,7 @@ void Game::initial()
 
         overlay.bullet762mmLabel.setFont(NataSans);
         overlay.bullet762mmLabel.setCharacterSize(side / 50);
-        overlay.bullet762mmLabel.setFillColor(sf::Color::Black);
+        overlay.bullet762mmLabel.setFillColor(sf::Color::White);
 
         overlay.bullet12gaugeEdge.setSize(sf::Vector2f(
             side / 20,
@@ -257,7 +289,7 @@ void Game::initial()
 
         overlay.bullet12gaugeLabel.setFont(NataSans);
         overlay.bullet12gaugeLabel.setCharacterSize(side / 50);
-        overlay.bullet12gaugeLabel.setFillColor(sf::Color::Black);
+        overlay.bullet12gaugeLabel.setFillColor(sf::Color::White);
 
         overlay.mainWeaponEdge.setSize(sf::Vector2f(
             side / 20,
@@ -1059,6 +1091,8 @@ void Game::commands()
                     //std::string str = std::to_string(player->getIndex().x) + " " + std::to_string(player->getIndex().y) + " " + std::to_string(player->getHitbox().getPosition().x - sf::VideoMode::getDesktopMode().width / 2 + side / 4) + " " + std::to_string(player->getHitbox().getPosition().y - side / 2 + side / 4) + " " + std::to_string(player->getMelee().getHitbox().getRotation());
                     //text.setString(str);
                     //window.draw(text);
+                    window.draw(overlay.viewBlocker12);
+                    window.draw(overlay.viewBlocker22);
                     window.draw(overlay.floorProgress);
                     window.draw(overlay.floorProgressLabel);
                     window.draw(overlay.floorNum);
@@ -1131,6 +1165,10 @@ void Game::commands()
                 center = sf::Vector2f(sf::VideoMode::getDesktopMode().width / 2, sf::VideoMode::getDesktopMode().height / 2);
                 dir.x = (sf::Mouse::getPosition().x - center.x) / (abs(sf::Mouse::getPosition().x - center.x) + abs(sf::Mouse::getPosition().y - center.y));
                 dir.y = (sf::Mouse::getPosition().y - center.y) / (abs(sf::Mouse::getPosition().x - center.x) + abs(sf::Mouse::getPosition().y - center.y));
+                overlay.viewBlocker1.setRotation(-45 + ((atan2(dir.y, dir.x)) / 3.14) * 180.f + 90.f);
+                overlay.viewBlocker2.setRotation(45 + ((atan2(dir.y, dir.x)) / 3.14) * 180.f + 90.f);
+                overlay.viewBlocker12.setRotation(-45 + ((atan2(dir.y, dir.x)) / 3.14) * 180.f + 90.f);
+                overlay.viewBlocker22.setRotation(45 + ((atan2(dir.y, dir.x)) / 3.14) * 180.f + 90.f);
                 player->rotate(((atan2(dir.y, dir.x)) / 3.14) * 180.f + 90.f);
                 break;
             }
@@ -1167,7 +1205,7 @@ void Game::commands()
                         player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15 - side / 15 - side / 15 - side / 40,
                         player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15
                     ));
-                    str = std::to_string(player->get9mm());
+                    str = std::to_string(player->get9mm() + 123);
                     overlay.bullet9mmLabel.setString(str);
                     overlay.bullet556mmEdge.setPosition(sf::Vector2f(
                         player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15 - side / 15,
@@ -1181,7 +1219,7 @@ void Game::commands()
                         player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15 - side / 15 - side / 40,
                         player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15
                     ));
-                    str = std::to_string(player->get556mm());
+                    str = std::to_string(player->get556mm() + 123);
                     overlay.bullet556mmLabel.setString(str);
                     overlay.bullet762mmEdge.setPosition(sf::Vector2f(
                         player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15,
@@ -1195,7 +1233,7 @@ void Game::commands()
                         player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15 - side / 40,
                         player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15
                     ));
-                    str = std::to_string(player->get762mm());
+                    str = std::to_string(player->get762mm() + 123);
                     overlay.bullet762mmLabel.setString(str);
                     overlay.bullet12gaugeEdge.setPosition(sf::Vector2f(
                         player->getHitbox().getPosition().x + side / 2 - side / 20,
@@ -1209,7 +1247,7 @@ void Game::commands()
                         player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 40,
                         player->getHitbox().getPosition().y + side / 2 - side / 20 - side / 15
                     ));
-                    str = std::to_string(player->get12gauge());
+                    str = std::to_string(player->get12gauge() + 123);
                     overlay.bullet12gaugeLabel.setString(str);
                     overlay.mainWeaponEdge.setPosition(sf::Vector2f(
                         player->getHitbox().getPosition().x + side / 2 - side / 20 - side / 15 - side / 15 - side / 15,
@@ -1254,6 +1292,23 @@ void Game::commands()
                     overlay.staminaBarFill.setScale(sf::Vector2f(player->getStamina() / 100.f, 1));
                     overlay.hpBarFill.setScale(sf::Vector2f(player->getHealth() / 100.f, 1));
                     overlay.armourBarFill.setScale(sf::Vector2f(player->getArmour() / 100.f, 1));
+
+                    overlay.viewBlocker1.setPosition(sf::Vector2f(
+                        player->getHitbox().getPosition().x,
+                        player->getHitbox().getPosition().y
+                    ));
+                    overlay.viewBlocker12.setPosition(sf::Vector2f(
+                        player->getHitbox().getPosition().x,
+                        player->getHitbox().getPosition().y
+                    ));
+                    overlay.viewBlocker2.setPosition(sf::Vector2f(
+                        player->getHitbox().getPosition().x,
+                        player->getHitbox().getPosition().y
+                    ));
+                    overlay.viewBlocker22.setPosition(sf::Vector2f(
+                        player->getHitbox().getPosition().x,
+                        player->getHitbox().getPosition().y
+                    ));
                 }
 
                 if (player->getSound().getRadius() != 0)
