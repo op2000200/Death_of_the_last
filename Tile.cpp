@@ -4,14 +4,20 @@ Tile::Tile()
 {
 }
 
-Tile::Tile(TileType tileType, int pos_x, int pos_y, int index_x, int index_y, int side, float diff, std::vector<sf::Texture*> textureHolder)
+Tile::Tile(TileType tileType, int pos_x, int pos_y, int index_x, int index_y, int side, float diff, sf::Texture* bg, sf::Texture* bg2)
 {
     int tileSize = side;
+    sprite.setTexture(*bg);
+    sprite.setOrigin(sf::Vector2f(
+        (bg->getSize().x / 2),
+        (bg->getSize().y / 2)
+    ));
+    sprite.setPosition(sf::Vector2f(pos_x, pos_y));
     switch (tileType)
     {
         case TileType::LevelRegular:
         {
-            body.setFillColor(sf::Color::White);
+            body.setFillColor(sf::Color(175,175,175));
             body.setSize(sf::Vector2f(tileSize, tileSize));
             body.setOrigin(sf::Vector2f(tileSize / 2, tileSize / 2));
             hitbox.setSize(sf::Vector2f(tileSize - 2, tileSize - 2));
@@ -19,6 +25,10 @@ Tile::Tile(TileType tileType, int pos_x, int pos_y, int index_x, int index_y, in
             //spawnEnemies(diff, side, pos_x, pos_y);
             goal = LevelGoal::Death;
             type = tileType;
+            sprite.setScale(sf::Vector2f(
+                (side / 1.f) / (bg->getSize().x - 40),
+                (side / 1.f) / (bg->getSize().y - 40)
+            ));
             break;
         }
         case TileType::LevelQizz: //get rid of it
@@ -35,7 +45,7 @@ Tile::Tile(TileType tileType, int pos_x, int pos_y, int index_x, int index_y, in
         }
         case TileType::LevelReward:
         {
-            body.setFillColor(sf::Color::Yellow);
+            body.setFillColor(sf::Color(175, 175, 175));
             body.setSize(sf::Vector2f(tileSize, tileSize));
             body.setOrigin(sf::Vector2f(tileSize / 2, tileSize / 2));
             hitbox.setSize(sf::Vector2f(tileSize - 2, tileSize - 2));
@@ -80,13 +90,17 @@ Tile::Tile(TileType tileType, int pos_x, int pos_y, int index_x, int index_y, in
         }
         case TileType::Central:
         {
-            body.setFillColor(sf::Color::White);
+            body.setFillColor(sf::Color(175, 175, 175));
             body.setSize(sf::Vector2f(tileSize, tileSize));
             body.setOrigin(sf::Vector2f(tileSize / 2, tileSize / 2));
             hitbox.setSize(sf::Vector2f(tileSize - 2, tileSize - 2));
             hitbox.setOrigin(sf::Vector2f((tileSize - 2) / 2, (tileSize - 2) / 2));
             goal = LevelGoal::No;
             type = tileType;
+            sprite.setScale(sf::Vector2f(
+                (side / 1.f) / (bg->getSize().x - 40),
+                (side / 1.f) / (bg->getSize().y - 40)
+            ));
             //RangedWeapon ranged(WeaponName::VP70, sf::Vector2f(pos_x, pos_y), side, textureHolder[2]);
             //rangedBuffer.push_back(ranged);
             //MeleeWeapon melee(Knife, sf::Vector2f(pos_x + side / 20, pos_y), side, textureHolder[0]);
@@ -95,24 +109,45 @@ Tile::Tile(TileType tileType, int pos_x, int pos_y, int index_x, int index_y, in
         }
         case TileType::CorridorV:
         {
-            body.setFillColor(sf::Color::White);
+            body.setFillColor(sf::Color(175, 175, 175));
             body.setSize(sf::Vector2f(tileSize / 3, tileSize));
             body.setOrigin(sf::Vector2f(tileSize / 6, tileSize / 2));
             hitbox.setSize(sf::Vector2f(tileSize / 3 - 2, tileSize - 2));
             hitbox.setOrigin(sf::Vector2f((tileSize / 3 - 2) / 2, (tileSize - 2) / 2));
             goal = LevelGoal::No;
             type = tileType;
+            sprite.setTexture(*bg2);
+            sprite.setOrigin(sf::Vector2f(
+                (bg2->getSize().x / 2),
+                (bg2->getSize().y / 2)
+            ));
+            sprite.setPosition(sf::Vector2f(pos_x, pos_y));
+            sprite.setScale(sf::Vector2f(
+                (side / 1.f) / (bg2->getSize().x),
+                (side / 3.f) / (bg2->getSize().y - 40)
+            ));
+            //sprite.setRotation(0);
             break;
         }
         case TileType::CorridorH:
         {
-            body.setFillColor(sf::Color::White);
+            body.setFillColor(sf::Color(175, 175, 175));
             body.setSize(sf::Vector2f(tileSize, tileSize / 3));
             body.setOrigin(sf::Vector2f(tileSize / 2, tileSize / 6));
             hitbox.setSize(sf::Vector2f(tileSize - 2, tileSize / 3 - 2));
             hitbox.setOrigin(sf::Vector2f((tileSize - 2) / 2, (tileSize / 3 - 2) / 2));
             goal = LevelGoal::No;
             type = tileType;
+            sprite.setTexture(*bg2);
+            sprite.setOrigin(sf::Vector2f(
+                (bg2->getSize().x / 2),
+                (bg2->getSize().y / 2)
+            ));
+            sprite.setPosition(sf::Vector2f(pos_x, pos_y));
+            sprite.setScale(sf::Vector2f(
+                (side / 1.f) / (bg2->getSize().x),
+                (side / 3.f) / (bg2->getSize().y - 40)
+            ));
             break;
         }
         default:
@@ -144,6 +179,11 @@ sf::RectangleShape Tile::getHitbox()
     return hitbox;
 }
 
+sf::Sprite Tile::getSprite()
+{
+    return sprite;
+}
+
 sf::Vector2i Tile::getIndex()
 {
     return index;
@@ -152,7 +192,7 @@ sf::Vector2i Tile::getIndex()
 void Tile::clear()
 {
     tileStatus = TileStatus::Cleared;
-    body.setFillColor(sf::Color(100,100,100));
+    //body.setFillColor(sf::Color(100,100,100));
 }
 
 void Tile::solve()
@@ -204,7 +244,7 @@ void Tile::spawnEnemies(float diff, int side, int pos_x, int pos_y)
 {
     int x, y, count, created = 0;
     count = rand() % 10 + 1;
-    while (created < count)
+    while (created < 1)
     {
         x = rand() % 20;
         y = rand() % 20;
@@ -226,7 +266,7 @@ void Tile::spawnReward(float diff)
 {
 }
 
-void Tile::spawnWalls(int up, int left, int down, int right)
+void Tile::spawnWalls(int up, int left, int down, int right, sf::Texture* bx)
 {
     walls = new Wall*[20];
     for (int i = 0; i < 20; i++)
@@ -273,12 +313,14 @@ void Tile::spawnWalls(int up, int left, int down, int right)
             }
         }
     }
-    int wallPoints = rand() % 16 + 8;
+    int wallPoints = /*rand() % 1 + */ 160;
     int created = 0;
-    while (created < wallPoints)
+    int tries = 0;
+    while (created < wallPoints and tries < 1000)
     {
-        int x = rand() % 20;
-        int y = rand() % 20;
+        int x = rand() % 18 + 1;
+        int y = rand() % 18 + 1;
+        tries++;
         for (int i = 0; i < nonEmptyWalls.size(); i++)
         {
             if (x == nonEmptyWalls[i].x and y == nonEmptyWalls[i].y)
@@ -287,34 +329,124 @@ void Tile::spawnWalls(int up, int left, int down, int right)
             }
             if (i == nonEmptyWalls.size() - 1)
             {
-                created++;
-                Wall wall(hitbox.getPosition().x - hitbox.getSize().x / 2 + hitbox.getSize().x / 40 + hitbox.getSize().x / 20 * (x),
-                    hitbox.getPosition().y - hitbox.getSize().y / 2 + hitbox.getSize().x / 40 + hitbox.getSize().y / 20 * (y),
-                    hitbox.getSize().x
+                if (walls[x][y - 1].getWS() != Walled and walls[x - 1][y].getWS() != Walled and walls[x][y + 1].getWS() != Walled and walls[x + 1][y].getWS() != Walled and walls[x - 1][y - 1].getWS() != Walled and walls[x + 1][y - 1].getWS() != Walled and walls[x - 1][y + 1].getWS() != Walled and walls[x + 1][y + 1].getWS() != Walled and walls[x][y].getWS() != Walled)
+                {
+                    created++;
+                    Wall wall(hitbox.getPosition().x - hitbox.getSize().x / 2 + hitbox.getSize().x / 40 + hitbox.getSize().x / 20 * (x),
+                        hitbox.getPosition().y - hitbox.getSize().y / 2 + hitbox.getSize().x / 40 + hitbox.getSize().y / 20 * (y),
+                        hitbox.getSize().x,
+                        bx
                     );
-                walls[x][y] = wall;
-                wallsToDraw.push_back(sf::Vector2i(x, y));
-                createWallRow(rand() % 4, sf::Vector2i(x, y), 100);
+                    walls[x][y] = wall;
+                    wallsToDraw.push_back(sf::Vector2i(x, y));
+                }
+
+                createWallRow(rand() % 4, sf::Vector2i(x, y), 100, bx);
             }
         }
     }
-
+    for (int i = 1; i < 19; i++)
+    {
+        for (int j = 1; j < 19; j++)
+        {
+            if (walls[i][j].getWS() != Walled)
+            {
+                int ctr = 0;
+                bool u = false, l = false, d = false, r = false;
+                if (walls[i][j - 1].getWS() == Walled)
+                {
+                    ctr++;
+                    u = true;
+                }
+                if (walls[i - 1][j].getWS() == Walled)
+                {
+                    ctr++;
+                    l = true;
+                }
+                if (walls[i][j + 1].getWS() == Walled)
+                {
+                    ctr++;
+                    d = true;
+                }
+                if (walls[i + 1][j].getWS() == Walled)
+                {
+                    ctr++;
+                    r = true;
+                }
+                if (ctr > 2)
+                {
+                    if (u)
+                    {
+                        walls[i][j - 1] = Wall();
+                        for (int k = 0; k < wallsToDraw.size(); k++)
+                        {
+                            if (wallsToDraw[k].x == i and wallsToDraw[k].y == j - 1)
+                            {
+                                wallsToDraw.erase(wallsToDraw.begin() + k);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (l)
+                        {
+                            walls[i - 1][j] = Wall();
+                            for (int k = 0; k < wallsToDraw.size(); k++)
+                            {
+                                if (wallsToDraw[k].x == i - 1 and wallsToDraw[k].y == j)
+                                {
+                                    wallsToDraw.erase(wallsToDraw.begin() + k);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (d)
+                            {
+                                walls[i][j + 1] = Wall();
+                                for (int k = 0; k < wallsToDraw.size(); k++)
+                                {
+                                    if (wallsToDraw[k].x == i and wallsToDraw[k].y == j + 1)
+                                    {
+                                        wallsToDraw.erase(wallsToDraw.begin() + k);
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                if (r)
+                                {
+                                    walls[i + 1][j] = Wall();
+                                    for (int k = 0; k < wallsToDraw.size(); k++)
+                                    {
+                                        if (wallsToDraw[k].x == i + 1 and wallsToDraw[k].y == j)
+                                        {
+                                            wallsToDraw.erase(wallsToDraw.begin() + k);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
-void Tile::createWallRow(int dir, sf::Vector2i index, int chance)
+void Tile::createWallRow(int dir, sf::Vector2i index, int chance, sf::Texture* bx)
 {
     switch (dir)
     {
     case 0:
     {
-        if (index.x != 0 and index.x != 19 and index.y != 0 and index.y != 19)
+        if (index.x != 1 and index.x != 18 and index.y != 1 and index.y != 18)
         {
             Wall wall(hitbox.getPosition().x - hitbox.getSize().x / 2 + hitbox.getSize().x / 40 + hitbox.getSize().x / 20 * (index.x),
                 hitbox.getPosition().y - hitbox.getSize().y / 2 + hitbox.getSize().x / 40 + hitbox.getSize().y / 20 * (index.y - 1),
-                hitbox.getSize().x
+                hitbox.getSize().x,
+                bx
             );
-            walls[index.x][index.y - 1] = wall;
-            wallsToDraw.push_back(sf::Vector2i(index.x, index.y - 1));
             int roll = rand() % 100;
             int direction;
             if (roll < 50)
@@ -343,7 +475,20 @@ void Tile::createWallRow(int dir, sf::Vector2i index, int chance)
                     }
                     if (i == nonEmptyWalls.size() - 1)
                     {
-                        createWallRow(direction, sf::Vector2i(index.x, index.y - 1), chance - 5);
+                        nonEmptyWalls.push_back(sf::Vector2i(index.x - 1, index.y - 1));
+                        nonEmptyWalls.push_back(sf::Vector2i(index.x, index.y - 1));
+                        nonEmptyWalls.push_back(sf::Vector2i(index.x + 1, index.y - 1));
+
+                        nonEmptyWalls.push_back(sf::Vector2i(index.x - 1, index.y));
+                        nonEmptyWalls.push_back(sf::Vector2i(index.x, index.y));
+                        nonEmptyWalls.push_back(sf::Vector2i(index.x + 1, index.y));
+
+                        nonEmptyWalls.push_back(sf::Vector2i(index.x - 1, index.y + 1));
+                        nonEmptyWalls.push_back(sf::Vector2i(index.x, index.y + 1));
+                        nonEmptyWalls.push_back(sf::Vector2i(index.x + 1, index.y + 1));
+                        walls[index.x][index.y - 1] = wall;
+                        wallsToDraw.push_back(sf::Vector2i(index.x, index.y - 1));
+                        createWallRow(direction, sf::Vector2i(index.x, index.y - 1), chance - 5, bx);
                     }
                 }
             }
@@ -352,14 +497,13 @@ void Tile::createWallRow(int dir, sf::Vector2i index, int chance)
     }
     case 1:
     {
-        if (index.x != 0 and index.x != 19 and index.y != 0 and index.y != 19)
+        if (index.x != 1 and index.x != 18 and index.y != 1 and index.y != 18)
         {
             Wall wall(hitbox.getPosition().x - hitbox.getSize().x / 2 + hitbox.getSize().x / 40 + hitbox.getSize().x / 20 * (index.x - 1),
                 hitbox.getPosition().y - hitbox.getSize().y / 2 + hitbox.getSize().x / 40 + hitbox.getSize().y / 20 * (index.y),
-                hitbox.getSize().x
+                hitbox.getSize().x,
+                bx
             );
-            walls[index.x - 1][index.y] = wall;
-            wallsToDraw.push_back(sf::Vector2i(index.x - 1, index.y));
             int roll = rand() % 100;
             int direction;
             if (roll < 50)
@@ -388,7 +532,20 @@ void Tile::createWallRow(int dir, sf::Vector2i index, int chance)
                     }
                     if (i == nonEmptyWalls.size() - 1)
                     {
-                        createWallRow(direction, sf::Vector2i(index.x - 1, index.y), chance - 5);
+                        nonEmptyWalls.push_back(sf::Vector2i(index.x - 1, index.y - 1));
+                        nonEmptyWalls.push_back(sf::Vector2i(index.x, index.y - 1));
+                        nonEmptyWalls.push_back(sf::Vector2i(index.x + 1, index.y - 1));
+
+                        nonEmptyWalls.push_back(sf::Vector2i(index.x - 1, index.y));
+                        nonEmptyWalls.push_back(sf::Vector2i(index.x, index.y));
+                        nonEmptyWalls.push_back(sf::Vector2i(index.x + 1, index.y));
+
+                        nonEmptyWalls.push_back(sf::Vector2i(index.x - 1, index.y + 1));
+                        nonEmptyWalls.push_back(sf::Vector2i(index.x, index.y + 1));
+                        nonEmptyWalls.push_back(sf::Vector2i(index.x + 1, index.y + 1));
+                        walls[index.x - 1][index.y] = wall;
+                        wallsToDraw.push_back(sf::Vector2i(index.x - 1, index.y));
+                        createWallRow(direction, sf::Vector2i(index.x - 1, index.y), chance - 5, bx);
                     }
                 }
             }
@@ -397,14 +554,13 @@ void Tile::createWallRow(int dir, sf::Vector2i index, int chance)
     }
     case 2:
     {
-        if (index.x != 0 and index.x != 19 and index.y != 0 and index.y != 19)
+        if (index.x != 1 and index.x != 18 and index.y != 1 and index.y != 18)
         {
             Wall wall(hitbox.getPosition().x - hitbox.getSize().x / 2 + hitbox.getSize().x / 40 + hitbox.getSize().x / 20 * (index.x),
                 hitbox.getPosition().y - hitbox.getSize().y / 2 + hitbox.getSize().x / 40 + hitbox.getSize().y / 20 * (index.y + 1),
-                hitbox.getSize().x
+                hitbox.getSize().x,
+                bx
             );
-            walls[index.x][index.y + 1] = wall;
-            wallsToDraw.push_back(sf::Vector2i(index.x, index.y + 1));
             int roll = rand() % 100;
             int direction;
             if (roll < 50)
@@ -433,7 +589,20 @@ void Tile::createWallRow(int dir, sf::Vector2i index, int chance)
                     }
                     if (i == nonEmptyWalls.size() - 1)
                     {
-                        createWallRow(direction, sf::Vector2i(index.x, index.y + 1), chance - 5);
+                        nonEmptyWalls.push_back(sf::Vector2i(index.x - 1, index.y - 1));
+                        nonEmptyWalls.push_back(sf::Vector2i(index.x, index.y - 1));
+                        nonEmptyWalls.push_back(sf::Vector2i(index.x + 1, index.y - 1));
+
+                        nonEmptyWalls.push_back(sf::Vector2i(index.x - 1, index.y));
+                        nonEmptyWalls.push_back(sf::Vector2i(index.x, index.y));
+                        nonEmptyWalls.push_back(sf::Vector2i(index.x + 1, index.y));
+
+                        nonEmptyWalls.push_back(sf::Vector2i(index.x - 1, index.y + 1));
+                        nonEmptyWalls.push_back(sf::Vector2i(index.x, index.y + 1));
+                        nonEmptyWalls.push_back(sf::Vector2i(index.x + 1, index.y + 1));
+                        walls[index.x][index.y + 1] = wall;
+                        wallsToDraw.push_back(sf::Vector2i(index.x, index.y + 1));
+                        createWallRow(direction, sf::Vector2i(index.x, index.y + 1), chance - 5, bx);
                     }
                 }
             }
@@ -442,14 +611,13 @@ void Tile::createWallRow(int dir, sf::Vector2i index, int chance)
     }
     case 3:
     {
-        if (index.x != 0 and index.x != 19 and index.y != 0 and index.y != 19)
+        if (index.x != 1 and index.x != 18 and index.y != 1 and index.y != 18)
         {
             Wall wall(hitbox.getPosition().x - hitbox.getSize().x / 2 + hitbox.getSize().x / 40 + hitbox.getSize().x / 20 * (index.x + 1),
                 hitbox.getPosition().y - hitbox.getSize().y / 2 + hitbox.getSize().x / 40 + hitbox.getSize().y / 20 * (index.y),
-                hitbox.getSize().x
+                hitbox.getSize().x,
+                bx
             );
-            walls[index.x + 1][index.y] = wall;
-            wallsToDraw.push_back(sf::Vector2i(index.x + 1, index.y));
             int roll = rand() % 100;
             int direction;
             if (roll < 50)
@@ -478,7 +646,20 @@ void Tile::createWallRow(int dir, sf::Vector2i index, int chance)
                     }
                     if (i == nonEmptyWalls.size() - 1)
                     {
-                        createWallRow(direction, sf::Vector2i(index.x + 1, index.y), chance - 5);
+                        nonEmptyWalls.push_back(sf::Vector2i(index.x - 1, index.y - 1));
+                        nonEmptyWalls.push_back(sf::Vector2i(index.x, index.y - 1));
+                        nonEmptyWalls.push_back(sf::Vector2i(index.x + 1, index.y - 1));
+
+                        nonEmptyWalls.push_back(sf::Vector2i(index.x - 1, index.y));
+                        nonEmptyWalls.push_back(sf::Vector2i(index.x, index.y));
+                        nonEmptyWalls.push_back(sf::Vector2i(index.x + 1, index.y));
+
+                        nonEmptyWalls.push_back(sf::Vector2i(index.x - 1, index.y + 1));
+                        nonEmptyWalls.push_back(sf::Vector2i(index.x, index.y + 1));
+                        nonEmptyWalls.push_back(sf::Vector2i(index.x + 1, index.y + 1));
+                        walls[index.x + 1][index.y] = wall;
+                        wallsToDraw.push_back(sf::Vector2i(index.x + 1, index.y));
+                        createWallRow(direction, sf::Vector2i(index.x + 1, index.y), chance - 5, bx);
                     }
                 }
             }
@@ -540,7 +721,7 @@ bool Tile::tickTile(Player* player, Tile tile)
                 {
                     enemyBuffer[i].setColor(sf::Color::Green);
                     //if in dest
-                    if (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getInd().x) < 2 and abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getInd().y) < 2 or enemyBuffer[i].getTime() > sf::seconds(5))
+                    if (enemyBuffer[i].getPoints().empty())
                     {
                         //choose a new dest and point
 
@@ -554,18 +735,12 @@ bool Tile::tickTile(Player* player, Tile tile)
 
                             if (walls[x][y].getWS() != Walled)
                             {
-                                if (walls[x - 1][y].getWS() == Walled and walls[x + 1][y].getWS() == Walled and walls[x][y - 1].getWS() == Walled and walls[x][y + 1].getWS() == Walled)
+                                enemyBuffer[i].setDest(sf::Vector2i(x, y));
+                                enemyBuffer[i].addPoints(makePath(enemyBuffer[i]));
+                                if (!enemyBuffer[i].getPoints().empty())
                                 {
-                                }
-                                else
-                                {
-                                    if (isReachable(enemyBuffer[i].getInd().x, enemyBuffer[i].getInd().y, x, y, 0))
-                                    {
-                                        enemyBuffer[i].setDest(sf::Vector2i(x, y));
-                                        enemyBuffer[i].restart();
-                                        tries = 0;
-                                        break;
-                                    }
+                                    tries = 0;
+                                    break;
                                 }
                             }
                             tries--;
@@ -573,206 +748,34 @@ bool Tile::tickTile(Player* player, Tile tile)
                     }
                     else
                     {
-                        //if in point
-                        if (enemyBuffer[i].getPoint() == enemyBuffer[i].getInd())
+                        if (abs(enemyBuffer[i].getPoints()[0].x - enemyBuffer[i].getInd().x + 0.5) < 0.1 and abs(enemyBuffer[i].getPoints()[0].y - enemyBuffer[i].getInd().y + 0.5) < 0.1)
                         {
-                            //enemyBuffer[i].restart();
-                            //choose new point
-                            int* distance = new int[4];
-                            for (int j = 0; j < 4; j++)
-                            {
-                                distance[j] = 100;
-                            }
-                            if (enemyBuffer[i].getInd().y - 1 > -1)
-                            {
-                                if (walls[enemyBuffer[i].getInd().x][enemyBuffer[i].getInd().y - 1].getWS() != Walled)
-                                {
-                                    distance[0] = sqrt(pow((enemyBuffer[i].getInd().x - enemyBuffer[i].getDest().x), 2) + pow((enemyBuffer[i].getInd().y - 1 - enemyBuffer[i].getDest().y), 2));
-                                }
-                            }
-                            if (enemyBuffer[i].getInd().x - 1 > -1)
-                            {
-                                if (walls[enemyBuffer[i].getInd().x - 1][enemyBuffer[i].getInd().y].getWS() != Walled)
-                                {
-                                    distance[1] = sqrt(pow((enemyBuffer[i].getInd().x - 1 - enemyBuffer[i].getDest().x), 2) + pow((enemyBuffer[i].getInd().y - enemyBuffer[i].getDest().y), 2));
-                                }
-                            }
-                            if (enemyBuffer[i].getInd().y + 1 < 20)
-                            {
-                                if (walls[enemyBuffer[i].getInd().x][enemyBuffer[i].getInd().y + 1].getWS() != Walled)
-                                {
-                                    distance[2] = sqrt(pow((enemyBuffer[i].getInd().x - enemyBuffer[i].getDest().x), 2) + pow((enemyBuffer[i].getInd().y + 1 - enemyBuffer[i].getDest().y), 2));
-                                }
-                            }
-                            if (enemyBuffer[i].getInd().x + 1 < 20)
-                            {
-                                if (walls[enemyBuffer[i].getInd().x + 1][enemyBuffer[i].getInd().y].getWS() != Walled)
-                                {
-                                    distance[3] = sqrt(pow((enemyBuffer[i].getInd().x + 1 - enemyBuffer[i].getDest().x), 2) + pow((enemyBuffer[i].getInd().y - enemyBuffer[i].getDest().y), 2));
-                                }
-                            }
-                            if (distance[0] == distance[1] and distance[0] != 100) //up left
-                            {
-                                if (enemyBuffer[i].getInd().x - 1 > -1 and enemyBuffer[i].getInd().y - 1 > -1)
-                                {
-                                    if (walls[enemyBuffer[i].getInd().x - 1][enemyBuffer[i].getInd().y - 1].getWS() != Walled)
-                                    {
-                                        //set point
-                                        enemyBuffer[i].setPoint(sf::Vector2i(enemyBuffer[i].getInd().x - 1, enemyBuffer[i].getInd().y - 1));
-                                    }
-                                    else
-                                    {
-                                        int rnd = rand() % 2;
-                                        if (rnd == 0)
-                                        {
-                                            //set first
-                                            enemyBuffer[i].setPoint(sf::Vector2i(enemyBuffer[i].getInd().x, enemyBuffer[i].getInd().y - 1));
-                                        }
-                                        else
-                                        {
-                                            //set last
-                                            enemyBuffer[i].setPoint(sf::Vector2i(enemyBuffer[i].getInd().x - 1, enemyBuffer[i].getInd().y));
-                                        }
-                                    }
-                                }
-                            }
-                            if (distance[2] == distance[1] and distance[2] != 100) //down left
-                            {
-                                if (enemyBuffer[i].getInd().x - 1 > -1 and enemyBuffer[i].getInd().y + 1 < 20)
-                                {
-                                    if (walls[enemyBuffer[i].getInd().x - 1][enemyBuffer[i].getInd().y + 1].getWS() != Walled)
-                                    {
-                                        enemyBuffer[i].setPoint(sf::Vector2i(enemyBuffer[i].getInd().x - 1, enemyBuffer[i].getInd().y + 1));
-                                    }
-                                    else
-                                    {
-                                        int rnd = rand() % 2;
-                                        if (rnd == 0)
-                                        {
-                                            //set first
-                                            enemyBuffer[i].setPoint(sf::Vector2i(enemyBuffer[i].getInd().x, enemyBuffer[i].getInd().y + 1));
-                                        }
-                                        else
-                                        {
-                                            //set last
-                                            enemyBuffer[i].setPoint(sf::Vector2i(enemyBuffer[i].getInd().x - 1, enemyBuffer[i].getInd().y));
-                                        }
-                                    }
-                                }
-                            }
-                            if (distance[2] == distance[3] and distance[2] != 100) //down right
-                            {
-                                if (enemyBuffer[i].getInd().x + 1 < 20 and enemyBuffer[i].getInd().y + 1 < 20)
-                                {
-                                    if (walls[enemyBuffer[i].getInd().x + 1][enemyBuffer[i].getInd().y + 1].getWS() != Walled)
-                                    {
-                                        enemyBuffer[i].setPoint(sf::Vector2i(enemyBuffer[i].getInd().x + 1, enemyBuffer[i].getInd().y + 1));
-                                    }
-                                    else
-                                    {
-                                        int rnd = rand() % 2;
-                                        if (rnd == 0)
-                                        {
-                                            //set first
-                                            enemyBuffer[i].setPoint(sf::Vector2i(enemyBuffer[i].getInd().x, enemyBuffer[i].getInd().y + 1));
-                                        }
-                                        else
-                                        {
-                                            //set last
-                                            enemyBuffer[i].setPoint(sf::Vector2i(enemyBuffer[i].getInd().x + 1, enemyBuffer[i].getInd().y));
-                                        }
-                                    }
-                                }
-                            }
-                            if (distance[0] == distance[3] and distance[0] != 100) //up right
-                            {
-                                if (enemyBuffer[i].getInd().x + 1 < 20 and enemyBuffer[i].getInd().y - 1 > -1)
-                                {
-                                    if (walls[enemyBuffer[i].getInd().x + 1][enemyBuffer[i].getInd().y - 1].getWS() != Walled)
-                                    {
-                                        enemyBuffer[i].setPoint(sf::Vector2i(enemyBuffer[i].getInd().x + 1, enemyBuffer[i].getInd().y - 1));
-                                    }
-                                    else
-                                    {
-                                        int rnd = rand() % 2;
-                                        if (rnd == 0)
-                                        {
-                                            //set first
-                                            enemyBuffer[i].setPoint(sf::Vector2i(enemyBuffer[i].getInd().x, enemyBuffer[i].getInd().y - 1));
-                                        }
-                                        else
-                                        {
-                                            //set last
-                                            enemyBuffer[i].setPoint(sf::Vector2i(enemyBuffer[i].getInd().x + 1, enemyBuffer[i].getInd().y));
-                                        }
-                                    }
-                                }
-                            }
-                            if (distance[0] < distance[1] and distance[0] < distance[2] and distance[0] < distance[3])
-                            {
-                                enemyBuffer[i].setPoint(sf::Vector2i(enemyBuffer[i].getInd().x, enemyBuffer[i].getInd().y - 1));
-                            }
-                            if (distance[1] < distance[0] and distance[1] < distance[2] and distance[1] < distance[3])
-                            {
-                                enemyBuffer[i].setPoint(sf::Vector2i(enemyBuffer[i].getInd().x - 1, enemyBuffer[i].getInd().y));
-                            }
-                            if (distance[2] < distance[1] and distance[2] < distance[0] and distance[2] < distance[3])
-                            {
-                                enemyBuffer[i].setPoint(sf::Vector2i(enemyBuffer[i].getInd().x, enemyBuffer[i].getInd().y + 1));
-                            }
-                            if (distance[3] < distance[1] and distance[3] < distance[2] and distance[3] < distance[0])
-                            {
-                                enemyBuffer[i].setPoint(sf::Vector2i(enemyBuffer[i].getInd().x + 1, enemyBuffer[i].getInd().y));
-                            }
+                            enemyBuffer[i].delFrstPoint();
                         }
                         else
                         {
-                            //moving to point
-
-                            //check hitboxes and distance to point, then move and update index
-                            if (enemyBuffer[i].getInd().y > enemyBuffer[i].getPoint().y)
-                            {
-                                enemyBuffer[i].move(sf::Vector2f(
-                                    0,
-                                    -1 * (100) * (1 / 100.f)
-                                ));
-                            }
-                            if (enemyBuffer[i].getInd().x > enemyBuffer[i].getPoint().x)
-                            {
-                                enemyBuffer[i].move(sf::Vector2f(
-                                    -1 * (100) * (1 / 100.f),
-                                    0
-                                ));
-                            }
-                            if (enemyBuffer[i].getInd().y < enemyBuffer[i].getPoint().y)
-                            {
-                                enemyBuffer[i].move(sf::Vector2f(
-                                    0,
-                                    1 * (100) * (1 / 100.f)
-                                ));
-                            }
-                            if (enemyBuffer[i].getInd().x < enemyBuffer[i].getPoint().x)
-                            {
-                                enemyBuffer[i].move(sf::Vector2f(
-                                    1 * (100) * (1 / 100.f),
-                                    0
-                                ));
-                            }
-                            if (enemyBuffer[i].getInd().x == enemyBuffer[i].getPoint().x)
-                            {
-                                enemyBuffer[i].setInd(sf::Vector2i(enemyBuffer[i].getPoint().x, enemyBuffer[i].getInd().y));
-                            }
-                            if (enemyBuffer[i].getInd().y == enemyBuffer[i].getPoint().y)
-                            {
-                                enemyBuffer[i].setInd(sf::Vector2i(enemyBuffer[i].getInd().x, enemyBuffer[i].getPoint().y));
-                            }
-
-
-                            int indx, indy;
+                            //move
+                            sf::Vector2f course;
+                            sf::Vector2f st;
+                            sf::Vector2f fn;
+                            st.x = enemyBuffer[i].getHitbox().getPosition().x;
+                            st.y = enemyBuffer[i].getHitbox().getPosition().y;
+                            fn.x = hitbox.getPosition().x - hitbox.getSize().x / 2 + hitbox.getSize().x / 40 + ((hitbox.getSize().x / 20) * enemyBuffer[i].getPoints()[0].x);
+                            fn.y = hitbox.getPosition().y - hitbox.getSize().y / 2 + hitbox.getSize().y / 40 + ((hitbox.getSize().y / 20) * enemyBuffer[i].getPoints()[0].y);
+                            enemyBuffer[i].move(sf::Vector2f(
+                                250.f * (1.f/ 100.f) * ((fn.x-st.x)/(abs(fn.x - st.x)+abs(fn.y - st.y))),
+                                250.f * (1.f/ 100.f) * ((fn.y-st.y)/(abs(fn.x - st.x)+abs(fn.y - st.y)))
+                            ));
+                            float indx, indy;
                             indx = (enemyBuffer[i].getHitbox().getPosition().x - (hitbox.getPosition().x - hitbox.getSize().x / 2)) / (hitbox.getSize().x / 20);
                             indy = (enemyBuffer[i].getHitbox().getPosition().y - (hitbox.getPosition().y - hitbox.getSize().y / 2)) / (hitbox.getSize().y / 20);
 
-                            enemyBuffer[i].setInd(sf::Vector2i(indx, indy));
+                            enemyBuffer[i].setInd(sf::Vector2f(indx, indy));
+
+                            //enemyBuffer[i].setPos(sf::Vector2f(
+                            //    ((enemyBuffer[i].getDest().x - enemyBuffer[i].getSprite().getPosition().x) / (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getSprite().getPosition().x) + abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getSprite().getPosition().y))),
+                            //    ((enemyBuffer[i].getDest().y - enemyBuffer[i].getSprite().getPosition().y) / (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getSprite().getPosition().x) + abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getSprite().getPosition().y)))
+                            //));
                         }
                     }
                 }
@@ -780,217 +783,7 @@ bool Tile::tickTile(Player* player, Tile tile)
                 //has been alerted and checks the dest
                 if (enemyBuffer[i].getBehav() == Check)
                 {
-                    enemyBuffer[i].setColor(sf::Color::Yellow);
-                    //if in dest
-                    if (abs(enemyBuffer[i].getDest().x - enemyBuffer[i].getInd().x) < 2 and abs(enemyBuffer[i].getDest().y - enemyBuffer[i].getInd().y) < 2 or enemyBuffer[i].getTime() > sf::seconds(10))
-                    {
-                        //set behav to reg
-                        enemyBuffer[i].setBehav(Regular);
-                    }
-                    else
-                    {
-                        //if in point
-                        if (enemyBuffer[i].getPoint() == enemyBuffer[i].getInd())
-                        {
-                            //enemyBuffer[i].restart();
-                            //choose new point
-                            int* distance = new int[4];
-                            for (int j = 0; j < 4; j++)
-                            {
-                                distance[j] = 100;
-                            }
-                            if (enemyBuffer[i].getInd().y - 1 > -1)
-                            {
-                                if (walls[enemyBuffer[i].getInd().x][enemyBuffer[i].getInd().y - 1].getWS() != Walled)
-                                {
-                                    distance[0] = sqrt(pow((enemyBuffer[i].getInd().x - enemyBuffer[i].getDest().x), 2) + pow((enemyBuffer[i].getInd().y - 1 - enemyBuffer[i].getDest().y), 2));
-                                }
-                            }
-                            if (enemyBuffer[i].getInd().x - 1 > -1)
-                            {
-                                if (walls[enemyBuffer[i].getInd().x - 1][enemyBuffer[i].getInd().y].getWS() != Walled)
-                                {
-                                    distance[1] = sqrt(pow((enemyBuffer[i].getInd().x - 1 - enemyBuffer[i].getDest().x), 2) + pow((enemyBuffer[i].getInd().y - enemyBuffer[i].getDest().y), 2));
-                                }
-                            }
-                            if (enemyBuffer[i].getInd().y + 1 < 20)
-                            {
-                                if (walls[enemyBuffer[i].getInd().x][enemyBuffer[i].getInd().y + 1].getWS() != Walled)
-                                {
-                                    distance[2] = sqrt(pow((enemyBuffer[i].getInd().x - enemyBuffer[i].getDest().x), 2) + pow((enemyBuffer[i].getInd().y + 1 - enemyBuffer[i].getDest().y), 2));
-                                }
-                            }
-                            if (enemyBuffer[i].getInd().x + 1 < 20)
-                            {
-                                if (walls[enemyBuffer[i].getInd().x + 1][enemyBuffer[i].getInd().y].getWS() != Walled)
-                                {
-                                    distance[3] = sqrt(pow((enemyBuffer[i].getInd().x + 1 - enemyBuffer[i].getDest().x), 2) + pow((enemyBuffer[i].getInd().y - enemyBuffer[i].getDest().y), 2));
-                                }
-                            }
-                            if (distance[0] == distance[1] and distance[0] != 100) //up left
-                            {
-                                if (enemyBuffer[i].getInd().x - 1 > -1 and enemyBuffer[i].getInd().y - 1 > -1)
-                                {
-                                    if (walls[enemyBuffer[i].getInd().x - 1][enemyBuffer[i].getInd().y - 1].getWS() != Walled)
-                                    {
-                                        //set point
-                                        enemyBuffer[i].setPoint(sf::Vector2i(enemyBuffer[i].getInd().x - 1, enemyBuffer[i].getInd().y - 1));
-                                    }
-                                    else
-                                    {
-                                        int rnd = rand() % 2;
-                                        if (rnd == 0)
-                                        {
-                                            //set first
-                                            enemyBuffer[i].setPoint(sf::Vector2i(enemyBuffer[i].getInd().x, enemyBuffer[i].getInd().y - 1));
-                                        }
-                                        else
-                                        {
-                                            //set last
-                                            enemyBuffer[i].setPoint(sf::Vector2i(enemyBuffer[i].getInd().x - 1, enemyBuffer[i].getInd().y));
-                                        }
-                                    }
-                                }
-                            }
-                            if (distance[2] == distance[1] and distance[2] != 100) //down left
-                            {
-                                if (enemyBuffer[i].getInd().x - 1 > -1 and enemyBuffer[i].getInd().y + 1 < 20)
-                                {
-                                    if (walls[enemyBuffer[i].getInd().x - 1][enemyBuffer[i].getInd().y + 1].getWS() != Walled)
-                                    {
-                                        enemyBuffer[i].setPoint(sf::Vector2i(enemyBuffer[i].getInd().x - 1, enemyBuffer[i].getInd().y + 1));
-                                    }
-                                    else
-                                    {
-                                        int rnd = rand() % 2;
-                                        if (rnd == 0)
-                                        {
-                                            //set first
-                                            enemyBuffer[i].setPoint(sf::Vector2i(enemyBuffer[i].getInd().x, enemyBuffer[i].getInd().y + 1));
-                                        }
-                                        else
-                                        {
-                                            //set last
-                                            enemyBuffer[i].setPoint(sf::Vector2i(enemyBuffer[i].getInd().x - 1, enemyBuffer[i].getInd().y));
-                                        }
-                                    }
-                                }
-                            }
-                            if (distance[2] == distance[3] and distance[2] != 100) //down right
-                            {
-                                if (enemyBuffer[i].getInd().x + 1 < 20 and enemyBuffer[i].getInd().y + 1 < 20)
-                                {
-                                    if (walls[enemyBuffer[i].getInd().x + 1][enemyBuffer[i].getInd().y + 1].getWS() != Walled)
-                                    {
-                                        enemyBuffer[i].setPoint(sf::Vector2i(enemyBuffer[i].getInd().x + 1, enemyBuffer[i].getInd().y + 1));
-                                    }
-                                    else
-                                    {
-                                        int rnd = rand() % 2;
-                                        if (rnd == 0)
-                                        {
-                                            //set first
-                                            enemyBuffer[i].setPoint(sf::Vector2i(enemyBuffer[i].getInd().x, enemyBuffer[i].getInd().y + 1));
-                                        }
-                                        else
-                                        {
-                                            //set last
-                                            enemyBuffer[i].setPoint(sf::Vector2i(enemyBuffer[i].getInd().x + 1, enemyBuffer[i].getInd().y));
-                                        }
-                                    }
-                                }
-                            }
-                            if (distance[0] == distance[3] and distance[0] != 100) //up right
-                            {
-                                if (enemyBuffer[i].getInd().x + 1 < 20 and enemyBuffer[i].getInd().y - 1 > -1)
-                                {
-                                    if (walls[enemyBuffer[i].getInd().x + 1][enemyBuffer[i].getInd().y - 1].getWS() != Walled)
-                                    {
-                                        enemyBuffer[i].setPoint(sf::Vector2i(enemyBuffer[i].getInd().x + 1, enemyBuffer[i].getInd().y - 1));
-                                    }
-                                    else
-                                    {
-                                        int rnd = rand() % 2;
-                                        if (rnd == 0)
-                                        {
-                                            //set first
-                                            enemyBuffer[i].setPoint(sf::Vector2i(enemyBuffer[i].getInd().x, enemyBuffer[i].getInd().y - 1));
-                                        }
-                                        else
-                                        {
-                                            //set last
-                                            enemyBuffer[i].setPoint(sf::Vector2i(enemyBuffer[i].getInd().x + 1, enemyBuffer[i].getInd().y));
-                                        }
-                                    }
-                                }
-                            }
-                            if (distance[0] < distance[1] and distance[0] < distance[2] and distance[0] < distance[3])
-                            {
-                                enemyBuffer[i].setPoint(sf::Vector2i(enemyBuffer[i].getInd().x, enemyBuffer[i].getInd().y - 1));
-                            }
-                            if (distance[1] < distance[0] and distance[1] < distance[2] and distance[1] < distance[3])
-                            {
-                                enemyBuffer[i].setPoint(sf::Vector2i(enemyBuffer[i].getInd().x - 1, enemyBuffer[i].getInd().y));
-                            }
-                            if (distance[2] < distance[1] and distance[2] < distance[0] and distance[2] < distance[3])
-                            {
-                                enemyBuffer[i].setPoint(sf::Vector2i(enemyBuffer[i].getInd().x, enemyBuffer[i].getInd().y + 1));
-                            }
-                            if (distance[3] < distance[1] and distance[3] < distance[2] and distance[3] < distance[0])
-                            {
-                                enemyBuffer[i].setPoint(sf::Vector2i(enemyBuffer[i].getInd().x + 1, enemyBuffer[i].getInd().y));
-                            }
-                        }
-                        else
-                        {
-                            //moving to point
-
-                            //check hitboxes and distance to point, then move and update index
-                            if (enemyBuffer[i].getInd().y > enemyBuffer[i].getPoint().y)
-                            {
-                                enemyBuffer[i].move(sf::Vector2f(
-                                    0,
-                                    -1 * (100) * (1 / 100.f)
-                                ));
-                            }
-                            if (enemyBuffer[i].getInd().x > enemyBuffer[i].getPoint().x)
-                            {
-                                enemyBuffer[i].move(sf::Vector2f(
-                                    -1 * (100) * (1 / 100.f),
-                                    0
-                                ));
-                            }
-                            if (enemyBuffer[i].getInd().y < enemyBuffer[i].getPoint().y)
-                            {
-                                enemyBuffer[i].move(sf::Vector2f(
-                                    0,
-                                    1 * (100) * (1 / 100.f)
-                                ));
-                            }
-                            if (enemyBuffer[i].getInd().x < enemyBuffer[i].getPoint().x)
-                            {
-                                enemyBuffer[i].move(sf::Vector2f(
-                                    1 * (100) * (1 / 100.f),
-                                    0
-                                ));
-                            }
-                            if (enemyBuffer[i].getInd().x == enemyBuffer[i].getPoint().x)
-                            {
-                                enemyBuffer[i].setInd(sf::Vector2i(enemyBuffer[i].getPoint().x, enemyBuffer[i].getInd().y));
-                            }
-                            if (enemyBuffer[i].getInd().y == enemyBuffer[i].getPoint().y)
-                            {
-                                enemyBuffer[i].setInd(sf::Vector2i(enemyBuffer[i].getInd().x, enemyBuffer[i].getPoint().y));
-                            }
-
-
-                            int indx, indy;
-                            indx = (enemyBuffer[i].getHitbox().getPosition().x - (hitbox.getPosition().x - hitbox.getSize().x / 2)) / (hitbox.getSize().x / 20);
-                            indy = (enemyBuffer[i].getHitbox().getPosition().y - (hitbox.getPosition().y - hitbox.getSize().y / 2)) / (hitbox.getSize().y / 20);
-
-                            enemyBuffer[i].setInd(sf::Vector2i(indx, indy));
-                        }
-                    }
+                    enemyBuffer[i].setBehav(Regular);
                 }
 
                 //fighting
@@ -1274,4 +1067,1419 @@ void Tile::setRed()
 void Tile::setYellow()
 {
     body.setFillColor(sf::Color::Yellow);
+}
+
+std::vector<sf::Vector2i> Tile::makePath(Enemy en)
+{
+    std::vector<sf::Vector2i> result;
+    std::vector<sf::Vector2i> buffer;
+    enemyPath.clear();
+    enemyPath.push_back(sf::Vector2i((en.getInd())));
+    if (makePoints(sf::Vector2i(en.getInd()), en.getDest(), 0))
+    {
+        enemyPath.push_back(en.getDest());
+        for (int i = 0; i < enemyPath.size() - 1; i++)
+        {
+            //result.push_back(enemyPath[i]);
+            buffer = makeLine(enemyPath[i], enemyPath[i + 1]);
+            for (int i = 0; i < buffer.size(); i++)
+            {
+                result.push_back(buffer[i]);
+            }
+        }
+        result.push_back(enemyPath[enemyPath.size() - 1]);
+    }
+    else
+    {
+        result.clear();
+    }
+    return result;
+}
+
+std::vector<sf::Vector2i> Tile::makeLine(sf::Vector2i p1, sf::Vector2i p2)
+{
+    std::vector<sf::Vector2i> result;
+    std::vector<sf::Vector2i> buffer;
+    std::vector<sf::Vector2i> buffer2;
+    result.clear();
+    buffer.clear();
+    buffer2.clear();
+    //input is two point on same line
+    //needed to make a path from one to another
+    if (p1.x == p2.x and p1.y == p2.y)
+    {
+        return result;
+    }
+    else
+    {
+        result.push_back(p1);
+        //vertical
+        if (p1.x == p2.x)
+        {
+            //up
+            if (p1.y > p2.y)
+            {
+                if (walls[p1.x][p1.y - 1].getWS() != Walled)
+                {
+                    buffer = makeLine(sf::Vector2i(p1.x,p1.y - 1), p2);
+                    for (int i = 0; i < buffer.size(); i++)
+                    {
+                        result.push_back(buffer[i]);
+                    }
+                }
+                else
+                {
+                    buffer = goAround(p1, p2, 0);
+                    for (int i = 0; i < buffer.size(); i++)
+                    {
+                        result.push_back(buffer[i]);
+                    }
+                    buffer2 = makeLine(result[result.size() - 1], p2);
+                    for (int i = 0; i < buffer2.size(); i++)
+                    {
+                        result.push_back(buffer2[i]);
+                    }
+                }
+            }
+            //down
+            if (p1.y < p2.y)
+            {
+                if (walls[p1.x][p1.y + 1].getWS() != Walled)
+                {
+                    buffer = makeLine(sf::Vector2i(p1.x, p1.y + 1), p2);
+                    for (int i = 0; i < buffer.size(); i++)
+                    {
+                        result.push_back(buffer[i]);
+                    }
+                }
+                else
+                {
+                    buffer = goAround(p1, p2, 0);
+                    for (int i = 0; i < buffer.size(); i++)
+                    {
+                        result.push_back(buffer[i]);
+                    }
+                    buffer2 = makeLine(result[result.size() - 1], p2);
+                    for (int i = 0; i < buffer2.size(); i++)
+                    {
+                        result.push_back(buffer2[i]);
+                    }
+                }
+            }
+        }
+        //horisontal
+
+        if (p1.y == p2.y)
+        {
+            //left
+            if (p1.x > p2.x)
+            {
+                if (walls[p1.x - 1][p1.y].getWS() != Walled)
+                {
+                    buffer = makeLine(sf::Vector2i(p1.x - 1, p1.y), p2);
+                    for (int i = 0; i < buffer.size(); i++)
+                    {
+                        result.push_back(buffer[i]);
+                    }
+                }
+                else
+                {
+                    buffer = goAround(p1, p2, 1);
+                    for (int i = 0; i < buffer.size(); i++)
+                    {
+                        result.push_back(buffer[i]);
+                    }
+                    buffer2 = makeLine(result[result.size() - 1], p2);
+                    for (int i = 0; i < buffer2.size(); i++)
+                    {
+                        result.push_back(buffer2[i]);
+                    }
+                }
+            }
+            //right
+            if (p1.x < p2.x)
+            {
+                if (walls[p1.x + 1][p1.y].getWS() != Walled)
+                {
+                    buffer = makeLine(sf::Vector2i(p1.x + 1, p1.y), p2);
+                    for (int i = 0; i < buffer.size(); i++)
+                    {
+                        result.push_back(buffer[i]);
+                    }
+                }
+                else
+                {
+                    buffer = goAround(p1, p2, 1);
+                    for (int i = 0; i < buffer.size(); i++)
+                    {
+                        result.push_back(buffer[i]);
+                    }
+                    buffer2 = makeLine(result[result.size() - 1], p2);
+                    for (int i = 0; i < buffer2.size(); i++)
+                    {
+                        result.push_back(buffer2[i]);
+                    }
+                }
+            }
+        }
+    }
+    return result;
+}
+
+std::vector<sf::Vector2i> Tile::goAround(sf::Vector2i p1, sf::Vector2i p2, int dir)
+{
+    switch (dir)
+    {
+        //ver
+    case 0:
+    {
+        std::vector<sf::Vector2i> left;
+        std::vector<sf::Vector2i> right;
+        left = pathFind(p1, p2, 1);
+        right = pathFind(p1, p2, 3);
+        if (left.size() < right.size())
+        {
+            return left;
+        }
+        else
+        {
+            return right;
+        }
+        break;
+    }
+    //hor
+    case 1:
+    {
+        std::vector<sf::Vector2i> up;
+        std::vector<sf::Vector2i> down;
+        up = pathFind(p1, p2, 0);
+        down = pathFind(p1, p2, 2);
+        if (up.size() < down.size())
+        {
+            return up;
+        }
+        else
+        {
+            return down;
+        }
+        break;
+    }
+    default:
+        break;
+    }
+}
+
+std::vector<sf::Vector2i> Tile::pathFind(sf::Vector2i p1, sf::Vector2i p2, int dir)
+{
+    sf::Vector2i original;
+    original.x = p1.x;
+    original.y = p1.y;
+    int len = 0;
+    std::vector<sf::Vector2i> result;
+    std::vector<sf::Vector2i> visited;
+    switch (dir)
+    {
+        //up
+    case 0:
+    {
+        bool moved = false;
+        //go up
+        visited.push_back(p1);
+        p1.y = p1.y - 1;
+        result.push_back(p1);
+        len++;
+        if (p1.x > p2.x)
+        {
+            while (len < 30)
+            {
+                moved = false;
+                //check wall in order down left up right 
+
+                //if down is clear
+                if (p1.y < 19)
+                {
+                    if (walls[p1.x][p1.y + 1].getWS() != Walled and !moved)
+                    {
+                        for (int i = 0; i < visited.size(); i++)
+                        {
+                            if (visited[i].x == p1.x and visited[i].y == p1.y)
+                            {
+                                break;
+                            }
+                            if (i == visited.size() - 1)
+                            {
+                                //go down
+                                visited.push_back(p1);
+                                p1.y = p1.y + 1;
+                                result.push_back(p1);
+                                moved = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+                //if left is clear
+                if (p1.x > 0)
+                {
+                    if (walls[p1.x - 1][p1.y].getWS() != Walled and !moved)
+                    {
+                        for (int i = 0; i < visited.size(); i++)
+                        {
+                            if (visited[i].x == p1.x and visited[i].y == p1.y)
+                            {
+                                break;
+                            }
+                            if (i == visited.size() - 1)
+                            {
+                                //go left
+                                visited.push_back(p1);
+                                p1.x = p1.x - 1;
+                                result.push_back(p1);
+                                moved = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+                //if up is clear
+                if (p1.y > 0)
+                {
+                    if (walls[p1.x][p1.y - 1].getWS() != Walled and !moved)
+                    {
+                        for (int i = 0; i < visited.size(); i++)
+                        {
+                            if (visited[i].x == p1.x and visited[i].y == p1.y)
+                            {
+                                break;
+                            }
+                            if (i == visited.size() - 1)
+                            {
+                                //go up
+                                visited.push_back(p1);
+                                p1.y = p1.y - 1;
+                                result.push_back(p1);
+                                moved = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+                //if right is clear
+                if (p1.x < 19)
+                {
+                    if (walls[p1.x + 1][p1.y].getWS() != Walled and !moved)
+                    {
+                        for (int i = 0; i < visited.size(); i++)
+                        {
+                            if (visited[i].x == p1.x and visited[i].y == p1.y)
+                            {
+                                break;
+                            }
+                            if (i == visited.size() - 1)
+                            {
+                                //go right
+                                visited.push_back(p1);
+                                p1.x = p1.x + 1;
+                                result.push_back(p1);
+                                moved = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+                len++;
+                if (p1.y == p2.y)
+                {
+                    if (original.x > p2.x)
+                    {
+                        if (p1.x > original.x)
+                        {
+                            for (int i = 0; i < 100; i++)
+                            {
+                                result.push_back(p1);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (p1.x < original.x)
+                        {
+                            for (int i = 0; i < 100; i++)
+                            {
+                                result.push_back(p1);
+                            }
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+        else
+        {
+            while (len < 30)
+            {
+                moved = false;
+                //check wall in order down right up left 
+
+                //if down is clear
+                if (p1.y < 19)
+                {
+                    if (walls[p1.x][p1.y + 1].getWS() != Walled and !moved)
+                    {
+                        for (int i = 0; i < visited.size(); i++)
+                        {
+                            if (visited[i].x == p1.x and visited[i].y == p1.y)
+                            {
+                                break;
+                            }
+                            if (i == visited.size() - 1)
+                            {
+                                //go down
+                                visited.push_back(p1);
+                                p1.y = p1.y + 1;
+                                result.push_back(p1);
+                                moved = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+                //if right is clear
+                if (p1.x < 19)
+                {
+                    if (walls[p1.x + 1][p1.y].getWS() != Walled and !moved)
+                    {
+                        for (int i = 0; i < visited.size(); i++)
+                        {
+                            if (visited[i].x == p1.x and visited[i].y == p1.y)
+                            {
+                                break;
+                            }
+                            if (i == visited.size() - 1)
+                            {
+                                //go right
+                                visited.push_back(p1);
+                                p1.x = p1.x + 1;
+                                result.push_back(p1);
+                                moved = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+                //if up is clear
+                if (p1.y > 0)
+                {
+                    if (walls[p1.x][p1.y - 1].getWS() != Walled and !moved)
+                    {
+                        for (int i = 0; i < visited.size(); i++)
+                        {
+                            if (visited[i].x == p1.x and visited[i].y == p1.y)
+                            {
+                                break;
+                            }
+                            if (i == visited.size() - 1)
+                            {
+                                //go up
+                                visited.push_back(p1);
+                                p1.y = p1.y - 1;
+                                result.push_back(p1);
+                                moved = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+                //if left is clear
+                if (p1.x > 0)
+                {
+                    if (walls[p1.x - 1][p1.y].getWS() != Walled and !moved)
+                    {
+                        for (int i = 0; i < visited.size(); i++)
+                        {
+                            if (visited[i].x == p1.x and visited[i].y == p1.y)
+                            {
+                                break;
+                            }
+                            if (i == visited.size() - 1)
+                            {
+                                //go left
+                                visited.push_back(p1);
+                                p1.x = p1.x - 1;
+                                result.push_back(p1);
+                                moved = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+                len++;
+                if (p1.y == p2.y)
+                {
+                    if (original.x > p2.x)
+                    {
+                        if (p1.x > original.x)
+                        {
+                            for (int i = 0; i < 100; i++)
+                            {
+                                result.push_back(p1);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (p1.x < original.x)
+                        {
+                            for (int i = 0; i < 100; i++)
+                            {
+                                result.push_back(p1);
+                            }
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+        return result;
+        break;
+    }
+    //left
+    case 1:
+    {
+        bool moved = false;
+        //go right
+        visited.push_back(p1);
+        p1.x = p1.x - 1;
+        result.push_back(p1);
+        len++;
+
+
+        if (p1.y > p2.y)
+        {
+            while (len < 30)
+            {
+                moved = false;
+                //check wall in order right up left down
+
+                //if right is clear
+                if (p1.x < 19)
+                {
+                    if (walls[p1.x + 1][p1.y].getWS() != Walled and !moved)
+                    {
+                        for (int i = 0; i < visited.size(); i++)
+                        {
+                            if (visited[i].x == p1.x and visited[i].y == p1.y)
+                            {
+                                break;
+                            }
+                            if (i == visited.size() - 1)
+                            {
+                                //go right
+                                visited.push_back(p1);
+                                p1.x = p1.x + 1;
+                                result.push_back(p1);
+                                moved = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+                //if up is clear
+                if (p1.y > 0)
+                {
+                    if (walls[p1.x][p1.y - 1].getWS() != Walled and !moved)
+                    {
+                        for (int i = 0; i < visited.size(); i++)
+                        {
+                            if (visited[i].x == p1.x and visited[i].y == p1.y)
+                            {
+                                break;
+                            }
+                            if (i == visited.size() - 1)
+                            {
+                                //go up
+                                visited.push_back(p1);
+                                p1.y = p1.y - 1;
+                                result.push_back(p1);
+                                moved = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+                //if left is clear
+                if (p1.x > 0)
+                {
+                    if (walls[p1.x - 1][p1.y].getWS() != Walled and !moved)
+                    {
+                        for (int i = 0; i < visited.size(); i++)
+                        {
+                            if (visited[i].x == p1.x and visited[i].y == p1.y)
+                            {
+                                break;
+                            }
+                            if (i == visited.size() - 1)
+                            {
+                                //go left
+                                visited.push_back(p1);
+                                p1.x = p1.x - 1;
+                                result.push_back(p1);
+                                moved = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+                //if down is clear
+                if (p1.y < 19)
+                {
+                    if (walls[p1.x][p1.y + 1].getWS() != Walled and !moved)
+                    {
+                        for (int i = 0; i < visited.size(); i++)
+                        {
+                            if (visited[i].x == p1.x and visited[i].y == p1.y)
+                            {
+                                break;
+                            }
+                            if (i == visited.size() - 1)
+                            {
+                                //go down
+                                visited.push_back(p1);
+                                p1.y = p1.y + 1;
+                                result.push_back(p1);
+                                moved = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                len++;
+                if (p1.x == p2.x)
+                {
+                    if (original.y > p2.y)
+                    {
+                        if (p1.y > original.y)
+                        {
+                            for (int i = 0; i < 100; i++)
+                            {
+                                result.push_back(p1);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (p1.y < original.y)
+                        {
+                            for (int i = 0; i < 100; i++)
+                            {
+                                result.push_back(p1);
+                            }
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+        else
+        {
+            while (len < 30)
+            {
+                moved = false;
+                //check wall in order right down left up 
+
+                //if right is clear
+                if (p1.x < 19)
+                {
+                    if (walls[p1.x + 1][p1.y].getWS() != Walled and !moved)
+                    {
+                        for (int i = 0; i < visited.size(); i++)
+                        {
+                            if (visited[i].x == p1.x and visited[i].y == p1.y)
+                            {
+                                break;
+                            }
+                            if (i == visited.size() - 1)
+                            {
+                                //go right
+                                visited.push_back(p1);
+                                p1.x = p1.x + 1;
+                                result.push_back(p1);
+                                moved = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+                //if down is clear
+                if (p1.y < 19)
+                {
+                    if (walls[p1.x][p1.y + 1].getWS() != Walled and !moved)
+                    {
+                        for (int i = 0; i < visited.size(); i++)
+                        {
+                            if (visited[i].x == p1.x and visited[i].y == p1.y)
+                            {
+                                break;
+                            }
+                            if (i == visited.size() - 1)
+                            {
+                                //go down
+                                visited.push_back(p1);
+                                p1.y = p1.y + 1;
+                                result.push_back(p1);
+                                moved = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+                //if left is clear
+                if (p1.x > 0)
+                {
+                    if (walls[p1.x - 1][p1.y].getWS() != Walled and !moved)
+                    {
+                        for (int i = 0; i < visited.size(); i++)
+                        {
+                            if (visited[i].x == p1.x and visited[i].y == p1.y)
+                            {
+                                break;
+                            }
+                            if (i == visited.size() - 1)
+                            {
+                                //go left
+                                visited.push_back(p1);
+                                p1.x = p1.x - 1;
+                                result.push_back(p1);
+                                moved = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+                //if up is clear
+                if (p1.y > 0)
+                {
+                    if (walls[p1.x][p1.y - 1].getWS() != Walled and !moved)
+                    {
+                        for (int i = 0; i < visited.size(); i++)
+                        {
+                            if (visited[i].x == p1.x and visited[i].y == p1.y)
+                            {
+                                break;
+                            }
+                            if (i == visited.size() - 1)
+                            {
+                                //go up
+                                visited.push_back(p1);
+                                p1.y = p1.y - 1;
+                                result.push_back(p1);
+                                moved = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+                len++;
+                if (p1.x == p2.x)
+                {
+                    if (original.y > p2.y)
+                    {
+                        if (p1.y > original.y)
+                        {
+                            for (int i = 0; i < 100; i++)
+                            {
+                                result.push_back(p1);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (p1.y < original.y)
+                        {
+                            for (int i = 0; i < 100; i++)
+                            {
+                                result.push_back(p1);
+                            }
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+        return result;
+        break;
+    }
+    //down
+    case 2:
+    {
+        bool moved = false;
+        //go down
+        visited.push_back(p1);
+        p1.y = p1.y + 1;
+        result.push_back(p1);
+        len++;
+        if (p1.x > p2.x)
+        {
+            while (len < 30)
+            {
+                moved = false;
+                //check wall in order up left down right 
+
+                //if up is clear
+                if (p1.y > 0)
+                {
+                    if (walls[p1.x][p1.y - 1].getWS() != Walled and !moved)
+                    {
+                        for (int i = 0; i < visited.size(); i++)
+                        {
+                            if (visited[i].x == p1.x and visited[i].y == p1.y)
+                            {
+                                break;
+                            }
+                            if (i == visited.size() - 1)
+                            {
+                                //go up
+                                visited.push_back(p1);
+                                p1.y = p1.y - 1;
+                                result.push_back(p1);
+                                moved = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+                //if left is clear
+                if (p1.x > 0)
+                {
+                    if (walls[p1.x - 1][p1.y].getWS() != Walled and !moved)
+                    {
+                        for (int i = 0; i < visited.size(); i++)
+                        {
+                            if (visited[i].x == p1.x and visited[i].y == p1.y)
+                            {
+                                break;
+                            }
+                            if (i == visited.size() - 1)
+                            {
+                                //go left
+                                visited.push_back(p1);
+                                p1.x = p1.x - 1;
+                                result.push_back(p1);
+                                moved = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+                //if down is clear
+                if (p1.y < 19)
+                {
+                    if (walls[p1.x][p1.y + 1].getWS() != Walled and !moved)
+                    {
+                        for (int i = 0; i < visited.size(); i++)
+                        {
+                            if (visited[i].x == p1.x and visited[i].y == p1.y)
+                            {
+                                break;
+                            }
+                            if (i == visited.size() - 1)
+                            {
+                                //go down
+                                visited.push_back(p1);
+                                p1.y = p1.y + 1;
+                                result.push_back(p1);
+                                moved = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+                //if right is clear
+                if (p1.x < 19)
+                {
+                    if (walls[p1.x + 1][p1.y].getWS() != Walled and !moved)
+                    {
+                        for (int i = 0; i < visited.size(); i++)
+                        {
+                            if (visited[i].x == p1.x and visited[i].y == p1.y)
+                            {
+                                break;
+                            }
+                            if (i == visited.size() - 1)
+                            {
+                                //go right
+                                visited.push_back(p1);
+                                p1.x = p1.x + 1;
+                                result.push_back(p1);
+                                moved = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+                len++;
+                if (p1.y == p2.y)
+                {
+                    if (original.x > p2.x)
+                    {
+                        if (p1.x > original.x)
+                        {
+                            for (int i = 0; i < 100; i++)
+                            {
+                                result.push_back(p1);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (p1.x < original.x)
+                        {
+                            for (int i = 0; i < 100; i++)
+                            {
+                                result.push_back(p1);
+                            }
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+        else
+        {
+            while (len < 30)
+            {
+                moved = false;
+                //check wall in order up right down left 
+
+                //if up is clear
+                if (p1.y > 0)
+                {
+                    if (walls[p1.x][p1.y - 1].getWS() != Walled and !moved)
+                    {
+                        for (int i = 0; i < visited.size(); i++)
+                        {
+                            if (visited[i].x == p1.x and visited[i].y == p1.y)
+                            {
+                                break;
+                            }
+                            if (i == visited.size() - 1)
+                            {
+                                //go up
+                                visited.push_back(p1);
+                                p1.y = p1.y - 1;
+                                result.push_back(p1);
+                                moved = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+                //if right is clear
+                if (p1.x < 19)
+                {
+                    if (walls[p1.x + 1][p1.y].getWS() != Walled and !moved)
+                    {
+                        for (int i = 0; i < visited.size(); i++)
+                        {
+                            if (visited[i].x == p1.x and visited[i].y == p1.y)
+                            {
+                                break;
+                            }
+                            if (i == visited.size() - 1)
+                            {
+                                //go right
+                                visited.push_back(p1);
+                                p1.x = p1.x + 1;
+                                result.push_back(p1);
+                                moved = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+                //if down is clear
+                if (p1.y < 19)
+                {
+                    if (walls[p1.x][p1.y + 1].getWS() != Walled and !moved)
+                    {
+                        for (int i = 0; i < visited.size(); i++)
+                        {
+                            if (visited[i].x == p1.x and visited[i].y == p1.y)
+                            {
+                                break;
+                            }
+                            if (i == visited.size() - 1)
+                            {
+                                //go down
+                                visited.push_back(p1);
+                                p1.y = p1.y + 1;
+                                result.push_back(p1);
+                                moved = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+                //if left is clear
+                if (p1.x > 0)
+                {
+                    if (walls[p1.x - 1][p1.y].getWS() != Walled and !moved)
+                    {
+                        for (int i = 0; i < visited.size(); i++)
+                        {
+                            if (visited[i].x == p1.x and visited[i].y == p1.y)
+                            {
+                                break;
+                            }
+                            if (i == visited.size() - 1)
+                            {
+                                //go left
+                                visited.push_back(p1);
+                                p1.x = p1.x - 1;
+                                result.push_back(p1);
+                                moved = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+                len++;
+                if (p1.y == p2.y)
+                {
+                    if (original.x > p2.x)
+                    {
+                        if (p1.x > original.x)
+                        {
+                            for (int i = 0; i < 100; i++)
+                            {
+                                result.push_back(p1);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (p1.x < original.x)
+                        {
+                            for (int i = 0; i < 100; i++)
+                            {
+                                result.push_back(p1);
+                            }
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+        return result;
+        break;
+    }
+    //right
+    case 3:
+    {
+        bool moved = false;
+        //go left
+        visited.push_back(p1);
+        p1.x = p1.x - 1;
+        result.push_back(p1);
+        len++;
+
+        if (p1.y > p2.y)
+        {
+            while (len < 30)
+            {
+                moved = false;
+                //check wall in order left up right down 
+
+                //if left is clear
+                if (p1.x > 0)
+                {
+                    if (walls[p1.x - 1][p1.y].getWS() != Walled and !moved)
+                    {
+                        for (int i = 0; i < visited.size(); i++)
+                        {
+                            if (visited[i].x == p1.x and visited[i].y == p1.y)
+                            {
+                                break;
+                            }
+                            if (i == visited.size() - 1)
+                            {
+                                //go left
+                                visited.push_back(p1);
+                                p1.x = p1.x - 1;
+                                result.push_back(p1);
+                                moved = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+                //if up is clear
+                if (p1.y > 0)
+                {
+                    if (walls[p1.x][p1.y - 1].getWS() != Walled and !moved)
+                    {
+                        for (int i = 0; i < visited.size(); i++)
+                        {
+                            if (visited[i].x == p1.x and visited[i].y == p1.y)
+                            {
+                                break;
+                            }
+                            if (i == visited.size() - 1)
+                            {
+                                //go up
+                                visited.push_back(p1);
+                                p1.y = p1.y - 1;
+                                result.push_back(p1);
+                                moved = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+                //if right is clear
+                if (p1.x < 19)
+                {
+                    if (walls[p1.x + 1][p1.y].getWS() != Walled and !moved)
+                    {
+                        for (int i = 0; i < visited.size(); i++)
+                        {
+                            if (visited[i].x == p1.x and visited[i].y == p1.y)
+                            {
+                                break;
+                            }
+                            if (i == visited.size() - 1)
+                            {
+                                //go right
+                                visited.push_back(p1);
+                                p1.x = p1.x + 1;
+                                result.push_back(p1);
+                                moved = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+                //if down is clear
+                if (p1.y < 19)
+                {
+                    if (walls[p1.x][p1.y + 1].getWS() != Walled and !moved)
+                    {
+                        for (int i = 0; i < visited.size(); i++)
+                        {
+                            if (visited[i].x == p1.x and visited[i].y == p1.y)
+                            {
+                                break;
+                            }
+                            if (i == visited.size() - 1)
+                            {
+                                //go down
+                                visited.push_back(p1);
+                                p1.y = p1.y + 1;
+                                result.push_back(p1);
+                                moved = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                len++;
+                if (p1.x == p2.x)
+                {
+                    if (original.y > p2.y)
+                    {
+                        if (p1.y > original.y)
+                        {
+                            for (int i = 0; i < 100; i++)
+                            {
+                                result.push_back(p1);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (p1.y < original.y)
+                        {
+                            for (int i = 0; i < 100; i++)
+                            {
+                                result.push_back(p1);
+                            }
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+        else
+        {
+            while (len < 30)
+            {
+                moved = false;
+                //check wall in order left down right up 
+
+                //if left is clear
+                if (p1.x > 0)
+                {
+                    if (walls[p1.x - 1][p1.y].getWS() != Walled and !moved)
+                    {
+                        for (int i = 0; i < visited.size(); i++)
+                        {
+                            if (visited[i].x == p1.x and visited[i].y == p1.y)
+                            {
+                                break;
+                            }
+                            if (i == visited.size() - 1)
+                            {
+                                //go left
+                                visited.push_back(p1);
+                                p1.x = p1.x - 1;
+                                result.push_back(p1);
+                                moved = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+                //if down is clear
+                if (p1.y < 19)
+                {
+                    if (walls[p1.x][p1.y + 1].getWS() != Walled and !moved)
+                    {
+                        for (int i = 0; i < visited.size(); i++)
+                        {
+                            if (visited[i].x == p1.x and visited[i].y == p1.y)
+                            {
+                                break;
+                            }
+                            if (i == visited.size() - 1)
+                            {
+                                //go down
+                                visited.push_back(p1);
+                                p1.y = p1.y + 1;
+                                result.push_back(p1);
+                                moved = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+                //if right is clear
+                if (p1.x < 19)
+                {
+                    if (walls[p1.x + 1][p1.y].getWS() != Walled and !moved)
+                    {
+                        for (int i = 0; i < visited.size(); i++)
+                        {
+                            if (visited[i].x == p1.x and visited[i].y == p1.y)
+                            {
+                                break;
+                            }
+                            if (i == visited.size() - 1)
+                            {
+                                //go right
+                                visited.push_back(p1);
+                                p1.x = p1.x + 1;
+                                result.push_back(p1);
+                                moved = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+                //if up is clear
+                if (p1.y > 0)
+                {
+                    if (walls[p1.x][p1.y - 1].getWS() != Walled and !moved)
+                    {
+                        for (int i = 0; i < visited.size(); i++)
+                        {
+                            if (visited[i].x == p1.x and visited[i].y == p1.y)
+                            {
+                                break;
+                            }
+                            if (i == visited.size() - 1)
+                            {
+                                //go up
+                                visited.push_back(p1);
+                                p1.y = p1.y - 1;
+                                result.push_back(p1);
+                                moved = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+                len++;
+                if (p1.x == p2.x)
+                {
+                    if (original.y > p2.y)
+                    {
+                        if (p1.y > original.y)
+                        {
+                            for (int i = 0; i < 100; i++)
+                            {
+                                result.push_back(p1);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (p1.y < original.y)
+                        {
+                            for (int i = 0; i < 100; i++)
+                            {
+                                result.push_back(p1);
+                            }
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+        return result;
+        break;
+    }
+    default:
+        break;
+    }
+    visited.clear();
+}
+
+bool Tile::makePoints(sf::Vector2i p1, sf::Vector2i p2, int len)
+{
+    if (len > 100)
+    {
+        return false;
+    }
+    if (walls[p2.x][p1.y].getWS() != Walled)
+    {
+        enemyPath.push_back(sf::Vector2i(p2.x, p1.y));
+    }
+    else
+    {
+        if (walls[p1.x][p2.y].getWS() != Walled)
+        {
+            enemyPath.push_back(sf::Vector2i(p1.x, p2.y));
+        }
+        else
+        {
+            int x, y;
+            if (p2.x > p1.x) //to right
+            {
+                int i = 1;
+                while (i < 20)
+                {
+                    if (walls[p2.x - i][p1.y].getWS() != Walled)
+                    {
+                        enemyPath.push_back(sf::Vector2i(p2.x - i, p1.y));
+                        x = p2.x - i;
+                        break;
+                    }
+                    else
+                    {
+                        i++;
+                    }
+                }
+                if (p2.y < p1.y) //up
+                {
+                    i = 1;
+                    while (i < 20)
+                    {
+                        if (walls[p2.x][p1.y - i].getWS() != Walled)
+                        {
+                            y = p1.y - i;
+                            break; 
+                        }
+                        else
+                        {
+                            i++;
+                        }
+                    }
+                }
+                if (p2.y > p1.y) //down
+                {
+                    i = 1;
+                    while (i < 20)
+                    {
+                        if (walls[p2.x][p1.y + i].getWS() != Walled)
+                        {
+                            y = p1.y + i;
+                            break;
+                        }
+                        else
+                        {
+                            i++;
+                        }
+                    }
+                }
+                sf::Vector2i p3(x, p1.y);
+                sf::Vector2i p4(p2.x, y);
+                sf::Vector2i p5(p2.x, y);
+                makePoints(p3, p4, len + 1);
+                p5.x = p2.x;
+                p5.y = y;
+                enemyPath.push_back(p5);
+                return true;
+            }
+            if (p2.x < p1.x) //to left
+            {
+                int i = 1;
+                while (i < 20)
+                {
+                    if (walls[p2.x + i][p1.y].getWS() != Walled)
+                    {
+                        enemyPath.push_back(sf::Vector2i(p2.x + i, p1.y));
+                        x = p2.x + i;
+                        break;
+                    }
+                    else
+                    {
+                        i++;
+                    }
+                }
+                if (p2.y < p1.y) //up
+                {
+                    i = 1;
+                    while (i < 20)
+                    {
+                        if (walls[p2.x][p1.y - i].getWS() != Walled)
+                        {
+                            y = p1.y - i;
+                            break;
+                        }
+                        else
+                        {
+                            i++;
+                        }
+                    }
+                }
+                if (p2.y > p1.y) //down
+                {
+                    i = 1;
+                    while (i < 20)
+                    {
+                        if (walls[p2.x][p1.y + i].getWS() != Walled)
+                        {
+                            y = p1.y + i;
+                            break;
+                        }
+                        else
+                        {
+                            i++;
+                        }
+                    }
+                }
+                sf::Vector2i p3(x, p1.y);
+                sf::Vector2i p4(p2.x, y);
+                sf::Vector2i p5(p2.x, y);
+                makePoints(p3, p4, len + 1);
+                p5.x = p2.x;
+                p5.y = y;
+                enemyPath.push_back(p5);
+                return true;
+            }
+        }
+    }
+    return true;
 }

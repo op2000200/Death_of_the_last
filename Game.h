@@ -56,6 +56,9 @@ private:
 	sf::Texture* mm762;
 	sf::Texture* g12;
 	sf::Texture* grad;
+	sf::Texture* box;
+	sf::Texture* levelBG;
+	sf::Texture* corBG;
 	std::vector<sf::Texture*> textureHolder;
 	float difficulty;
 	sf::Clock dashTimer;

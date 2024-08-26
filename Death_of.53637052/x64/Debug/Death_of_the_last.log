@@ -1,174 +1,172 @@
 ﻿  Tile.cpp
-C:\code\Death_of_the_last\Tile.cpp(15,49): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(15,49): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(15,49): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(15,49): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(15,49): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(15,39): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(15,39): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(15,39): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(15,39): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(15,39): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(16,64): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(16,64): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(16,64): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(16,64): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(16,64): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(16,50): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(16,50): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(16,50): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(16,50): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(16,50): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(17,64): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(17,64): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(17,64): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(17,64): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(17,64): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(17,50): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(17,50): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(17,50): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(17,50): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(17,50): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(18,78): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(18,78): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(18,78): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(18,78): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(18,78): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(18,58): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(18,58): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(18,58): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(18,58): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(18,58): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(27,49): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(27,49): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(27,49): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(27,49): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(27,49): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(27,39): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(27,39): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(27,39): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(27,39): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(27,39): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(28,64): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(28,64): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(28,64): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(28,64): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(28,64): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(28,50): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(28,50): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(28,50): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(28,50): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(28,50): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(29,64): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(29,64): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(29,64): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(29,64): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(29,64): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(29,50): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(29,50): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(29,50): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(29,50): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(29,50): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(30,78): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(30,78): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(30,78): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(30,78): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(30,78): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(30,58): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(30,58): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(30,58): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(30,58): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(30,58): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(39,49): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(39,49): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(39,49): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(39,49): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(39,49): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(39,39): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(39,39): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(39,39): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(39,39): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(39,39): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(40,64): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(40,64): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(40,64): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(40,64): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(40,64): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(40,50): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(40,50): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(40,50): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(40,50): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(40,50): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(41,64): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(41,64): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(41,64): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(41,64): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(41,64): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(41,50): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(41,50): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(41,50): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(41,50): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(41,50): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(42,78): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(42,78): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(42,78): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(42,78): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(42,78): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(42,58): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(42,58): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(42,58): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(42,58): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(42,58): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(51,49): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(51,49): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(51,49): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(51,49): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(51,49): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(51,39): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(51,39): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(51,39): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(51,39): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(51,39): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(52,64): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(52,64): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(52,64): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(52,64): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(52,64): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(52,50): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(52,50): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(52,50): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(52,50): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(52,50): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(53,64): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(53,64): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(53,64): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(53,64): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(53,64): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(53,50): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(53,50): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(53,50): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(53,50): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(53,50): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(54,78): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(54,78): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(54,78): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(54,78): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(54,78): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(54,58): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(54,58): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(54,58): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(54,58): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(54,58): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(62,49): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(62,49): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(62,49): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(62,49): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(62,49): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(62,39): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(62,39): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(62,39): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(62,39): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(62,39): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(13,26): warning C4244: аргумент: преобразование "T" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(13,26): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(13,26): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(13,26): warning C4244:             T=unsigned int
+C:\code\Death_of_the_last\Tile.cpp(13,26): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(13,26): warning C4244:         and
+C:\code\Death_of_the_last\Tile.cpp(13,26): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(13,26): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(13,26): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(12,26): warning C4244: аргумент: преобразование "T" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(12,26): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(12,26): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(12,26): warning C4244:             T=unsigned int
+C:\code\Death_of_the_last\Tile.cpp(12,26): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(12,26): warning C4244:         and
+C:\code\Death_of_the_last\Tile.cpp(12,26): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(12,26): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(12,26): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(15,44): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(15,44): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(15,44): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(15,44): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(15,44): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(15,37): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(15,37): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(15,37): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(15,37): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(15,37): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(21,49): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(21,49): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(21,49): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(21,49): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(21,49): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(21,39): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(21,39): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(21,39): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(21,39): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(21,39): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(22,64): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(22,64): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(22,64): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(22,64): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(22,64): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(22,50): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(22,50): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(22,50): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(22,50): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(22,50): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(23,64): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(23,64): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(23,64): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(23,64): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(23,64): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(23,50): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(23,50): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(23,50): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(23,50): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(23,50): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(24,78): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(24,78): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(24,78): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(24,78): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(24,78): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(24,58): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(24,58): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(24,58): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(24,58): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(24,58): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(37,49): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(37,49): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(37,49): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(37,49): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(37,49): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(37,39): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(37,39): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(37,39): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(37,39): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(37,39): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(38,64): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(38,64): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(38,64): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(38,64): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(38,64): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(38,50): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(38,50): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(38,50): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(38,50): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(38,50): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(39,64): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(39,64): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(39,64): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(39,64): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(39,64): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(39,50): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(39,50): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(39,50): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(39,50): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(39,50): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(40,78): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(40,78): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(40,78): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(40,78): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(40,78): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(40,58): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(40,58): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(40,58): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(40,58): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(40,58): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(49,49): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(49,49): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(49,49): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(49,49): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(49,49): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(49,39): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(49,39): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(49,39): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(49,39): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(49,39): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(50,64): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(50,64): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(50,64): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(50,64): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(50,64): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(50,50): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(50,50): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(50,50): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(50,50): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(50,50): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(51,64): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(51,64): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(51,64): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(51,64): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(51,64): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(51,50): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(51,50): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(51,50): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(51,50): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(51,50): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(52,78): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(52,78): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(52,78): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(52,78): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(52,78): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(52,58): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(52,58): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(52,58): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(52,58): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(52,58): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(61,49): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(61,49): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(61,49): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(61,49): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(61,49): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(61,39): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(61,39): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(61,39): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(61,39): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(61,39): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(62,64): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(62,64): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(62,64): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(62,64): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(62,64): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(62,50): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(62,50): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(62,50): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(62,50): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(62,50): warning C4244:         ]
 C:\code\Death_of_the_last\Tile.cpp(63,64): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
 C:\code\Death_of_the_last\Tile.cpp(63,64): warning C4244:         with
 C:\code\Death_of_the_last\Tile.cpp(63,64): warning C4244:         [
@@ -179,36 +177,36 @@ C:\code\Death_of_the_last\Tile.cpp(63,50): warning C4244:         with
 C:\code\Death_of_the_last\Tile.cpp(63,50): warning C4244:         [
 C:\code\Death_of_the_last\Tile.cpp(63,50): warning C4244:             T=float
 C:\code\Death_of_the_last\Tile.cpp(63,50): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(64,64): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(64,64): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(64,64): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(64,64): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(64,64): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(64,50): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(64,50): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(64,50): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(64,50): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(64,50): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(65,78): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(65,78): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(65,78): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(65,78): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(65,78): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(65,58): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(65,58): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(65,58): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(65,58): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(65,58): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(73,49): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(73,49): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(73,49): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(73,49): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(73,49): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(73,39): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(73,39): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(73,39): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(73,39): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(73,39): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(64,78): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(64,78): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(64,78): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(64,78): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(64,78): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(64,58): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(64,58): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(64,58): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(64,58): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(64,58): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(72,49): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(72,49): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(72,49): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(72,49): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(72,49): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(72,39): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(72,39): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(72,39): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(72,39): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(72,39): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(73,64): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(73,64): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(73,64): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(73,64): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(73,64): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(73,50): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(73,50): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(73,50): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(73,50): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(73,50): warning C4244:         ]
 C:\code\Death_of_the_last\Tile.cpp(74,64): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
 C:\code\Death_of_the_last\Tile.cpp(74,64): warning C4244:         with
 C:\code\Death_of_the_last\Tile.cpp(74,64): warning C4244:         [
@@ -219,36 +217,36 @@ C:\code\Death_of_the_last\Tile.cpp(74,50): warning C4244:         with
 C:\code\Death_of_the_last\Tile.cpp(74,50): warning C4244:         [
 C:\code\Death_of_the_last\Tile.cpp(74,50): warning C4244:             T=float
 C:\code\Death_of_the_last\Tile.cpp(74,50): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(75,64): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(75,64): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(75,64): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(75,64): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(75,64): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(75,50): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(75,50): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(75,50): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(75,50): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(75,50): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(76,78): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(76,78): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(76,78): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(76,78): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(76,78): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(76,58): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(76,58): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(76,58): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(76,58): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(76,58): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(84,49): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(84,49): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(84,49): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(84,49): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(84,49): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(84,39): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(84,39): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(84,39): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(84,39): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(84,39): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(75,78): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(75,78): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(75,78): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(75,78): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(75,78): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(75,58): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(75,58): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(75,58): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(75,58): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(75,58): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(83,49): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(83,49): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(83,49): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(83,49): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(83,49): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(83,39): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(83,39): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(83,39): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(83,39): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(83,39): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(84,64): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(84,64): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(84,64): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(84,64): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(84,64): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(84,50): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(84,50): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(84,50): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(84,50): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(84,50): warning C4244:         ]
 C:\code\Death_of_the_last\Tile.cpp(85,64): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
 C:\code\Death_of_the_last\Tile.cpp(85,64): warning C4244:         with
 C:\code\Death_of_the_last\Tile.cpp(85,64): warning C4244:         [
@@ -259,209 +257,297 @@ C:\code\Death_of_the_last\Tile.cpp(85,50): warning C4244:         with
 C:\code\Death_of_the_last\Tile.cpp(85,50): warning C4244:         [
 C:\code\Death_of_the_last\Tile.cpp(85,50): warning C4244:             T=float
 C:\code\Death_of_the_last\Tile.cpp(85,50): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(86,64): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(86,64): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(86,64): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(86,64): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(86,64): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(86,50): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(86,50): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(86,50): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(86,50): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(86,50): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(87,78): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(87,78): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(87,78): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(87,78): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(87,78): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(87,58): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(87,58): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(87,58): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(87,58): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(87,58): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(99,53): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(99,53): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(99,53): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(99,53): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(99,53): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(99,48): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(99,48): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(99,48): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(99,48): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(99,48): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(100,64): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(100,64): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(100,64): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(100,64): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(100,64): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(100,50): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(100,50): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(100,50): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(100,50): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(100,50): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(101,68): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(101,68): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(101,68): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(101,68): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(101,68): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(101,54): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(101,54): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(101,54): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(101,54): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(101,54): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(102,82): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(102,82): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(102,82): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(102,82): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(102,82): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(102,62): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(102,62): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(102,62): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(102,62): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(102,62): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(110,58): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(110,58): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(110,58): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(110,58): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(110,58): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(110,39): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(110,39): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(110,39): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(110,39): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(110,39): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(111,64): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(111,64): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(111,64): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(111,64): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(111,64): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(111,50): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(111,50): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(111,50): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(111,50): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(111,50): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(112,68): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(112,68): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(112,68): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(112,68): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(112,68): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(112,50): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(112,50): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(112,50): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(112,50): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(112,50): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(113,82): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(113,82): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(113,82): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(113,82): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(113,82): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(113,58): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(113,58): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(113,58): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(113,58): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(113,58): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(123,42): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(123,42): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(123,42): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(123,42): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(123,42): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(123,35): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(123,35): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(123,35): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(123,35): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(123,35): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(124,44): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(124,44): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(124,44): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(124,44): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(124,44): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(124,37): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(124,37): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(124,37): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(124,37): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(124,37): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(213,172): warning C4244: аргумент: преобразование "T" в "int", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(213,172): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(213,172): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(213,172): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(213,172): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(213,82): warning C4244: аргумент: преобразование "T" в "int", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(213,82): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(213,82): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(213,82): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(213,82): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(293,37): warning C4244: аргумент: преобразование "const T" в "int", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(293,37): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(293,37): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(293,37): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(293,37): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(292,95): warning C4244: аргумент: преобразование "T" в "int", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(292,95): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(292,95): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(292,95): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(292,95): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(291,101): warning C4244: аргумент: преобразование "T" в "int", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(291,101): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(291,101): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(291,101): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(291,101): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(314,33): warning C4244: аргумент: преобразование "const T" в "int", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(314,33): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(314,33): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(314,33): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(314,33): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(313,91): warning C4244: аргумент: преобразование "T" в "int", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(313,91): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(313,91): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(313,91): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(313,91): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(312,97): warning C4244: аргумент: преобразование "T" в "int", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(312,97): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(312,97): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(312,97): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(312,97): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(359,33): warning C4244: аргумент: преобразование "const T" в "int", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(359,33): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(359,33): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(359,33): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(359,33): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(358,91): warning C4244: аргумент: преобразование "T" в "int", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(358,91): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(358,91): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(358,91): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(358,91): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(357,97): warning C4244: аргумент: преобразование "T" в "int", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(357,97): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(357,97): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(357,97): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(357,97): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(404,33): warning C4244: аргумент: преобразование "const T" в "int", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(404,33): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(404,33): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(404,33): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(404,33): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(403,91): warning C4244: аргумент: преобразование "T" в "int", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(403,91): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(403,91): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(403,91): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(403,91): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(402,97): warning C4244: аргумент: преобразование "T" в "int", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(402,97): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(402,97): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(402,97): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(402,97): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(449,33): warning C4244: аргумент: преобразование "const T" в "int", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(449,33): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(449,33): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(449,33): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(449,33): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(448,91): warning C4244: аргумент: преобразование "T" в "int", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(448,91): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(448,91): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(448,91): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(448,91): warning C4244:         ]
-C:\code\Death_of_the_last\Tile.cpp(447,97): warning C4244: аргумент: преобразование "T" в "int", возможна потеря данных
-C:\code\Death_of_the_last\Tile.cpp(447,97): warning C4244:         with
-C:\code\Death_of_the_last\Tile.cpp(447,97): warning C4244:         [
-C:\code\Death_of_the_last\Tile.cpp(447,97): warning C4244:             T=float
-C:\code\Death_of_the_last\Tile.cpp(447,97): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(86,78): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(86,78): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(86,78): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(86,78): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(86,78): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(86,58): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(86,58): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(86,58): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(86,58): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(86,58): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(94,49): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(94,49): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(94,49): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(94,49): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(94,49): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(94,39): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(94,39): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(94,39): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(94,39): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(94,39): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(95,64): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(95,64): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(95,64): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(95,64): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(95,64): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(95,50): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(95,50): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(95,50): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(95,50): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(95,50): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(96,64): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(96,64): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(96,64): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(96,64): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(96,64): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(96,50): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(96,50): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(96,50): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(96,50): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(96,50): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(97,78): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(97,78): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(97,78): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(97,78): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(97,78): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(97,58): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(97,58): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(97,58): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(97,58): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(97,58): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(113,53): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(113,53): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(113,53): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(113,53): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(113,53): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(113,48): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(113,48): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(113,48): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(113,48): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(113,48): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(114,64): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(114,64): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(114,64): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(114,64): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(114,64): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(114,50): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(114,50): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(114,50): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(114,50): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(114,50): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(115,68): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(115,68): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(115,68): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(115,68): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(115,68): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(115,54): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(115,54): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(115,54): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(115,54): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(115,54): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(116,82): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(116,82): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(116,82): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(116,82): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(116,82): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(116,62): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(116,62): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(116,62): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(116,62): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(116,62): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(122,35): warning C4244: аргумент: преобразование "T" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(122,35): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(122,35): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(122,35): warning C4244:             T=unsigned int
+C:\code\Death_of_the_last\Tile.cpp(122,35): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(122,35): warning C4244:         and
+C:\code\Death_of_the_last\Tile.cpp(122,35): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(122,35): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(122,35): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(121,35): warning C4244: аргумент: преобразование "T" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(121,35): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(121,35): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(121,35): warning C4244:             T=unsigned int
+C:\code\Death_of_the_last\Tile.cpp(121,35): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(121,35): warning C4244:         and
+C:\code\Death_of_the_last\Tile.cpp(121,35): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(121,35): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(121,35): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(124,52): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(124,52): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(124,52): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(124,52): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(124,52): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(124,45): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(124,45): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(124,45): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(124,45): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(124,45): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(135,58): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(135,58): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(135,58): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(135,58): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(135,58): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(135,39): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(135,39): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(135,39): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(135,39): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(135,39): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(136,64): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(136,64): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(136,64): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(136,64): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(136,64): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(136,50): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(136,50): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(136,50): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(136,50): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(136,50): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(137,68): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(137,68): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(137,68): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(137,68): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(137,68): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(137,50): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(137,50): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(137,50): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(137,50): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(137,50): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(138,82): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(138,82): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(138,82): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(138,82): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(138,82): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(138,58): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(138,58): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(138,58): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(138,58): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(138,58): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(144,35): warning C4244: аргумент: преобразование "T" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(144,35): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(144,35): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(144,35): warning C4244:             T=unsigned int
+C:\code\Death_of_the_last\Tile.cpp(144,35): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(144,35): warning C4244:         and
+C:\code\Death_of_the_last\Tile.cpp(144,35): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(144,35): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(144,35): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(143,35): warning C4244: аргумент: преобразование "T" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(143,35): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(143,35): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(143,35): warning C4244:             T=unsigned int
+C:\code\Death_of_the_last\Tile.cpp(143,35): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(143,35): warning C4244:         and
+C:\code\Death_of_the_last\Tile.cpp(143,35): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(143,35): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(143,35): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(146,52): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(146,52): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(146,52): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(146,52): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(146,52): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(146,45): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(146,45): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(146,45): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(146,45): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(146,45): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(158,42): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(158,42): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(158,42): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(158,42): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(158,42): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(158,35): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(158,35): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(158,35): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(158,35): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(158,35): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(159,44): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(159,44): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(159,44): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(159,44): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(159,44): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(159,37): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(159,37): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(159,37): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(159,37): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(159,37): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(253,172): warning C4244: аргумент: преобразование "T" в "int", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(253,172): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(253,172): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(253,172): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(253,172): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(253,82): warning C4244: аргумент: преобразование "T" в "int", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(253,82): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(253,82): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(253,82): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(253,82): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(337,41): warning C4244: аргумент: преобразование "const T" в "int", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(337,41): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(337,41): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(337,41): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(337,41): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(336,99): warning C4244: аргумент: преобразование "T" в "int", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(336,99): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(336,99): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(336,99): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(336,99): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(335,105): warning C4244: аргумент: преобразование "T" в "int", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(335,105): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(335,105): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(335,105): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(335,105): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(447,33): warning C4244: аргумент: преобразование "const T" в "int", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(447,33): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(447,33): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(447,33): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(447,33): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(446,91): warning C4244: аргумент: преобразование "T" в "int", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(446,91): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(446,91): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(446,91): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(446,91): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(445,97): warning C4244: аргумент: преобразование "T" в "int", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(445,97): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(445,97): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(445,97): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(445,97): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(504,33): warning C4244: аргумент: преобразование "const T" в "int", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(504,33): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(504,33): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(504,33): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(504,33): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(503,91): warning C4244: аргумент: преобразование "T" в "int", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(503,91): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(503,91): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(503,91): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(503,91): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(502,97): warning C4244: аргумент: преобразование "T" в "int", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(502,97): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(502,97): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(502,97): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(502,97): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(561,33): warning C4244: аргумент: преобразование "const T" в "int", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(561,33): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(561,33): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(561,33): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(561,33): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(560,91): warning C4244: аргумент: преобразование "T" в "int", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(560,91): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(560,91): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(560,91): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(560,91): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(559,97): warning C4244: аргумент: преобразование "T" в "int", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(559,97): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(559,97): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(559,97): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(559,97): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(618,33): warning C4244: аргумент: преобразование "const T" в "int", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(618,33): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(618,33): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(618,33): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(618,33): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(617,91): warning C4244: аргумент: преобразование "T" в "int", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(617,91): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(617,91): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(617,91): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(617,91): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(616,97): warning C4244: аргумент: преобразование "T" в "int", возможна потеря данных
+C:\code\Death_of_the_last\Tile.cpp(616,97): warning C4244:         with
+C:\code\Death_of_the_last\Tile.cpp(616,97): warning C4244:         [
+C:\code\Death_of_the_last\Tile.cpp(616,97): warning C4244:             T=float
+C:\code\Death_of_the_last\Tile.cpp(616,97): warning C4244:         ]
+C:\code\Death_of_the_last\Tile.cpp(1270,1): warning C4715: Tile::goAround: значение возвращается не при всех путях выполнения
+C:\code\Death_of_the_last\Tile.cpp(2347,1): warning C4715: Tile::pathFind: значение возвращается не при всех путях выполнения
   Death_of_the_last.vcxproj -> C:\code\Death_of_the_last\x64\Debug\Death_of_the_last.exe

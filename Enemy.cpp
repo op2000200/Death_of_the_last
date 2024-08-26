@@ -6,13 +6,13 @@ Enemy::Enemy(int pos_x, int pos_y, int side, int x, int y)
 	hitbox.setOrigin(sf::Vector2f(hitbox.getRadius(), hitbox.getRadius()));
 	hitbox.setPosition(sf::Vector2f(pos_x, pos_y));
 	hitbox.setFillColor(sf::Color::Transparent);
-	hitbox.setOutlineColor(sf::Color::Red);
-	hitbox.setOutlineThickness(1.f);
+	//hitbox.setOutlineColor(sf::Color::Red);
+	//hitbox.setOutlineThickness(1.f);
 	behav = EnemyBehavior::Regular;
 	state = EnemyState::Standing;
 	health = 100;
 	hpBar.setSize(sf::Vector2f(
-		side / 20,
+		side / 25,
 		side / 100
 	));
 	hpBar.setOrigin(sf::Vector2f(
@@ -23,8 +23,8 @@ Enemy::Enemy(int pos_x, int pos_y, int side, int x, int y)
 	hpBar.setFillColor(sf::Color::Green);
 	ind.x = x;
 	ind.y = y;
-	dest = ind;
-	point = ind;
+	dest = sf::Vector2i(ind);
+	point = sf::Vector2i(ind);
 }
 
 Enemy::~Enemy()
@@ -91,12 +91,12 @@ void Enemy::setDest(sf::Vector2i buf)
 	dest = buf;
 }
 
-sf::Vector2i Enemy::getInd()
+sf::Vector2f Enemy::getInd()
 {
 	return ind;
 }
 
-void Enemy::setInd(sf::Vector2i buf)
+void Enemy::setInd(sf::Vector2f buf)
 {
 	ind = buf;
 }
@@ -139,4 +139,24 @@ void Enemy::alert(sf::Vector2i d)
 {
 	behav = Check;
 	setDest(d);
+}
+
+sf::Vector2i Enemy::getNextPoint()
+{
+	return sf::Vector2i();
+}
+
+std::vector<sf::Vector2i> Enemy::getPoints()
+{
+	return points;
+}
+
+void Enemy::delFrstPoint()
+{
+	points.erase(points.begin());
+}
+
+void Enemy::addPoints(std::vector<sf::Vector2i> pt)
+{
+	points = pt;
 }
